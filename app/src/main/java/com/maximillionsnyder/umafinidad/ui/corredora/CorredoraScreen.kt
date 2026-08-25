@@ -467,3 +467,13 @@ private fun androidx.compose.foundation.lazy.LazyListScope.itemsIndexedAlt(
         contenido(lista[i], i == lista.lastIndex)
     }
 }
+
+@Composable
+private fun Nota(texto: String) {
+    Text(
+        texto,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp),
+    )
+}

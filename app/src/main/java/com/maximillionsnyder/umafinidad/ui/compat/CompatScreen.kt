@@ -317,9 +317,8 @@ fun CompatScreen(
     }
 }
 
-/* ---------- Slots coloreados por rol ---------- */
+/* ---------- Slots coloreados por genealogía ---------- */
 
-@Composable
 @Composable
 private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val rolColor = colorDeGenealogia(slot)

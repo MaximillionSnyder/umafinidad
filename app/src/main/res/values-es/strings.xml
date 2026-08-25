@@ -67,4 +67,7 @@
     <string name="modo_lista_desc">Filas horizontales con franja de color</string>
     <string name="seccion_herencia">Herencia</string>
     <string name="herencia_contador">%1$d/7</string>
+    <string name="salir_titulo">¿Salir de Uma Afinidad?</string>
+    <string name="salir_mensaje">¿Seguro que querés salir de la app?</string>
+    <string name="salir_salir">Salir</string>
 </resources>

@@ -19,12 +19,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items as lazyRowItems
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -147,37 +145,57 @@ fun CompatScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
 
-            /* ---- Cabecera: contador + slots coloreados por rol ---- */
+            /* ---- Cabecera protagonista + slots SIEMPRE visibles ---- */
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     stringResource(R.string.seccion_herencia),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Black,
                 )
-                Text(
-                    stringResource(R.string.herencia_contador, seleccion.count { it != null }),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold,
-                )
+                Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.primary) {
+                    Text(
+                        stringResource(R.string.herencia_contador, seleccion.count { it != null }),
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
 
-            LazyRow(
+            Column(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                lazyRowItems((0 until SLOTS).toList()) { i ->
-                    SlotChip(
-                        etiqueta = etiquetaRol(i),
-                        personaje = seleccion[i]?.let { modelo.porId(it) },
-                        slot = i,
-                        japones = japones,
-                        onClick = { manejarQuitar(i) },
-                    )
+                /* Fila genealógica 1: hijo + padres */
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    listOf(0, 1, 2).forEach { i ->
+                        SlotChip(
+                            etiqueta = etiquetaRol(i),
+                            personaje = seleccion[i]?.let { modelo.porId(it) },
+                            slot = i,
+                            japones = japones,
+                            onClick = { manejarQuitar(i) },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                }
+                /* Fila genealógica 2: los cuatro abuelos */
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    listOf(3, 4, 5, 6).forEach { i ->
+                        SlotChip(
+                            etiqueta = etiquetaRol(i),
+                            personaje = seleccion[i]?.let { modelo.porId(it) },
+                            slot = i,
+                            japones = japones,
+                            onClick = { manejarQuitar(i) },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
                 }
             }
 
@@ -304,35 +322,35 @@ internal fun colorDeRol(rol: Rol): Color = when (rol) {
 }
 
 @Composable
-private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: () -> Unit) {
+private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val rolColor = colorDeRol(rolDeSlot(slot))
     Card(
-        modifier = Modifier.clickable(onClick = onClick),
-        shape = RoundedCornerShape(14.dp),
+        modifier = modifier.clickable(onClick = onClick),
+        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         border = androidx.compose.foundation.BorderStroke(
             1.dp,
             if (personaje != null) rolColor.copy(alpha = 0.7f) else MaterialTheme.colorScheme.outlineVariant,
         ),
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 5.dp),
         ) {
-            if (personaje != null) {
-                Box(modifier = Modifier.size(6.dp).background(rolColor, CircleShape))
-            }
-            Column {
-                Text(etiqueta, style = MaterialTheme.typography.labelSmall, color = rolColor, fontWeight = FontWeight.Bold)
-                Text(
-                    text = personaje?.displayName(japones) ?: "—",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = if (personaje != null) FontWeight.Bold else FontWeight.Normal,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
+            Text(
+                etiqueta,
+                style = MaterialTheme.typography.labelSmall,
+                color = rolColor,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                text = personaje?.displayName(japones) ?: "—",
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = if (personaje != null) FontWeight.Bold else FontWeight.Normal,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
     }
 }

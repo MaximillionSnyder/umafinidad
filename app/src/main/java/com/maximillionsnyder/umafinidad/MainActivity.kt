@@ -3,12 +3,14 @@ package com.maximillionsnyder.umafinidad
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.compose.BackHandler
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
@@ -66,6 +70,11 @@ private fun App(vm: AppViewModel) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    /* Aviso antes de salir: el botón/gesto atrás nunca cierra sin confirmar. */
+    var confirmarSalida by rememberSaveable { mutableStateOf(false) }
+    BackHandler { confirmarSalida = true }
 
     val japones = LocalConfiguration.current.locales[0].language == "ja"
 
@@ -142,5 +151,24 @@ private fun App(vm: AppViewModel) {
                 }
             }
         }
+    }
+
+    /* Diálogo de confirmación antes de salir de la app. */
+    if (confirmarSalida) {
+        AlertDialog(
+            onDismissRequest = { confirmarSalida = false },
+            title = { Text(stringResource(R.string.salir_titulo)) },
+            text = { Text(stringResource(R.string.salir_mensaje)) },
+            confirmButton = {
+                TextButton(onClick = { (context as? android.app.Activity)?.finish() }) {
+                    Text(stringResource(R.string.salir_salir))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmarSalida = false }) {
+                    Text(stringResource(R.string.cancelar))
+                }
+            },
+        )
     }
 }

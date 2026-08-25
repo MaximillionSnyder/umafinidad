@@ -67,4 +67,7 @@
     <string name="modo_lista_desc">Horizontal rows with a color stripe</string>
     <string name="seccion_herencia">Lineage</string>
     <string name="herencia_contador">%1$d/7</string>
+    <string name="salir_titulo">Exit Uma Afinidad?</string>
+    <string name="salir_mensaje">Are you sure you want to leave the app?</string>
+    <string name="salir_salir">Exit</string>
 </resources>

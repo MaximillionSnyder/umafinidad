@@ -67,4 +67,7 @@
     <string name="modo_lista_desc">色帯付きの横並び表示</string>
     <string name="seccion_herencia">継承</string>
     <string name="herencia_contador">%1$d/7</string>
+    <string name="salir_titulo">Uma Afinidadを終了しますか？</string>
+    <string name="salir_mensaje">アプリを終了してもよろしいですか？</string>
+    <string name="salir_salir">終了</string>
 </resources>

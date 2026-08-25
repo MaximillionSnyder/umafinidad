@@ -75,4 +75,7 @@
     <string name="mejor_de">Best lineage for %1$s</string>
     <string name="corredora_invalida">That character is not playable; no lineage can be computed.</string>
     <string name="corredora_hint">Type a runner’s name to see her best possible pedigree.</string>
+    <string name="alternativas_titulo">Options for %1$s</string>
+    <string name="restablecer_optimo">Reset to optimal</string>
+    <string name="sin_alternativas">No valid alternatives for this slot.</string>
 </resources>

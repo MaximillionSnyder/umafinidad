@@ -115,6 +115,11 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _seleccion.value = List(SLOTS) { null }
     }
 
+    /* Carga una selección arbitraria (Mi corredora con alternativas). */
+    fun cargarSeleccion(sel: List<Int?>) {
+        _seleccion.value = sel
+    }
+
     /* Botón "Ver herencia" del top: carga el linaje completo y muestra la
        pestaña de compatibilidad. */
     fun cargarLinaje(l: Linaje) {

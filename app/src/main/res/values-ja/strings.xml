@@ -75,4 +75,7 @@
     <string name="mejor_de">%1$sの最適血統</string>
     <string name="corredora_invalida">そのウマ娘は育成可能ではないため計算できません。</string>
     <string name="corredora_hint">ウマ娘の名前を入力すると、最適な血統が表示されます。</string>
+    <string name="alternativas_titulo">%1$sの候補</string>
+    <string name="restablecer_optimo">最適に戻す</string>
+    <string name="sin_alternativas">このスロットに有効な候補がありません。</string>
 </resources>

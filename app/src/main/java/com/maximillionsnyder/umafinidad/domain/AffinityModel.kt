@@ -29,6 +29,15 @@ data class Linaje(
     val puntos: Int,
 )
 
+/* Candidato para reemplazar un slot del árbol de Mi corredora.
+   puntosDirectos = aporte del candidato a SUS vínculos con el resto fijo;
+   total = puntaje del árbol completo con el cambio aplicado. */
+data class AlternativaSlot(
+    val personaje: Character,
+    val puntosDirectos: Int,
+    val total: Int,
+)
+
 class AffinityModel private constructor(
     val personajes: List<Character>,
     private val porId: Map<Int, Character>,
@@ -263,4 +272,69 @@ class AffinityModel private constructor(
     }
 
     fun porId(id: Int): Character? = porId[id]
+
+    /* ===== Alternativas por slot (Mi corredora) ===== */
+
+    /* Total del árbol completo con la semántica de result.js:
+       hijo×padres + entre padres + tríos hijo-padre-abuelo (corredora 0). */
+    private fun totalDeSeleccion(seleccion: Array<Int?>): Int =
+        vinculos(armarArbol(seleccion)).sumOf { v ->
+            if (v.esCorredora) 0
+            else if (v.ids.size == 3) puntajeTrioRapido(v.ids[0], v.ids[1], v.ids[2])
+            else puntajePar(v.ids[0], v.ids[1])
+        }
+
+    /* Candidatos para reemplazar el ocupante de un slot (1..6), ordenados
+       por total resultante descendente. Respeta todas las reglas del juego
+       vía puedeIrEn. El slot del hijo no es intercambiable. */
+    fun alternativasParaSlot(
+        seleccion: List<Int?>,
+        slot: Int,
+        limite: Int = 8,
+    ): List<AlternativaSlot> {
+        if (slot <= 0 || slot >= seleccion.size) return emptyList()
+        val ocupante = seleccion[slot] ?: return emptyList()
+        val hId = seleccion[0] ?: return emptyList()
+        val selArr = seleccion.toTypedArray()
+
+        val resultados = mutableListOf<AlternativaSlot>()
+        val m = charsTop.size
+
+        for (idx in 0 until m) {
+            val candidato = charsTop[idx]
+            if (candidato.charId == ocupante) continue
+            if (!puedeIrEn(selArr, slot, candidato.charId)) continue
+
+            /* Aporte directo según el rol del slot. */
+            val directos = when (rolDeSlot(slot)) {
+                Rol.PADRE -> {
+                    val rama = slot - 1
+                    val otroPadre = if (slot == 1) seleccion[2]!! else seleccion[1]!!
+                    var d = puntajePar(hId, candidato.charId) +
+                        puntajePar(candidato.charId, otroPadre)
+                    for (g in listOf(seleccion[3 + rama * 2], seleccion[4 + rama * 2])) {
+                        if (g != null && g != candidato.charId && g != hId) {
+                            d += puntajeTrioRapido(hId, candidato.charId, g)
+                        }
+                    }
+                    d
+                }
+                Rol.ABUELO -> {
+                    val padreId = seleccion[1 + (slot - 3) / 2]!!
+                    if (candidato.charId == hId) 0 else puntajeTrioRapido(hId, padreId, candidato.charId)
+                }
+                else -> continue
+            }
+
+            val nuevo = selArr.copyOf().also { it[slot] = candidato.charId }
+            resultados += AlternativaSlot(candidato, directos, totalDeSeleccion(nuevo))
+        }
+
+        return resultados
+            .sortedWith(
+                compareByDescending<AlternativaSlot> { it.total }
+                    .thenByDescending { it.puntosDirectos },
+            )
+            .take(limite)
+    }
 }

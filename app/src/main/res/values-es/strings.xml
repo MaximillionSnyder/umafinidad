@@ -75,4 +75,7 @@
     <string name="mejor_de">Mejor linaje de %1$s</string>
     <string name="corredora_invalida">Ese personaje no es jugable, no tiene linaje calculable.</string>
     <string name="corredora_hint">Escribí el nombre de una corredora para ver su mejor árbol posible.</string>
+    <string name="alternativas_titulo">Opciones para %1$s</string>
+    <string name="restablecer_optimo">Restablecer óptimo</string>
+    <string name="sin_alternativas">No hay alternativas válidas para este slot.</string>
 </resources>

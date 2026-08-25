@@ -119,4 +119,66 @@ class MejorLinajeTest {
     fun personajeInvalidoDevuelveNull() {
         assertNull(modelo.mejorLinajeDe(999999999))
     }
+
+    /* ===== Alternativas por slot ===== */
+
+    private fun seleccionDeTop1(): Array<Int?> {
+        val l = modelo.topLinajes(1).first()
+        return arrayOf(
+            l.hijo.charId,
+            l.padre.charId,
+            l.madre.charId,
+            l.abuelos[0][0].charId,
+            l.abuelos[0][1].charId,
+            l.abuelos[1][0].charId,
+            l.abuelos[1][1].charId,
+        )
+    }
+
+    @Test
+    fun alternativasOrdenadasValidasYSinOcupante() {
+        val sel = seleccionDeTop1()
+        for (slot in 1..6) {
+            val alts = modelo.alternativasParaSlot(sel.toList(), slot)
+            if (alts.isEmpty()) continue
+
+            /* Orden descendente por total. */
+            for (i in 1 until alts.size) {
+                assertTrue("slot $slot fila $i", alts[i - 1].total >= alts[i].total)
+            }
+            /* Sin el ocupante actual y con reglas válidas. */
+            for (alt in alts) {
+                assertTrue("≠ ocupante", alt.personaje.charId != sel[slot])
+                assertTrue(
+                    "puedeIrEn(slot $slot, ${alt.personaje.charId})",
+                    com.maximillionsnyder.umafinidad.domain.puedeIrEn(sel, slot, alt.personaje.charId),
+                )
+                /* Ningún cambio puede superar el óptimo exhaustivo del hijo. */
+                val optimoHijo = modelo.mejorLinajeDe(sel[0]!!)!!.puntos
+                assertTrue("total ${alt.total} <= óptimo $optimoHijo", alt.total <= optimoHijo)
+            }
+        }
+    }
+
+    @Test
+    fun totalDeAlternativaCoherenteConPuntajesPublicos() {
+        val sel = seleccionDeTop1()
+        val alts = modelo.alternativasParaSlot(sel.toList(), 1)
+        val primera = alts.firstOrNull() ?: return
+
+        val nuevo = sel.copyOf().also { it[1] = primera.personaje.charId }
+        val recalculado = vinculos(armarArbol(nuevo)).sumOf { v ->
+            if (v.esCorredora) 0
+            else if (v.tipo == TipoVinculo.HIJO_PADRE_ABUELO)
+                modelo.puntajeTrio(v.ids[0], v.ids[1], v.ids[2])
+            else modelo.puntajePar(v.ids[0], v.ids[1])
+        }
+        assertEquals(recalculado, primera.total)
+    }
+
+    @Test
+    fun hijoNoEsIntercambiable() {
+        val sel = seleccionDeTop1()
+        assertTrue(modelo.alternativasParaSlot(sel.toList(), 0).isEmpty())
+    }
 }

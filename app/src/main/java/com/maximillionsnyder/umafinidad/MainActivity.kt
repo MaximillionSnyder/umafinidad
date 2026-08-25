@@ -154,8 +154,8 @@ private fun App(vm: AppViewModel) {
                         3 -> CorredoraScreen(
                             modelo = m,
                             japones = japones,
-                            onVerHerencia = { linaje ->
-                                vm.cargarLinaje(linaje)
+                            onVerHerencia = { sel ->
+                                vm.cargarSeleccion(sel)
                                 tab = 0
                             },
                         )

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -19,13 +20,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,14 +40,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.maximillionsnyder.umafinidad.R
+import com.maximillionsnyder.umafinidad.domain.AlternativaSlot
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Linaje
@@ -53,19 +57,39 @@ import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.ResultadoCompat
 import com.maximillionsnyder.umafinidad.ui.compat.ResultadoPanel
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /* Pestaña "Mi corredora": buscás una corredora y ves SU mejor linaje
-   exacto (barrido exhaustivo de pares de padres en Dispatchers.Default). */
+   exacto. Los 6 roles secundarios son intercambiables: al tocarlos se
+   ofrecen alternativas ordenadas por total resultante (con los puntos
+   directos del candidato como referencia). */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CorredoraScreen(
     modelo: AffinityModel,
     japones: Boolean,
-    onVerHerencia: (Linaje) -> Unit,
+    onVerHerencia: (List<Int?>) -> Unit,
 ) {
     var filtro by rememberSaveable { mutableStateOf("") }
     var elegidaId by rememberSaveable { mutableIntStateOf(-1) }
     var linaje by remember { mutableStateOf<Linaje?>(null) }
     var calculando by remember { mutableStateOf(false) }
+
+    /* Selección editable: arranca en el óptimo y cambia con alternativas. */
+    var seleccionActual by remember { mutableStateOf<List<Int?>>(emptyList()) }
+    var seleccionOptima by remember { mutableStateOf<List<Int?>>(emptyList()) }
+    var sheetSlot by remember { mutableStateOf<Int?>(null) }
+
+    fun listaDeLinaje(l: Linaje): List<Int?> = listOf(
+        l.hijo.charId,
+        l.padre.charId,
+        l.madre.charId,
+        l.abuelos[0][0].charId,
+        l.abuelos[0][1].charId,
+        l.abuelos[1][0].charId,
+        l.abuelos[1][1].charId,
+    )
 
     val sugerencias = remember(filtro, modelo) {
         if (filtro.trim().length >= 2) rankearSugerencias(modelo.personajes, filtro)
@@ -75,10 +99,14 @@ fun CorredoraScreen(
     LaunchedEffect(elegidaId) {
         if (elegidaId <= 0) {
             linaje = null
+            seleccionActual = emptyList()
             return@LaunchedEffect
         }
         calculando = true
-        linaje = withContext(Dispatchers.Default) { modelo.mejorLinajeDe(elegidaId) }
+        val l = withContext(Dispatchers.Default) { modelo.mejorLinajeDe(elegidaId) }
+        linaje = l
+        seleccionOptima = l?.let { listaDeLinaje(it) } ?: emptyList()
+        seleccionActual = seleccionOptima
         calculando = false
     }
 
@@ -148,15 +176,40 @@ fun CorredoraScreen(
                     CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             }
-            linaje == null -> {
+            linaje == null || seleccionActual.isEmpty() -> {
                 Nota(stringResource(R.string.corredora_invalida))
             }
             else -> {
-                PanelMejorLinaje(modelo, linaje!!, japones, onVerHerencia)
+                PanelMejorLinaje(
+                    modelo = modelo,
+                    nombreHijoId = elegidaId,
+                    seleccionActual = seleccionActual,
+                    japones = japones,
+                    esOptimo = seleccionActual == seleccionOptima,
+                    onRestablecer = { seleccionActual = seleccionOptima },
+                    onAbrirAlternativas = { sheetSlot = it },
+                    onVerHerencia = { onVerHerencia(seleccionActual) },
+                )
             }
         }
 
         Spacer(Modifier.height(24.dp))
+    }
+
+    /* Sheet de alternativas para el slot tocado. */
+    sheetSlot?.let { slot ->
+        ModalBottomSheet(onDismissRequest = { sheetSlot = null }) {
+            HojaAlternativas(
+                modelo = modelo,
+                seleccion = seleccionActual,
+                slot = slot,
+                japones = japones,
+                onElegir = { nuevoId ->
+                    seleccionActual = seleccionActual.toMutableList().also { it[slot] = nuevoId }
+                    sheetSlot = null
+                },
+            )
+        }
     }
 }
 
@@ -183,8 +236,20 @@ private fun FilaSugerencia(c: Character, japones: Boolean, onClick: () -> Unit) 
 }
 
 @Composable
-private fun PanelMejorLinaje(modelo: AffinityModel, l: Linaje, japones: Boolean, onVerHerencia: (Linaje) -> Unit) {
-    val nombreHijo = l.hijo.displayName(japones)
+private fun PanelMejorLinaje(
+    modelo: AffinityModel,
+    nombreHijoId: Int,
+    seleccionActual: List<Int?>,
+    japones: Boolean,
+    esOptimo: Boolean,
+    onRestablecer: () -> Unit,
+    onAbrirAlternativas: (Int) -> Unit,
+    onVerHerencia: () -> Unit,
+) {
+    val res: ResultadoCompat = remember(seleccionActual) {
+        AppViewModel.calcular(modelo, seleccionActual)
+    }
+    val nombreHijo = modelo.porId(nombreHijoId)?.displayName(japones) ?: ""
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -193,7 +258,7 @@ private fun PanelMejorLinaje(modelo: AffinityModel, l: Linaje, japones: Boolean,
     ) {
         Column(modifier = Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                Avatar(l.hijo.charId, nombreHijo, modifier = Modifier.size(48.dp))
+                Avatar(nombreHijoId, nombreHijo, modifier = Modifier.size(48.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         stringResource(R.string.mejor_de, nombreHijo),
@@ -202,31 +267,38 @@ private fun PanelMejorLinaje(modelo: AffinityModel, l: Linaje, japones: Boolean,
                     )
                 }
                 com.maximillionsnyder.umafinidad.ui.componentes.RankPill(
-                    modelo.rangoTotal(l.puntos),
-                    l.puntos,
+                    modelo.rangoTotal(res.total ?: 0),
+                    res.total ?: 0,
                     grande = true,
                 )
             }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
-            ChipRol(stringResource(R.string.rol_hijo), nombreHijo, l.hijo.charId, Rol.HIJO, japones)
-            ChipRol(stringResource(R.string.rol_padre1), l.padre.displayName(japones), l.padre.charId, Rol.PADRE, japones)
-            ChipRol(stringResource(R.string.rol_padre2), l.madre.displayName(japones), l.madre.charId, Rol.PADRE, japones)
-
-            val etiquetasAbuelos = listOf(
-                stringResource(R.string.rol_abuelo1_p1),
-                stringResource(R.string.rol_abuelo2_p1),
-                stringResource(R.string.rol_abuelo1_p2),
-                stringResource(R.string.rol_abuelo2_p2),
+            /* Hijo: fijo (define la búsqueda). */
+            ChipRol(
+                etiqueta = stringResource(R.string.rol_hijo),
+                personaje = modelo.porId(seleccionActual[0]!!),
+                rol = Rol.HIJO,
+                japones = japones,
+                onClick = null,
             )
-            val abuelos = l.abuelos.flatMap { it }
-            abuelos.forEachIndexed { i, abuelo ->
-                ChipRol(etiquetasAbuelos[i], abuelo.displayName(japones), abuelo.charId, Rol.ABUELO, japones)
+            /* Los otros seis: tocar abre las alternativas del slot. */
+            for (slot in 1..6) {
+                ChipRol(
+                    etiqueta = etiquetaRolDe(slot),
+                    personaje = seleccionActual[slot]?.let { modelo.porId(it) },
+                    rol = when {
+                        slot <= 2 -> Rol.PADRE
+                        else -> Rol.ABUELO
+                    },
+                    japones = japones,
+                    onClick = { onAbrirAlternativas(slot) },
+                )
             }
 
             Button(
-                onClick = { onVerHerencia(l) },
+                onClick = onVerHerencia,
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.ver_herencia), fontWeight = FontWeight.Bold)
@@ -234,60 +306,164 @@ private fun PanelMejorLinaje(modelo: AffinityModel, l: Linaje, japones: Boolean,
         }
     }
 
+    if (!esOptimo) {
+        TextButton(onClick = {
+            onRestablecer()
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.restablecer_optimo), color = MaterialTheme.colorScheme.primary)
+        }
+    }
+
     Spacer(Modifier.height(12.dp))
 
-    /* Desglose de vínculos reutilizando el cálculo del panel de resultado. */
-    val res: ResultadoCompat = remember(l) {
-        AppViewModel.calcular(
-            modelo,
-            listOf(
-                l.hijo.charId,
-                l.padre.charId,
-                l.madre.charId,
-                l.abuelos[0][0].charId,
-                l.abuelos[0][1].charId,
-                l.abuelos[1][0].charId,
-                l.abuelos[1][1].charId,
-            ),
-        )
-    }
     ResultadoPanel(modelo, res, japones)
 }
 
+/* Etiquetas de rol por slot (mismas strings que Compatibilidad). */
 @Composable
-private fun ChipRol(etiqueta: String, nombre: String, charId: Int, rol: Rol, japones: Boolean) {
+internal fun etiquetaRolDe(i: Int): String = stringResource(
+    when (i) {
+        0 -> R.string.rol_hijo
+        1 -> R.string.rol_padre1
+        2 -> R.string.rol_padre2
+        3 -> R.string.rol_abuelo1_p1
+        4 -> R.string.rol_abuelo2_p1
+        5 -> R.string.rol_abuelo1_p2
+        else -> R.string.rol_abuelo2_p2
+    },
+)
+
+@Composable
+private fun ChipRol(etiqueta: String, personaje: Character?, rol: Rol, japones: Boolean, onClick: (() -> Unit)?) {
+    val colorRol = when (rol) {
+        Rol.HIJO -> MaterialTheme.colorScheme.primary.copy(alpha = 0.9f)
+        Rol.PADRE -> Color(0xFF82AADD)
+        Rol.ABUELO -> Color(0xFFAEB4C2)
+    }
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
         shape = RoundedCornerShape(12.dp),
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        border = if (personaje != null && onClick != null) BorderStroke(1.dp, colorRol.copy(alpha = 0.45f)) else null,
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Avatar(charId, nombre, modifier = Modifier.size(28.dp))
+            personaje?.let { Avatar(it.charId, it.displayName(japones), modifier = Modifier.size(28.dp)) }
             Column(modifier = Modifier.weight(1f)) {
-                Text(etiqueta, style = MaterialTheme.typography.labelSmall, color = colorDeRolLocal(rol), fontWeight = FontWeight.Bold)
-                Text(nombre, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(etiqueta, style = MaterialTheme.typography.labelSmall, color = colorRol, fontWeight = FontWeight.Bold)
+                Text(
+                    personaje?.displayName(japones) ?: "—",
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            if (onClick != null) {
+                Text("⌄", color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold)
             }
         }
     }
 }
 
+/* Hoja de alternativas: ordenadas por total resultante; muestra los puntos
+   directos grandes y el total pequeño debajo de cada candidato. */
 @Composable
-private fun colorDeRolLocal(rol: Rol): androidx.compose.ui.graphics.Color = when (rol) {
-    Rol.HIJO -> MaterialTheme.colorScheme.primary.copy(alpha = 0.9f)
-    Rol.PADRE -> androidx.compose.ui.graphics.Color(0xFF82AADD)
-    Rol.ABUELO -> androidx.compose.ui.graphics.Color(0xFFAEB4C2)
+private fun HojaAlternativas(
+    modelo: AffinityModel,
+    seleccion: List<Int?>,
+    slot: Int,
+    japones: Boolean,
+    onElegir: (Int) -> Unit,
+) {
+    val ocupanteEtiqueta = etiquetaRolDe(slot)
+    val alternativas = remember(seleccion, slot) {
+        modelo.alternativasParaSlot(seleccion, slot, limite = 10)
+    }
+
+    Column(modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
+        Text(
+            stringResource(R.string.alternativas_titulo, ocupanteEtiqueta),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+        )
+
+        if (alternativas.isEmpty()) {
+            Text(
+                stringResource(R.string.sin_alternativas),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            )
+            return@Column
+        }
+
+        LazyColumn(modifier = Modifier.fillMaxWidth().height(420.dp)) {
+            itemsIndexedAlt(alternativas) { alt, esUltima ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onElegir(alt.personaje.charId) }
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    Avatar(alt.personaje.charId, alt.personaje.displayName(japones), modifier = Modifier.size(36.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            alt.personaje.displayName(japones),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        Text(
+                            "Total ${alt.total}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = colorClase(claseDePuntos(alt.total)),
+                        )
+                    }
+                    Text(
+                        "${alt.puntosDirectos}pt",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Black,
+                        color = colorClase(claseDePuntos(alt.puntosDirectos)),
+                    )
+                }
+                if (!esUltima) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            }
+        }
+    }
+}
+
+/* Mismos umbrales que GruposScreen (par): ◎ ≥20, ○ ≥10, △ ≥4. */
+private fun claseDePuntos(puntos: Int): String? = when {
+    puntos >= 20 -> "rank-great"
+    puntos >= 10 -> "rank-good"
+    puntos >= 4 -> "rank-fair"
+    else -> null
 }
 
 @Composable
-private fun Nota(texto: String) {
-    Text(
-        texto,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp),
-    )
+private fun colorClase(clase: String?): Color = when (clase) {
+    "rank-great" -> com.maximillionsnyder.umafinidad.ui.theme.RankGreat
+    "rank-good" -> com.maximillionsnyder.umafinidad.ui.theme.RankGood
+    "rank-fair" -> com.maximillionsnyder.umafinidad.ui.theme.RankFair
+    else -> MaterialTheme.colorScheme.onSurface
+}
+
+/* Helper local para no importar itemsIndexed dos veces con alias. */
+private fun androidx.compose.foundation.lazy.LazyListScope.itemsIndexedAlt(
+    lista: List<AlternativaSlot>,
+    contenido: @Composable androidx.compose.foundation.lazy.LazyItemScope.(AlternativaSlot, Boolean) -> Unit,
+) {
+    items(lista.size) { i ->
+        contenido(lista[i], i == lista.lastIndex)
+    }
 }

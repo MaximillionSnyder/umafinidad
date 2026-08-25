@@ -36,6 +36,12 @@ android {
     buildFeatures {
         compose = true
     }
+
+    /* Los tests de paridad leen los mismos JSON datamined del app
+       (src/main/assets) sin duplicarlos como recursos de test. */
+    sourceSets.getByName("test") {
+        resources.srcDir("src/main/assets")
+    }
 }
 
 kotlin {

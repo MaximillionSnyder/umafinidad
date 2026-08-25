@@ -240,7 +240,7 @@ private fun PanelMejorLinaje(modelo: AffinityModel, l: Linaje, japones: Boolean,
     val res: ResultadoCompat = remember(l) {
         AppViewModel.calcular(
             modelo,
-            arrayOf(
+            listOf(
                 l.hijo.charId,
                 l.padre.charId,
                 l.madre.charId,

@@ -57,6 +57,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     /* Los tests de paridad leen los mismos JSON datamined del app

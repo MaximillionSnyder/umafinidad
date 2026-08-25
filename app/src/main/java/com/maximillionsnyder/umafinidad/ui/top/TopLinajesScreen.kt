@@ -93,7 +93,7 @@ private fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: B
             containerColor = if (i < 3) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
             else MaterialTheme.colorScheme.surfaceContainerLow,
         ),
-        border = if (i < 3) androidx.compose.foundation.BorderStroke(1.dp, colorDeMedalla(i).copy(alpha = 0.6f)) else null,
+        border = if (i < 3) androidx.compose.foundation.BorderStroke(1.dp, colorDeMedalla(i)!!.copy(alpha = 0.6f)) else null,
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),

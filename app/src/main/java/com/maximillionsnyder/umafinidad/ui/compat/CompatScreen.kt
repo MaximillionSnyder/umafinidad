@@ -48,6 +48,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -195,8 +196,8 @@ fun CompatScreen(
                 }
             } else {
                 when (modoGrilla) {
-                    ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, ::manejarToggle)
-                    ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, ::manejarToggle)
+                    ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
+                    ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
                 }
             }
         }
@@ -301,10 +302,11 @@ private fun GrillaTarjetas(
     seleccion: List<Int?>,
     japones: Boolean,
     onToggle: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 104.dp),
-        modifier = Modifier.weight(1f).fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -339,7 +341,7 @@ private fun CardTarjeta(personaje: Character, seleccion: List<Int?>, japones: Bo
         ) {
             Box {
                 Avatar(personaje.charId, nombrePrincipal, modifier = Modifier.size(64.dp))
-                AnimatedVisibility(visible = seleccionado, enter = androidx.compose.animation.scaleIn(), exit = androidx.compose.animation.scaleOut()) {
+                androidx.compose.animation.AnimatedVisibility(visible = seleccionado, enter = androidx.compose.animation.scaleIn(), exit = androidx.compose.animation.scaleOut()) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopEnd)
@@ -381,9 +383,10 @@ private fun GrillaLista(
     seleccion: List<Int?>,
     japones: Boolean,
     onToggle: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = Modifier.weight(1f).fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {

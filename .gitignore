@@ -1,0 +1,20 @@
+# Gradle
+.gradle/
+build/
+app/build/
+
+# IDE
+.idea/
+*.iml
+local.properties
+
+# Node (solo scripts de datos, sin deps)
+node_modules/
+
+# Firmas y secretos locales
+*.keystore
+*.jks
+keystore-*.zip
+
+# Sistema
+.DS_Store

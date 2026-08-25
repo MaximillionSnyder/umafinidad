@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Uma Afinidad</string>
+    <string name="tab_compat">相性</string>
+    <string name="tab_groups">グループ</string>
+    <string name="tab_top">トップ血統</string>
+</resources>

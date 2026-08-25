@@ -1,0 +1,9 @@
+{
+  "name": "umafinidad",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch-gametora.mjs",
+    "icons": "node scripts/generate-launcher-icons.mjs"
+  }
+}

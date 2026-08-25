@@ -70,4 +70,9 @@
     <string name="salir_titulo">¿Salir de Uma Afinidad?</string>
     <string name="salir_mensaje">¿Seguro que querés salir de la app?</string>
     <string name="salir_salir">Salir</string>
+    <string name="tab_corredora">Mi corredora</string>
+    <string name="buscar_corredora">Buscá una corredora…</string>
+    <string name="mejor_de">Mejor linaje de %1$s</string>
+    <string name="corredora_invalida">Ese personaje no es jugable, no tiene linaje calculable.</string>
+    <string name="corredora_hint">Escribí el nombre de una corredora para ver su mejor árbol posible.</string>
 </resources>

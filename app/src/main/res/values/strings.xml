@@ -70,4 +70,9 @@
     <string name="salir_titulo">Exit Uma Afinidad?</string>
     <string name="salir_mensaje">Are you sure you want to leave the app?</string>
     <string name="salir_salir">Exit</string>
+    <string name="tab_corredora">My runner</string>
+    <string name="buscar_corredora">Search a runner…</string>
+    <string name="mejor_de">Best lineage for %1$s</string>
+    <string name="corredora_invalida">That character is not playable; no lineage can be computed.</string>
+    <string name="corredora_hint">Type a runner’s name to see her best possible pedigree.</string>
 </resources>

@@ -117,6 +117,47 @@ class AffinityModel private constructor(
 
     private val cacheTop: List<Linaje> by lazy { calcularTopLinajes() }
 
+    /* ===== Estructuras compartidas (top global y mejorLinajeDe) ===== */
+
+    private val charsTop: List<Character> by lazy { personajes.filter { it.playable == true && it.active == true } }
+    private val idsTop: List<Int> by lazy { charsTop.map { it.charId } }
+
+    /* Matriz triangular superior de puntajes par-a-par. */
+    private val matrizPares: IntArray by lazy {
+        val m = charsTop.size
+        val ids = idsTop
+        IntArray(m * m).also { s ->
+            for (i in 0 until m)
+                for (j in i + 1 until m) s[i * m + j] = puntajePar(ids[i], ids[j])
+        }
+    }
+
+    private fun parEn(i: Int, j: Int): Int {
+        val m = charsTop.size
+        return if (i < j) matrizPares[i * m + j] else matrizPares[j * m + i]
+    }
+
+    private val cacheAbuelos = HashMap<Long, MejorParAbuelos>()
+
+    /* Mejor par de abuelos para la rama del padre p con hijo h.
+       Reglas del juego: nadie puede ser abuelo de su propia rama (g === p
+       prohibido); el hijo sí puede ser abuelo pero esa relación vale 0
+       (corredora). */
+    private fun mejorParAbuelos(h: Int, p: Int): MejorParAbuelos {
+        val m = charsTop.size
+        val key = h.toLong() * m + p
+        cacheAbuelos[key]?.let { return it }
+        var t1 = -1; var t2 = -1; var g1 = -1; var g2 = -1
+        for (g in 0 until m) {
+            if (g == p) continue
+            val t = if (g == h) 0 else puntajeTrioRapido(idsTop[h], idsTop[p], idsTop[g])
+            if (t > t1) { t2 = t1; g2 = g1; t1 = t; g1 = g } else if (t > t2) { t2 = t; g2 = g }
+        }
+        val v = MejorParAbuelos(g1, g2, t1 + t2)
+        cacheAbuelos[key] = v
+        return v
+    }
+
     /* Top de linajes completos (hijo + padres + mejores abuelos por rama).
        Mismo algoritmo heurístico que la web (K=300 triples base + mejor par
        de abuelos por rama), con los mismos criterios de orden para que los
@@ -128,43 +169,21 @@ class AffinityModel private constructor(
     private class Candidato(val h: Int, val p1: Int, val p2: Int, val base: Int, val total: Int, val b1: MejorParAbuelos, val b2: MejorParAbuelos)
 
     private fun calcularTopLinajes(): List<Linaje> {
-        val chars = personajes.filter { it.playable == true && it.active == true }
+        val chars = charsTop
         val m = chars.size
-        val ids = chars.map { it.charId }
-
-        val s = IntArray(m * m)
-        for (i in 0 until m)
-            for (j in i + 1 until m) s[i * m + j] = puntajePar(ids[i], ids[j])
+        val ids = idsTop
 
         val sets = mutableListOf<SetBase>()
         for (h in 0 until m)
             for (p1 in h + 1 until m)
                 for (p2 in p1 + 1 until m) {
-                    val base = s[h * m + p1] + s[h * m + p2] + s[p1 * m + p2]
+                    val base = matrizPares[h * m + p1] + matrizPares[h * m + p2] + matrizPares[p1 * m + p2]
                     if (sets.size < K_TOP || base > sets.last().base) {
                         sets.add(SetBase(h, p1, p2, base))
                         sets.sortWith(compareByDescending { it.base }) /* estable, igual que JS */
                         if (sets.size > K_TOP) sets.subList(K_TOP, sets.size).clear()
                     }
                 }
-
-        val bonusCache = HashMap<Long, MejorParAbuelos>()
-        fun mejorParAbuelos(h: Int, p: Int): MejorParAbuelos {
-            val key = h.toLong() * m + p
-            bonusCache[key]?.let { return it }
-            var t1 = -1; var t2 = -1; var g1 = -1; var g2 = -1
-            for (g in 0 until m) {
-                /* Reglas del juego: nadie puede ser abuelo de su propia rama
-                   (g === p prohibido); el hijo sí puede ser abuelo pero esa
-                   relación vale 0 (corredora). */
-                if (g == p) continue
-                val t = if (g == h) 0 else puntajeTrioRapido(ids[h], ids[p], ids[g])
-                if (t > t1) { t2 = t1; g2 = g1; t1 = t; g1 = g } else if (t > t2) { t2 = t; g2 = g }
-            }
-            val v = MejorParAbuelos(g1, g2, t1 + t2)
-            bonusCache[key] = v
-            return v
-        }
 
         val candidatos = mutableListOf<Candidato>()
         for (st in sets)
@@ -194,6 +213,53 @@ class AffinityModel private constructor(
                 puntos = r.total,
             )
         }
+    }
+
+    /* Mejor linaje EXACTO para un hijo dado: se recorren todos los pares de
+       padres posibles (~m²/2) y se completa cada rama con su mejor par de
+       abuelos. Sin heurística: es el óptimo real para esa corredora.
+       Devuelve null si el personaje no está en el pool jugable/activo. */
+    fun mejorLinajeDe(hijoId: Int): Linaje? {
+        val chars = charsTop
+        val m = chars.size
+        val h = idsTop.indexOf(hijoId)
+        if (h < 0) return null
+
+        /* Calienta la matriz una sola vez. */
+        matrizPares
+
+        var mejorP1 = -1; var mejorP2 = -1
+        var mejorTotal = -1
+        var mejorB1: MejorParAbuelos? = null
+        var mejorB2: MejorParAbuelos? = null
+
+        for (p1 in 0 until m) {
+            if (p1 == h) continue
+            for (p2 in p1 + 1 until m) {
+                if (p2 == h) continue
+                val base = parEn(h, p1) + parEn(h, p2) + parEn(p1, p2)
+                val b1 = mejorParAbuelos(h, p1)
+                val b2 = mejorParAbuelos(h, p2)
+                val total = base + b1.puntos + b2.puntos
+                if (total > mejorTotal) {
+                    mejorTotal = total; mejorP1 = p1; mejorP2 = p2; mejorB1 = b1; mejorB2 = b2
+                }
+            }
+        }
+        if (mejorB1 == null || mejorB2 == null) return null
+
+        fun charEn(i: Int): Character = chars[i]
+
+        return Linaje(
+            hijo = charEn(h),
+            padre = charEn(mejorP1),
+            madre = charEn(mejorP2),
+            abuelos = listOf(
+                listOf(charEn(mejorB1.g1), charEn(mejorB1.g2)),
+                listOf(charEn(mejorB2.g1), charEn(mejorB2.g2)),
+            ),
+            puntos = mejorTotal,
+        )
     }
 
     fun porId(id: Int): Character? = porId[id]

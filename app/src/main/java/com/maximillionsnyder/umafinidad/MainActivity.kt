@@ -39,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
+import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
 import com.maximillionsnyder.umafinidad.ui.groups.GroupsScreen
 import com.maximillionsnyder.umafinidad.ui.settings.SettingsScreen
 import com.maximillionsnyder.umafinidad.ui.theme.UmaAfinidadTheme
@@ -107,6 +108,12 @@ private fun App(vm: AppViewModel) {
                     NavigationBarItem(
                         selected = tab == 3,
                         onClick = { tab = 3 },
+                        icon = { Icon(painterResource(R.drawable.ic_tab_corredora), contentDescription = null) },
+                        label = { Text(stringResource(R.string.tab_corredora)) },
+                    )
+                    NavigationBarItem(
+                        selected = tab == 4,
+                        onClick = { tab = 4 },
                         icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
                         label = { Text(stringResource(R.string.tab_ajustes)) },
                     )
@@ -137,6 +144,14 @@ private fun App(vm: AppViewModel) {
                         )
                         1 -> GroupsScreen(modelo = m, japones = japones)
                         2 -> TopLinajesScreen(
+                            modelo = m,
+                            japones = japones,
+                            onVerHerencia = { linaje ->
+                                vm.cargarLinaje(linaje)
+                                tab = 0
+                            },
+                        )
+                        3 -> CorredoraScreen(
                             modelo = m,
                             japones = japones,
                             onVerHerencia = { linaje ->

@@ -70,4 +70,9 @@
     <string name="salir_titulo">Uma Afinidadを終了しますか？</string>
     <string name="salir_mensaje">アプリを終了してもよろしいですか？</string>
     <string name="salir_salir">終了</string>
+    <string name="tab_corredora">マイウマ娘</string>
+    <string name="buscar_corredora">ウマ娘を検索…</string>
+    <string name="mejor_de">%1$sの最適血統</string>
+    <string name="corredora_invalida">そのウマ娘は育成可能ではないため計算できません。</string>
+    <string name="corredora_hint">ウマ娘の名前を入力すると、最適な血統が表示されます。</string>
 </resources>

@@ -56,4 +56,15 @@
     <string name="rol_corto_hijo">Child</string>
     <string name="rol_corto_padre">Parent</string>
     <string name="rol_corto_abuelo">Grandparent</string>
+
+    <!-- Ajustes -->
+    <string name="tab_ajustes">Settings</string>
+    <string name="ajustes_apariencia">Appearance</string>
+    <string name="modo_grilla_pregunta">How do you want to see characters?</string>
+    <string name="modo_vertical">Large cards</string>
+    <string name="modo_vertical_desc">Grid with large centered avatars</string>
+    <string name="modo_lista">Compact list</string>
+    <string name="modo_lista_desc">Horizontal rows with a color stripe</string>
+    <string name="seccion_herencia">Lineage</string>
+    <string name="herencia_contador">%1$d/7</string>
 </resources>

@@ -56,4 +56,15 @@
     <string name="rol_corto_hijo">Hijo</string>
     <string name="rol_corto_padre">Padre</string>
     <string name="rol_corto_abuelo">Abuelo</string>
+
+    <!-- Ajustes -->
+    <string name="tab_ajustes">Ajustes</string>
+    <string name="ajustes_apariencia">Apariencia</string>
+    <string name="modo_grilla_pregunta">¿Cómo querés ver los personajes?</string>
+    <string name="modo_vertical">Tarjetas grandes</string>
+    <string name="modo_vertical_desc">Grilla con avatares grandes y centrados</string>
+    <string name="modo_lista">Lista compacta</string>
+    <string name="modo_lista_desc">Filas horizontales con franja de color</string>
+    <string name="seccion_herencia">Herencia</string>
+    <string name="herencia_contador">%1$d/7</string>
 </resources>

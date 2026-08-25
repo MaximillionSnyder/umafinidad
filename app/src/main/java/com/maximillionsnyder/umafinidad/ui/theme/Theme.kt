@@ -1,14 +1,20 @@
 package com.maximillionsnyder.umafinidad.ui.theme
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-val Fondo = Color(0xFF14161A)
+val FondoArriba = Color(0xFF1B1E24)
+val FondoAbajo = Color(0xFF14161A)
 val Primario = Color(0xFFFFB782)
+val AcentoNaranja = Color(0xFFF08C3A)
 val SobrePrimario = Color(0xFF4F2500)
 val ContenedorPrimario = Color(0xFF6F3A06)
 val SobreContenedorPrimario = Color(0xFFFFDBC2)
@@ -23,10 +29,20 @@ val TextoSecundario = Color(0xFF9AA0AD)
 val Contorno = Color(0xFF8D919B)
 val ContornoVariante = Color(0xFF2C313B)
 
-/* Rangos de afinidad (mismos colores que la PWA). */
+/* Rangos de afinidad (mismos colores que la PWA) + fondo tintado al 12%. */
 val RankGreat = Color(0xFF7ED07E)
 val RankGood = Color(0xFFE7C86A)
 val RankFair = Color(0xFFD98F8F)
+
+/* Colores por rol de los slots de herencia. */
+val RolHijo = Color(0xFFF08C3A)
+val RolPadre = Color(0xFF82AADD)
+val RolAbuelo = Color(0xFFAEB4C2)
+
+/* Medallas del top de linajes. */
+val MedalOro = Color(0xFFFFD54F)
+val MedalPlata = Color(0xFFCFD8DC)
+val MedalBronce = Color(0xFFCE9B64)
 
 fun colorDeRango(clase: String?): Color? = when (clase) {
     "rank-great" -> RankGreat
@@ -35,6 +51,8 @@ fun colorDeRango(clase: String?): Color? = when (clase) {
     else -> null
 }
 
+fun fondoDeRango(clase: String?): Color? = colorDeRango(clase)?.copy(alpha = 0.12f)
+
 private val EsquemaOscuro = darkColorScheme(
     primary = Primario,
     onPrimary = SobrePrimario,
@@ -42,9 +60,9 @@ private val EsquemaOscuro = darkColorScheme(
     onPrimaryContainer = SobreContenedorPrimario,
     secondaryContainer = ContenedorSecundario,
     onSecondaryContainer = SobreContenedorSecundario,
-    background = Fondo,
+    background = FondoAbajo,
     onBackground = TextoPrincipal,
-    surface = Fondo,
+    surface = FondoAbajo,
     onSurface = TextoPrincipal,
     surfaceVariant = SuperficieAlta,
     onSurfaceVariant = TextoSecundario,
@@ -52,17 +70,22 @@ private val EsquemaOscuro = darkColorScheme(
     outlineVariant = ContornoVariante,
 )
 
-/* Colores de rango accesibles desde cualquier composable. */
 data class ColoresRango(val great: Color, val good: Color, val fair: Color)
 
 val LocalColoresRango = staticCompositionLocalOf {
     ColoresRango(RankGreat, RankGood, RankFair)
 }
 
+/* Gradiente vertical de fondo (identidad del ícono). */
+val BrushFondo: Brush = Brush.verticalGradient(listOf(FondoArriba, FondoAbajo))
+
+fun Modifier.fondoGradiente(): Modifier = background(BrushFondo)
+
 /* La app es oscura por diseño (igual que la PWA): se usa siempre el esquema
    oscuro sin importar la preferencia del sistema. */
 @Composable
 fun UmaAfinidadTheme(content: @Composable () -> Unit) {
+    isSystemInDarkTheme() // el tema no cambia con el sistema
     MaterialTheme(colorScheme = EsquemaOscuro) {
         CompositionLocalProvider(
             LocalColoresRango provides ColoresRango(RankGreat, RankGood, RankFair),

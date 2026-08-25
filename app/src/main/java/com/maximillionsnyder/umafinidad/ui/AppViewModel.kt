@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
+import com.maximillionsnyder.umafinidad.data.ModoGrilla
+import com.maximillionsnyder.umafinidad.data.PrefsRepository
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.GrupoCompartido
 import com.maximillionsnyder.umafinidad.domain.Linaje
@@ -54,12 +56,22 @@ data class ResultadoCompat(
 class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repo = AffinityRepository(application)
+    private val prefs = PrefsRepository(application)
 
     private val _modelo = MutableStateFlow<AffinityModel?>(null)
     val modelo: StateFlow<AffinityModel?> = _modelo
 
     private val _seleccion = MutableStateFlow<List<Int?>>(List(SLOTS) { null })
     val seleccion: StateFlow<List<Int?>> = _seleccion
+
+    /* Modo de grilla persistido (tarjetas grandes / lista compacta). */
+    private val _modoGrilla = MutableStateFlow(prefs.modoGrilla)
+    val modoGrilla: StateFlow<ModoGrilla> = _modoGrilla
+
+    fun setModoGrilla(modo: ModoGrilla) {
+        prefs.modoGrilla = modo
+        _modoGrilla.value = modo
+    }
 
     init {
         /* Carga de datos fuera del hilo principal (~800 KB de JSON). */

@@ -21,6 +21,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.int
+import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -184,7 +185,7 @@ class ParidadTest {
         assertEquals(231, filas.size) /* 3 selecciones × 7 slots × 11 candidatos */
         for (filaJson in filas) {
             val fila = filaJson as JsonArray
-            val selIdx = fila[0].int; val slot = fila[1].int; val idReal = fila[2].int; val esperado = fila[3].boolean
+            val selIdx = fila[0].jsonPrimitive.int; val slot = fila[1].jsonPrimitive.int; val idReal = fila[2].jsonPrimitive.int; val esperado = fila[3].jsonPrimitive.boolean
             assertEquals(
                 "puedeIrEn(sel$selIdx, slot$slot, $idReal)",
                 esperado,
@@ -199,7 +200,7 @@ class ParidadTest {
         val selecciones = seleccionesBase()
         for (filaJson in filas) {
             val fila = filaJson as JsonArray
-            val selIdx = fila[0].int; val idReal = fila[1].int; val esperado = fila[2].int
+            val selIdx = fila[0].jsonPrimitive.int; val idReal = fila[1].jsonPrimitive.int; val esperado = fila[2].jsonPrimitive.int
             assertEquals(
                 "slotPara(sel$selIdx, $idReal)",
                 esperado,

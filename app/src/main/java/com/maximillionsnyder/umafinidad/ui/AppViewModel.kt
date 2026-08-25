@@ -11,6 +11,7 @@ import com.maximillionsnyder.umafinidad.domain.Rango
 import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.TipoVinculo
 import com.maximillionsnyder.umafinidad.domain.armarArbol
+import com.maximillionsnyder.umafinidad.domain.puedeIrEn
 import com.maximillionsnyder.umafinidad.domain.slotPara
 import com.maximillionsnyder.umafinidad.domain.vinculos
 import kotlinx.coroutines.Dispatchers

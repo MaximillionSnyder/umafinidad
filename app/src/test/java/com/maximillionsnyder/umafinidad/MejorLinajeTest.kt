@@ -86,7 +86,7 @@ class MejorLinajeTest {
         val top3 = modelo.topLinajes(3)
         for (l in top3) {
             val mejor = modelo.mejorLinajeDe(l.hijo.charId)!!
-            val seleccion = arrayOf(
+            val seleccion: Array<Int?> = arrayOf(
                 mejor.hijo.charId,
                 mejor.padre.charId,
                 mejor.madre.charId,

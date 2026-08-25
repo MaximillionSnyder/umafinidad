@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.maximillionsnyder.umafinidad"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.maximillionsnyder.umafinidad"

@@ -290,7 +290,14 @@ fun CompatScreen(
 
     if (sheetAbierto && resultado != null) {
         ModalBottomSheet(onDismissRequest = { sheetAbierto = false }) {
-            ResultadoPanel(modelo, resultado, japones)
+            /* El scroll ahora vive acá, en el contenedor del sheet. */
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                ResultadoPanel(modelo, resultado, japones)
+            }
         }
     }
 
@@ -515,7 +522,9 @@ private fun posicionesRes(seleccion: List<Int?>, id: Int): List<Int> =
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ResultadoPanel(modelo: AffinityModel, res: ResultadoCompat, japones: Boolean) {
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom = 24.dp)) {
+    /* Sin scroll interno: el contenedor de cada pantalla decide el scroll
+       (un scroll anidado en la misma dirección crashea en Compose). */
+    Column(modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
         if (res.vacio) {
             Nota(stringResource(R.string.elegi_hijo_empezar))
             return@Column

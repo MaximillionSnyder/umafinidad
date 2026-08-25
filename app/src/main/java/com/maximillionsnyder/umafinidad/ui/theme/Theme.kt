@@ -34,10 +34,18 @@ val RankGreat = Color(0xFF7ED07E)
 val RankGood = Color(0xFFE7C86A)
 val RankFair = Color(0xFFD98F8F)
 
-/* Colores por rol de los slots de herencia. */
+/* Colores por genealogía de los slots de herencia:
+   hijo naranja; rama del Padre 1 azul (slots 1,3,4);
+   rama del Padre 2 verde (slots 2,5,6). */
 val RolHijo = Color(0xFFF08C3A)
-val RolPadre = Color(0xFF82AADD)
-val RolAbuelo = Color(0xFFAEB4C2)
+val GenealogiaRama1 = Color(0xFF82AADD)
+val GenealogiaRama2 = Color(0xFF7ED07E)
+
+fun colorDeGenealogia(slot: Int): Color = when {
+    slot == 0 -> RolHijo
+    slot == 1 || slot == 3 || slot == 4 -> GenealogiaRama1
+    else -> GenealogiaRama2
+}
 
 /* Medallas del top de linajes. */
 val MedalOro = Color(0xFFFFD54F)

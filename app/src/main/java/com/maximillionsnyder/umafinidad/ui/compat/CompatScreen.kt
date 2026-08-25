@@ -50,7 +50,6 @@ import androidx.compose.runtime.setValue
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,11 +60,10 @@ import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
-import com.maximillionsnyder.umafinidad.domain.Rol
 import com.maximillionsnyder.umafinidad.domain.coincideDifuso
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
 import com.maximillionsnyder.umafinidad.domain.SLOTS
-import com.maximillionsnyder.umafinidad.domain.rolDeSlot
+import com.maximillionsnyder.umafinidad.ui.theme.colorDeGenealogia
 import com.maximillionsnyder.umafinidad.ui.EstadoSeccion
 import com.maximillionsnyder.umafinidad.ui.FilaVinculoUi
 import com.maximillionsnyder.umafinidad.ui.QuitarResultado
@@ -322,15 +320,9 @@ fun CompatScreen(
 /* ---------- Slots coloreados por rol ---------- */
 
 @Composable
-internal fun colorDeRol(rol: Rol): Color = when (rol) {
-    Rol.HIJO -> MaterialTheme.colorScheme.primary.copy(alpha = 0.9f)
-    Rol.PADRE -> Color(0xFF82AADD)
-    Rol.ABUELO -> Color(0xFFAEB4C2)
-}
-
 @Composable
 private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val rolColor = colorDeRol(rolDeSlot(slot))
+    val rolColor = colorDeGenealogia(slot)
     Card(
         modifier = modifier.clickable(onClick = onClick),
         shape = RoundedCornerShape(12.dp),

@@ -51,7 +51,6 @@ import com.maximillionsnyder.umafinidad.domain.AlternativaSlot
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Linaje
-import com.maximillionsnyder.umafinidad.domain.Rol
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.ResultadoCompat
@@ -279,19 +278,17 @@ private fun PanelMejorLinaje(
             ChipRol(
                 etiqueta = stringResource(R.string.rol_hijo),
                 personaje = modelo.porId(seleccionActual[0]!!),
-                rol = Rol.HIJO,
+                slot = 0,
                 japones = japones,
                 onClick = null,
             )
-            /* Los otros seis: tocar abre las alternativas del slot. */
+            /* Los otros seis: tocar abre las alternativas del slot. El color
+               marca la genealogía (rama del padre 1 azul, rama del padre 2 verde). */
             for (slot in 1..6) {
                 ChipRol(
                     etiqueta = etiquetaRolDe(slot),
                     personaje = seleccionActual[slot]?.let { modelo.porId(it) },
-                    rol = when {
-                        slot <= 2 -> Rol.PADRE
-                        else -> Rol.ABUELO
-                    },
+                    slot = slot,
                     japones = japones,
                     onClick = { onAbrirAlternativas(slot) },
                 )
@@ -334,12 +331,8 @@ internal fun etiquetaRolDe(i: Int): String = stringResource(
 )
 
 @Composable
-private fun ChipRol(etiqueta: String, personaje: Character?, rol: Rol, japones: Boolean, onClick: (() -> Unit)?) {
-    val colorRol = when (rol) {
-        Rol.HIJO -> MaterialTheme.colorScheme.primary.copy(alpha = 0.9f)
-        Rol.PADRE -> Color(0xFF82AADD)
-        Rol.ABUELO -> Color(0xFFAEB4C2)
-    }
+private fun ChipRol(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: (() -> Unit)?) {
+    val colorRol = com.maximillionsnyder.umafinidad.ui.theme.colorDeGenealogia(slot)
     Surface(
         modifier = Modifier
             .fillMaxWidth()

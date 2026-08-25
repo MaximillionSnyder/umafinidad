@@ -31,6 +31,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -45,6 +47,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -63,6 +66,8 @@ import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Rol
+import com.maximillionsnyder.umafinidad.domain.coincideDifuso
+import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
 import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.rolDeSlot
 import com.maximillionsnyder.umafinidad.ui.EstadoSeccion
@@ -70,10 +75,6 @@ import com.maximillionsnyder.umafinidad.ui.FilaVinculoUi
 import com.maximillionsnyder.umafinidad.ui.QuitarResultado
 import com.maximillionsnyder.umafinidad.ui.ResultadoCompat
 import com.maximillionsnyder.umafinidad.ui.ToggleResultado
-import java.text.Normalizer
-
-private fun normalizar(v: String): String =
-    Normalizer.normalize(v, Normalizer.Form.NFD).replace(Regex("\\p{Mn}+"), "").lowercase()
 
 @Composable
 fun etiquetaRol(i: Int): String = stringResource(
@@ -112,6 +113,20 @@ fun CompatScreen(
     var sheetAbierto by rememberSaveable { mutableStateOf(false) }
     var dialogoQuitar by rememberSaveable { mutableStateOf(false) }
 
+    val sugerencias = remember(filtro, modelo) {
+        if (filtro.trim().length >= 2) rankearSugerencias(modelo.personajes, filtro)
+        else emptyList()
+    }
+
+    /* Opción A: al elegir una sugerencia se coloca el personaje y se limpia
+       el buscador; si no pudo colocarse, el texto queda para corregir. */
+    fun elegirSugerencia(id: Int) {
+        when (onToggle(id)) {
+            ToggleResultado.COLOCADO, ToggleResultado.QUITADO -> filtro = ""
+            else -> {}
+        }
+    }
+
     val msgSeleccionCompleta = stringResource(R.string.seleccion_completa)
     val msgRegla = stringResource(R.string.regla_slots)
 
@@ -129,7 +144,7 @@ fun CompatScreen(
 
     val filtrados = modelo.personajes
         .filter { it.playable == true && it.active == true }
-        .filter { coincide(it, filtro) }
+        .filter { coincideDifuso(it, filtro) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -168,23 +183,50 @@ fun CompatScreen(
                 }
             }
 
-            /* ---- Buscador ---- */
-            OutlinedTextField(
-                value = filtro,
-                onValueChange = { filtro = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
-                singleLine = true,
-                shape = RoundedCornerShape(14.dp),
-                leadingIcon = { Icon(painterResource(R.drawable.ic_buscar), contentDescription = null) },
-                trailingIcon = {
-                    if (filtro.isNotEmpty()) {
-                        IconButton(onClick = { filtro = "" }) {
-                            Icon(painterResource(R.drawable.ic_cerrar), contentDescription = stringResource(R.string.limpiar_todo))
+            /* ---- Buscador con autocompletado difuso ---- */
+            Box(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
+                OutlinedTextField(
+                    value = filtro,
+                    onValueChange = { filtro = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(14.dp),
+                    leadingIcon = { Icon(painterResource(R.drawable.ic_buscar), contentDescription = null) },
+                    trailingIcon = {
+                        if (filtro.isNotEmpty()) {
+                            IconButton(onClick = { filtro = "" }) {
+                                Icon(painterResource(R.drawable.ic_cerrar), contentDescription = stringResource(R.string.limpiar_todo))
+                            }
                         }
+                    },
+                    placeholder = { Text(stringResource(R.string.buscar)) },
+                )
+
+                DropdownMenu(
+                    expanded = sugerencias.isNotEmpty(),
+                    onDismissRequest = { },
+                    modifier = Modifier.fillMaxWidth(0.92f),
+                ) {
+                    sugerencias.forEach { c ->
+                        val nombrePrincipal = c.displayName(japones)
+                        val nombreSecundario = if (japones) c.enName ?: "" else c.jpName ?: ""
+                        DropdownMenuItem(
+                            text = {
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                    Avatar(c.charId, nombrePrincipal, modifier = Modifier.size(32.dp))
+                                    Column {
+                                        Text(nombrePrincipal, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                        if (nombreSecundario.isNotEmpty()) {
+                                            Text(nombreSecundario, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                        }
+                                    }
+                                }
+                            },
+                            onClick = { elegirSugerencia(c.charId) },
+                        )
                     }
-                },
-                placeholder = { Text(stringResource(R.string.buscar)) },
-            )
+                }
+            }
 
             /* ---- Grilla de personajes (dos modos) ---- */
             if (filtrados.isEmpty()) {
@@ -284,15 +326,7 @@ private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones
     }
 }
 
-/* ---------- Búsqueda (porte de grid.js) ---------- */
-
-private fun coincide(c: Character, filtro: String): Boolean {
-    val f = normalizar(filtro.trim())
-    if (f.isEmpty()) return true
-    return normalizar(c.enName ?: "").contains(f) ||
-        (c.jpName ?: "").contains(filtro.trim()) ||
-        (c.urlName ?: "").contains(f)
-}
+/* ---------- Búsqueda difusa (ver domain/Busqueda.kt) ---------- */
 
 /* ---------- Modo TARJETAS: avatar grande centrado ---------- */
 

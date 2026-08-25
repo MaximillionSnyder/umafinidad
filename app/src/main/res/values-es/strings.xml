@@ -4,4 +4,56 @@
     <string name="tab_compat">Compatibilidad</string>
     <string name="tab_groups">Grupos</string>
     <string name="tab_top">Mejores linajes</string>
+
+    <!-- Compatibilidad -->
+    <string name="buscar">Buscar personaje…</string>
+    <string name="sin_resultados">Sin resultados.</string>
+    <string name="ver_afinidad">Ver afinidad</string>
+    <string name="seleccion_completa">Selección completa (7/7)</string>
+    <string name="regla_slots">Regla del juego: el hijo no puede ser padre; en cada rama no se repiten padre ni abuelos</string>
+
+    <!-- Resultado -->
+    <string name="elegi_hijo_empezar">Elegí al hijo para empezar.</string>
+    <string name="total_herencia">Total herencia</string>
+    <string name="sec_hijo_padres">Hijo × Padres</string>
+    <string name="sec_entre_padres">Entre padres</string>
+    <string name="sec_hijo_padres_abuelos">Hijo × Padres × Abuelos</string>
+    <string name="falta_hijo">Falta elegir al hijo.</string>
+    <string name="elige_un_padre">Elegí al menos un padre.</string>
+    <string name="elegi_otro_padre">Elegí el otro padre.</string>
+    <string name="faltan_padres">Faltan los padres.</string>
+    <string name="no_hay_abuelos">Todavía no hay abuelos.</string>
+    <string name="sin_hijo_completa">Sin hijo no se calcula la herencia completa.</string>
+    <string name="corredora_nota">Afinidad 0 en el juego: es la misma que la corredora.</string>
+    <string name="sin_grupos_comun">Sin grupos en común.</string>
+    <string name="mas_grupos">+%1$d más…</string>
+
+    <!-- Diálogo quitar hijo -->
+    <string name="quitar_hijo_titulo">¿Quitar al hijo?</string>
+    <string name="quitar_solo_hijo">Quitar solo el hijo</string>
+    <string name="limpiar_todo">Limpiar todo</string>
+    <string name="cancelar">Cancelar</string>
+
+    <!-- Grupos -->
+    <string name="filtro_todos">Todos</string>
+    <string name="filtro_pt">%1$d+ pt</string>
+    <string name="miembros_cantidad">%1$d miembros</string>
+    <string name="sin_grupos_filtro">Sin grupos con esos puntos.</string>
+
+    <!-- Top linajes -->
+    <string name="calculando">Calculando…</string>
+    <string name="sin_datos">Sin datos.</string>
+    <string name="ver_herencia">Ver herencia</string>
+
+    <!-- Roles -->
+    <string name="rol_hijo">Hijo</string>
+    <string name="rol_padre1">Padre 1</string>
+    <string name="rol_padre2">Padre 2</string>
+    <string name="rol_abuelo1_p1">Abuelo 1 · Padre 1</string>
+    <string name="rol_abuelo2_p1">Abuelo 2 · Padre 1</string>
+    <string name="rol_abuelo1_p2">Abuelo 1 · Padre 2</string>
+    <string name="rol_abuelo2_p2">Abuelo 2 · Padre 2</string>
+    <string name="rol_corto_hijo">Hijo</string>
+    <string name="rol_corto_padre">Padre</string>
+    <string name="rol_corto_abuelo">Abuelo</string>
 </resources>

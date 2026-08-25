@@ -14,6 +14,7 @@ internal data class CharacterDto(
     @SerialName("jp_name") val jpName: String? = null,
     val playable: Boolean? = null,
     val active: Boolean? = null,
+    @SerialName("url_name") val urlName: String? = null,
 )
 
 @Serializable
@@ -39,6 +40,6 @@ internal data class DataBundle(
    la app no usa. */
 val jsonParser: Json = Json { ignoreUnknownKeys = true }
 
-internal fun CharacterDto.toDomain() = Character(charId, enName, jpName, playable, active)
+internal fun CharacterDto.toDomain() = Character(charId, enName, jpName, playable, active, urlName)
 internal fun RelationDto.toDomain() = Relation(relationType, relationPoint)
 internal fun MemberDto.toDomain() = Member(charaId, relationType)

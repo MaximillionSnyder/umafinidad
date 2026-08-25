@@ -4,4 +4,56 @@
     <string name="tab_compat">相性</string>
     <string name="tab_groups">グループ</string>
     <string name="tab_top">トップ血統</string>
+
+    <!-- 相性 -->
+    <string name="buscar">ウマ娘を検索…</string>
+    <string name="sin_resultados">該当なし</string>
+    <string name="ver_afinidad">相性を見る</string>
+    <string name="seleccion_completa">選択完了（7/7）</string>
+    <string name="regla_slots">ゲームルール：子は親になれない。各枝では親・祖父母の重複不可</string>
+
+    <!-- 結果 -->
+    <string name="elegi_hijo_empezar">まず子ウマ娘を選んでください。</string>
+    <string name="total_herencia">継承合計</string>
+    <string name="sec_hijo_padres">子 × 親</string>
+    <string name="sec_entre_padres">親同士</string>
+    <string name="sec_hijo_padres_abuelos">子 × 親 × 祖父母</string>
+    <string name="falta_hijo">子が未選択です。</string>
+    <string name="elige_un_padre">親を少なくとも1人選んでください。</string>
+    <string name="elegi_otro_padre">もう1人の親を選んでください。</string>
+    <string name="faltan_padres">親が未選択です。</string>
+    <string name="no_hay_abuelos">祖父母がまだいません。</string>
+    <string name="sin_hijo_completa">子がないと継承は完全に計算されません。</string>
+    <string name="corredora_nota">レースウマ娘と同一のため、ゲーム上の相性は0です。</string>
+    <string name="sin_grupos_comun">共通グループなし。</string>
+    <string name="mas_grupos">他%1$d件…</string>
+
+    <!-- 子を外すダイアログ -->
+    <string name="quitar_hijo_titulo">子を外しますか？</string>
+    <string name="quitar_solo_hijo">子だけ外す</string>
+    <string name="limpiar_todo">全てクリア</string>
+    <string name="cancelar">キャンセル</string>
+
+    <!-- グループ -->
+    <string name="filtro_todos">全て</string>
+    <string name="filtro_pt">%1$dpt以上</string>
+    <string name="miembros_cantidad">%1$d人</string>
+    <string name="sin_grupos_filtro">該当するグループがありません。</string>
+
+    <!-- トップ血統 -->
+    <string name="calculando">計算中…</string>
+    <string name="sin_datos">データなし。</string>
+    <string name="ver_herencia">継承を見る</string>
+
+    <!-- 役割 -->
+    <string name="rol_hijo">子</string>
+    <string name="rol_padre1">親1</string>
+    <string name="rol_padre2">親2</string>
+    <string name="rol_abuelo1_p1">祖父母1・親1</string>
+    <string name="rol_abuelo2_p1">祖父母2・親1</string>
+    <string name="rol_abuelo1_p2">祖父母1・親2</string>
+    <string name="rol_abuelo2_p2">祖父母2・親2</string>
+    <string name="rol_corto_hijo">子</string>
+    <string name="rol_corto_padre">親</string>
+    <string name="rol_corto_abuelo">祖父母</string>
 </resources>

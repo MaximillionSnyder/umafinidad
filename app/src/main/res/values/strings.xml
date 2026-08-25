@@ -4,4 +4,56 @@
     <string name="tab_compat">Compatibility</string>
     <string name="tab_groups">Groups</string>
     <string name="tab_top">Top lineages</string>
+
+    <!-- Compatibilidad -->
+    <string name="buscar">Search character…</string>
+    <string name="sin_resultados">No results.</string>
+    <string name="ver_afinidad">View affinity</string>
+    <string name="seleccion_completa">Selection full (7/7)</string>
+    <string name="regla_slots">Game rule: the child cannot be a parent; no repeated parent or grandparents within a branch</string>
+
+    <!-- Resultado -->
+    <string name="elegi_hijo_empezar">Pick the child to start.</string>
+    <string name="total_herencia">Total inheritance</string>
+    <string name="sec_hijo_padres">Child × Parents</string>
+    <string name="sec_entre_padres">Between parents</string>
+    <string name="sec_hijo_padres_abuelos">Child × Parents × Grandparents</string>
+    <string name="falta_hijo">The child has not been chosen yet.</string>
+    <string name="elige_un_padre">Choose at least one parent.</string>
+    <string name="elegi_otro_padre">Choose the other parent.</string>
+    <string name="faltan_padres">Both parents are missing.</string>
+    <string name="no_hay_abuelos">No grandparents yet.</string>
+    <string name="sin_hijo_completa">Without a child, the full lineage cannot be computed.</string>
+    <string name="corredora_nota">Affinity 0 in-game: same as the runner.</string>
+    <string name="sin_grupos_comun">No shared groups.</string>
+    <string name="mas_grupos">%1$d more…</string>
+
+    <!-- Diálogo quitar hijo -->
+    <string name="quitar_hijo_titulo">Remove the child?</string>
+    <string name="quitar_solo_hijo">Remove child only</string>
+    <string name="limpiar_todo">Clear all</string>
+    <string name="cancelar">Cancel</string>
+
+    <!-- Grupos -->
+    <string name="filtro_todos">All</string>
+    <string name="filtro_pt">%1$d+ pt</string>
+    <string name="miembros_cantidad">%1$d members</string>
+    <string name="sin_grupos_filtro">No groups with those points.</string>
+
+    <!-- Top linajes -->
+    <string name="calculando">Calculating…</string>
+    <string name="sin_datos">No data.</string>
+    <string name="ver_herencia">View lineage</string>
+
+    <!-- Roles -->
+    <string name="rol_hijo">Child</string>
+    <string name="rol_padre1">Parent 1</string>
+    <string name="rol_padre2">Parent 2</string>
+    <string name="rol_abuelo1_p1">Grandparent 1 · Parent 1</string>
+    <string name="rol_abuelo2_p1">Grandparent 2 · Parent 1</string>
+    <string name="rol_abuelo1_p2">Grandparent 1 · Parent 2</string>
+    <string name="rol_abuelo2_p2">Grandparent 2 · Parent 2</string>
+    <string name="rol_corto_hijo">Child</string>
+    <string name="rol_corto_padre">Parent</string>
+    <string name="rol_corto_abuelo">Grandparent</string>
 </resources>

@@ -1,0 +1,85 @@
+package com.maximillionsnyder.umafinidad.ui.top
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.domain.Linaje
+import com.maximillionsnyder.umafinidad.ui.componentes.PuntosRango
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+/* Porte de montarTop(): top 20 de linajes completos con cálculo diferido.
+   El primer cálculo tarda ~1 s y corre en Dispatchers.Default. */
+@Composable
+fun TopLinajesScreen(modelo: AffinityModel, japones: Boolean, onVerHerencia: (Linaje) -> Unit) {
+    var top by remember { mutableStateOf<List<Linaje>?>(null) }
+
+    LaunchedEffect(modelo) {
+        top = withContext(Dispatchers.Default) { modelo.topLinajes(20) }
+    }
+
+    val lista = top
+    if (lista == null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                CircularProgressIndicator()
+                Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        return
+    }
+
+    if (lista.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(stringResource(R.string.sin_datos), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        return
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = androidx.compose.foundation.layout.PaddingValues(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        itemsIndexed(lista) { i, combo ->
+            Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)) {
+                Column(modifier = Modifier.fillMaxWidth().padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                        Text("${i + 1}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                        PuntosRango(modelo.rangoTotal(combo.puntos), combo.puntos)
+                    }
+                    val nombres = listOf(combo.hijo, combo.padre, combo.madre)
+                        .joinToString(" × ") { it.displayName(japones) }
+                    Text(nombres, style = MaterialTheme.typography.bodyMedium)
+                    Button(onClick = { onVerHerencia(combo) }, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.ver_herencia))
+                    }
+                }
+            }
+        }
+    }
+}

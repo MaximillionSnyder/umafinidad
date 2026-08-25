@@ -9,6 +9,7 @@ data class Character(
     val jpName: String?,
     val playable: Boolean?,
     val active: Boolean?,
+    val urlName: String?,
 ) {
     /* Nombre visible según idioma del teléfono: japonés → jp_name,
        cualquier otro → en_name (con fallback cruzado). */

@@ -31,8 +31,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -184,7 +182,10 @@ fun CompatScreen(
             }
 
             /* ---- Buscador con autocompletado difuso ---- */
-            Box(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
+            /* Las sugerencias se dibujan DENTRO de la pantalla (no en una
+               ventana modal): así la grilla, el FAB y los tabs siguen siendo
+               tocables y el teclado nunca pierde el foco. */
+            Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
                 OutlinedTextField(
                     value = filtro,
                     onValueChange = { filtro = it },
@@ -202,17 +203,25 @@ fun CompatScreen(
                     placeholder = { Text(stringResource(R.string.buscar)) },
                 )
 
-                DropdownMenu(
-                    expanded = sugerencias.isNotEmpty(),
-                    onDismissRequest = { },
-                    modifier = Modifier.fillMaxWidth(0.92f),
-                ) {
-                    sugerencias.forEach { c ->
-                        val nombrePrincipal = c.displayName(japones)
-                        val nombreSecundario = if (japones) c.enName ?: "" else c.jpName ?: ""
-                        DropdownMenuItem(
-                            text = {
-                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                if (sugerencias.isNotEmpty()) {
+                    Spacer(Modifier.height(6.dp))
+                    Card(
+                        shape = RoundedCornerShape(14.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                    ) {
+                        Column {
+                            sugerencias.forEachIndexed { indice, c ->
+                                val nombrePrincipal = c.displayName(japones)
+                                val nombreSecundario = if (japones) c.enName ?: "" else c.jpName ?: ""
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable { elegirSugerencia(c.charId) }
+                                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                ) {
                                     Avatar(c.charId, nombrePrincipal, modifier = Modifier.size(32.dp))
                                     Column {
                                         Text(nombrePrincipal, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -221,9 +230,11 @@ fun CompatScreen(
                                         }
                                     }
                                 }
-                            },
-                            onClick = { elegirSugerencia(c.charId) },
-                        )
+                                if (indice < sugerencias.lastIndex) {
+                                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                                }
+                            }
+                        }
                     }
                 }
             }

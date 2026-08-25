@@ -3,16 +3,31 @@ name: Android
 on:
   push:
     branches: [main]
+    tags: ['v*']
   pull_request:
   workflow_dispatch:
+    inputs:
+      keystore_password:
+        description: 'Contraseña del keystore (solo primera vez, para el bootstrap)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  KEYSTORE_PATH: android.keystore
+  KEY_ALIAS: umafinidad
 
 jobs:
-  build:
+  # ---- Build de control (push a main / PR) ----
+  debug:
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
@@ -30,3 +45,113 @@ jobs:
           name: umafinidad-debug-${{ github.run_number }}
           path: app/build/outputs/apk/debug/*.apk
           retention-days: 30
+
+  # ---- Release firmado (tag v* o bootstrap manual la primera vez) ----
+  release:
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Decidir credenciales de firma
+        id: creds
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KS_PASS_SECRET: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KS_KEY_PASS_SECRET: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          BOOTSTRAP_PASS: ${{ inputs.keystore_password }}
+        run: |
+          set -euo pipefail
+
+          if [ -n "$KS_B64" ]; then
+            printf '%s' "$KS_B64" | base64 -d > "$KEYSTORE_PATH"
+            PASS="$KS_PASS_SECRET"
+            KEY_PASS="${KS_KEY_PASS_SECRET:-$KS_PASS_SECRET}"
+            echo "modo=secrets" >> "$GITHUB_OUTPUT"
+          elif [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ] && [ -n "$BOOTSTRAP_PASS" ]; then
+            PASS="$BOOTSTRAP_PASS"
+            KEY_PASS="$PASS"
+            keytool -genkeypair -v \
+              -keystore "$KEYSTORE_PATH" \
+              -alias "$KEY_ALIAS" \
+              -keyalg RSA -keysize 2048 -validity 10950 \
+              -storepass "$PASS" -keypass "$KEY_PASS" \
+              -dname "CN=Uma Afinidad, O=MaximillionSnyder, C=AR"
+            echo "modo=bootstrap" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Sin credenciales. Primera vez: ejecutá el workflow manualmente escribiendo 'keystore_password'. Después cargá los secrets ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD y ANDROID_KEY_PASSWORD."
+            exit 1
+          fi
+
+          {
+            echo "KS_PASS=$PASS"
+            echo "KS_KEY_PASS=$KEY_PASS"
+            echo "BOOTSTRAP_ZIP_PASS=$BOOTSTRAP_PASS"
+          } >> "$GITHUB_ENV"
+
+      - name: Versionar desde git (versionCode = run number)
+        run: |
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            NAME="${GITHUB_REF_NAME#v}"
+          else
+            NAME="0.0.0-$(git rev-parse --short HEAD)"
+          fi
+          {
+            echo "VERSION_CODE=$GITHUB_RUN_NUMBER"
+            echo "VERSION_NAME=$NAME"
+          } >> "$GITHUB_ENV"
+
+      - name: Compilar AAB y APK firmados
+        run: ./gradlew :app:bundleRelease :app:assembleRelease --stacktrace
+
+      - name: Huella SHA256 del certificado
+        run: |
+          FP=$(keytool -list -v \
+            -keystore "$KEYSTORE_PATH" \
+            -alias "$KEY_ALIAS" \
+            -storepass "$KS_PASS" \
+            | awk '/SHA256:/ {print $2; exit}')
+          {
+            echo "### Certificado de firma"
+            echo ""
+            echo '- Alias: `'"$KEY_ALIAS"'`'
+            echo '- SHA256: `'"$FP"'`'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Empaquetar keystore nuevo (solo bootstrap)
+        if: steps.creds.outputs.modo == 'bootstrap'
+        run: zip -P "$BOOTSTRAP_ZIP_PASS" keystore-bootstrap.zip "$KEYSTORE_PATH"
+
+      - name: Subir paquetes
+        uses: actions/upload-artifact@v4
+        with:
+          name: umafinidad-release-${{ github.run_number }}
+          path: |
+            app/build/outputs/bundle/release/app-release.aab
+            app/build/outputs/apk/release/app-release.apk
+          retention-days: 30
+
+      - name: Subir keystore bootstrap
+        if: steps.creds.outputs.modo == 'bootstrap'
+        uses: actions/upload-artifact@v4
+        with:
+          name: keystore-bootstrap-${{ github.run_number }}
+          path: keystore-bootstrap.zip
+          retention-days: 1
+
+      - name: Publicar release de GitHub
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            app/build/outputs/bundle/release/app-release.aab
+            app/build/outputs/apk/release/app-release.apk

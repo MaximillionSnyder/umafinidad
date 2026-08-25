@@ -13,8 +13,25 @@ android {
         applicationId = "com.maximillionsnyder.umafinidad"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        /* El workflow de release sobrescribe ambas vía entorno. */
+        versionCode = (System.getenv("VERSION_CODE") ?: "1").toInt()
+        versionName = System.getenv("VERSION_NAME") ?: "0.1.0"
+    }
+
+    /* Firma de release: el workflow decodifica el keystore desde los secrets
+       a la raíz del repo. Sin keystore (dev local), se firma con debug para
+       que assembleRelease nunca falle. */
+    val hayKeystoreCi = !System.getenv("ANDROID_KEYSTORE_BASE64").isNullOrEmpty()
+
+    signingConfigs {
+        if (hayKeystoreCi) {
+            create("ci") {
+                storeFile = File(rootProject.projectDir, "android.keystore")
+                storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "umafinidad"
+                keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
@@ -25,6 +42,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            signingConfig = if (hayKeystoreCi) {
+                signingConfigs.getByName("ci")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 

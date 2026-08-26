@@ -15,7 +15,7 @@ class ArbolesTest {
     private fun ejemplo(id: Long, hijoId: Int, sel: List<Int?>, creadoEn: Long) =
         ArbolGuardado(id = id, hijoId = hijoId, nombre = "test", seleccion = sel, total = 100, creadoEn = creadoEn)
 
-    private val selCompleta = listOf<Int?>(1001, 1015, 1023, 1015, 1045, 1001, 1030)
+    private val selCompleta = listOf<Int?>(1001, 1015, 1023, 1015, 1045, null, 1030)
 
     @Test
     fun roundTripConNulls() {

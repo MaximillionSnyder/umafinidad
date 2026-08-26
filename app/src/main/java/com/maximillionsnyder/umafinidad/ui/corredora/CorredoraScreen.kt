@@ -99,6 +99,10 @@ fun CorredoraScreen(
     var mostrarGuardar by rememberSaveable { mutableStateOf(false) }
     var textoNombre by rememberSaveable { mutableStateOf("") }
 
+    /* Mensajes resueltos en composición para usarlos desde callbacks. */
+    val msgEliminado = stringResource(R.string.eliminado_snack)
+    val msgGuardado = stringResource(R.string.guardado_snack)
+
     fun listaDeLinaje(l: Linaje): List<Int?> = listOf(
         l.hijo.charId,
         l.padre.charId,
@@ -252,7 +256,7 @@ fun CorredoraScreen(
                                 },
                                 alBorrar = {
                                     onEliminarArbol(a.id)
-                                    avisar(stringResource(R.string.eliminado_snack))
+                                    avisar(msgEliminado)
                                 },
                             )
                         }
@@ -288,7 +292,7 @@ fun CorredoraScreen(
                     onGuardarArbol(elegidaId, textoNombre.ifBlank { nombreSugerido }, seleccionActual, totalActual)
                     mostrarGuardar = false
                     textoNombre = ""
-                    avisar(stringResource(R.string.guardado_snack))
+                    avisar(msgGuardado)
                 }) { Text(stringResource(R.string.guardar)) }
             },
             dismissButton = {

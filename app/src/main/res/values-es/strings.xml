@@ -78,4 +78,11 @@
     <string name="alternativas_titulo">Opciones para %1$s</string>
     <string name="restablecer_optimo">Restablecer óptimo</string>
     <string name="sin_alternativas">No hay alternativas válidas para este slot.</string>
+    <string name="guardar_config">Guardar configuración</string>
+    <string name="guardar">Guardar</string>
+    <string name="nombre_sugerido">%1$s · %2$dpt</string>
+    <string name="guardadas_de">Guardadas de %1$s</string>
+    <string name="arboles_ajustes">Árboles guardados</string>
+    <string name="guardado_snack">Configuración guardada</string>
+    <string name="eliminado_snack">Configuración eliminada</string>
 </resources>

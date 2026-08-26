@@ -22,6 +22,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -68,6 +69,8 @@ private fun App(vm: AppViewModel) {
     val seleccion by vm.seleccion.collectAsState()
     val resultado by vm.resultado.collectAsState()
     val modoGrilla by vm.modoGrilla.collectAsState()
+    val arboles by vm.arboles.collectAsState()
+    val arbolPendiente by vm.arbolPendiente.collectAsState()
 
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -79,6 +82,11 @@ private fun App(vm: AppViewModel) {
     BackHandler { confirmarSalida = true }
 
     val japones = LocalConfiguration.current.locales[0].language == "ja"
+
+    /* Una config pedida desde Ajustes abre Mi corredora. */
+    LaunchedEffect(arbolPendiente) {
+        if (arbolPendiente != null) tab = 3
+    }
 
     /* Fondo con gradiente en toda la app. */
     Box(modifier = Modifier.fillMaxSize().fondoGradiente()) {
@@ -154,6 +162,12 @@ private fun App(vm: AppViewModel) {
                         3 -> CorredoraScreen(
                             modelo = m,
                             japones = japones,
+                            arboles = arboles,
+                            pendiente = arbolPendiente,
+                            onGuardarArbol = vm::guardarArbol,
+                            onEliminarArbol = vm::eliminarArbol,
+                            onConsumirPendiente = vm::consumirArbolPendiente,
+                            avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
                             onVerHerencia = { sel ->
                                 vm.cargarSeleccion(sel)
                                 tab = 0
@@ -162,6 +176,11 @@ private fun App(vm: AppViewModel) {
                         else -> SettingsScreen(
                             modoGrilla = modoGrilla,
                             onModoGrilla = vm::setModoGrilla,
+                            modelo = m,
+                            japones = japones,
+                            arboles = arboles,
+                            onAbrirArbol = vm::abrirArbol,
+                            onEliminarArbol = vm::eliminarArbol,
                         )
                     }
                 }

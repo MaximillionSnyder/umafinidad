@@ -78,4 +78,11 @@
     <string name="alternativas_titulo">%1$sの候補</string>
     <string name="restablecer_optimo">最適に戻す</string>
     <string name="sin_alternativas">このスロットに有効な候補がありません。</string>
+    <string name="guardar_config">構成を保存</string>
+    <string name="guardar">保存</string>
+    <string name="nombre_sugerido">%1$s · %2$dpt</string>
+    <string name="guardadas_de">%1$sの保存済み</string>
+    <string name="arboles_ajustes">保存した血統</string>
+    <string name="guardado_snack">保存しました</string>
+    <string name="eliminado_snack">削除しました</string>
 </resources>

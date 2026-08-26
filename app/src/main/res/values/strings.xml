@@ -78,4 +78,11 @@
     <string name="alternativas_titulo">Options for %1$s</string>
     <string name="restablecer_optimo">Reset to optimal</string>
     <string name="sin_alternativas">No valid alternatives for this slot.</string>
+    <string name="guardar_config">Save configuration</string>
+    <string name="guardar">Save</string>
+    <string name="nombre_sugerido">%1$s · %2$dpt</string>
+    <string name="guardadas_de">Saved for %1$s</string>
+    <string name="arboles_ajustes">Saved trees</string>
+    <string name="guardado_snack">Configuration saved</string>
+    <string name="eliminado_snack">Configuration deleted</string>
 </resources>

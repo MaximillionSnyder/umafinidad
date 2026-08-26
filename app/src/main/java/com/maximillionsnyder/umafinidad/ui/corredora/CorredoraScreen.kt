@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -46,11 +47,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AlternativaSlot
+import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Linaje
+import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.ResultadoCompat
@@ -68,6 +74,12 @@ import kotlinx.coroutines.withContext
 fun CorredoraScreen(
     modelo: AffinityModel,
     japones: Boolean,
+    arboles: List<ArbolGuardado>,
+    pendiente: ArbolGuardado?,
+    onGuardarArbol: (hijoId: Int, nombre: String, seleccion: List<Int?>, total: Int) -> Unit,
+    onEliminarArbol: (Long) -> Unit,
+    onConsumirPendiente: () -> Unit,
+    avisar: (String) -> Unit,
     onVerHerencia: (List<Int?>) -> Unit,
 ) {
     var filtro by rememberSaveable { mutableStateOf("") }
@@ -79,6 +91,13 @@ fun CorredoraScreen(
     var seleccionActual by remember { mutableStateOf<List<Int?>>(emptyList()) }
     var seleccionOptima by remember { mutableStateOf<List<Int?>>(emptyList()) }
     var sheetSlot by remember { mutableStateOf<Int?>(null) }
+
+    /* Cargas externas (config guardada desde Ajustes o de la lista). */
+    var recarga by remember { mutableIntStateOf(0) }
+    var overrideCarga by remember { mutableStateOf<List<Int?>?>(null) }
+
+    var mostrarGuardar by rememberSaveable { mutableStateOf(false) }
+    var textoNombre by rememberSaveable { mutableStateOf("") }
 
     fun listaDeLinaje(l: Linaje): List<Int?> = listOf(
         l.hijo.charId,
@@ -95,9 +114,10 @@ fun CorredoraScreen(
         else emptyList()
     }
 
-    LaunchedEffect(elegidaId) {
+    LaunchedEffect(elegidaId, recarga) {
         if (elegidaId <= 0) {
             linaje = null
+            seleccionOptima = emptyList()
             seleccionActual = emptyList()
             return@LaunchedEffect
         }
@@ -105,8 +125,20 @@ fun CorredoraScreen(
         val l = withContext(Dispatchers.Default) { modelo.mejorLinajeDe(elegidaId) }
         linaje = l
         seleccionOptima = l?.let { listaDeLinaje(it) } ?: emptyList()
-        seleccionActual = seleccionOptima
+        seleccionActual = overrideCarga?.takeIf { it.size == SLOTS } ?: seleccionOptima
+        overrideCarga = null
         calculando = false
+    }
+
+    /* Config pedida desde Ajustes. */
+    LaunchedEffect(pendiente) {
+        pendiente?.let { a ->
+            overrideCarga = a.seleccion
+            filtro = ""
+            elegidaId = a.hijoId
+            recarga++
+            onConsumirPendiente()
+        }
     }
 
     Column(
@@ -179,20 +211,90 @@ fun CorredoraScreen(
                 Nota(stringResource(R.string.corredora_invalida))
             }
             else -> {
-                PanelMejorLinaje(
-                    modelo = modelo,
-                    nombreHijoId = elegidaId,
-                    seleccionActual = seleccionActual,
-                    japones = japones,
-                    esOptimo = seleccionActual == seleccionOptima,
-                    onRestablecer = { seleccionActual = seleccionOptima },
-                    onAbrirAlternativas = { sheetSlot = it },
-                    onVerHerencia = { onVerHerencia(seleccionActual) },
-                )
+                Column {
+                    PanelMejorLinaje(
+                        modelo = modelo,
+                        nombreHijoId = elegidaId,
+                        seleccionActual = seleccionActual,
+                        japones = japones,
+                        esOptimo = seleccionActual == seleccionOptima,
+                        onRestablecer = { seleccionActual = seleccionOptima },
+                        onAbrirAlternativas = { sheetSlot = it },
+                        onVerHerencia = { onVerHerencia(seleccionActual) },
+                    )
+
+                    /* Guardar la configuración actual (aunque difiera del óptimo). */
+                    val totalActual = AppViewModel.calcular(modelo, seleccionActual).total ?: 0
+                    Button(
+                        onClick = { mostrarGuardar = true },
+                        modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+                    ) {
+                        Text(stringResource(R.string.guardar_config), fontWeight = FontWeight.Bold)
+                    }
+
+                    /* Configuraciones guardadas de esta corredora. */
+                    val guardadas = arboles.filter { it.hijoId == elegidaId }
+                    if (guardadas.isNotEmpty()) {
+                        Text(
+                            stringResource(R.string.guardadas_de, modelo.porId(elegidaId)?.displayName(japones) ?: ""),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(start = 4.dp, top = 14.dp, bottom = 4.dp),
+                        )
+                        guardadas.forEach { a ->
+                            TarjetaGuardada(
+                                guardada = a,
+                                japones = japones,
+                                alTocar = {
+                                    overrideCarga = a.seleccion
+                                    recarga++
+                                },
+                                alBorrar = {
+                                    onEliminarArbol(a.id)
+                                    avisar(stringResource(R.string.eliminado_snack))
+                                },
+                            )
+                        }
+                    }
+                }
             }
         }
 
         Spacer(Modifier.height(24.dp))
+    }
+
+    /* Diálogo de guardado con nombre opcional. */
+    if (mostrarGuardar && seleccionActual.isNotEmpty()) {
+        val totalActual = AppViewModel.calcular(modelo, seleccionActual).total ?: 0
+        val nombreSugerido = stringResource(
+            R.string.nombre_sugerido,
+            modelo.porId(elegidaId)?.displayName(japones) ?: "",
+            totalActual,
+        )
+        AlertDialog(
+            onDismissRequest = { mostrarGuardar = false },
+            title = { Text(stringResource(R.string.guardar_config)) },
+            text = {
+                OutlinedTextField(
+                    value = textoNombre,
+                    onValueChange = { textoNombre = it },
+                    singleLine = true,
+                    placeholder = { Text(nombreSugerido) },
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    onGuardarArbol(elegidaId, textoNombre.ifBlank { nombreSugerido }, seleccionActual, totalActual)
+                    mostrarGuardar = false
+                    textoNombre = ""
+                    avisar(stringResource(R.string.guardado_snack))
+                }) { Text(stringResource(R.string.guardar)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { mostrarGuardar = false }) { Text(stringResource(R.string.cancelar)) }
+            },
+        )
     }
 
     /* Sheet de alternativas para el slot tocado. */
@@ -469,4 +571,27 @@ private fun Nota(texto: String) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp),
     )
+}
+
+@Composable
+private fun TarjetaGuardada(guardada: ArbolGuardado, japones: Boolean, alTocar: () -> Unit, alBorrar: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = alTocar).padding(vertical = 3.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+    ) {
+        Row(modifier = Modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(guardada.nombre, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    "◎ ${guardada.total} · " + SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(Date(guardada.creadoEn)),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = com.maximillionsnyder.umafinidad.ui.theme.RankGood,
+                )
+            }
+            IconButton(onClick = alBorrar) {
+                Icon(painterResource(R.drawable.ic_cerrar), contentDescription = stringResource(R.string.cancelar))
+            }
+        }
+    }
 }

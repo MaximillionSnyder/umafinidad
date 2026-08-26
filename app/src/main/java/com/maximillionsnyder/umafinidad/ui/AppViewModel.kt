@@ -4,8 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
+import com.maximillionsnyder.umafinidad.data.ArbolGuardado
+import com.maximillionsnyder.umafinidad.data.ArbolesRepository
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
+import com.maximillionsnyder.umafinidad.data.fusionarArbol
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.GrupoCompartido
 import com.maximillionsnyder.umafinidad.domain.Linaje
@@ -72,6 +75,42 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         prefs.modoGrilla = modo
         _modoGrilla.value = modo
     }
+
+    /* ===== Configuraciones de árbol guardadas ===== */
+
+    private val arbolesRepo = ArbolesRepository(application)
+    private val _arboles = MutableStateFlow(arbolesRepo.todos())
+    val arboles: StateFlow<List<ArbolGuardado>> = _arboles
+
+    fun guardarArbol(hijoId: Int, nombre: String, seleccion: List<Int?>, total: Int) {
+        val nuevo = ArbolGuardado(
+            id = System.currentTimeMillis(),
+            hijoId = hijoId,
+            nombre = nombre.trim(),
+            seleccion = seleccion,
+            total = total,
+            creadoEn = System.currentTimeMillis(),
+        )
+        val fusion = fusionarArbol(_arboles.value, nuevo)
+        arbolesRepo.reemplazarTodos(fusion)
+        _arboles.value = fusion
+    }
+
+    fun eliminarArbol(id: Long) {
+        val resto = _arboles.value.filterNot { it.id == id }
+        arbolesRepo.reemplazarTodos(resto)
+        _arboles.value = resto
+    }
+
+    fun arbolesDeHijo(hijoId: Int): List<ArbolGuardado> =
+        _arboles.value.filter { it.hijoId == hijoId }
+
+    /* Navegación pendiente: Ajustes pide abrir una config en Mi corredora. */
+    private val _arbolPendiente = MutableStateFlow<ArbolGuardado?>(null)
+    val arbolPendiente: StateFlow<ArbolGuardado?> = _arbolPendiente
+
+    fun abrirArbol(a: ArbolGuardado) { _arbolPendiente.value = a }
+    fun consumirArbolPendiente() { _arbolPendiente.value = null }
 
     init {
         /* Carga de datos fuera del hilo principal (~800 KB de JSON). */

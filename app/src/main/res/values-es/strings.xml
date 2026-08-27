@@ -4,6 +4,7 @@
     <string name="tab_compat">Compatibilidad</string>
     <string name="tab_groups">Grupos</string>
     <string name="tab_top">Mejores linajes</string>
+    <string name="tab_ranking">Ranking</string>
 
     <!-- Compatibilidad -->
     <string name="buscar">Buscar personaje…</string>

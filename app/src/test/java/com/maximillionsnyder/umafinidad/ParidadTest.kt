@@ -23,6 +23,7 @@ import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -161,6 +162,36 @@ class ParidadTest {
             assertEquals("top[$i] puntos", e.puntos, a.puntos)
             assertEquals(e.hijo.enName, a.hijo.enName)
         }
+    }
+
+    /* ===== Ranking “Umas más versátiles” ===== */
+
+    /* Invariantes data-independientes (no dependen del contenido de los
+       assets): tamaño, orden descendente, y consistencia del total con la
+       suma de puntajePar contra el resto del pool. */
+    @Test
+    fun rankingAfinidadEsConsistente() {
+        val ranking = modelo.rankingAfinidad()
+
+        assertEquals(ids.size, ranking.size)
+        assertTrue("orden descendente", ranking.zipWithNext().all { (a, b) -> a.total >= b.total })
+        assertTrue("empates ordenados por charId asc", ranking.zipWithNext().all { (a, b) ->
+            a.total != b.total || a.personaje.charId <= b.personaje.charId
+        })
+
+        /* El total de cada entrada debe ser exactamente la suma de puntajePar
+           contra todas las demás umas del pool (spot-check: 3 primeras + 3 últimas). */
+        val muestra = ranking.take(3) + ranking.takeLast(3)
+        for (entry in muestra) {
+            val id = entry.personaje.charId
+            val esperado = ids.filter { it != id }.sumOf { modelo.puntajePar(id, it) }
+            assertEquals("total de ${entry.personaje.enName}", esperado, entry.total)
+        }
+
+        /* Con datos reales el primero es siempre ◎ (percentil 10) y el
+           ranking cabe completo en el pool jugable/activo. */
+        assertEquals("rank-great", modelo.rangoRanking(ranking.first().total).clase)
+        assertTrue(ranking.all { it.total >= 0 })
     }
 
     /* ===== Herencia ===== */

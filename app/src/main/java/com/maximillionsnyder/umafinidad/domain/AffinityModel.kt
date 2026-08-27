@@ -273,6 +273,56 @@ class AffinityModel private constructor(
 
     fun porId(id: Int): Character? = porId[id]
 
+    /* ===== Ranking “Umas más versátiles” (total afinidad) ===== */
+
+    data class RankingAfinidad(
+        val personaje: Character,
+        val total: Int,
+    )
+
+    private var umbralRankingGreat: Int = Int.MIN_VALUE
+    private var umbralRankingGood: Int = Int.MIN_VALUE
+
+    private val cacheRanking: List<RankingAfinidad> by lazy { calcularRankingAfinidad() }
+
+    fun rankingAfinidad(): List<RankingAfinidad> = cacheRanking
+
+    fun rangoRanking(total: Int): Rango {
+        if (umbralRankingGreat == Int.MIN_VALUE) {
+            // Asegura que los umbrales estén calculados (inicializa cache si es necesario)
+            if (charsTop.isEmpty()) return Rango("△", "rank-fair")
+            rankingAfinidad()
+        }
+        return when {
+            total >= umbralRankingGreat -> Rango("◎", "rank-great")
+            total >= umbralRankingGood -> Rango("○", "rank-good")
+            else -> Rango("△", "rank-fair")
+        }
+    }
+
+    private fun calcularRankingAfinidad(): List<RankingAfinidad> {
+        val m = charsTop.size
+        if (m == 0) {
+            umbralRankingGreat = Int.MAX_VALUE
+            umbralRankingGood = Int.MAX_VALUE
+            return emptyList()
+        }
+        // Suma por fila de la matriz simétrica (reusa matrizPares/parEn)
+        val totales = IntArray(m)
+        for (i in 0 until m) {
+            var t = 0
+            for (j in 0 until m) if (i != j) t += parEn(i, j)
+            totales[i] = t
+        }
+        val ordenados = totales.sortedDescending()
+        val idxGreat = (kotlin.math.ceil(m * 0.10).toInt() - 1).coerceIn(0, m - 1)
+        val idxGood = (kotlin.math.ceil(m * 0.50).toInt() - 1).coerceIn(0, m - 1)
+        umbralRankingGreat = ordenados[idxGreat]
+        umbralRankingGood = ordenados[idxGood]
+        return (0 until m).map { i -> RankingAfinidad(charsTop[i], totales[i]) }
+            .sortedWith(compareByDescending<RankingAfinidad> { it.total }.thenBy { it.personaje.charId })
+    }
+
     /* ===== Alternativas por slot (Mi corredora) ===== */
 
     /* Total del árbol completo con la semántica de result.js:

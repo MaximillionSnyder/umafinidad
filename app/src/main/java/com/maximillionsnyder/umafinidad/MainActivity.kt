@@ -42,6 +42,7 @@ import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
 import com.maximillionsnyder.umafinidad.ui.groups.GroupsScreen
+import com.maximillionsnyder.umafinidad.ui.ranking.RankingScreen
 import com.maximillionsnyder.umafinidad.ui.settings.SettingsScreen
 import com.maximillionsnyder.umafinidad.ui.theme.UmaAfinidadTheme
 import com.maximillionsnyder.umafinidad.ui.theme.fondoGradiente
@@ -122,6 +123,12 @@ private fun App(vm: AppViewModel) {
                     NavigationBarItem(
                         selected = tab == 4,
                         onClick = { tab = 4 },
+                        icon = { Icon(painterResource(R.drawable.ic_tab_ranking), contentDescription = null) },
+                        label = { Text(stringResource(R.string.tab_ranking)) },
+                    )
+                    NavigationBarItem(
+                        selected = tab == 5,
+                        onClick = { tab = 5 },
                         icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
                         label = { Text(stringResource(R.string.tab_ajustes)) },
                     )
@@ -173,6 +180,7 @@ private fun App(vm: AppViewModel) {
                                 tab = 0
                             },
                         )
+                        4 -> RankingScreen(modelo = m, japones = japones)
                         else -> SettingsScreen(
                             modoGrilla = modoGrilla,
                             onModoGrilla = vm::setModoGrilla,

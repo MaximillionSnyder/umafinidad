@@ -177,16 +177,62 @@ class AffinityModel private constructor(
 
     private class Candidato(val h: Int, val p1: Int, val p2: Int, val base: Int, val total: Int, val b1: MejorParAbuelos, val b2: MejorParAbuelos)
 
-    private fun calcularTopLinajes(): List<Linaje> {
+    private fun calcularTopLinajes(): List<Linaje> =
+        calcularTopSobre((0 until charsTop.size).toList(), cacheAbuelos)
+
+    /* Top de linajes calculado SOLO con los personajes que el usuario posee
+       (ids de characters.json). Los ids fuera del pool jugable/activo se
+       ignoran; con menos de 3 personajes no hay combinaciones posibles.
+       Mismo algoritmo heurístico que el top global. */
+    fun topLinajesDeElenco(idsElenco: Collection<Int>, n: Int = 20): List<Linaje> {
+        val posPorId = HashMap<Int, Int>()
+        for (i in idsTop.indices) posPorId[idsTop[i]] = i
+        val indices = idsElenco.mapNotNull { posPorId[it] }.distinct().sorted()
+        if (indices.size < 3) return emptyList()
+        /* Cache local: los abuelos se eligen dentro del elenco, no valen
+           las entradas calculadas para el pool completo. */
+        return calcularTopSobre(indices, HashMap()).take(n)
+    }
+
+    /* Núcleo compartido del top de linajes sobre un subconjunto de índices
+       de charsTop. Con indices = 0 until m y el cache global reproduce
+       exactamente el algoritmo de la web: misma enumeración de triples
+       (i < j < k sobre índices crecientes) y mismos ordenamientos
+       estables, para que los empates queden idénticos. */
+    private fun calcularTopSobre(
+        indices: List<Int>,
+        cacheAbuelos: HashMap<Long, MejorParAbuelos>,
+    ): List<Linaje> {
         val chars = charsTop
         val m = chars.size
         val ids = idsTop
 
+        /* Mejor par de abuelos para la rama del padre p con hijo h,
+           restringido al subconjunto. Reglas del juego: nadie puede ser
+           abuelo de su propia rama (g == p prohibido); el hijo sí puede
+           ser abuelo pero esa relación vale 0 (corredora). */
+        fun mejorPar(h: Int, p: Int): MejorParAbuelos {
+            val key = h.toLong() * m + p
+            cacheAbuelos[key]?.let { return it }
+            var t1 = -1; var t2 = -1; var g1 = -1; var g2 = -1
+            for (g in indices) {
+                if (g == p) continue
+                val t = if (g == h) 0 else puntajeTrioRapido(ids[h], ids[p], ids[g])
+                if (t > t1) { t2 = t1; g2 = g1; t1 = t; g1 = g } else if (t > t2) { t2 = t; g2 = g }
+            }
+            val v = MejorParAbuelos(g1, g2, t1 + t2)
+            cacheAbuelos[key] = v
+            return v
+        }
+
         val sets = mutableListOf<SetBase>()
-        for (h in 0 until m)
-            for (p1 in h + 1 until m)
-                for (p2 in p1 + 1 until m) {
-                    val base = matrizPares[h * m + p1] + matrizPares[h * m + p2] + matrizPares[p1 * m + p2]
+        for (i in indices.indices)
+            for (j in i + 1 until indices.size)
+                for (k in j + 1 until indices.size) {
+                    val h = indices[i]
+                    val p1 = indices[j]
+                    val p2 = indices[k]
+                    val base = parEn(h, p1) + parEn(h, p2) + parEn(p1, p2)
                     if (sets.size < K_TOP || base > sets.last().base) {
                         sets.add(SetBase(h, p1, p2, base))
                         sets.sortWith(compareByDescending { it.base }) /* estable, igual que JS */
@@ -201,8 +247,8 @@ class AffinityModel private constructor(
                 Triple(st.b, st.a, st.c),
                 Triple(st.c, st.a, st.b),
             )) {
-                val b1 = mejorParAbuelos(h, p1)
-                val b2 = mejorParAbuelos(h, p2)
+                val b1 = mejorPar(h, p1)
+                val b2 = mejorPar(h, p2)
                 candidatos.add(Candidato(h, p1, p2, st.base, st.base + b1.puntos + b2.puntos, b1, b2))
             }
 

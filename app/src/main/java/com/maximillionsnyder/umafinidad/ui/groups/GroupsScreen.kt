@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -39,16 +42,32 @@ import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.theme.colorDeRango
 
 /* Porte de montarGrupos(): chips de filtro por puntos + lista expandible.
-   Mismas opciones que la web: [0, 2, 5, 7, 8] pt. */
+   Mismas opciones que la web: [0, 2, 5, 7, 8] pt.
+   Referencia archivada: se abre a pantalla completa desde Ajustes. */
 private val OPCIONES = listOf(0, 2, 5, 7, 8)
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun GroupsScreen(modelo: AffinityModel, japones: Boolean) {
+fun GroupsScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) {
     var min by rememberSaveable { mutableIntStateOf(0) }
     var grupoAbierto by rememberSaveable { mutableStateOf<Int?>(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
+        /* Cabecera con botón volver (ya no es una pestaña de la barra). */
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onVolver) {
+                Icon(painterResource(R.drawable.ic_atras), contentDescription = stringResource(R.string.volver))
+            }
+            Text(
+                stringResource(R.string.tab_groups),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Black,
+            )
+        }
+
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),

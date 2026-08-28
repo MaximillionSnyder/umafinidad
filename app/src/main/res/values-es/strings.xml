@@ -3,6 +3,7 @@
     <string name="app_name">Uma Afinidad</string>
     <string name="tab_compat">Compatibilidad</string>
     <string name="tab_groups">Grupos</string>
+    <string name="tab_elenco">Mis corredoras</string>
     <string name="tab_top">Mejores linajes</string>
     <string name="tab_ranking">Ranking</string>
 
@@ -40,6 +41,16 @@
     <string name="filtro_pt">%1$d+ pt</string>
     <string name="miembros_cantidad">%1$d miembros</string>
     <string name="sin_grupos_filtro">Sin grupos con esos puntos.</string>
+
+    <!-- Mis corredoras (elenco propio) -->
+    <string name="elenco_tab_editar">Editar elenco</string>
+    <string name="elenco_tab_linajes">Mis linajes</string>
+    <string name="elenco_contador">%1$d/%2$d</string>
+    <string name="elenco_marcar_visibles">Marcar visibles</string>
+    <string name="elenco_limpiar_titulo">¿Limpiar tu elenco?</string>
+    <string name="elenco_limpiar_mensaje">Se van a desmarcar todas las corredoras.</string>
+    <string name="elenco_minimo">Marcá al menos 3 corredoras para calcular tus mejores linajes.</string>
+    <string name="volver">Volver</string>
 
     <!-- Top linajes -->
     <string name="calculando">Calculando…</string>
@@ -84,6 +95,7 @@
     <string name="nombre_sugerido">%1$s · %2$dpt</string>
     <string name="guardadas_de">Guardadas de %1$s</string>
     <string name="arboles_ajustes">Árboles guardados</string>
+    <string name="grupos_ajustes_desc">Grupos de afinidad y sus miembros</string>
     <string name="guardado_snack">Configuración guardada</string>
     <string name="eliminado_snack">Configuración eliminada</string>
 </resources>

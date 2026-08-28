@@ -3,6 +3,7 @@
     <string name="app_name">Uma Afinidad</string>
     <string name="tab_compat">相性</string>
     <string name="tab_groups">グループ</string>
+    <string name="tab_elenco">所持ウマ娘</string>
     <string name="tab_top">トップ血統</string>
     <string name="tab_ranking">ランキング</string>
 
@@ -40,6 +41,16 @@
     <string name="filtro_pt">%1$dpt以上</string>
     <string name="miembros_cantidad">%1$d人</string>
     <string name="sin_grupos_filtro">該当するグループがありません。</string>
+
+    <!-- 所持ウマ娘（マイ所持リスト） -->
+    <string name="elenco_tab_editar">所持を編集</string>
+    <string name="elenco_tab_linajes">マイ血統</string>
+    <string name="elenco_contador">%1$d/%2$d</string>
+    <string name="elenco_marcar_visibles">表示中を追加</string>
+    <string name="elenco_limpiar_titulo">所持リストをクリアしますか？</string>
+    <string name="elenco_limpiar_mensaje">全ての選択が解除されます。</string>
+    <string name="elenco_minimo">最適血統を計算するには3人以上選んでください。</string>
+    <string name="volver">戻る</string>
 
     <!-- トップ血統 -->
     <string name="calculando">計算中…</string>
@@ -84,6 +95,7 @@
     <string name="nombre_sugerido">%1$s · %2$dpt</string>
     <string name="guardadas_de">%1$sの保存済み</string>
     <string name="arboles_ajustes">保存した血統</string>
+    <string name="grupos_ajustes_desc">相性グループとメンバー一覧</string>
     <string name="guardado_snack">保存しました</string>
     <string name="eliminado_snack">削除しました</string>
 </resources>

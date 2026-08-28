@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.ArbolesRepository
+import com.maximillionsnyder.umafinidad.data.ElencoRepository
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
 import com.maximillionsnyder.umafinidad.data.fusionarArbol
@@ -104,6 +105,30 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun arbolesDeHijo(hijoId: Int): List<ArbolGuardado> =
         _arboles.value.filter { it.hijoId == hijoId }
+
+    /* ===== Mi elenco (personajes que posee el usuario) ===== */
+
+    private val elencoRepo = ElencoRepository(application)
+    private val _elenco = MutableStateFlow(elencoRepo.obtener())
+    val elenco: StateFlow<Set<Int>> = _elenco
+
+    fun toggleElenco(id: Int) {
+        val nuevo = _elenco.value.toMutableSet()
+        if (!nuevo.add(id)) nuevo.remove(id)
+        elencoRepo.reemplazar(nuevo)
+        _elenco.value = nuevo
+    }
+
+    fun marcarElenco(ids: Collection<Int>) {
+        val nuevo = _elenco.value + ids
+        elencoRepo.reemplazar(nuevo)
+        _elenco.value = nuevo
+    }
+
+    fun limpiarElenco() {
+        elencoRepo.reemplazar(emptySet())
+        _elenco.value = emptySet()
+    }
 
     /* Navegación pendiente: Ajustes pide abrir una config en Mi corredora. */
     private val _arbolPendiente = MutableStateFlow<ArbolGuardado?>(null)

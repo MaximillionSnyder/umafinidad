@@ -3,6 +3,7 @@
     <string name="app_name">Uma Afinidad</string>
     <string name="tab_compat">Compatibility</string>
     <string name="tab_groups">Groups</string>
+    <string name="tab_elenco">My roster</string>
     <string name="tab_top">Top lineages</string>
     <string name="tab_ranking">Ranking</string>
 
@@ -40,6 +41,16 @@
     <string name="filtro_pt">%1$d+ pt</string>
     <string name="miembros_cantidad">%1$d members</string>
     <string name="sin_grupos_filtro">No groups with those points.</string>
+
+    <!-- Mis corredoras (elenco propio) -->
+    <string name="elenco_tab_editar">Edit roster</string>
+    <string name="elenco_tab_linajes">My lineages</string>
+    <string name="elenco_contador">%1$d/%2$d</string>
+    <string name="elenco_marcar_visibles">Mark visible</string>
+    <string name="elenco_limpiar_titulo">Clear your roster?</string>
+    <string name="elenco_limpiar_mensaje">All runners will be unmarked.</string>
+    <string name="elenco_minimo">Mark at least 3 runners to compute your best lineages.</string>
+    <string name="volver">Back</string>
 
     <!-- Top linajes -->
     <string name="calculando">Calculating…</string>
@@ -84,6 +95,7 @@
     <string name="nombre_sugerido">%1$s · %2$dpt</string>
     <string name="guardadas_de">Saved for %1$s</string>
     <string name="arboles_ajustes">Saved trees</string>
+    <string name="grupos_ajustes_desc">Affinity groups and their members</string>
     <string name="guardado_snack">Configuration saved</string>
     <string name="eliminado_snack">Configuration deleted</string>
 </resources>

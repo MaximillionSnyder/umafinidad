@@ -45,6 +45,7 @@ fun SettingsScreen(
     arboles: List<ArbolGuardado>,
     onAbrirArbol: (ArbolGuardado) -> Unit,
     onEliminarArbol: (Long) -> Unit,
+    onAbrirGrupos: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -81,8 +82,38 @@ fun SettingsScreen(
 
         Spacer(Modifier.height(8.dp))
 
+        /* ===== Grupos (referencia, archivada de la barra inferior) ===== */
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        Spacer(Modifier.height(8.dp))
+        Card(
+            modifier = Modifier.fillMaxWidth().clickable(onClick = onAbrirGrupos),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_tab_groups),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Column {
+                    Text(stringResource(R.string.tab_groups), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.grupos_ajustes_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
         /* ===== Árboles guardados (global) ===== */
         if (arboles.isNotEmpty()) {
+            Spacer(Modifier.height(8.dp))
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             Spacer(Modifier.height(8.dp))
             Text(

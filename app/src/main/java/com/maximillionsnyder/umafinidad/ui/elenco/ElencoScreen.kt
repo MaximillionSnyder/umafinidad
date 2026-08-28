@@ -234,7 +234,7 @@ private fun CardElenco(personaje: Character, marcado: Boolean, japones: Boolean,
         ) {
             Box {
                 Avatar(personaje.charId, nombrePrincipal, modifier = Modifier.size(56.dp))
-                AnimatedVisibility(visible = marcado, enter = scaleIn(), exit = scaleOut()) {
+                androidx.compose.animation.AnimatedVisibility(visible = marcado, enter = scaleIn(), exit = scaleOut()) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.TopEnd)

@@ -56,7 +56,7 @@ fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: Boolean, 
         ) {
             Medalla(i)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(nombres, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Text(nombres, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis, color = MaterialTheme.colorScheme.primary)
                 Text(
                     stringResource(R.string.ver_herencia),
                     style = MaterialTheme.typography.labelSmall,

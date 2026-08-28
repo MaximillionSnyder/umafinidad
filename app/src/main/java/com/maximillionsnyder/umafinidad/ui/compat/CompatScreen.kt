@@ -153,6 +153,7 @@ fun CompatScreen(
                     stringResource(R.string.seccion_herencia),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Black,
+                    color = MaterialTheme.colorScheme.primary,
                 )
                 Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.primary) {
                     Text(

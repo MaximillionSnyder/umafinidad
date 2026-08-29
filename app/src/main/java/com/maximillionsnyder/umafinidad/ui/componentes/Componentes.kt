@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -107,11 +108,8 @@ fun PuntosRango(rango: Rango?, puntos: Int, modifier: Modifier = Modifier) {
 fun HeaderBar(
     titulo: String,
     pillTexto: String? = null,
-    onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
-    val primaryColor = MaterialTheme.colorScheme.primary
-    val onPrimaryColor = MaterialTheme.colorScheme.onPrimary
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -128,16 +126,12 @@ fun HeaderBar(
         pillTexto?.let { texto ->
             Surface(
                 shape = RoundedCornerShape(999.dp),
-                color = primaryColor,
-                modifier = Modifier
-                    .padding(horizontal = 12.dp, vertical = 4.dp)
-                    .wrapContentSize()
-                    .clickable(onClick = onClick),
+                color = MaterialTheme.colorScheme.primary,
             ) {
                 Text(
                     text = texto,
                     style = MaterialTheme.typography.labelLarge,
-                    color = onPrimaryColor,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                 )

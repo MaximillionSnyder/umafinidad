@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "fetch": "node scripts/fetch-gametora.mjs",
+    "fetch:aptitudes": "node scripts/fetch-gametora.mjs --solo-aptitudes",
     "icons": "node scripts/generate-launcher-icons.mjs"
   }
 }

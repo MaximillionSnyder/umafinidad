@@ -58,6 +58,7 @@ import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
+import com.maximillionsnyder.umafinidad.ui.componentes.AptitudesDetalle
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.ResultadoCompat
@@ -378,6 +379,9 @@ private fun PanelMejorLinaje(
             }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            /* Aptitudes de la corredora elegida (carta base). */
+            modelo.aptitudesDe(nombreHijoId)?.let { AptitudesDetalle(it) }
 
             /* Hijo: fijo (define la búsqueda). */
             ChipRol(

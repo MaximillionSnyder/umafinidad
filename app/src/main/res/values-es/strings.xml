@@ -3,7 +3,7 @@
     <string name="app_name">Uma Afinidad</string>
     <string name="tab_compat">Compatibilidad</string>
     <string name="tab_groups">Grupos</string>
-    <string name="tab_elenco">Mis corredoras</string>
+    <string name="tab_elenco">Mis Umas</string>
     <string name="tab_top">Mejores linajes</string>
     <string name="tab_ranking">Ranking</string>
 
@@ -42,14 +42,14 @@
     <string name="miembros_cantidad">%1$d miembros</string>
     <string name="sin_grupos_filtro">Sin grupos con esos puntos.</string>
 
-    <!-- Mis corredoras (elenco propio) -->
+    <!-- Mis Umas (elenco propio) -->
     <string name="elenco_tab_editar">Editar elenco</string>
     <string name="elenco_tab_linajes">Mis linajes</string>
     <string name="elenco_contador">%1$d/%2$d</string>
     <string name="elenco_marcar_visibles">Marcar visibles</string>
     <string name="elenco_limpiar_titulo">¿Limpiar tu elenco?</string>
-    <string name="elenco_limpiar_mensaje">Se van a desmarcar todas las corredoras.</string>
-    <string name="elenco_minimo">Marcá al menos 3 corredoras para calcular tus mejores linajes.</string>
+    <string name="elenco_limpiar_mensaje">Se van a desmarcar todas las Umas.</string>
+    <string name="elenco_minimo">Marcá al menos 3 Umas para calcular tus mejores linajes.</string>
     <string name="volver">Volver</string>
 
     <!-- Top linajes -->
@@ -68,6 +68,21 @@
     <string name="rol_corto_hijo">Hijo</string>
     <string name="rol_corto_padre">Padre</string>
     <string name="rol_corto_abuelo">Abuelo</string>
+
+    <!-- Aptitudes -->
+    <string name="apt_pista">Pista</string>
+    <string name="apt_distancia">Distancia</string>
+    <string name="apt_estilo">Estilo</string>
+    <string name="apt_turf">Césped</string>
+    <string name="apt_dirt">Tierra</string>
+    <string name="apt_corta">Corta</string>
+    <string name="apt_milla">Milla</string>
+    <string name="apt_media">Media</string>
+    <string name="apt_larga">Larga</string>
+    <string name="apt_fuga">Fuga</string>
+    <string name="apt_vanguardia">Vanguardia</string>
+    <string name="apt_remate">Remate</string>
+    <string name="apt_retraso">Retraso</string>
 
     <!-- Ajustes -->
     <string name="tab_ajustes">Ajustes</string>

@@ -32,7 +32,7 @@ import kotlinx.coroutines.withContext
 
 /* Porte de montarTop(): top 20 de linajes completos con cálculo diferido.
    Tocar la card carga la herencia. La fila vive en CardFilaTop
-   (compartida con "Mis corredoras"). */
+   (compartida con "Mis Umas"). */
 @Composable
 fun TopLinajesScreen(modelo: AffinityModel, japones: Boolean, onVerHerencia: (Linaje) -> Unit) {
     var top by remember { mutableStateOf<List<Linaje>?>(null) }

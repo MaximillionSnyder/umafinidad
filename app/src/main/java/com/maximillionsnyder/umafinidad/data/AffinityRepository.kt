@@ -19,6 +19,9 @@ class AffinityRepository(private val context: Context) {
         val members = jsonParser.decodeFromString<List<MemberDto>>(
             context.assets.open("data/succession_relation_member.json").bufferedReader().use { it.readText() },
         ).map { it.toDomain() }
-        return AffinityModel(characters, relations, members)
+        val aptitudes = deserializarAptitudes(
+            context.assets.open("data/aptitudes.json").bufferedReader().use { it.readText() },
+        )
+        return AffinityModel(characters, relations, members, aptitudes)
     }
 }

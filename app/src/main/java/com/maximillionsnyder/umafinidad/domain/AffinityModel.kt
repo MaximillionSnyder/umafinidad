@@ -46,15 +46,26 @@ class AffinityModel private constructor(
     private val tiposPorChar = mutableMapOf<Int, LinkedHashSet<Int>>()
     private val miembrosPorTipo = mutableMapOf<Int, MutableList<Int>>()
     private lateinit var relacionesOrdenadas: List<Relation>
+    private val aptitudesPorId: Map<Int, List<String>>
 
-    constructor(characters: List<Character>, relations: List<Relation>, members: List<Member>) : this(characters, characters.associateBy { it.charId }) {
+    constructor(
+        characters: List<Character>,
+        relations: List<Relation>,
+        members: List<Member>,
+        aptitudes: Map<Int, List<String>> = emptyMap(),
+    ) : this(characters, characters.associateBy { it.charId }) {
         relacionesOrdenadas = relations
         for (r in relations) puntoPorTipo[r.relationType] = r.relationPoint
         for (m in members) {
             tiposPorChar.getOrPut(m.charaId) { linkedSetOf() }.add(m.relationType)
             miembrosPorTipo.getOrPut(m.relationType) { mutableListOf() }.add(m.charaId)
         }
+        aptitudesPorId = aptitudes
     }
+
+    /* Aptitudes (pista/distancia/estilo) de la carta base; null si el
+       personaje no está en la tabla. No afecta ningún cálculo. */
+    fun aptitudesDe(id: Int): List<String>? = aptitudesPorId[id]
 
     fun gruposCompartidos(ids: List<Int>): List<GrupoCompartido> {
         if (ids.size < 2) return emptyList()

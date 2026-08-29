@@ -34,7 +34,7 @@ import com.maximillionsnyder.umafinidad.ui.theme.MedalOro
 import com.maximillionsnyder.umafinidad.ui.theme.MedalPlata
 
 /* Fila del top de linajes, compartida por el Top global ("Mejores
-   linajes") y "Mis corredoras". Los primeros 3 llevan medalla; tocar la
+   linajes") y "Mis Umas". Los primeros 3 llevan medalla; tocar la
    card dispara onClick (ver herencia). */
 @Composable
 fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: Boolean, onClick: () -> Unit) {

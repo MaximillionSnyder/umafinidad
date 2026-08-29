@@ -3,6 +3,9 @@ package com.maximillionsnyder.umafinidad.data
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Member
 import com.maximillionsnyder.umafinidad.domain.Relation
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -39,6 +42,15 @@ internal data class DataBundle(
 /* Configuración del parser: los JSON datamined traen muchísimos campos que
    la app no usa. */
 val jsonParser: Json = Json { ignoreUnknownKeys = true }
+
+/* aptitudes.json: mapa char_id (como string) → 10 letras A–G. Las claves
+   se convierten a Int para alinearlas con el resto del modelo. */
+fun deserializarAptitudes(json: String): Map<Int, List<String>> =
+    jsonParser
+        .decodeFromString(
+            MapSerializer(String.serializer(), ListSerializer(String.serializer())),
+            json,
+        ).mapKeys { it.key.toInt() }
 
 internal fun CharacterDto.toDomain() = Character(charId, enName, jpName, playable, active, urlName)
 internal fun RelationDto.toDomain() = Relation(relationType, relationPoint)

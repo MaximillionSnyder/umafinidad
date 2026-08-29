@@ -47,6 +47,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.maximillionsnyder.umafinidad.ui.componentes.AptitudesChips
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import androidx.compose.ui.Alignment
@@ -250,8 +251,8 @@ fun CompatScreen(
                 }
             } else {
                 when (modoGrilla) {
-                    ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
-                    ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
+                    ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, modelo::aptitudesDe, ::manejarToggle, Modifier.weight(1f))
+                    ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, modelo::aptitudesDe, ::manejarToggle, Modifier.weight(1f))
                 }
             }
         }
@@ -347,6 +348,7 @@ private fun GrillaTarjetas(
     filtrados: List<Character>,
     seleccion: List<Int?>,
     japones: Boolean,
+    aptitudesDe: (Int) -> List<String>?,
     onToggle: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -358,14 +360,20 @@ private fun GrillaTarjetas(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(filtrados, key = { it.charId }) { c ->
-            CardTarjeta(c, seleccion, japones) { onToggle(c.charId) }
+            CardTarjeta(c, seleccion, japones, aptitudesDe(c.charId)) { onToggle(c.charId) }
         }
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun CardTarjeta(personaje: Character, seleccion: List<Int?>, japones: Boolean, onClick: () -> Unit) {
+private fun CardTarjeta(
+    personaje: Character,
+    seleccion: List<Int?>,
+    japones: Boolean,
+    apt: List<String>?,
+    onClick: () -> Unit,
+) {
     val nombrePrincipal = personaje.displayName(japones)
     val nombreSecundario = if (japones) personaje.enName ?: "" else personaje.jpName ?: ""
     val roles = posicionesRes(seleccion, personaje.charId)
@@ -403,6 +411,7 @@ private fun CardTarjeta(personaje: Character, seleccion: List<Int?>, japones: Bo
             if (nombreSecundario.isNotEmpty()) {
                 Text(nombreSecundario, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
             }
+            apt?.let { AptitudesChips(it) }
             if (roles.isNotEmpty()) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     roles.forEach { r ->
@@ -428,6 +437,7 @@ private fun GrillaLista(
     filtrados: List<Character>,
     seleccion: List<Int?>,
     japones: Boolean,
+    aptitudesDe: (Int) -> List<String>?,
     onToggle: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -437,13 +447,19 @@ private fun GrillaLista(
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         items(filtrados.size, key = { filtrados[it].charId }) { idx ->
-            CardFila(filtrados[idx], seleccion, japones) { onToggle(filtrados[idx].charId) }
+            CardFila(filtrados[idx], seleccion, japones, aptitudesDe(filtrados[idx].charId)) { onToggle(filtrados[idx].charId) }
         }
     }
 }
 
 @Composable
-private fun CardFila(personaje: Character, seleccion: List<Int?>, japones: Boolean, onClick: () -> Unit) {
+private fun CardFila(
+    personaje: Character,
+    seleccion: List<Int?>,
+    japones: Boolean,
+    apt: List<String>?,
+    onClick: () -> Unit,
+) {
     val nombrePrincipal = personaje.displayName(japones)
     val nombreSecundario = if (japones) personaje.enName ?: "" else personaje.jpName ?: ""
     val roles = posicionesRes(seleccion, personaje.charId)
@@ -469,6 +485,7 @@ private fun CardFila(personaje: Character, seleccion: List<Int?>, japones: Boole
                     if (nombreSecundario.isNotEmpty()) {
                         Text(nombreSecundario, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
+                    apt?.let { AptitudesChips(it) }
                 }
                 AnimatedVisibility(visible = seleccionado) {
                     Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {

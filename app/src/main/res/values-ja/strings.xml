@@ -3,7 +3,7 @@
     <string name="app_name">Uma Afinidad</string>
     <string name="tab_compat">相性</string>
     <string name="tab_groups">グループ</string>
-    <string name="tab_elenco">所持ウマ娘</string>
+    <string name="tab_elenco">所持ウマ</string>
     <string name="tab_top">トップ血統</string>
     <string name="tab_ranking">ランキング</string>
 
@@ -42,7 +42,7 @@
     <string name="miembros_cantidad">%1$d人</string>
     <string name="sin_grupos_filtro">該当するグループがありません。</string>
 
-    <!-- 所持ウマ娘（マイ所持リスト） -->
+    <!-- 所持ウマ（マイ所持リスト） -->
     <string name="elenco_tab_editar">所持を編集</string>
     <string name="elenco_tab_linajes">マイ血統</string>
     <string name="elenco_contador">%1$d/%2$d</string>
@@ -68,6 +68,21 @@
     <string name="rol_corto_hijo">子</string>
     <string name="rol_corto_padre">親</string>
     <string name="rol_corto_abuelo">祖父母</string>
+
+    <!-- 適性 -->
+    <string name="apt_pista">バ場</string>
+    <string name="apt_distancia">距離</string>
+    <string name="apt_estilo">脚質</string>
+    <string name="apt_turf">芝</string>
+    <string name="apt_dirt">ダート</string>
+    <string name="apt_corta">短距離</string>
+    <string name="apt_milla">マイル</string>
+    <string name="apt_media">中距離</string>
+    <string name="apt_larga">長距離</string>
+    <string name="apt_fuga">逃げ</string>
+    <string name="apt_vanguardia">先行</string>
+    <string name="apt_remate">差し</string>
+    <string name="apt_retraso">追込</string>
 
     <!-- 設定 -->
     <string name="tab_ajustes">設定</string>

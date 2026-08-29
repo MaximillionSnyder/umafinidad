@@ -3,7 +3,7 @@
     <string name="app_name">Uma Afinidad</string>
     <string name="tab_compat">Compatibility</string>
     <string name="tab_groups">Groups</string>
-    <string name="tab_elenco">My roster</string>
+    <string name="tab_elenco">My Umas</string>
     <string name="tab_top">Top lineages</string>
     <string name="tab_ranking">Ranking</string>
 
@@ -42,7 +42,7 @@
     <string name="miembros_cantidad">%1$d members</string>
     <string name="sin_grupos_filtro">No groups with those points.</string>
 
-    <!-- Mis corredoras (elenco propio) -->
+    <!-- My Umas (elenco propio) -->
     <string name="elenco_tab_editar">Edit roster</string>
     <string name="elenco_tab_linajes">My lineages</string>
     <string name="elenco_contador">%1$d/%2$d</string>
@@ -68,6 +68,21 @@
     <string name="rol_corto_hijo">Child</string>
     <string name="rol_corto_padre">Parent</string>
     <string name="rol_corto_abuelo">Grandparent</string>
+
+    <!-- Aptitudes -->
+    <string name="apt_pista">Track</string>
+    <string name="apt_distancia">Distance</string>
+    <string name="apt_estilo">Style</string>
+    <string name="apt_turf">Turf</string>
+    <string name="apt_dirt">Dirt</string>
+    <string name="apt_corta">Sprint</string>
+    <string name="apt_milla">Mile</string>
+    <string name="apt_media">Medium</string>
+    <string name="apt_larga">Long</string>
+    <string name="apt_fuga">Front</string>
+    <string name="apt_vanguardia">Pace</string>
+    <string name="apt_remate">Late</string>
+    <string name="apt_retraso">End</string>
 
     <!-- Ajustes -->
     <string name="tab_ajustes">Settings</string>

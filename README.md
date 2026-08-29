@@ -32,8 +32,9 @@ está en japonés; en cualquier otro caso se usa `en_name`.
 ## Uso
 
 ```bash
-npm run fetch    # actualizar datos datamined → app/src/main/assets/data/
-npm run icons    # regenerar íconos launcher legacy
+npm run fetch              # actualizar datos datamined (incluye aptitudes) → app/src/main/assets/data/
+npm run fetch:aptitudes    # solo aptitudes (track/distancia/estilo) por personaje
+npm run icons              # regenerar íconos launcher legacy
 ./gradlew :app:assembleDebug          # APK debug
 ./gradlew :app:testDebugUnitTest      # tests de paridad con la web
 ```

@@ -80,14 +80,19 @@ private fun App(vm: AppViewModel) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    /* Grupos es una referencia archivada: se abre a pantalla completa
-       desde Ajustes y el botón atrás la cierra. */
+    /* Grupos y Ranking son referencias archivadas: se abren a pantalla
+       completa desde Ajustes y el botón atrás las cierra. */
     var verGrupos by rememberSaveable { mutableStateOf(false) }
+    var verRanking by rememberSaveable { mutableStateOf(false) }
 
     /* Aviso antes de salir: el botón/gesto atrás nunca cierra sin confirmar
-       (salvo dentro de Grupos, donde primero vuelve). */
+       (salvo dentro de Grupos/Ranking, donde primero vuelve). */
     var confirmarSalida by rememberSaveable { mutableStateOf(false) }
-    BackHandler { if (verGrupos) verGrupos = false else confirmarSalida = true }
+    BackHandler {
+        if (verGrupos) verGrupos = false
+        else if (verRanking) verRanking = false
+        else confirmarSalida = true
+    }
 
     val japones = LocalConfiguration.current.locales[0].language == "ja"
 
@@ -106,6 +111,15 @@ private fun App(vm: AppViewModel) {
                 }
             } else {
                 GroupsScreen(modelo = m, japones = japones, onVolver = { verGrupos = false })
+            }
+        } else if (verRanking) {
+            val m = modelo
+            if (m == null) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                RankingScreen(modelo = m, japones = japones, onVolver = { verRanking = false })
             }
         } else {
             Scaffold(
@@ -140,12 +154,6 @@ private fun App(vm: AppViewModel) {
                         NavigationBarItem(
                             selected = tab == 4,
                             onClick = { tab = 4 },
-                            icon = { Icon(painterResource(R.drawable.ic_tab_ranking), contentDescription = null) },
-                            label = { Text(stringResource(R.string.tab_ranking)) },
-                        )
-                        NavigationBarItem(
-                            selected = tab == 5,
-                            onClick = { tab = 5 },
                             icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
                             label = { Text(stringResource(R.string.tab_ajustes)) },
                         )
@@ -208,7 +216,6 @@ private fun App(vm: AppViewModel) {
                                     tab = 0
                                 },
                             )
-                            4 -> RankingScreen(modelo = m, japones = japones)
                             else -> SettingsScreen(
                                 modoGrilla = modoGrilla,
                                 onModoGrilla = vm::setModoGrilla,
@@ -218,6 +225,7 @@ private fun App(vm: AppViewModel) {
                                 onAbrirArbol = vm::abrirArbol,
                                 onEliminarArbol = vm::eliminarArbol,
                                 onAbrirGrupos = { verGrupos = true },
+                                onAbrirRanking = { verRanking = true },
                             )
                         }
                     }

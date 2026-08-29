@@ -111,6 +111,7 @@
     <string name="guardadas_de">Saved for %1$s</string>
     <string name="arboles_ajustes">Saved trees</string>
     <string name="grupos_ajustes_desc">Affinity groups and their members</string>
+    <string name="ranking_ajustes_desc">Most versatile Umas by total affinity</string>
     <string name="guardado_snack">Configuration saved</string>
     <string name="eliminado_snack">Configuration deleted</string>
 </resources>

@@ -111,6 +111,7 @@
     <string name="guardadas_de">Guardadas de %1$s</string>
     <string name="arboles_ajustes">Árboles guardados</string>
     <string name="grupos_ajustes_desc">Grupos de afinidad y sus miembros</string>
+    <string name="ranking_ajustes_desc">Umas más versátiles por afinidad total</string>
     <string name="guardado_snack">Configuración guardada</string>
     <string name="eliminado_snack">Configuración eliminada</string>
 </resources>

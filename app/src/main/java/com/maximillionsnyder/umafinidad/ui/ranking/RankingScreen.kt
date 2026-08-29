@@ -18,6 +18,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,13 +31,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
-import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
 import com.maximillionsnyder.umafinidad.ui.theme.CardFondo
 import com.maximillionsnyder.umafinidad.ui.theme.MedalBronce
@@ -45,47 +47,57 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /* Ranking “Umas más versátiles”: lista pura informativa ordenada por total afinidad.
-   Sin búsqueda, sin click, sin navegación cruzada — solo el listado. */
+   Se abre a pantalla completa desde Ajustes (como Grupos). */
 @Composable
-fun RankingScreen(modelo: AffinityModel, japones: Boolean) {
+fun RankingScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) {
     var ranking by remember { mutableStateOf<List<AffinityModel.RankingAfinidad>?>(null) }
 
     LaunchedEffect(modelo) {
         ranking = withContext(Dispatchers.Default) { modelo.rankingAfinidad() }
     }
 
-    val lista = ranking
-    if (lista == null) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                CircularProgressIndicator()
-                Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onVolver) {
+                Icon(painterResource(R.drawable.ic_atras), contentDescription = stringResource(R.string.volver))
             }
-        }
-        return
-    }
-
-    if (lista.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(stringResource(R.string.sin_datos), color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        return
-    }
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(12.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        item {
-            HeaderBar(
-                titulo = stringResource(R.string.tab_ranking),
-                pillTexto = "${lista.size} ${stringResource(R.string.tab_ranking)}"
+            Text(
+                stringResource(R.string.tab_ranking),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Black,
+                color = Color.White,
             )
-            Spacer(Modifier.padding(bottom = 4.dp))
         }
-        itemsIndexed(lista) { i, entry ->
-            CardFilaRanking(i, entry, modelo, japones)
+
+        val lista = ranking
+        if (lista == null) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    CircularProgressIndicator()
+                    Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            return@Column
+        }
+
+        if (lista.isEmpty()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(stringResource(R.string.sin_datos), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            return@Column
+        }
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            itemsIndexed(lista) { i, entry ->
+                CardFilaRanking(i, entry, modelo, japones)
+            }
         }
     }
 }

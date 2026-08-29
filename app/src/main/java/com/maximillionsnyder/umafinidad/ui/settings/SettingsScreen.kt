@@ -47,6 +47,7 @@ fun SettingsScreen(
     onAbrirArbol: (ArbolGuardado) -> Unit,
     onEliminarArbol: (Long) -> Unit,
     onAbrirGrupos: () -> Unit,
+    onAbrirRanking: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -107,6 +108,33 @@ fun SettingsScreen(
                     Text(stringResource(R.string.tab_groups), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
                     Text(
                         stringResource(R.string.grupos_ajustes_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
+        /* ===== Ranking (referencia, archivado de la barra inferior) ===== */
+        Card(
+            modifier = Modifier.fillMaxWidth().clickable(onClick = onAbrirRanking),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_tab_ranking),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Column {
+                    Text(stringResource(R.string.tab_ranking), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.ranking_ajustes_desc),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

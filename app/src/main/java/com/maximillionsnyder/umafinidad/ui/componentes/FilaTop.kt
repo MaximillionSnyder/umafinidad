@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Linaje
+import com.maximillionsnyder.umafinidad.ui.theme.CardFondo
 import com.maximillionsnyder.umafinidad.ui.theme.MedalBronce
 import com.maximillionsnyder.umafinidad.ui.theme.MedalOro
 import com.maximillionsnyder.umafinidad.ui.theme.MedalPlata
@@ -45,7 +46,7 @@ fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: Boolean, 
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (i < 3) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
-            else MaterialTheme.colorScheme.surfaceContainerLow,
+            else CardFondo,
         ),
         border = if (i < 3) BorderStroke(1.dp, colorDeMedalla(i)!!.copy(alpha = 0.6f)) else null,
     ) {
@@ -56,7 +57,7 @@ fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: Boolean, 
         ) {
             Medalla(i)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(nombres, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis, color = MaterialTheme.colorScheme.primary)
+                Text(nombres, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis, color = Color.White)
                 Text(
                     stringResource(R.string.ver_herencia),
                     style = MaterialTheme.typography.labelSmall,

@@ -33,12 +33,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.theme.colorDeRango
 
 /* Porte de montarGrupos(): chips de filtro por puntos + lista expandible.
@@ -65,6 +67,7 @@ fun GroupsScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) 
                 stringResource(R.string.tab_groups),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Black,
+                color = Color.White,
             )
         }
 

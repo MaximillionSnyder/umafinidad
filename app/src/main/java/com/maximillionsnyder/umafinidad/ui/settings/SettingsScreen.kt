@@ -34,6 +34,7 @@ import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 
 /* Apartado de ajustes: por ahora, el modo de grilla de personajes. */
 @Composable
@@ -54,6 +55,8 @@ fun SettingsScreen(
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
+        HeaderBar(titulo = stringResource(R.string.tab_ajustes))
+
         Text(
             stringResource(R.string.ajustes_apariencia),
             style = MaterialTheme.typography.titleMedium,

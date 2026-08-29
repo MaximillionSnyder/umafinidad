@@ -34,7 +34,9 @@ import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
+import com.maximillionsnyder.umafinidad.ui.theme.CardFondo
 import com.maximillionsnyder.umafinidad.ui.theme.MedalBronce
 import com.maximillionsnyder.umafinidad.ui.theme.MedalOro
 import com.maximillionsnyder.umafinidad.ui.theme.MedalPlata
@@ -74,6 +76,13 @@ fun RankingScreen(modelo: AffinityModel, japones: Boolean) {
         contentPadding = PaddingValues(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        item {
+            HeaderBar(
+                titulo = stringResource(R.string.tab_ranking),
+                pillTexto = "${lista.size} ${stringResource(R.string.tab_ranking)}"
+            )
+            Spacer(Modifier.padding(bottom = 4.dp))
+        }
         itemsIndexed(lista) { i, entry ->
             CardFilaRanking(i, entry, modelo, japones)
         }
@@ -94,7 +103,7 @@ private fun CardFilaRanking(
         shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (pos < 3) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
-            else MaterialTheme.colorScheme.surfaceContainerLow,
+            else CardFondo,
         ),
         border = if (pos < 3) androidx.compose.foundation.BorderStroke(1.dp, colorDeMedalla(pos)!!.copy(alpha = 0.6f)) else null,
     ) {
@@ -112,7 +121,7 @@ private fun CardFilaRanking(
                 maxLines = 1,
                 overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f),
-                color = MaterialTheme.colorScheme.primary,
+                color = Color.White,
             )
             RankPill(rango, entry.total)
         }

@@ -58,6 +58,7 @@ import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.ResultadoCompat
 import com.maximillionsnyder.umafinidad.ui.compat.ResultadoPanel
@@ -151,11 +152,9 @@ fun CorredoraScreen(
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 12.dp),
     ) {
-        Text(
-            stringResource(R.string.tab_corredora),
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Black,
-            modifier = Modifier.padding(start = 4.dp, top = 10.dp, bottom = 8.dp),
+        HeaderBar(
+            titulo = stringResource(R.string.tab_corredora),
+            pillTexto = stringResource(R.string.herencia_contador, seleccionActual.count { it != null })
         )
 
         /* Buscador con sugerencias integradas (no modal). */

@@ -58,6 +58,7 @@ import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.coincideDifuso
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -81,26 +82,10 @@ fun ElencoScreen(
 
     Column(modifier = Modifier.fillMaxSize()) {
         /* Cabecera: título + contador del elenco. */
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                stringResource(R.string.tab_elenco),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Black,
-            )
-            Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.primary) {
-                Text(
-                    stringResource(R.string.elenco_contador, elenco.size, totalJugables),
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-        }
+        HeaderBar(
+            titulo = stringResource(R.string.tab_elenco),
+            pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables)
+        )
 
         TabRow(selectedTabIndex = tab) {
             Tab(

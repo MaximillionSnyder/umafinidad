@@ -2,20 +2,27 @@ package com.maximillionsnyder.umafinidad.ui.componentes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.Rango
 import com.maximillionsnyder.umafinidad.ui.theme.LocalColoresRango
+import com.maximillionsnyder.umafinidad.ui.theme.CardFondo
 import com.maximillionsnyder.umafinidad.ui.theme.fondoDeRango
 import kotlin.math.floor
 
@@ -91,4 +98,50 @@ fun PuntosRango(rango: Rango?, puntos: Int, modifier: Modifier = Modifier) {
         fontWeight = FontWeight.Bold,
         color = color,
     )
+}
+
+/* Cabecera uniforme: título + pastilla opcional (contador).
+   Mismo estilo que la cabecera "Herencia" de CompatScreen. */
+@Composable
+fun HeaderBar(
+    titulo: String,
+    pillTexto: String? = null,
+    onClick: (() -> Unit)? = null,
+    modifier: Modifier = Modifier,
+) {
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val onPrimaryColor = MaterialTheme.colorScheme.onPrimary
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = titulo,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Black,
+            color = Color.White,
+        )
+        pillTexto?.let { texto ->
+            Surface(
+                shape = RoundedCornerShape(999.dp),
+                color = primaryColor,
+                modifier = Modifier
+                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                    .fillMaxWidth()
+                    .wrapContentSize(),
+                onClick = onClick,
+            ) {
+                Text(
+                    text = texto,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = onPrimaryColor,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                )
+            }
+        }
+    }
 }

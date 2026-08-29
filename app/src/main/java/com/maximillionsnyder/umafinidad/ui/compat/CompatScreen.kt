@@ -48,6 +48,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -143,28 +144,11 @@ fun CompatScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
 
-            /* ---- Cabecera protagonista + slots SIEMPRE visibles ---- */
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    stringResource(R.string.seccion_herencia),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Black,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.primary) {
-                    Text(
-                        stringResource(R.string.herencia_contador, seleccion.count { it != null }),
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-            }
+            /* ---- Cabecera Herencia + slots SIEMPRE visibles ---- */
+            HeaderBar(
+                titulo = stringResource(R.string.seccion_herencia),
+                pillTexto = stringResource(R.string.herencia_contador, seleccion.count { it != null })
+            )
 
             Column(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),

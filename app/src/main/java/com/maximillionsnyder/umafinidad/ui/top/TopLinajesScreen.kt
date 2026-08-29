@@ -24,6 +24,7 @@ import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -61,6 +62,13 @@ fun TopLinajesScreen(modelo: AffinityModel, japones: Boolean, onVerHerencia: (Li
         contentPadding = PaddingValues(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        item {
+            HeaderBar(
+                titulo = stringResource(R.string.tab_top),
+                pillTexto = "${lista.size} ${stringResource(R.string.tab_top).lowercase()}"
+            )
+            Spacer(Modifier.padding(bottom = 4.dp))
+        }
         itemsIndexed(lista) { i, combo ->
             CardFilaTop(i, combo, modelo, japones) { onVerHerencia(combo) }
         }

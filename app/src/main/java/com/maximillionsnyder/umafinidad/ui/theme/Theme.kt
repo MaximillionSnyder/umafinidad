@@ -41,6 +41,9 @@ val RolHijo = Color(0xFFF08C3A)
 val GenealogiaRama1 = Color(0xFF82AADD)
 val GenealogiaRama2 = Color(0xFF7ED07E)
 
+/* Fondo de cards más cálido/vivo que surfaceContainerLow. */
+val CardFondo = Color(0xFF2C2824)
+
 fun colorDeGenealogia(slot: Int): Color = when {
     slot == 0 -> RolHijo
     slot == 1 || slot == 3 || slot == 4 -> GenealogiaRama1

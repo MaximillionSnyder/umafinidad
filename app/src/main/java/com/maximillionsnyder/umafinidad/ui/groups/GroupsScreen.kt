@@ -67,7 +67,7 @@ fun GroupsScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) 
                 stringResource(R.string.tab_groups),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Black,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
 

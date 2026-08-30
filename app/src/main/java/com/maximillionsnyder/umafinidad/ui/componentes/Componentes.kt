@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.Rango
 import com.maximillionsnyder.umafinidad.ui.theme.LocalColoresRango
-import com.maximillionsnyder.umafinidad.ui.theme.CardFondo
 import com.maximillionsnyder.umafinidad.ui.theme.fondoDeRango
 import kotlin.math.floor
 
@@ -121,7 +120,7 @@ fun HeaderBar(
             text = titulo,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Black,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
         )
         pillTexto?.let { texto ->
             Surface(

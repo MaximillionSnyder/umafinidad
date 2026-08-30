@@ -87,6 +87,14 @@
     <!-- Ajustes -->
     <string name="tab_ajustes">Ajustes</string>
     <string name="ajustes_apariencia">Apariencia</string>
+    <string name="tema_titulo">Tema</string>
+    <string name="tema_desc">Elegí cómo se ve la app</string>
+    <string name="tema_sistema">Sistema</string>
+    <string name="tema_sistema_desc">Sigue al sistema</string>
+    <string name="tema_claro">Claro</string>
+    <string name="tema_claro_desc">Fondo claro</string>
+    <string name="tema_oscuro">Oscuro</string>
+    <string name="tema_oscuro_desc">Fondo oscuro</string>
     <string name="modo_grilla_pregunta">¿Cómo querés ver los personajes?</string>
     <string name="modo_vertical">Tarjetas grandes</string>
     <string name="modo_vertical_desc">Grilla con avatares grandes y centrados</string>

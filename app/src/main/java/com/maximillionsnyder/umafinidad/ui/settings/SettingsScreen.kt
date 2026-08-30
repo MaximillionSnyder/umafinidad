@@ -33,6 +33,7 @@ import com.maximillionsnyder.umafinidad.BuildConfig
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
+import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 
@@ -41,6 +42,8 @@ import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 fun SettingsScreen(
     modoGrilla: ModoGrilla,
     onModoGrilla: (ModoGrilla) -> Unit,
+    tema: ThemeMode,
+    onTema: (ThemeMode) -> Unit,
     modelo: AffinityModel,
     japones: Boolean,
     arboles: List<ArbolGuardado>,
@@ -82,6 +85,37 @@ fun SettingsScreen(
             descripcion = stringResource(R.string.modo_lista_desc),
             seleccionado = modoGrilla == ModoGrilla.LISTA,
             onClick = { onModoGrilla(ModoGrilla.LISTA) },
+        )
+
+        Spacer(Modifier.height(12.dp))
+        Text(
+            stringResource(R.string.tema_titulo),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+        )
+        Text(
+            stringResource(R.string.tema_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        OpcionGrilla(
+            titulo = stringResource(R.string.tema_sistema),
+            descripcion = stringResource(R.string.tema_sistema_desc),
+            seleccionado = tema == ThemeMode.SISTEMA,
+            onClick = { onTema(ThemeMode.SISTEMA) },
+        )
+        OpcionGrilla(
+            titulo = stringResource(R.string.tema_claro),
+            descripcion = stringResource(R.string.tema_claro_desc),
+            seleccionado = tema == ThemeMode.CLARO,
+            onClick = { onTema(ThemeMode.CLARO) },
+        )
+        OpcionGrilla(
+            titulo = stringResource(R.string.tema_oscuro),
+            descripcion = stringResource(R.string.tema_oscuro_desc),
+            seleccionado = tema == ThemeMode.OSCURO,
+            onClick = { onTema(ThemeMode.OSCURO) },
         )
 
         Spacer(Modifier.height(8.dp))

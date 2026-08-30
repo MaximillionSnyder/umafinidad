@@ -87,6 +87,14 @@
     <!-- 設定 -->
     <string name="tab_ajustes">設定</string>
     <string name="ajustes_apariencia">外観</string>
+    <string name="tema_titulo">テーマ</string>
+    <string name="tema_desc">アプリの外観を選ぶ</string>
+    <string name="tema_sistema">システム</string>
+    <string name="tema_sistema_desc">システムに合わせる</string>
+    <string name="tema_claro">ライト</string>
+    <string name="tema_claro_desc">明るい背景</string>
+    <string name="tema_oscuro">ダーク</string>
+    <string name="tema_oscuro_desc">暗い背景</string>
     <string name="modo_grilla_pregunta">ウマ娘の表示方法は？</string>
     <string name="modo_vertical">大きなカード</string>
     <string name="modo_vertical_desc">大きいアイコンのグリッド表示</string>

@@ -9,6 +9,7 @@ import com.maximillionsnyder.umafinidad.data.ArbolesRepository
 import com.maximillionsnyder.umafinidad.data.ElencoRepository
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
+import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.fusionarArbol
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.GrupoCompartido
@@ -75,6 +76,15 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun setModoGrilla(modo: ModoGrilla) {
         prefs.modoGrilla = modo
         _modoGrilla.value = modo
+    }
+
+    /* Tema persistido (sistema / claro / oscuro). */
+    private val _tema = MutableStateFlow(prefs.tema)
+    val tema: StateFlow<ThemeMode> = _tema
+
+    fun setTema(modo: ThemeMode) {
+        prefs.tema = modo
+        _tema.value = modo
     }
 
     /* ===== Configuraciones de árbol guardadas ===== */

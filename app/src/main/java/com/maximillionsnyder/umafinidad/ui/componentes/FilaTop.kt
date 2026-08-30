@@ -28,10 +28,10 @@ import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Linaje
-import com.maximillionsnyder.umafinidad.ui.theme.CardFondo
 import com.maximillionsnyder.umafinidad.ui.theme.MedalBronce
 import com.maximillionsnyder.umafinidad.ui.theme.MedalOro
 import com.maximillionsnyder.umafinidad.ui.theme.MedalPlata
+import com.maximillionsnyder.umafinidad.ui.theme.cardFondo
 
 /* Fila del top de linajes, compartida por el Top global ("Mejores
    linajes") y "Mis Umas". Los primeros 3 llevan medalla; tocar la
@@ -46,7 +46,7 @@ fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: Boolean, 
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (i < 3) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
-            else CardFondo,
+            else cardFondo(),
         ),
         border = if (i < 3) BorderStroke(1.dp, colorDeMedalla(i)!!.copy(alpha = 0.6f)) else null,
     ) {
@@ -57,7 +57,7 @@ fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: Boolean, 
         ) {
             Medalla(i)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(nombres, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis, color = Color.White)
+                Text(nombres, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis, color = MaterialTheme.colorScheme.onSurface)
                 Text(
                     stringResource(R.string.ver_herencia),
                     style = MaterialTheme.typography.labelSmall,

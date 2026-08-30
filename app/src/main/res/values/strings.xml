@@ -87,6 +87,14 @@
     <!-- Ajustes -->
     <string name="tab_ajustes">Settings</string>
     <string name="ajustes_apariencia">Appearance</string>
+    <string name="tema_titulo">Theme</string>
+    <string name="tema_desc">Choose how the app looks</string>
+    <string name="tema_sistema">System</string>
+    <string name="tema_sistema_desc">Follow system setting</string>
+    <string name="tema_claro">Light</string>
+    <string name="tema_claro_desc">Light background</string>
+    <string name="tema_oscuro">Dark</string>
+    <string name="tema_oscuro_desc">Dark background</string>
     <string name="modo_grilla_pregunta">How do you want to see characters?</string>
     <string name="modo_vertical">Large cards</string>
     <string name="modo_vertical_desc">Grid with large centered avatars</string>

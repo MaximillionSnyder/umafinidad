@@ -6,10 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.compose.BackHandler
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -25,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,11 +35,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
@@ -58,7 +64,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            UmaAfinidadTheme {
+            val tema by vm.tema.collectAsState()
+            UmaAfinidadTheme(tema = tema) {
                 App(vm)
             }
         }
@@ -74,8 +81,9 @@ private fun App(vm: AppViewModel) {
     val arboles by vm.arboles.collectAsState()
     val arbolPendiente by vm.arbolPendiente.collectAsState()
     val elenco by vm.elenco.collectAsState()
+    val tema by vm.tema.collectAsState()
 
-    var tab by rememberSaveable { mutableIntStateOf(0) }
+    val pagerState = rememberPagerState(initialPage = 0) { 5 }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -95,14 +103,19 @@ private fun App(vm: AppViewModel) {
     }
 
     val japones = LocalConfiguration.current.locales[0].language == "ja"
+    val esOscuro = when (tema) {
+        ThemeMode.CLARO -> false
+        ThemeMode.OSCURO -> true
+        ThemeMode.SISTEMA -> isSystemInDarkTheme()
+    }
 
     /* Una config pedida desde Ajustes abre Mi corredora. */
     LaunchedEffect(arbolPendiente) {
-        if (arbolPendiente != null) tab = 3
+        if (arbolPendiente != null) pagerState.animateScrollToPage(3)
     }
 
     /* Fondo con gradiente en toda la app. */
-    Box(modifier = Modifier.fillMaxSize().fondoGradiente()) {
+    Box(modifier = Modifier.fillMaxSize().fondoGradiente(esOscuro)) {
         if (verGrupos) {
             val m = modelo
             if (m == null) {
@@ -126,107 +139,122 @@ private fun App(vm: AppViewModel) {
                 containerColor = Color.Transparent,
                 snackbarHost = { SnackbarHost(snackbarHostState) },
                 bottomBar = {
-                    NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.97f)) {
-                        NavigationBarItem(
-                            selected = tab == 0,
-                            onClick = { tab = 0 },
-                            icon = { Icon(painterResource(R.drawable.ic_tab_compat), contentDescription = null) },
-                            label = { Text(stringResource(R.string.tab_compat)) },
-                        )
-                        NavigationBarItem(
-                            selected = tab == 1,
-                            onClick = { tab = 1 },
-                            icon = { Icon(painterResource(R.drawable.ic_tab_elenco), contentDescription = null) },
-                            label = { Text(stringResource(R.string.tab_elenco)) },
-                        )
-                        NavigationBarItem(
-                            selected = tab == 2,
-                            onClick = { tab = 2 },
-                            icon = { Icon(painterResource(R.drawable.ic_tab_top), contentDescription = null) },
-                            label = { Text(stringResource(R.string.tab_top)) },
-                        )
-                        NavigationBarItem(
-                            selected = tab == 3,
-                            onClick = { tab = 3 },
-                            icon = { Icon(painterResource(R.drawable.ic_tab_corredora), contentDescription = null) },
-                            label = { Text(stringResource(R.string.tab_corredora)) },
-                        )
-                        NavigationBarItem(
-                            selected = tab == 4,
-                            onClick = { tab = 4 },
-                            icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
-                            label = { Text(stringResource(R.string.tab_ajustes)) },
-                        )
+                    Box(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    ) {
+                        NavigationBar(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(28.dp))
+                                .shadow(8.dp, RoundedCornerShape(28.dp)),
+                            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                            tonalElevation = 3.dp,
+                        ) {
+                            NavigationBarItem(
+                                selected = pagerState.currentPage == 0,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
+                                icon = { Icon(painterResource(R.drawable.ic_tab_compat), contentDescription = null) },
+                                label = { Text(stringResource(R.string.tab_compat)) },
+                            )
+                            NavigationBarItem(
+                                selected = pagerState.currentPage == 1,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
+                                icon = { Icon(painterResource(R.drawable.ic_tab_elenco), contentDescription = null) },
+                                label = { Text(stringResource(R.string.tab_elenco)) },
+                            )
+                            NavigationBarItem(
+                                selected = pagerState.currentPage == 2,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
+                                icon = { Icon(painterResource(R.drawable.ic_tab_top), contentDescription = null) },
+                                label = { Text(stringResource(R.string.tab_top)) },
+                            )
+                            NavigationBarItem(
+                                selected = pagerState.currentPage == 3,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
+                                icon = { Icon(painterResource(R.drawable.ic_tab_corredora), contentDescription = null) },
+                                label = { Text(stringResource(R.string.tab_corredora)) },
+                            )
+                            NavigationBarItem(
+                                selected = pagerState.currentPage == 4,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
+                                icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
+                                label = { Text(stringResource(R.string.tab_ajustes)) },
+                            )
+                        }
                     }
                 },
             ) { padding ->
                 Box(modifier = Modifier.fillMaxSize().padding(padding)) {
-                    Crossfade(targetState = modelo to tab, label = "contenido") { (_, t) ->
-                        val m = modelo
-                        if (m == null) {
-                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                            }
-                            return@Crossfade
+                    val m = modelo
+                    if (m == null) {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                         }
-                        when (t) {
-                            0 -> CompatScreen(
-                                modelo = m,
-                                seleccion = seleccion,
-                                resultado = resultado,
-                                modoGrilla = modoGrilla,
-                                japones = japones,
-                                onToggle = vm::toggle,
-                                onQuitarSlot = vm::quitarSlot,
-                                onConfirmarQuitarSoloHijo = vm::confirmarQuitarSoloHijo,
-                                onLimpiarTodo = vm::limpiarTodo,
-                                avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
-                            )
-                            1 -> ElencoScreen(
-                                modelo = m,
-                                japones = japones,
-                                elenco = elenco,
-                                onToggle = vm::toggleElenco,
-                                onMarcar = vm::marcarElenco,
-                                onLimpiar = vm::limpiarElenco,
-                                onVerHerencia = { linaje ->
-                                    vm.cargarLinaje(linaje)
-                                    tab = 0
-                                },
-                            )
-                            2 -> TopLinajesScreen(
-                                modelo = m,
-                                japones = japones,
-                                onVerHerencia = { linaje ->
-                                    vm.cargarLinaje(linaje)
-                                    tab = 0
-                                },
-                            )
-                            3 -> CorredoraScreen(
-                                modelo = m,
-                                japones = japones,
-                                arboles = arboles,
-                                pendiente = arbolPendiente,
-                                onGuardarArbol = vm::guardarArbol,
-                                onEliminarArbol = vm::eliminarArbol,
-                                onConsumirPendiente = vm::consumirArbolPendiente,
-                                avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
-                                onVerHerencia = { sel ->
-                                    vm.cargarSeleccion(sel)
-                                    tab = 0
-                                },
-                            )
-                            else -> SettingsScreen(
-                                modoGrilla = modoGrilla,
-                                onModoGrilla = vm::setModoGrilla,
-                                modelo = m,
-                                japones = japones,
-                                arboles = arboles,
-                                onAbrirArbol = vm::abrirArbol,
-                                onEliminarArbol = vm::eliminarArbol,
-                                onAbrirGrupos = { verGrupos = true },
-                                onAbrirRanking = { verRanking = true },
-                            )
+                    } else {
+                        HorizontalPager(
+                            state = pagerState,
+                            modifier = Modifier.fillMaxSize(),
+                        ) { page ->
+                            when (page) {
+                                0 -> CompatScreen(
+                                    modelo = m,
+                                    seleccion = seleccion,
+                                    resultado = resultado,
+                                    modoGrilla = modoGrilla,
+                                    japones = japones,
+                                    onToggle = vm::toggle,
+                                    onQuitarSlot = vm::quitarSlot,
+                                    onConfirmarQuitarSoloHijo = vm::confirmarQuitarSoloHijo,
+                                    onLimpiarTodo = vm::limpiarTodo,
+                                    avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
+                                )
+                                1 -> ElencoScreen(
+                                    modelo = m,
+                                    japones = japones,
+                                    elenco = elenco,
+                                    onToggle = vm::toggleElenco,
+                                    onMarcar = vm::marcarElenco,
+                                    onLimpiar = vm::limpiarElenco,
+                                    onVerHerencia = { linaje ->
+                                        vm.cargarLinaje(linaje)
+                                        scope.launch { pagerState.animateScrollToPage(0) }
+                                    },
+                                )
+                                2 -> TopLinajesScreen(
+                                    modelo = m,
+                                    japones = japones,
+                                    onVerHerencia = { linaje ->
+                                        vm.cargarLinaje(linaje)
+                                        scope.launch { pagerState.animateScrollToPage(0) }
+                                    },
+                                )
+                                3 -> CorredoraScreen(
+                                    modelo = m,
+                                    japones = japones,
+                                    arboles = arboles,
+                                    pendiente = arbolPendiente,
+                                    onGuardarArbol = vm::guardarArbol,
+                                    onEliminarArbol = vm::eliminarArbol,
+                                    onConsumirPendiente = vm::consumirArbolPendiente,
+                                    avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
+                                    onVerHerencia = { sel ->
+                                        vm.cargarSeleccion(sel)
+                                        scope.launch { pagerState.animateScrollToPage(0) }
+                                    },
+                                )
+                                else -> SettingsScreen(
+                                    modoGrilla = modoGrilla,
+                                    onModoGrilla = vm::setModoGrilla,
+                                    tema = tema,
+                                    onTema = vm::setTema,
+                                    modelo = m,
+                                    japones = japones,
+                                    arboles = arboles,
+                                    onAbrirArbol = vm::abrirArbol,
+                                    onEliminarArbol = vm::eliminarArbol,
+                                    onAbrirGrupos = { verGrupos = true },
+                                    onAbrirRanking = { verRanking = true },
+                                )
+                            }
                         }
                     }
                 }

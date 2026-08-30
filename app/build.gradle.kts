@@ -82,6 +82,7 @@ dependencies {
     val compose = "1.11.4"
     implementation("androidx.compose.ui:ui:$compose")
     implementation("androidx.compose.ui:ui-tooling-preview:$compose")
+    implementation("androidx.compose.foundation:foundation:$compose")
     implementation("androidx.compose.material3:material3:1.4.0")
     debugImplementation("androidx.compose.ui:ui-tooling:$compose")
 

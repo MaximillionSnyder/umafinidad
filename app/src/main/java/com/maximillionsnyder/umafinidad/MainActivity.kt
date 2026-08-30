@@ -83,22 +83,24 @@ private fun App(vm: AppViewModel) {
     val elenco by vm.elenco.collectAsState()
     val tema by vm.tema.collectAsState()
 
-    val pagerState = rememberPagerState(initialPage = 0) { 5 }
+    val pagerState = rememberPagerState(initialPage = 0) { 4 }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    /* Grupos y Ranking son referencias archivadas: se abren a pantalla
-       completa desde Ajustes y el botón atrás las cierra. */
+    /* Grupos, Ranking y Mis Umas son referencias archivadas: se abren a
+       pantalla completa desde Ajustes y el botón atrás las cierra. */
     var verGrupos by rememberSaveable { mutableStateOf(false) }
     var verRanking by rememberSaveable { mutableStateOf(false) }
+    var verElenco by rememberSaveable { mutableStateOf(false) }
 
     /* Aviso antes de salir: el botón/gesto atrás nunca cierra sin confirmar
-       (salvo dentro de Grupos/Ranking, donde primero vuelve). */
+       (salvo dentro de Grupos/Ranking/Mis Umas, donde primero vuelve). */
     var confirmarSalida by rememberSaveable { mutableStateOf(false) }
     BackHandler {
         if (verGrupos) verGrupos = false
         else if (verRanking) verRanking = false
+        else if (verElenco) verElenco = false
         else confirmarSalida = true
     }
 
@@ -111,7 +113,7 @@ private fun App(vm: AppViewModel) {
 
     /* Una config pedida desde Ajustes abre Mi corredora. */
     LaunchedEffect(arbolPendiente) {
-        if (arbolPendiente != null) pagerState.animateScrollToPage(3)
+        if (arbolPendiente != null) pagerState.animateScrollToPage(2)
     }
 
     /* Fondo con gradiente en toda la app. */
@@ -133,6 +135,28 @@ private fun App(vm: AppViewModel) {
                 }
             } else {
                 RankingScreen(modelo = m, japones = japones, onVolver = { verRanking = false })
+            }
+        } else if (verElenco) {
+            val m = modelo
+            if (m == null) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                ElencoScreen(
+                    modelo = m,
+                    japones = japones,
+                    elenco = elenco,
+                    onToggle = vm::toggleElenco,
+                    onMarcar = vm::marcarElenco,
+                    onLimpiar = vm::limpiarElenco,
+                    onVerHerencia = { linaje ->
+                        vm.cargarLinaje(linaje)
+                        verElenco = false
+                        scope.launch { pagerState.animateScrollToPage(0) }
+                    },
+                    onVolver = { verElenco = false },
+                )
             }
         } else {
             Scaffold(
@@ -158,24 +182,18 @@ private fun App(vm: AppViewModel) {
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 1,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
-                                icon = { Icon(painterResource(R.drawable.ic_tab_elenco), contentDescription = null) },
-                                label = { Text(stringResource(R.string.tab_elenco)) },
-                            )
-                            NavigationBarItem(
-                                selected = pagerState.currentPage == 2,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_top), contentDescription = null) },
                                 label = { Text(stringResource(R.string.tab_top)) },
                             )
                             NavigationBarItem(
-                                selected = pagerState.currentPage == 3,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
+                                selected = pagerState.currentPage == 2,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_corredora), contentDescription = null) },
                                 label = { Text(stringResource(R.string.tab_corredora)) },
                             )
                             NavigationBarItem(
-                                selected = pagerState.currentPage == 4,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
+                                selected = pagerState.currentPage == 3,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
                                 label = { Text(stringResource(R.string.tab_ajustes)) },
                             )
@@ -207,19 +225,7 @@ private fun App(vm: AppViewModel) {
                                     onLimpiarTodo = vm::limpiarTodo,
                                     avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
                                 )
-                                1 -> ElencoScreen(
-                                    modelo = m,
-                                    japones = japones,
-                                    elenco = elenco,
-                                    onToggle = vm::toggleElenco,
-                                    onMarcar = vm::marcarElenco,
-                                    onLimpiar = vm::limpiarElenco,
-                                    onVerHerencia = { linaje ->
-                                        vm.cargarLinaje(linaje)
-                                        scope.launch { pagerState.animateScrollToPage(0) }
-                                    },
-                                )
-                                2 -> TopLinajesScreen(
+                                1 -> TopLinajesScreen(
                                     modelo = m,
                                     japones = japones,
                                     onVerHerencia = { linaje ->
@@ -227,7 +233,7 @@ private fun App(vm: AppViewModel) {
                                         scope.launch { pagerState.animateScrollToPage(0) }
                                     },
                                 )
-                                3 -> CorredoraScreen(
+                                2 -> CorredoraScreen(
                                     modelo = m,
                                     japones = japones,
                                     arboles = arboles,
@@ -253,6 +259,7 @@ private fun App(vm: AppViewModel) {
                                     onEliminarArbol = vm::eliminarArbol,
                                     onAbrirGrupos = { verGrupos = true },
                                     onAbrirRanking = { verRanking = true },
+                                    onAbrirElenco = { verElenco = true },
                                 )
                             }
                         }

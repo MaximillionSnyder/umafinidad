@@ -120,6 +120,7 @@
     <string name="arboles_ajustes">保存した血統</string>
     <string name="grupos_ajustes_desc">相性グループとメンバー一覧</string>
     <string name="ranking_ajustes_desc">総合相性で最も汎用性の高いウマ娘</string>
+    <string name="elenco_ajustes_desc">所持ウマとその最適血統</string>
     <string name="guardado_snack">保存しました</string>
     <string name="eliminado_snack">削除しました</string>
 </resources>

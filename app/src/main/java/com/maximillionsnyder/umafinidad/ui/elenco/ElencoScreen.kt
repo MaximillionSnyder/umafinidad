@@ -64,7 +64,8 @@ import kotlinx.coroutines.withContext
 
 /* "Mis Umas": elenco propio del usuario. Solapa 1: marcar qué
    personajes posee (grilla + búsqueda difusa). Solapa 2: los mejores
-   linajes calculados SOLO con ese elenco (mismo algoritmo que el Top). */
+   linajes calculados SOLO con ese elenco (mismo algoritmo que el Top).
+   Se abre a pantalla completa desde Ajustes. */
 @Composable
 fun ElencoScreen(
     modelo: AffinityModel,
@@ -74,6 +75,7 @@ fun ElencoScreen(
     onMarcar: (List<Int>) -> Unit,
     onLimpiar: () -> Unit,
     onVerHerencia: (Linaje) -> Unit,
+    onVolver: () -> Unit,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val totalJugables = remember(modelo) {
@@ -81,11 +83,34 @@ fun ElencoScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        /* Cabecera: título + contador del elenco. */
-        HeaderBar(
-            titulo = stringResource(R.string.tab_elenco),
-            pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables)
-        )
+        /* Cabecera con botón volver. */
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onVolver) {
+                Icon(painterResource(R.drawable.ic_atras), contentDescription = stringResource(R.string.volver))
+            }
+            Text(
+                stringResource(R.string.tab_elenco),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Black,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.weight(1f),
+            )
+            Surface(
+                shape = RoundedCornerShape(999.dp),
+                color = MaterialTheme.colorScheme.primary,
+            ) {
+                Text(
+                    stringResource(R.string.elenco_contador, elenco.size, totalJugables),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                )
+            }
+        }
 
         TabRow(selectedTabIndex = tab) {
             Tab(

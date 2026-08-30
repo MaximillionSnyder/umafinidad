@@ -86,6 +86,7 @@
 
     <!-- Ajustes -->
     <string name="tab_ajustes">Ajustes</string>
+    <string name="tab_mas">Más</string>
     <string name="ajustes_apariencia">Apariencia</string>
     <string name="tema_titulo">Tema</string>
     <string name="tema_desc">Elegí cómo se ve la app</string>

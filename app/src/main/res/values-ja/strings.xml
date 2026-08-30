@@ -86,6 +86,7 @@
 
     <!-- 設定 -->
     <string name="tab_ajustes">設定</string>
+    <string name="tab_mas">その他</string>
     <string name="ajustes_apariencia">外観</string>
     <string name="tema_titulo">テーマ</string>
     <string name="tema_desc">アプリの外観を選ぶ</string>

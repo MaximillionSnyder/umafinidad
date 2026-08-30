@@ -195,7 +195,7 @@ private fun App(vm: AppViewModel) {
                                 selected = pagerState.currentPage == 3,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
-                                label = { Text(stringResource(R.string.tab_ajustes)) },
+                                label = { Text(stringResource(R.string.tab_mas)) },
                             )
                         }
                     }

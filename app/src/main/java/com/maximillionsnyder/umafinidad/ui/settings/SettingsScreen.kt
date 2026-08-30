@@ -1,5 +1,7 @@
 package com.maximillionsnyder.umafinidad.ui.settings
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +22,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -53,6 +59,9 @@ fun SettingsScreen(
     onAbrirRanking: () -> Unit,
     onAbrirElenco: () -> Unit,
 ) {
+    var aparienciaAbierta by rememberSaveable { mutableStateOf(false) }
+    var temaAbierto by rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,64 +69,68 @@ fun SettingsScreen(
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        HeaderBar(titulo = stringResource(R.string.tab_ajustes))
+        HeaderBar(titulo = stringResource(R.string.tab_mas))
 
         Text(
-            stringResource(R.string.ajustes_apariencia),
+            stringResource(R.string.tab_ajustes),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
         )
 
-        Text(
-            stringResource(R.string.modo_grilla_pregunta),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        SeccionDesplegable(
+            titulo = stringResource(R.string.ajustes_apariencia),
+            abierto = aparienciaAbierta,
+            onToggle = { aparienciaAbierta = !aparienciaAbierta },
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    stringResource(R.string.modo_grilla_pregunta),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.modo_vertical),
+                    descripcion = stringResource(R.string.modo_vertical_desc),
+                    seleccionado = modoGrilla == ModoGrilla.TARJETAS,
+                    onClick = { onModoGrilla(ModoGrilla.TARJETAS) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.modo_lista),
+                    descripcion = stringResource(R.string.modo_lista_desc),
+                    seleccionado = modoGrilla == ModoGrilla.LISTA,
+                    onClick = { onModoGrilla(ModoGrilla.LISTA) },
+                )
+            }
+        }
 
-        OpcionGrilla(
-            titulo = stringResource(R.string.modo_vertical),
-            descripcion = stringResource(R.string.modo_vertical_desc),
-            seleccionado = modoGrilla == ModoGrilla.TARJETAS,
-            onClick = { onModoGrilla(ModoGrilla.TARJETAS) },
-        )
-        OpcionGrilla(
-            titulo = stringResource(R.string.modo_lista),
-            descripcion = stringResource(R.string.modo_lista_desc),
-            seleccionado = modoGrilla == ModoGrilla.LISTA,
-            onClick = { onModoGrilla(ModoGrilla.LISTA) },
-        )
-
-        Spacer(Modifier.height(12.dp))
-        Text(
-            stringResource(R.string.tema_titulo),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-        )
-        Text(
-            stringResource(R.string.tema_desc),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        OpcionGrilla(
-            titulo = stringResource(R.string.tema_sistema),
-            descripcion = stringResource(R.string.tema_sistema_desc),
-            seleccionado = tema == ThemeMode.SISTEMA,
-            onClick = { onTema(ThemeMode.SISTEMA) },
-        )
-        OpcionGrilla(
-            titulo = stringResource(R.string.tema_claro),
-            descripcion = stringResource(R.string.tema_claro_desc),
-            seleccionado = tema == ThemeMode.CLARO,
-            onClick = { onTema(ThemeMode.CLARO) },
-        )
-        OpcionGrilla(
-            titulo = stringResource(R.string.tema_oscuro),
-            descripcion = stringResource(R.string.tema_oscuro_desc),
-            seleccionado = tema == ThemeMode.OSCURO,
-            onClick = { onTema(ThemeMode.OSCURO) },
-        )
+        SeccionDesplegable(
+            titulo = stringResource(R.string.tema_titulo),
+            subtitulo = stringResource(R.string.tema_desc),
+            abierto = temaAbierto,
+            onToggle = { temaAbierto = !temaAbierto },
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                OpcionGrilla(
+                    titulo = stringResource(R.string.tema_sistema),
+                    descripcion = stringResource(R.string.tema_sistema_desc),
+                    seleccionado = tema == ThemeMode.SISTEMA,
+                    onClick = { onTema(ThemeMode.SISTEMA) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.tema_claro),
+                    descripcion = stringResource(R.string.tema_claro_desc),
+                    seleccionado = tema == ThemeMode.CLARO,
+                    onClick = { onTema(ThemeMode.CLARO) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.tema_oscuro),
+                    descripcion = stringResource(R.string.tema_oscuro_desc),
+                    seleccionado = tema == ThemeMode.OSCURO,
+                    onClick = { onTema(ThemeMode.OSCURO) },
+                )
+            }
+        }
 
         Spacer(Modifier.height(8.dp))
 
@@ -262,6 +275,55 @@ private fun OpcionGrilla(titulo: String, descripcion: String, seleccionado: Bool
             Column(modifier = Modifier.weight(1f)) {
                 Text(titulo, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
                 Text(descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+    }
+}
+
+@Composable
+private fun SeccionDesplegable(
+    titulo: String,
+    abierto: Boolean,
+    onToggle: () -> Unit,
+    subtitulo: String? = null,
+    contenido: @Composable () -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+    ) {
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onToggle)
+                    .padding(horizontal = 12.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(titulo, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    if (subtitulo != null) {
+                        Text(subtitulo, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
+                Text(
+                    if (abierto) "∧" else "∨",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+            AnimatedVisibility(visible = abierto) {
+                Column(
+                    modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    contenido()
+                }
             }
         }
     }

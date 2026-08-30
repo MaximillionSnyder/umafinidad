@@ -56,7 +56,6 @@ import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.coincideDifuso
-import com.maximillionsnyder.umafinidad.ui.componentes.AptitudesChips
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
@@ -174,7 +173,7 @@ private fun EditorElenco(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(filtrados, key = { it.charId }) { c ->
-                    CardElenco(c, marcado = elenco.contains(c.charId), japones = japones, apt = modelo.aptitudesDe(c.charId)) { onToggle(c.charId) }
+                    CardElenco(c, marcado = elenco.contains(c.charId), japones = japones) { onToggle(c.charId) }
                 }
             }
         }
@@ -201,13 +200,7 @@ private fun EditorElenco(
 }
 
 @Composable
-private fun CardElenco(
-    personaje: Character,
-    marcado: Boolean,
-    japones: Boolean,
-    apt: List<String>?,
-    onClick: () -> Unit,
-) {
+private fun CardElenco(personaje: Character, marcado: Boolean, japones: Boolean, onClick: () -> Unit) {
     val nombrePrincipal = personaje.displayName(japones)
 
     Card(
@@ -251,7 +244,6 @@ private fun CardElenco(
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
             )
-            apt?.let { AptitudesChips(it) }
         }
     }
 }

@@ -88,6 +88,16 @@
     <string name="tab_ajustes">設定</string>
     <string name="tab_mas">その他</string>
     <string name="ajustes_apariencia">外観</string>
+    <string name="idioma_titulo">言語</string>
+    <string name="idioma_desc">アプリの言語を選ぶ</string>
+    <string name="idioma_sistema">システム</string>
+    <string name="idioma_sistema_desc">システムに合わせる</string>
+    <string name="idioma_espanol">スペイン語</string>
+    <string name="idioma_espanol_desc">Español</string>
+    <string name="idioma_ingles">英語</string>
+    <string name="idioma_ingles_desc">English</string>
+    <string name="idioma_japones">日本語</string>
+    <string name="idioma_japones_desc">日本語</string>
     <string name="tema_titulo">テーマ</string>
     <string name="tema_desc">アプリの外観を選ぶ</string>
     <string name="tema_sistema">システム</string>

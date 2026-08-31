@@ -51,6 +51,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.data.ThemeMode
+import com.maximillionsnyder.umafinidad.data.aplicarIdioma
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
@@ -68,6 +69,11 @@ class MainActivity : ComponentActivity() {
     private val vm by viewModels<AppViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Aplica idioma guardado antes de inflar para que resources ya estén localizados
+        try {
+            val prefs = com.maximillionsnyder.umafinidad.data.PrefsRepository(this)
+            aplicarIdioma(prefs.idioma)
+        } catch (_: Exception) {}
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -94,6 +100,11 @@ private fun App(vm: AppViewModel) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val idioma by vm.idioma.collectAsState()
+
+    LaunchedEffect(idioma) {
+        aplicarIdioma(idioma)
+    }
 
     /* Grupos, Ranking y Mis Umas son referencias archivadas: se abren a
        pantalla completa desde Ajustes y el botón atrás las cierra. */
@@ -303,6 +314,8 @@ private fun App(vm: AppViewModel) {
                                     onModoGrilla = vm::setModoGrilla,
                                     tema = tema,
                                     onTema = vm::setTema,
+                                    idioma = idioma,
+                                    onIdioma = vm::setIdioma,
                                     modelo = m,
                                     japones = japones,
                                     arboles = arboles,

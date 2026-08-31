@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import com.maximillionsnyder.umafinidad.BuildConfig
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
+import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
@@ -50,6 +51,8 @@ fun SettingsScreen(
     onModoGrilla: (ModoGrilla) -> Unit,
     tema: ThemeMode,
     onTema: (ThemeMode) -> Unit,
+    idioma: Idioma,
+    onIdioma: (Idioma) -> Unit,
     modelo: AffinityModel,
     japones: Boolean,
     arboles: List<ArbolGuardado>,
@@ -61,6 +64,7 @@ fun SettingsScreen(
 ) {
     var aparienciaAbierta by rememberSaveable { mutableStateOf(false) }
     var temaAbierto by rememberSaveable { mutableStateOf(false) }
+    var idiomaAbierto by rememberSaveable { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderBar(titulo = stringResource(R.string.tab_mas))
@@ -129,6 +133,40 @@ fun SettingsScreen(
                     descripcion = stringResource(R.string.tema_oscuro_desc),
                     seleccionado = tema == ThemeMode.OSCURO,
                     onClick = { onTema(ThemeMode.OSCURO) },
+                )
+            }
+        }
+
+        SeccionDesplegable(
+            titulo = stringResource(R.string.idioma_titulo),
+            subtitulo = stringResource(R.string.idioma_desc),
+            abierto = idiomaAbierto,
+            onToggle = { idiomaAbierto = !idiomaAbierto },
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_sistema),
+                    descripcion = stringResource(R.string.idioma_sistema_desc),
+                    seleccionado = idioma == Idioma.SISTEMA,
+                    onClick = { onIdioma(Idioma.SISTEMA) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_espanol),
+                    descripcion = stringResource(R.string.idioma_espanol_desc),
+                    seleccionado = idioma == Idioma.ESPANOL,
+                    onClick = { onIdioma(Idioma.ESPANOL) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_ingles),
+                    descripcion = stringResource(R.string.idioma_ingles_desc),
+                    seleccionado = idioma == Idioma.INGLES,
+                    onClick = { onIdioma(Idioma.INGLES) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_japones),
+                    descripcion = stringResource(R.string.idioma_japones_desc),
+                    seleccionado = idioma == Idioma.JAPONES,
+                    onClick = { onIdioma(Idioma.JAPONES) },
                 )
             }
         }

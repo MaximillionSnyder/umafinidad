@@ -20,8 +20,15 @@ class PrefsRepository(context: Context) {
         } ?: ThemeMode.SISTEMA
         set(valor) = prefs.edit().putString(KEY_TEMA, valor.name).apply()
 
+    var idioma: Idioma
+        get() = prefs.getString(KEY_IDIOMA, null)?.let { raw ->
+            try { Idioma.valueOf(raw) } catch (_: IllegalArgumentException) { Idioma.SISTEMA }
+        } ?: Idioma.SISTEMA
+        set(valor) = prefs.edit().putString(KEY_IDIOMA, valor.name).apply()
+
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
         const val KEY_TEMA = "tema_modo"
+        const val KEY_IDIOMA = "idioma_modo"
     }
 }

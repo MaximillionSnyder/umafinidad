@@ -88,6 +88,16 @@
     <string name="tab_ajustes">Settings</string>
     <string name="tab_mas">More</string>
     <string name="ajustes_apariencia">Appearance</string>
+    <string name="idioma_titulo">Language</string>
+    <string name="idioma_desc">Choose app language</string>
+    <string name="idioma_sistema">System</string>
+    <string name="idioma_sistema_desc">Follow system language</string>
+    <string name="idioma_espanol">Spanish</string>
+    <string name="idioma_espanol_desc">Español</string>
+    <string name="idioma_ingles">English</string>
+    <string name="idioma_ingles_desc">English</string>
+    <string name="idioma_japones">Japanese</string>
+    <string name="idioma_japones_desc">日本語</string>
     <string name="tema_titulo">Theme</string>
     <string name="tema_desc">Choose how the app looks</string>
     <string name="tema_sistema">System</string>

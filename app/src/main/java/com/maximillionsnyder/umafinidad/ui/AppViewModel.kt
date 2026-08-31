@@ -7,6 +7,7 @@ import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.ArbolesRepository
 import com.maximillionsnyder.umafinidad.data.ElencoRepository
+import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
 import com.maximillionsnyder.umafinidad.data.ThemeMode
@@ -85,6 +86,15 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun setTema(modo: ThemeMode) {
         prefs.tema = modo
         _tema.value = modo
+    }
+
+    /* Idioma persistido (sistema / es / en / ja). */
+    private val _idioma = MutableStateFlow(prefs.idioma)
+    val idioma: StateFlow<Idioma> = _idioma
+
+    fun setIdioma(valor: Idioma) {
+        prefs.idioma = valor
+        _idioma.value = valor
     }
 
     /* ===== Configuraciones de árbol guardadas ===== */

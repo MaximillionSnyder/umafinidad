@@ -137,9 +137,13 @@ fun CompatScreen(
         if (onQuitarSlot(i) == QuitarResultado.NECESITA_CONFIRMACION) dialogoQuitar = true
     }
 
-    val filtrados = modelo.personajes
-        .filter { it.playable == true && it.active == true }
-        .filter { coincideDifuso(it, filtro) }
+    val seleccionSet = remember(seleccion) { seleccion.filterNotNull().toSet() }
+    val filtrados = remember(modelo, filtro, seleccionSet) {
+        modelo.personajes
+            .filter { it.playable == true && it.active == true }
+            .filter { coincideDifuso(it, filtro) }
+            .sortedWith(compareBy { if (it.charId in seleccionSet) 0 else 1 })
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -249,9 +253,12 @@ fun CompatScreen(
                     }
                 }
             } else {
-                when (modoGrilla) {
-                    ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
-                    ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
+                // Al venir de ver herencia, los seleccionados se acomodan primero para no tener que scrollear
+                androidx.compose.runtime.key(seleccion) {
+                    when (modoGrilla) {
+                        ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
+                        ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
+                    }
                 }
             }
         }

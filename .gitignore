@@ -18,3 +18,7 @@ keystore-*.zip
 
 # Sistema
 .DS_Store
+
+# Local tooling (no commitear)
+.codegraph/
+.opencode/

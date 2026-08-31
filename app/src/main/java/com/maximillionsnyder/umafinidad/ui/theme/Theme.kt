@@ -1,6 +1,7 @@
 package com.maximillionsnyder.umafinidad.ui.theme
 
 import android.app.Activity
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -169,8 +170,18 @@ fun UmaAfinidadTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = esquema.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !esOscuro
+            window.statusBarColor = Color.Transparent.toArgb()
+            // Transparent nav bar where supported; fallback to solid background on legacy 3-button devices
+            window.navigationBarColor = if (Build.VERSION.SDK_INT >= 29) {
+                Color.Transparent.toArgb()
+            } else {
+                esquema.background.toArgb()
+            }
+            val controller = WindowCompat.getInsetsController(window, view)
+            controller.isAppearanceLightStatusBars = !esOscuro
+            if (Build.VERSION.SDK_INT >= 26) {
+                controller.isAppearanceLightNavigationBars = !esOscuro
+            }
         }
     }
 

@@ -601,19 +601,6 @@ private fun FilaVinculo(v: FilaVinculoUi, modelo: AffinityModel, japones: Boolea
             if (v.esCorredora) {
                 Nota(stringResource(R.string.corredora_nota), compacta = true)
             }
-            if (v.compartidos.isEmpty()) {
-                Nota(stringResource(R.string.sin_grupos_comun), compacta = true)
-            } else {
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    val visibles = v.compartidos.take(6)
-                    visibles.forEach { g ->
-                        ChipGrupo("#${g.tipo}", "${g.puntos}pt")
-                    }
-                    if (v.compartidos.size > 6) {
-                        ChipGrupo(stringResource(R.string.mas_grupos, v.compartidos.size - 6), "")
-                    }
-                }
-            }
         }
     }
 }

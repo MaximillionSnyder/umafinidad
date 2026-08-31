@@ -22,42 +22,42 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 
-val FondoArriba = Color(0xFF1B1E24)
-val FondoAbajo = Color(0xFF14161A)
-val Primario = Color(0xFFFFB782)
-val AcentoNaranja = Color(0xFFF08C3A)
+val FondoArriba = Color(0xFF000000)
+val FondoAbajo = Color(0xFF000000)
+val Primario = Color(0xFFFF8C42)
+val AcentoNaranja = Color(0xFFFF8C42)
 val SobrePrimario = Color(0xFF4F2500)
-val ContenedorPrimario = Color(0xFF6F3A06)
+val ContenedorPrimario = Color(0xFF7A3E00)
 val SobreContenedorPrimario = Color(0xFFFFDBC2)
-val ContenedorSecundario = Color(0xFF544239)
+val ContenedorSecundario = Color(0xFF3A2F27)
 val SobreContenedorSecundario = Color(0xFFFFDCC2)
-val SuperficieBaja = Color(0xFF1D2026)
-val Superficie = Color(0xFF22262C)
-val SuperficieAlta = Color(0xFF262A32)
-val SuperficieMaxima = Color(0xFF2B3038)
-val TextoPrincipal = Color(0xFFE8EAF0)
-val TextoSecundario = Color(0xFF9AA0AD)
+val SuperficieBaja = Color(0xFF0A0A0A)
+val Superficie = Color(0xFF121212)
+val SuperficieAlta = Color(0xFF1E1E1E)
+val SuperficieMaxima = Color(0xFF2A2A2A)
+val TextoPrincipal = Color(0xFFF2F2F2)
+val TextoSecundario = Color(0xFF9CA3AF)
 val Contorno = Color(0xFF8D919B)
-val ContornoVariante = Color(0xFF2C313B)
+val ContornoVariante = Color(0xFF2A2A2A)
 
-/* ---- Tema claro (réplica cálida de AppGasto Light) ---- */
-val FondoArribaClaro = Color(0xFFFFF8F0)
-val FondoAbajoClaro = Color(0xFFF5EFE6)
-val PrimarioClaro = Color(0xFF7A3A00)
+/* ---- Tema claro: fondo blanco puro + superficies neutras ---- */
+val FondoArribaClaro = Color(0xFFFFFFFF)
+val FondoAbajoClaro = Color(0xFFFFFFFF)
+val PrimarioClaro = Color(0xFFC2410C)
 val SobrePrimarioClaro = Color(0xFFFFFFFF)
-val ContenedorPrimarioClaro = Color(0xFFFFDBC2)
+val ContenedorPrimarioClaro = Color(0xFFFFE8D6)
 val SobreContenedorPrimarioClaro = Color(0xFF4F2500)
 val ContenedorSecundarioClaro = Color(0xFFFFDCC2)
 val SobreContenedorSecundarioClaro = Color(0xFF544239)
-val SuperficieBajaClaro = Color(0xFFFFFBFF)
-val SuperficieClaro = Color(0xFFF5F0EB)
-val SuperficieAltaClaro = Color(0xFFEDE8E1)
-val SuperficieMaximaClaro = Color(0xFFE8E0D6)
-val TextoPrincipalClaro = Color(0xFF1B1E24)
-val TextoSecundarioClaro = Color(0xFF5A5E6B)
-val ContornoClaro = Color(0xFF7A7E88)
-val ContornoVarianteClaro = Color(0xFFE0D8D0)
-val CardFondoClaro = Color(0xFFFFF3E8)
+val SuperficieBajaClaro = Color(0xFFFFFFFF)
+val SuperficieClaro = Color(0xFFF9F9F9)
+val SuperficieAltaClaro = Color(0xFFF1F1F1)
+val SuperficieMaximaClaro = Color(0xFFEAEAEA)
+val TextoPrincipalClaro = Color(0xFF111111)
+val TextoSecundarioClaro = Color(0xFF6B7280)
+val ContornoClaro = Color(0xFF9CA3AF)
+val ContornoVarianteClaro = Color(0xFFE5E7EB)
+val CardFondoClaro = Color(0xFFF9F9F9)
 
 /* Rangos de afinidad (mismos colores que la PWA) + fondo tintado al 12%. */
 val RankGreat = Color(0xFF7ED07E)
@@ -71,8 +71,8 @@ val RolHijo = Color(0xFFF08C3A)
 val GenealogiaRama1 = Color(0xFF82AADD)
 val GenealogiaRama2 = Color(0xFF7ED07E)
 
-/* Fondo de cards más cálido/vivo que surfaceContainerLow. */
-val CardFondo = Color(0xFF2C2824)
+/* Fondo de cards: sutil elevación sobre el fondo puro (negro/blanco). */
+val CardFondo = Color(0xFF1A1A1A)
 
 fun colorDeGenealogia(slot: Int): Color = when {
     slot == 0 -> RolHijo
@@ -107,6 +107,11 @@ private val EsquemaOscuro = darkColorScheme(
     onSurface = TextoPrincipal,
     surfaceVariant = SuperficieAlta,
     onSurfaceVariant = TextoSecundario,
+    surfaceContainerLowest = FondoAbajo,
+    surfaceContainerLow = SuperficieBaja,
+    surfaceContainer = Superficie,
+    surfaceContainerHigh = SuperficieAlta,
+    surfaceContainerHighest = SuperficieMaxima,
     outline = Contorno,
     outlineVariant = ContornoVariante,
 )
@@ -124,6 +129,11 @@ private val EsquemaClaro = lightColorScheme(
     onSurface = TextoPrincipalClaro,
     surfaceVariant = SuperficieAltaClaro,
     onSurfaceVariant = TextoSecundarioClaro,
+    surfaceContainerLowest = FondoAbajoClaro,
+    surfaceContainerLow = SuperficieBajaClaro,
+    surfaceContainer = SuperficieClaro,
+    surfaceContainerHigh = SuperficieAltaClaro,
+    surfaceContainerHighest = SuperficieMaximaClaro,
     outline = ContornoClaro,
     outlineVariant = ContornoVarianteClaro,
 )

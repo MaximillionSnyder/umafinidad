@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
 import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
 import com.maximillionsnyder.umafinidad.ui.theme.MedalBronce
 import com.maximillionsnyder.umafinidad.ui.theme.MedalOro
@@ -56,21 +58,11 @@ fun RankingScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit)
         ranking = withContext(Dispatchers.Default) { modelo.rankingAfinidad() }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = onVolver) {
-                Icon(painterResource(R.drawable.ic_atras), contentDescription = stringResource(R.string.volver))
-            }
-            Text(
-                stringResource(R.string.tab_ranking),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Black,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-        }
+    Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+        HeaderBarConVolver(
+            titulo = stringResource(R.string.tab_ranking),
+            onVolver = onVolver,
+        )
 
         val lista = ranking
         if (lista == null) {

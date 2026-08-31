@@ -59,20 +59,19 @@ fun TopLinajesScreen(modelo: AffinityModel, japones: Boolean, onVerHerencia: (Li
         return
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(12.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        item {
-            HeaderBar(
-                titulo = stringResource(R.string.tab_top),
-                pillTexto = "${lista.size} ${stringResource(R.string.tab_top).lowercase()}"
-            )
-            Spacer(Modifier.padding(bottom = 4.dp))
-        }
-        itemsIndexed(lista) { i, combo ->
-            CardFilaTop(i, combo, modelo, japones) { onVerHerencia(combo) }
+    Column(modifier = Modifier.fillMaxSize()) {
+        HeaderBar(
+            titulo = stringResource(R.string.tab_top),
+            pillTexto = "${lista.size} ${stringResource(R.string.tab_top).lowercase()}"
+        )
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            itemsIndexed(lista) { i, combo ->
+                CardFilaTop(i, combo, modelo, japones) { onVerHerencia(combo) }
+            }
         }
     }
 }

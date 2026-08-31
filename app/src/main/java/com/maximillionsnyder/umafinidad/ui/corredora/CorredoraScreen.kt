@@ -146,18 +146,19 @@ fun CorredoraScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 12.dp),
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
         HeaderBar(
             titulo = stringResource(R.string.tab_corredora),
             pillTexto = stringResource(R.string.herencia_contador, seleccionActual.count { it != null })
         )
 
-        /* Buscador con sugerencias integradas (no modal). */
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 12.dp),
+        ) {
+            /* Buscador con sugerencias integradas (no modal). */
         Column(modifier = Modifier.padding(bottom = 8.dp)) {
             OutlinedTextField(
                 value = filtro,
@@ -264,7 +265,8 @@ fun CorredoraScreen(
             }
         }
 
-        Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(24.dp))
+        }
     }
 
     /* Diálogo de guardado con nombre opcional. */

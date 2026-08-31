@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -40,7 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
-import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
 import com.maximillionsnyder.umafinidad.ui.theme.colorDeRango
 
 /* Porte de montarGrupos(): chips de filtro por puntos + lista expandible.
@@ -54,22 +55,11 @@ fun GroupsScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) 
     var min by rememberSaveable { mutableIntStateOf(0) }
     var grupoAbierto by rememberSaveable { mutableStateOf<Int?>(null) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        /* Cabecera con botón volver (ya no es una pestaña de la barra). */
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = onVolver) {
-                Icon(painterResource(R.drawable.ic_atras), contentDescription = stringResource(R.string.volver))
-            }
-            Text(
-                stringResource(R.string.tab_groups),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Black,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-        }
+    Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+        HeaderBarConVolver(
+            titulo = stringResource(R.string.tab_groups),
+            onVolver = onVolver,
+        )
 
         LazyRow(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp),

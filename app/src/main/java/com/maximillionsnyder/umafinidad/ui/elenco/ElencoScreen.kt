@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -58,7 +59,7 @@ import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.coincideDifuso
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
-import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -82,35 +83,12 @@ fun ElencoScreen(
         modelo.personajes.count { it.playable == true && it.active == true }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        /* Cabecera con botón volver. */
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = onVolver) {
-                Icon(painterResource(R.drawable.ic_atras), contentDescription = stringResource(R.string.volver))
-            }
-            Text(
-                stringResource(R.string.tab_elenco),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Black,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.weight(1f),
-            )
-            Surface(
-                shape = RoundedCornerShape(999.dp),
-                color = MaterialTheme.colorScheme.primary,
-            ) {
-                Text(
-                    stringResource(R.string.elenco_contador, elenco.size, totalJugables),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                )
-            }
-        }
+    Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+        HeaderBarConVolver(
+            titulo = stringResource(R.string.tab_elenco),
+            onVolver = onVolver,
+            pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables),
+        )
 
         TabRow(selectedTabIndex = tab) {
             Tab(

@@ -10,8 +10,11 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,6 +47,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
@@ -167,38 +172,81 @@ private fun App(vm: AppViewModel) {
                 snackbarHost = { SnackbarHost(snackbarHostState) },
                 bottomBar = {
                     Box(
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .navigationBarsPadding()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        contentAlignment = Alignment.Center,
                     ) {
                         NavigationBar(
                             modifier = Modifier
+                                .widthIn(max = 560.dp)
+                                .fillMaxWidth()
                                 .clip(RoundedCornerShape(28.dp))
                                 .shadow(8.dp, RoundedCornerShape(28.dp)),
                             containerColor = MaterialTheme.colorScheme.surfaceContainer,
                             tonalElevation = 3.dp,
+                            windowInsets = WindowInsets(0.dp),
                         ) {
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 0,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_compat), contentDescription = null) },
-                                label = { Text(stringResource(R.string.tab_compat)) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_compat),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                },
+                                alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 1,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_top), contentDescription = null) },
-                                label = { Text(stringResource(R.string.tab_top)) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_top),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                },
+                                alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 2,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_corredora), contentDescription = null) },
-                                label = { Text(stringResource(R.string.tab_corredora)) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_corredora),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                },
+                                alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 3,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
-                                label = { Text(stringResource(R.string.tab_mas)) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_mas),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                },
+                                alwaysShowLabel = true,
                             )
                         }
                     }

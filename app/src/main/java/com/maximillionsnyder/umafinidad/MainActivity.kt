@@ -319,7 +319,10 @@ private fun App(vm: AppViewModel) {
                                     modelo = m,
                                     japones = japones,
                                     arboles = arboles,
-                                    onAbrirArbol = vm::abrirArbol,
+                                    onAbrirArbol = { a ->
+                                        vm.abrirArbol(a)
+                                        scope.launch { pagerState.animateScrollToPage(2) }
+                                    },
                                     onEliminarArbol = vm::eliminarArbol,
                                     onAbrirGrupos = { verGrupos = true },
                                     onAbrirRanking = { verRanking = true },

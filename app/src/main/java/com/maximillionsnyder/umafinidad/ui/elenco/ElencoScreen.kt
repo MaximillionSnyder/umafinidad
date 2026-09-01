@@ -59,14 +59,13 @@ import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.coincideDifuso
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/* "Mis Umas": elenco propio del usuario. Solapa 1: marcar qué
-   personajes posee (grilla + búsqueda difusa). Solapa 2: los mejores
-   linajes calculados SOLO con ese elenco (mismo algoritmo que el Top).
-   Se abre a pantalla completa desde Ajustes. */
+/* "Mis Umas": elenco propio. Como tab individual al lado de Mi corredora
+   (también accesible desde Más). Solapa 1: editar roster. Solapa 2: mejores linajes del elenco. */
 @Composable
 fun ElencoScreen(
     modelo: AffinityModel,
@@ -76,19 +75,30 @@ fun ElencoScreen(
     onMarcar: (List<Int>) -> Unit,
     onLimpiar: () -> Unit,
     onVerHerencia: (Linaje) -> Unit,
-    onVolver: () -> Unit,
+    onVolver: (() -> Unit)? = null,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val totalJugables = remember(modelo) {
         modelo.personajes.count { it.playable == true && it.active == true }
     }
 
-    Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
-        HeaderBarConVolver(
-            titulo = stringResource(R.string.tab_elenco),
-            onVolver = onVolver,
-            pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables),
+    Column(
+        modifier = Modifier.fillMaxSize().then(
+            if (onVolver != null) Modifier.navigationBarsPadding() else Modifier
         )
+    ) {
+        if (onVolver != null) {
+            HeaderBarConVolver(
+                titulo = stringResource(R.string.tab_elenco),
+                onVolver = onVolver,
+                pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables),
+            )
+        } else {
+            HeaderBar(
+                titulo = stringResource(R.string.tab_elenco),
+                pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables),
+            )
+        }
 
         TabRow(selectedTabIndex = tab) {
             Tab(

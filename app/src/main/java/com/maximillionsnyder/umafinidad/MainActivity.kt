@@ -96,7 +96,7 @@ private fun App(vm: AppViewModel) {
     val elenco by vm.elenco.collectAsState()
     val tema by vm.tema.collectAsState()
 
-    val pagerState = rememberPagerState(initialPage = 0) { 4 }
+    val pagerState = rememberPagerState(initialPage = 0) { 5 }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -106,19 +106,17 @@ private fun App(vm: AppViewModel) {
         aplicarIdioma(idioma)
     }
 
-    /* Grupos, Ranking y Mis Umas son referencias archivadas: se abren a
-       pantalla completa desde Ajustes y el botón atrás las cierra. */
+    /* Grupos y Ranking son referencias archivadas: se abren a
+       pantalla completa desde Ajustes y el botón atrás las cierra. Mis Umas ya es tab. */
     var verGrupos by rememberSaveable { mutableStateOf(false) }
     var verRanking by rememberSaveable { mutableStateOf(false) }
-    var verElenco by rememberSaveable { mutableStateOf(false) }
 
     /* Aviso antes de salir: el botón/gesto atrás nunca cierra sin confirmar
-       (salvo dentro de Grupos/Ranking/Mis Umas, donde primero vuelve). */
+       (salvo dentro de Grupos/Ranking, donde primero vuelve). */
     var confirmarSalida by rememberSaveable { mutableStateOf(false) }
     BackHandler {
         if (verGrupos) verGrupos = false
         else if (verRanking) verRanking = false
-        else if (verElenco) verElenco = false
         else confirmarSalida = true
     }
 
@@ -154,28 +152,6 @@ private fun App(vm: AppViewModel) {
             } else {
                 RankingScreen(modelo = m, japones = japones, onVolver = { verRanking = false })
             }
-        } else if (verElenco) {
-            val m = modelo
-            if (m == null) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            } else {
-                ElencoScreen(
-                    modelo = m,
-                    japones = japones,
-                    elenco = elenco,
-                    onToggle = vm::toggleElenco,
-                    onMarcar = vm::marcarElenco,
-                    onLimpiar = vm::limpiarElenco,
-                    onVerHerencia = { linaje ->
-                        vm.cargarLinaje(linaje)
-                        verElenco = false
-                        scope.launch { pagerState.animateScrollToPage(0) }
-                    },
-                    onVolver = { verElenco = false },
-                )
-            }
         } else {
             Scaffold(
                 containerColor = Color.Transparent,
@@ -191,7 +167,7 @@ private fun App(vm: AppViewModel) {
                     ) {
                         NavigationBar(
                             modifier = Modifier
-                                .widthIn(max = 560.dp)
+                                .widthIn(max = 640.dp)
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(28.dp))
                                 .shadow(8.dp, RoundedCornerShape(28.dp)),
@@ -209,7 +185,7 @@ private fun App(vm: AppViewModel) {
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelMedium,
+                                        style = MaterialTheme.typography.labelSmall,
                                     )
                                 },
                                 alwaysShowLabel = true,
@@ -224,7 +200,7 @@ private fun App(vm: AppViewModel) {
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelMedium,
+                                        style = MaterialTheme.typography.labelSmall,
                                     )
                                 },
                                 alwaysShowLabel = true,
@@ -239,7 +215,7 @@ private fun App(vm: AppViewModel) {
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelMedium,
+                                        style = MaterialTheme.typography.labelSmall,
                                     )
                                 },
                                 alwaysShowLabel = true,
@@ -247,6 +223,21 @@ private fun App(vm: AppViewModel) {
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 3,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
+                                icon = { Icon(painterResource(R.drawable.ic_tab_elenco), contentDescription = null) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_elenco),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.labelSmall,
+                                    )
+                                },
+                                alwaysShowLabel = true,
+                            )
+                            NavigationBarItem(
+                                selected = pagerState.currentPage == 4,
+                                onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
                                 label = {
                                     Text(
@@ -254,7 +245,7 @@ private fun App(vm: AppViewModel) {
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelMedium,
+                                        style = MaterialTheme.typography.labelSmall,
                                     )
                                 },
                                 alwaysShowLabel = true,
@@ -309,6 +300,19 @@ private fun App(vm: AppViewModel) {
                                         scope.launch { pagerState.animateScrollToPage(0) }
                                     },
                                 )
+                                3 -> ElencoScreen(
+                                    modelo = m,
+                                    japones = japones,
+                                    elenco = elenco,
+                                    onToggle = vm::toggleElenco,
+                                    onMarcar = vm::marcarElenco,
+                                    onLimpiar = vm::limpiarElenco,
+                                    onVerHerencia = { linaje ->
+                                        vm.cargarLinaje(linaje)
+                                        scope.launch { pagerState.animateScrollToPage(0) }
+                                    },
+                                    onVolver = null,
+                                )
                                 else -> SettingsScreen(
                                     modoGrilla = modoGrilla,
                                     onModoGrilla = vm::setModoGrilla,
@@ -326,7 +330,7 @@ private fun App(vm: AppViewModel) {
                                     onEliminarArbol = vm::eliminarArbol,
                                     onAbrirGrupos = { verGrupos = true },
                                     onAbrirRanking = { verRanking = true },
-                                    onAbrirElenco = { verElenco = true },
+                                    onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 )
                             }
                         }

@@ -2,8 +2,8 @@ package com.maximillionsnyder.umafinidad
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -103,7 +103,7 @@ private fun App(vm: AppViewModel) {
     val idioma by vm.idioma.collectAsState()
 
     LaunchedEffect(idioma) {
-        aplicarIdioma(idioma)
+        aplicarIdioma(context, idioma)
     }
 
     /* Grupos y Ranking son referencias archivadas: se abren a

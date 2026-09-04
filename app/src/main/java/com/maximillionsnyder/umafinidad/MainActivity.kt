@@ -10,6 +10,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,7 +52,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextAutoSize
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -324,11 +324,11 @@ private fun App(vm: AppViewModel) {
             )
         }
 }
+}
 
 /* Label de tab que se achica hasta caber (7..11sp) antes de truncar. */
 @Composable
-private fun TabLabel(texto: String) {
-    BasicText(
+private fun TabLabel(texto: String) {    BasicText(
         text = texto,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
@@ -350,8 +350,5 @@ private fun TabIcon(id: Int, selected: Boolean) {
         label = "tintTab",
     )
     Icon(painterResource(id), contentDescription = null, tint = tint)
-}
-
-
 }
 

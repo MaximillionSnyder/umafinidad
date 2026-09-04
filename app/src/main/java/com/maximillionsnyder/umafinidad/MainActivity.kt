@@ -6,6 +6,8 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.layout.Box
@@ -182,35 +184,35 @@ private fun App(vm: AppViewModel) {
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 0,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
-                                icon = { Icon(painterResource(R.drawable.ic_tab_compat), contentDescription = null) },
+                                icon = { TabIcon(R.drawable.ic_tab_compat, pagerState.currentPage == 0) },
                                 label = { TabLabel(stringResource(R.string.tab_compat)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 1,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
-                                icon = { Icon(painterResource(R.drawable.ic_tab_top), contentDescription = null) },
+                                icon = { TabIcon(R.drawable.ic_tab_top, pagerState.currentPage == 1) },
                                 label = { TabLabel(stringResource(R.string.tab_top)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 2,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
-                                icon = { Icon(painterResource(R.drawable.ic_tab_corredora), contentDescription = null) },
+                                icon = { TabIcon(R.drawable.ic_tab_corredora, pagerState.currentPage == 2) },
                                 label = { TabLabel(stringResource(R.string.tab_corredora)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 3,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
-                                icon = { Icon(painterResource(R.drawable.ic_tab_elenco), contentDescription = null) },
+                                icon = { TabIcon(R.drawable.ic_tab_elenco, pagerState.currentPage == 3) },
                                 label = { TabLabel(stringResource(R.string.tab_elenco)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 4,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
-                                icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
+                                icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 4) },
                                 label = { TabLabel(stringResource(R.string.tab_mas)) },
                                 alwaysShowLabel = true,
                             )
@@ -337,6 +339,19 @@ private fun TabLabel(texto: String) {
         ),
     )
 }
+
+/* Icono de tab con transición animada de color al seleccionar. */
+@Composable
+private fun TabIcon(id: Int, selected: Boolean) {
+    val tint by animateColorAsState(
+        targetValue = if (selected) MaterialTheme.colorScheme.primary
+                      else MaterialTheme.colorScheme.onSurfaceVariant,
+        animationSpec = tween(200),
+        label = "tintTab",
+    )
+    Icon(painterResource(id), contentDescription = null, tint = tint)
+}
+
 
 }
 

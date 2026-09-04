@@ -1,7 +1,11 @@
 package com.maximillionsnyder.umafinidad.ui.settings
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -329,9 +333,7 @@ private fun SeccionDesplegable(
     contenido: @Composable () -> Unit,
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .animateContentSize(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
     ) {
@@ -357,7 +359,11 @@ private fun SeccionDesplegable(
                     color = MaterialTheme.colorScheme.primary,
                 )
             }
-            AnimatedVisibility(visible = abierto) {
+            AnimatedVisibility(
+                visible = abierto,
+                enter = expandVertically(tween(200)) + fadeIn(tween(150)),
+                exit = shrinkVertically(tween(200)) + fadeOut(tween(120)),
+            ) {
                 Column(
                     modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),

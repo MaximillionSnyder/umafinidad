@@ -1,7 +1,11 @@
 package com.maximillionsnyder.umafinidad.ui.groups
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -96,7 +100,6 @@ fun GroupsScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) 
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .animateContentSize()
                         .clickable { grupoAbierto = if (abierto) null else grupo.tipo },
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
@@ -129,7 +132,11 @@ fun GroupsScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) 
                                 color = colorDeRango(claseDePuntos(grupo.puntos)) ?: MaterialTheme.colorScheme.onSurface,
                             )
                         }
-                        AnimatedVisibility(visible = abierto) {
+                        AnimatedVisibility(
+                            visible = abierto,
+                            enter = expandVertically(tween(200)) + fadeIn(tween(150)),
+                            exit = shrinkVertically(tween(200)) + fadeOut(tween(120)),
+                        ) {
                             FlowRow(
                                 horizontalArrangement = Arrangement.spacedBy(5.dp),
                                 verticalArrangement = Arrangement.spacedBy(5.dp),

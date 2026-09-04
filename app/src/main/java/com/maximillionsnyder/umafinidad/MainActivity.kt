@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -47,9 +49,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextAutoSize
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.aplicarIdioma
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
@@ -179,75 +183,35 @@ private fun App(vm: AppViewModel) {
                                 selected = pagerState.currentPage == 0,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_compat), contentDescription = null) },
-                                label = {
-                                    Text(
-                                        stringResource(R.string.tab_compat),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                },
+                                label = { TabLabel(stringResource(R.string.tab_compat)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 1,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_top), contentDescription = null) },
-                                label = {
-                                    Text(
-                                        stringResource(R.string.tab_top),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                },
+                                label = { TabLabel(stringResource(R.string.tab_top)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 2,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_corredora), contentDescription = null) },
-                                label = {
-                                    Text(
-                                        stringResource(R.string.tab_corredora),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                },
+                                label = { TabLabel(stringResource(R.string.tab_corredora)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 3,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_elenco), contentDescription = null) },
-                                label = {
-                                    Text(
-                                        stringResource(R.string.tab_elenco),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                },
+                                label = { TabLabel(stringResource(R.string.tab_elenco)) },
                                 alwaysShowLabel = true,
                             )
                             NavigationBarItem(
                                 selected = pagerState.currentPage == 4,
                                 onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
                                 icon = { Icon(painterResource(R.drawable.ic_tab_ajustes), contentDescription = null) },
-                                label = {
-                                    Text(
-                                        stringResource(R.string.tab_mas),
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                },
+                                label = { TabLabel(stringResource(R.string.tab_mas)) },
                                 alwaysShowLabel = true,
                             )
                         }
@@ -359,4 +323,20 @@ private fun App(vm: AppViewModel) {
         }
 }
 
+/* Label de tab que se achica hasta caber (7..11sp) antes de truncar. */
+@Composable
+private fun TabLabel(texto: String) {
+    BasicText(
+        text = texto,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        autoSize = TextAutoSize.StepDown(minFontSize = 7.sp, maxFontSize = 11.sp),
+        style = MaterialTheme.typography.labelSmall.copy(
+            textAlign = TextAlign.Center,
+            color = LocalContentColor.current,
+        ),
+    )
 }
+
+}
+

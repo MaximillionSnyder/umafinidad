@@ -118,6 +118,7 @@ fun HeaderBar(
     titulo: String,
     pillTexto: String? = null,
     modifier: Modifier = Modifier,
+    chip: (@Composable () -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -137,6 +138,9 @@ fun HeaderBar(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f, fill = false),
         )
+        chip?.let { contenido ->
+            Box(modifier = Modifier.padding(start = 10.dp)) { contenido() }
+        }
         pillTexto?.let { texto ->
             Surface(
                 shape = RoundedCornerShape(999.dp),

@@ -28,6 +28,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -149,7 +150,34 @@ fun CorredoraScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderBar(
             titulo = stringResource(R.string.tab_corredora),
-            pillTexto = stringResource(R.string.herencia_contador, seleccionActual.count { it != null })
+            pillTexto = stringResource(R.string.herencia_contador, seleccionActual.count { it != null }),
+            chip = {
+                if (elegidaId > 0) {
+                    val elegida = modelo.porId(elegidaId)
+                    if (elegida != null) {
+                        Surface(
+                            shape = RoundedCornerShape(999.dp),
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(start = 4.dp, end = 10.dp, top = 3.dp, bottom = 3.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            ) {
+                                Avatar(elegidaId, elegida.displayName(japones), modifier = Modifier.size(22.dp))
+                                Text(
+                                    elegida.displayName(japones),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            }
+                        }
+                    }
+                }
+            },
         )
 
         Column(
@@ -165,7 +193,14 @@ fun CorredoraScreen(
                 onValueChange = { filtro = it },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                shape = RoundedCornerShape(14.dp),
+                shape = RoundedCornerShape(999.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = Color.Transparent,
+                    focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                    cursorColor = MaterialTheme.colorScheme.primary,
+                ),
                 leadingIcon = { Icon(painterResource(R.drawable.ic_buscar), contentDescription = null) },
                 trailingIcon = {
                     if (filtro.isNotEmpty()) {
@@ -483,7 +518,7 @@ private fun HojaAlternativas(
 ) {
     val ocupanteEtiqueta = etiquetaRolDe(slot)
     val alternativas = remember(seleccion, slot) {
-        modelo.alternativasParaSlot(seleccion, slot, limite = 10)
+        modelo.alternativasParaSlot(seleccion, slot, limite = 20)
     }
 
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
@@ -526,7 +561,7 @@ private fun HojaAlternativas(
                         Text(
                             "Total ${alt.total}",
                             style = MaterialTheme.typography.labelSmall,
-                            color = colorClase(claseDePuntos(alt.total)),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                     Text(

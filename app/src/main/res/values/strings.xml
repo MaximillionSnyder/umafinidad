@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Uma Afinidad</string>
-    <string name="tab_compat">Compatibility</string>
+    <string name="tab_compat">Affinity</string>
     <string name="tab_groups">Groups</string>
     <string name="tab_elenco">My Umas</string>
     <string name="tab_top">Top lineages</string>
@@ -26,7 +26,7 @@
     <string name="faltan_padres">Both parents are missing.</string>
     <string name="no_hay_abuelos">No grandparents yet.</string>
     <string name="sin_hijo_completa">Without a child, the full lineage cannot be computed.</string>
-    <string name="corredora_nota">Affinity 0 in-game: same as the runner.</string>
+    <string name="corredora_nota">In-game affinity is 0 — it\'s the same runner.</string>
     <string name="sin_grupos_comun">No shared groups.</string>
     <string name="mas_grupos">%1$d more…</string>
 
@@ -46,7 +46,7 @@
     <string name="elenco_tab_editar">Edit roster</string>
     <string name="elenco_tab_linajes">My lineages</string>
     <string name="elenco_contador">%1$d/%2$d</string>
-    <string name="elenco_marcar_visibles">Mark visible</string>
+    <string name="elenco_marcar_visibles">Mark visible Umas</string>
     <string name="elenco_limpiar_titulo">Clear your roster?</string>
     <string name="elenco_limpiar_mensaje">All runners will be unmarked.</string>
     <string name="elenco_minimo">Mark at least 3 runners to compute your best lineages.</string>
@@ -106,21 +106,21 @@
     <string name="tema_claro_desc">Light background</string>
     <string name="tema_oscuro">Dark</string>
     <string name="tema_oscuro_desc">Dark background</string>
-    <string name="modo_grilla_pregunta">How do you want to see characters?</string>
+    <string name="modo_grilla_pregunta">How would you like to view characters?</string>
     <string name="modo_vertical">Large cards</string>
     <string name="modo_vertical_desc">Grid with large centered avatars</string>
     <string name="modo_lista">Compact list</string>
     <string name="modo_lista_desc">Horizontal rows with a color stripe</string>
-    <string name="seccion_herencia">Lineage</string>
+    <string name="seccion_herencia">Inheritance</string>
     <string name="herencia_contador">%1$d/7</string>
     <string name="salir_titulo">Exit Uma Afinidad?</string>
     <string name="salir_mensaje">Are you sure you want to leave the app?</string>
     <string name="salir_salir">Exit</string>
     <string name="tab_corredora">My runner</string>
-    <string name="buscar_corredora">Search a runner…</string>
+    <string name="buscar_corredora">Search for a runner…</string>
     <string name="mejor_de">Best lineage for %1$s</string>
     <string name="corredora_invalida">That character is not playable; no lineage can be computed.</string>
-    <string name="corredora_hint">Type a runner’s name to see her best possible pedigree.</string>
+    <string name="corredora_hint">Type a runner\'s name to see her best possible lineage.</string>
     <string name="alternativas_titulo">Options for %1$s</string>
     <string name="restablecer_optimo">Reset to optimal</string>
     <string name="sin_alternativas">No valid alternatives for this slot.</string>
@@ -128,7 +128,7 @@
     <string name="guardar">Save</string>
     <string name="nombre_sugerido">%1$s · %2$dpt</string>
     <string name="guardadas_de">Saved for %1$s</string>
-    <string name="arboles_ajustes">Saved trees</string>
+    <string name="arboles_ajustes">Saved lineages</string>
     <string name="grupos_ajustes_desc">Affinity groups and their members</string>
     <string name="ranking_ajustes_desc">Most versatile Umas by total affinity</string>
     <string name="elenco_ajustes_desc">Your personal roster and its best lineages</string>

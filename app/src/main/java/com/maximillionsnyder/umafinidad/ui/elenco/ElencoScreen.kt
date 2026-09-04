@@ -274,7 +274,7 @@ private fun LinajesElenco(
 
     LaunchedEffect(elenco, modelo) {
         linajes = null
-        linajes = withContext(Dispatchers.Default) { modelo.topLinajesDeElenco(elenco, 20) }
+        linajes = withContext(Dispatchers.Default) { modelo.topLinajesDeElenco(elenco, 40) }
     }
 
     val lista = linajes

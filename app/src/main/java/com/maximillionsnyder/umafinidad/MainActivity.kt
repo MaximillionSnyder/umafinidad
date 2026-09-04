@@ -332,7 +332,7 @@ private fun TabLabel(texto: String) {    BasicText(
         text = texto,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        autoSize = TextAutoSize.StepDown(minFontSize = 7.sp, maxFontSize = 11.sp),
+        autoSize = TextAutoSize.StepBased(minFontSize = 7.sp, maxFontSize = 11.sp),
         style = MaterialTheme.typography.labelSmall.copy(
             textAlign = TextAlign.Center,
             color = LocalContentColor.current,

@@ -73,20 +73,21 @@ fun SettingsScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderBar(titulo = stringResource(R.string.tab_mas))
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
-        ) {
-            Text(
-                stringResource(R.string.tab_ajustes),
+        Text(
+            stringResource(R.string.tab_ajustes),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
         )
 
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
         SeccionDesplegable(
             titulo = stringResource(R.string.ajustes_apariencia),
             abierto = aparienciaAbierta,

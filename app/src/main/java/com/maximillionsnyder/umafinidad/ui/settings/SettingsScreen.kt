@@ -64,6 +64,7 @@ fun SettingsScreen(
     onEliminarArbol: (Long) -> Unit,
     onAbrirGrupos: () -> Unit,
     onAbrirRanking: () -> Unit,
+    onAbrirRankingPadres: () -> Unit,
     onAbrirElenco: () -> Unit,
 ) {
     var aparienciaAbierta by rememberSaveable { mutableStateOf(false) }
@@ -227,6 +228,33 @@ fun SettingsScreen(
                     Text(stringResource(R.string.tab_ranking), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
                     Text(
                         stringResource(R.string.ranking_ajustes_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
+        /* ===== Mejores padres (variante a probar; se queda una de las dos) ===== */
+        Card(
+            modifier = Modifier.fillMaxWidth().clickable(onClick = onAbrirRankingPadres),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_tab_ranking),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Column {
+                    Text(stringResource(R.string.ranking_padres_titulo), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.ranking_padres_ajustes_desc),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

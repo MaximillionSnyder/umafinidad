@@ -29,6 +29,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,14 +52,26 @@ import com.maximillionsnyder.umafinidad.ui.theme.cardFondo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/* Ranking “Umas más versátiles”: lista pura informativa ordenada por total afinidad.
-   Se abre a pantalla completa desde Ajustes (como Grupos). */
+/* Ranking con dos modos para probar: versátiles (total afinidad) y
+   mejores padres (veces como padre óptimo + % + media). Se abre desde
+   Ajustes por la card clásica o por la card nueva de padres. */
+enum class ModoRanking { VERSATIL, PADRES }
+
 @Composable
-fun RankingScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) {
+fun RankingScreen(
+    modelo: AffinityModel,
+    japones: Boolean,
+    onVolver: () -> Unit,
+    modoInicial: ModoRanking = ModoRanking.VERSATIL,
+) {
+    var modo by rememberSaveable { mutableStateOf(modoInicial) }
     var ranking by remember { mutableStateOf<List<AffinityModel.RankingAfinidad>?>(null) }
+    var rankingPadres by remember { mutableStateOf<List<AffinityModel.RankingPadre>?>(null) }
 
     LaunchedEffect(modelo) {
-        ranking = withContext(Dispatchers.Default) { modelo.rankingAfinidad() }
+        val (a, p) = withContext(Dispatchers.Default) { modelo.rankingAfinidad() to modelo.rankingPadres() }
+        ranking = a
+        rankingPadres = p
     }
 
     Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
@@ -64,32 +80,96 @@ fun RankingScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit)
             onVolver = onVolver,
         )
 
-        val lista = ranking
-        if (lista == null) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    CircularProgressIndicator()
-                    Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-            return@Column
-        }
-
-        if (lista.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.sin_datos), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            return@Column
-        }
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+        SingleChoiceSegmentedButtonRow(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
         ) {
-            itemsIndexed(lista) { i, entry ->
-                CardFilaRanking(i, entry, modelo, japones)
+            SegmentedButton(
+                selected = modo == ModoRanking.VERSATIL,
+                onClick = { modo = ModoRanking.VERSATIL },
+                shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
+            ) {
+                Text(stringResource(R.string.ranking_modo_versatil))
             }
+            SegmentedButton(
+                selected = modo == ModoRanking.PADRES,
+                onClick = { modo = ModoRanking.PADRES },
+                shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
+            ) {
+                Text(stringResource(R.string.ranking_modo_padres))
+            }
+        }
+
+        if (modo == ModoRanking.VERSATIL) {
+            ContenidoVersatiles(ranking, modelo, japones)
+        } else {
+            ContenidoPadres(rankingPadres, japones)
+        }
+    }
+}
+
+@Composable
+private fun ContenidoVersatiles(
+    ranking: List<AffinityModel.RankingAfinidad>?,
+    modelo: AffinityModel,
+    japones: Boolean,
+) {
+    if (ranking == null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                CircularProgressIndicator()
+                Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        return
+    }
+
+    if (ranking.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(stringResource(R.string.sin_datos), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        return
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        itemsIndexed(ranking) { i, entry ->
+            CardFilaRanking(i, entry, modelo, japones)
+        }
+    }
+}
+
+@Composable
+private fun ContenidoPadres(
+    ranking: List<AffinityModel.RankingPadre>?,
+    japones: Boolean,
+) {
+    if (ranking == null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                CircularProgressIndicator()
+                Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        return
+    }
+
+    if (ranking.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(stringResource(R.string.sin_datos), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        return
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        itemsIndexed(ranking) { i, entry ->
+            CardFilaPadre(i, entry, japones)
         }
     }
 }
@@ -129,6 +209,54 @@ private fun CardFilaRanking(
                 color = MaterialTheme.colorScheme.onSurface,
             )
             RankPill(rango, entry.total)
+        }
+    }
+}
+
+@Composable
+private fun CardFilaPadre(
+    pos: Int,
+    entry: AffinityModel.RankingPadre,
+    japones: Boolean,
+) {
+    val nombre = entry.personaje.displayName(japones)
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (pos < 3) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
+            else cardFondo(),
+        ),
+        border = if (pos < 3) androidx.compose.foundation.BorderStroke(1.dp, colorDeMedalla(pos)!!.copy(alpha = 0.6f)) else null,
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Medalla(pos)
+            Avatar(id = entry.personaje.charId, nombre = nombre, modifier = Modifier.size(36.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    nombre,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    stringResource(R.string.ranking_padres_media, entry.puntosMedios, entry.totalAfinidad),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+                Text(
+                    stringResource(R.string.ranking_padres_veces, entry.veces, entry.porcentaje.toInt()),
+                    style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
+            )
         }
     }
 }

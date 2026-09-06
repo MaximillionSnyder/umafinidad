@@ -379,6 +379,62 @@ class AffinityModel private constructor(
             .sortedWith(compareByDescending<RankingAfinidad> { it.total }.thenBy { it.personaje.charId })
     }
 
+    /* ===== Ranking “Mejores padres” (primera opción como padre) ===== */
+
+    /* Por cada hijo del pool se calcula su linaje óptimo exacto con
+       mejorLinajeDe() y se cuenta cuántas veces cada uma aparece como
+       padre/madre. veces = nº de hijos para los que es padre óptimo,
+       porcentaje = veces / totalHijos * 100, puntosMedios = media de los
+       puntos del linaje cuando ejerce de padre. Orden: veces desc,
+       puntosMedios desc, totalAfinidad desc, charId asc (determinista). */
+    data class RankingPadre(
+        val personaje: Character,
+        val veces: Int,
+        val porcentaje: Float,
+        val puntosMedios: Int,
+        val totalAfinidad: Int,
+    )
+
+    private val cacheRankingPadres: List<RankingPadre> by lazy { calcularRankingPadres() }
+
+    fun rankingPadres(): List<RankingPadre> = cacheRankingPadres
+
+    private fun calcularRankingPadres(): List<RankingPadre> {
+        val m = charsTop.size
+        if (m == 0) return emptyList()
+        // Totales de afinidad para el desempate (misma fuente que rankingAfinidad).
+        val totalPorId = HashMap<Int, Int>(m)
+        for (i in 0 until m) {
+            var t = 0
+            for (j in 0 until m) if (i != j) t += parEn(i, j)
+            totalPorId[idsTop[i]] = t
+        }
+        val apariciones = HashMap<Int, MutableList<Int>>()
+        var hijosComputados = 0
+        for (hijoId in idsTop) {
+            val linaje = mejorLinajeDe(hijoId) ?: continue
+            hijosComputados++
+            apariciones.getOrPut(linaje.padre.charId) { mutableListOf() }.add(linaje.puntos)
+            apariciones.getOrPut(linaje.madre.charId) { mutableListOf() }.add(linaje.puntos)
+        }
+        return charsTop.map { c ->
+            val puntos = apariciones[c.charId] ?: emptyList()
+            val veces = puntos.size
+            RankingPadre(
+                personaje = c,
+                veces = veces,
+                porcentaje = if (hijosComputados == 0) 0f else veces * 100f / hijosComputados,
+                puntosMedios = if (puntos.isEmpty()) 0 else puntos.sum() / puntos.size,
+                totalAfinidad = totalPorId[c.charId] ?: 0,
+            )
+        }.sortedWith(
+            compareByDescending<RankingPadre> { it.veces }
+                .thenByDescending { it.puntosMedios }
+                .thenByDescending { it.totalAfinidad }
+                .thenBy { it.personaje.charId },
+        )
+    }
+
     /* ===== Alternativas por slot (Mi corredora) ===== */
 
     /* Total del árbol completo con la semántica de result.js:

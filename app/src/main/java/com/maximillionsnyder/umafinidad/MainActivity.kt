@@ -63,6 +63,7 @@ import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
 import com.maximillionsnyder.umafinidad.ui.elenco.ElencoScreen
 import com.maximillionsnyder.umafinidad.ui.groups.GroupsScreen
+import com.maximillionsnyder.umafinidad.ui.ranking.ModoRanking
 import com.maximillionsnyder.umafinidad.ui.ranking.RankingScreen
 import com.maximillionsnyder.umafinidad.ui.settings.SettingsScreen
 import com.maximillionsnyder.umafinidad.ui.theme.UmaAfinidadTheme
@@ -116,6 +117,7 @@ private fun App(vm: AppViewModel) {
        pantalla completa desde Ajustes y el botón atrás las cierra. Mis Umas ya es tab. */
     var verGrupos by rememberSaveable { mutableStateOf(false) }
     var verRanking by rememberSaveable { mutableStateOf(false) }
+    var verRankingPadres by rememberSaveable { mutableStateOf(false) }
 
     /* Aviso antes de salir: el botón/gesto atrás nunca cierra sin confirmar
        (salvo dentro de Grupos/Ranking, donde primero vuelve). */
@@ -123,6 +125,7 @@ private fun App(vm: AppViewModel) {
     BackHandler {
         if (verGrupos) verGrupos = false
         else if (verRanking) verRanking = false
+        else if (verRankingPadres) verRankingPadres = false
         else confirmarSalida = true
     }
 
@@ -157,6 +160,20 @@ private fun App(vm: AppViewModel) {
                 }
             } else {
                 RankingScreen(modelo = m, japones = japones, onVolver = { verRanking = false })
+            }
+        } else if (verRankingPadres) {
+            val m = modelo
+            if (m == null) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                RankingScreen(
+                    modelo = m,
+                    japones = japones,
+                    onVolver = { verRankingPadres = false },
+                    modoInicial = ModoRanking.PADRES,
+                )
             }
         } else {
             Scaffold(
@@ -296,6 +313,7 @@ private fun App(vm: AppViewModel) {
                                     onEliminarArbol = vm::eliminarArbol,
                                     onAbrirGrupos = { verGrupos = true },
                                     onAbrirRanking = { verRanking = true },
+                                    onAbrirRankingPadres = { verRankingPadres = true },
                                     onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 )
                             }

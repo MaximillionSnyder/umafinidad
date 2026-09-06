@@ -131,6 +131,12 @@
     <string name="arboles_ajustes">Árboles guardados</string>
     <string name="grupos_ajustes_desc">Grupos de afinidad y sus miembros</string>
     <string name="ranking_ajustes_desc">Umas más versátiles por afinidad total</string>
+    <string name="ranking_modo_versatil">Versátiles</string>
+    <string name="ranking_modo_padres">Mejores padres</string>
+    <string name="ranking_padres_titulo">Mejores padres</string>
+    <string name="ranking_padres_ajustes_desc">Umas elegidas más veces como padres óptimos</string>
+    <string name="ranking_padres_veces">%1$d · %2$d%%</string>
+    <string name="ranking_padres_media">media %1$dpt · afinidad %2$d</string>
     <string name="elenco_ajustes_desc">Tu elenco personal y sus mejores linajes</string>
     <string name="guardado_snack">Configuración guardada</string>
     <string name="eliminado_snack">Configuración eliminada</string>

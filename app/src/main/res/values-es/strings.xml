@@ -107,7 +107,7 @@
     <string name="tema_oscuro">Oscuro</string>
     <string name="tema_oscuro_desc">Fondo oscuro</string>
     <string name="tema_contraste">Contraste alto</string>
-    <string name="tema_contraste_desc">Sigue al sistema con mayor contraste</string>
+    <string name="tema_contraste_desc">Fondo claro con mayor contraste</string>
     <string name="accesibilidad_titulo">Accesibilidad</string>
     <string name="accesibilidad_desc">Opciones de legibilidad para poca visión</string>
     <string name="tamano_texto_titulo">¿Qué tan grande querés el texto?</string>

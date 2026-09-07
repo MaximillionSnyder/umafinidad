@@ -178,11 +178,11 @@ fun UmaAfinidadTheme(
     content: @Composable () -> Unit,
 ) {
     val contrasteAlto = tema == ThemeMode.ALTO_CONTRASTE
-    /* ALTO_CONTRASTE sigue al sistema (claro/oscuro) con colores reforzados. */
+    /* ALTO_CONTRASTE es un tema fijo de base clara con contraste reforzado. */
     val esOscuro = when (tema) {
-        ThemeMode.CLARO -> false
+        ThemeMode.CLARO, ThemeMode.ALTO_CONTRASTE -> false
         ThemeMode.OSCURO -> true
-        ThemeMode.SISTEMA, ThemeMode.ALTO_CONTRASTE -> isSystemInDarkTheme()
+        ThemeMode.SISTEMA -> isSystemInDarkTheme()
     }
     val esquemaBase = if (esOscuro) EsquemaOscuro else EsquemaClaro
     /* Alto contraste: refuerza textos secundarios y contornos sin tocar

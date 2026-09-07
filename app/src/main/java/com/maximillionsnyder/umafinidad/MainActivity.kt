@@ -139,9 +139,9 @@ private fun App(vm: AppViewModel) {
 
     val japones = LocalConfiguration.current.locales[0].language == "ja"
     val esOscuro = when (tema) {
-        ThemeMode.CLARO -> false
+        ThemeMode.CLARO, ThemeMode.ALTO_CONTRASTE -> false
         ThemeMode.OSCURO -> true
-        ThemeMode.SISTEMA, ThemeMode.ALTO_CONTRASTE -> isSystemInDarkTheme()
+        ThemeMode.SISTEMA -> isSystemInDarkTheme()
     }
 
     /* Una config pedida desde Ajustes abre Mi corredora. */

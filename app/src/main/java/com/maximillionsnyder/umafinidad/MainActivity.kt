@@ -38,11 +38,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -127,14 +129,53 @@ private fun App(vm: AppViewModel) {
     var verRanking by rememberSaveable { mutableStateOf(false) }
     var verRankingPadres by rememberSaveable { mutableStateOf(false) }
 
-    /* Aviso antes de salir: el botón/gesto atrás nunca cierra sin confirmar
-       (salvo dentro de Grupos/Ranking, donde primero vuelve). */
+    /* Pila de navegación ("tab:N", "grupos", "ranking", "ranking-padres"):
+       atrás desapila hasta volver al inicio y recién ahí pregunta si salir. */
+    val historial = rememberSaveable { mutableStateListOf("tab:0") }
+
+    /* Aplica un destino de la pila (flags de overlay + página del pager). */
+    fun aplicarDestino(destino: String) {
+        verGrupos = destino == "grupos"
+        verRanking = destino == "ranking"
+        verRankingPadres = destino == "ranking-padres"
+        destino.removePrefix("tab:").toIntOrNull()?.let { pagina ->
+            if (pagerState.currentPage != pagina) scope.launch { pagerState.animateScrollToPage(pagina) }
+        }
+    }
+
+    /* Abrir un overlay apilándolo (si no es el tope actual). */
+    fun irA(destino: String) {
+        if (historial.last() == destino) return
+        historial.add(destino)
+        aplicarDestino(destino)
+    }
+
+    /* Retrocede una pantalla; false si ya estamos al inicio. */
+    fun volver(): Boolean {
+        if (historial.size <= 1) return false
+        historial.removeLast()
+        aplicarDestino(historial.last())
+        return true
+    }
+
+    /* Registra taps, swipes y saltos (herencias, árbol pendiente): toda
+       página donde el pager se asienta suma historial, salvo que un overlay
+       esté abierto o que ya sea el tope (evita duplicados y loops al volver).
+       settledPage (y no currentPage) para no apilar intermedias de la animación. */
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.settledPage }.collect { pagina ->
+            if (!verGrupos && !verRanking && !verRankingPadres) {
+                val destino = "tab:$pagina"
+                if (historial.last() != destino) historial.add(destino)
+            }
+        }
+    }
+
+    /* Aviso antes de salir: solo cuando la pila está en su inicio; antes
+       de eso, atrás siempre vuelve a la pantalla anterior. */
     var confirmarSalida by rememberSaveable { mutableStateOf(false) }
     BackHandler {
-        if (verGrupos) verGrupos = false
-        else if (verRanking) verRanking = false
-        else if (verRankingPadres) verRankingPadres = false
-        else confirmarSalida = true
+        if (!volver()) confirmarSalida = true
     }
 
     val japones = LocalConfiguration.current.locales[0].language == "ja"
@@ -158,7 +199,7 @@ private fun App(vm: AppViewModel) {
                     CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             } else {
-                GroupsScreen(modelo = m, japones = japones, onVolver = { verGrupos = false })
+                GroupsScreen(modelo = m, japones = japones, onVolver = { volver() })
             }
         } else if (verRanking) {
             val m = modelo
@@ -167,7 +208,7 @@ private fun App(vm: AppViewModel) {
                     CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             } else {
-                RankingScreen(modelo = m, japones = japones, onVolver = { verRanking = false })
+                RankingScreen(modelo = m, japones = japones, onVolver = { volver() })
             }
         } else if (verRankingPadres) {
             val m = modelo
@@ -179,7 +220,7 @@ private fun App(vm: AppViewModel) {
                 RankingScreen(
                     modelo = m,
                     japones = japones,
-                    onVolver = { verRankingPadres = false },
+                    onVolver = { volver() },
                     modoInicial = ModoRanking.PADRES,
                 )
             }
@@ -319,9 +360,9 @@ private fun App(vm: AppViewModel) {
                                         scope.launch { pagerState.animateScrollToPage(2) }
                                     },
                                     onEliminarArbol = vm::eliminarArbol,
-                                    onAbrirGrupos = { verGrupos = true },
-                                    onAbrirRanking = { verRanking = true },
-                                    onAbrirRankingPadres = { verRankingPadres = true },
+                                    onAbrirGrupos = { irA("grupos") },
+                                    onAbrirRanking = { irA("ranking") },
+                                    onAbrirRankingPadres = { irA("ranking-padres") },
                                     tamanoTexto = tamanoTexto,
                                     onTamanoTexto = vm::setTamanoTexto,
                                     textoNegrita = textoNegrita,

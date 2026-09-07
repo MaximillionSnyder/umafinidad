@@ -115,14 +115,6 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _textoNegrita.value = valor
     }
 
-    private val _altoContraste = MutableStateFlow(prefs.altoContraste)
-    val altoContraste: StateFlow<Boolean> = _altoContraste
-
-    fun setAltoContraste(valor: Boolean) {
-        prefs.altoContraste = valor
-        _altoContraste.value = valor
-    }
-
     /* ===== Configuraciones de árbol guardadas ===== */
 
     private val arbolesRepo = ArbolesRepository(application)

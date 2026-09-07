@@ -18,9 +18,21 @@ class PrefsRepository(context: Context) {
         set(valor) = prefs.edit().putBoolean(KEY_GRID_VERTICAL, valor == ModoGrilla.TARJETAS).apply()
 
     var tema: ThemeMode
-        get() = prefs.getString(KEY_TEMA, null)?.let { raw ->
-            try { ThemeMode.valueOf(raw) } catch (_: IllegalArgumentException) { ThemeMode.SISTEMA }
-        } ?: ThemeMode.SISTEMA
+        get() {
+            prefs.getString(KEY_TEMA, null)?.let { raw ->
+                try {
+                    return ThemeMode.valueOf(raw)
+                } catch (_: IllegalArgumentException) {
+                }
+            }
+            // Migración: el interruptor de contraste (v3.9.x) ahora es un tema.
+            if (prefs.getBoolean(KEY_ALTO_CONTRASTE, false)) {
+                prefs.edit().putString(KEY_TEMA, ThemeMode.ALTO_CONTRASTE.name)
+                    .remove(KEY_ALTO_CONTRASTE).apply()
+                return ThemeMode.ALTO_CONTRASTE
+            }
+            return ThemeMode.SISTEMA
+        }
         set(valor) = prefs.edit().putString(KEY_TEMA, valor.name).apply()
 
     var idioma: Idioma
@@ -39,16 +51,13 @@ class PrefsRepository(context: Context) {
         get() = prefs.getBoolean(KEY_TEXTO_NEGRITA, false)
         set(valor) = prefs.edit().putBoolean(KEY_TEXTO_NEGRITA, valor).apply()
 
-    var altoContraste: Boolean
-        get() = prefs.getBoolean(KEY_ALTO_CONTRASTE, false)
-        set(valor) = prefs.edit().putBoolean(KEY_ALTO_CONTRASTE, valor).apply()
-
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
         const val KEY_TEMA = "tema_modo"
         const val KEY_IDIOMA = "idioma_modo"
         const val KEY_TAMANO_TEXTO = "tamano_texto"
         const val KEY_TEXTO_NEGRITA = "texto_negrita"
+        // Solo lectura para migrar instalaciones con el interruptor viejo.
         const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }
 }

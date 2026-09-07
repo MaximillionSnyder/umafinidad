@@ -106,6 +106,8 @@
     <string name="tema_claro_desc">Light background</string>
     <string name="tema_oscuro">Dark</string>
     <string name="tema_oscuro_desc">Dark background</string>
+    <string name="tema_contraste">High contrast</string>
+    <string name="tema_contraste_desc">Follows system with stronger contrast</string>
     <string name="accesibilidad_titulo">Accessibility</string>
     <string name="accesibilidad_desc">Legibility options for low vision</string>
     <string name="tamano_texto_titulo">How big should the text be?</string>
@@ -117,8 +119,6 @@
     <string name="tamano_muy_grande_desc">30% bigger text</string>
     <string name="negrita_titulo">Bold text</string>
     <string name="negrita_desc">Thicker, more legible letters</string>
-    <string name="contraste_titulo">High contrast</string>
-    <string name="contraste_desc">Stronger contrast colors</string>
     <string name="modo_grilla_pregunta">How would you like to view characters?</string>
     <string name="modo_vertical">Large cards</string>
     <string name="modo_vertical_desc">Grid with large centered avatars</string>

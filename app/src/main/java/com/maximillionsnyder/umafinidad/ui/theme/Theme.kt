@@ -175,18 +175,19 @@ fun UmaAfinidadTheme(
     tema: ThemeMode = ThemeMode.SISTEMA,
     tamanoTexto: TamanoTexto = TamanoTexto.NORMAL,
     negrita: Boolean = false,
-    altoContraste: Boolean = false,
     content: @Composable () -> Unit,
 ) {
+    val contrasteAlto = tema == ThemeMode.ALTO_CONTRASTE
+    /* ALTO_CONTRASTE sigue al sistema (claro/oscuro) con colores reforzados. */
     val esOscuro = when (tema) {
         ThemeMode.CLARO -> false
         ThemeMode.OSCURO -> true
-        ThemeMode.SISTEMA -> isSystemInDarkTheme()
+        ThemeMode.SISTEMA, ThemeMode.ALTO_CONTRASTE -> isSystemInDarkTheme()
     }
     val esquemaBase = if (esOscuro) EsquemaOscuro else EsquemaClaro
     /* Alto contraste: refuerza textos secundarios y contornos sin tocar
        la identidad (primario y fondos quedan igual). */
-    val esquema = if (altoContraste) {
+    val esquema = if (contrasteAlto) {
         if (esOscuro) {
             esquemaBase.copy(
                 onSurfaceVariant = Color(0xFFDDE3EA),

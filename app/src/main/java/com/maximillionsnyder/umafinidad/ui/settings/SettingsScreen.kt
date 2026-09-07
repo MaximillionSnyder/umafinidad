@@ -72,8 +72,6 @@ fun SettingsScreen(
     onTamanoTexto: (TamanoTexto) -> Unit,
     textoNegrita: Boolean,
     onTextoNegrita: (Boolean) -> Unit,
-    altoContraste: Boolean,
-    onAltoContraste: (Boolean) -> Unit,
 ) {
     var aparienciaAbierta by rememberSaveable { mutableStateOf(false) }
     var accesibilidadAbierta by rememberSaveable { mutableStateOf(false) }
@@ -160,12 +158,6 @@ fun SettingsScreen(
                     activado = textoNegrita,
                     onCambio = onTextoNegrita,
                 )
-                FilaInterruptor(
-                    titulo = stringResource(R.string.contraste_titulo),
-                    descripcion = stringResource(R.string.contraste_desc),
-                    activado = altoContraste,
-                    onCambio = onAltoContraste,
-                )
             }
         }
 
@@ -193,6 +185,12 @@ fun SettingsScreen(
                     descripcion = stringResource(R.string.tema_oscuro_desc),
                     seleccionado = tema == ThemeMode.OSCURO,
                     onClick = { onTema(ThemeMode.OSCURO) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.tema_contraste),
+                    descripcion = stringResource(R.string.tema_contraste_desc),
+                    seleccionado = tema == ThemeMode.ALTO_CONTRASTE,
+                    onClick = { onTema(ThemeMode.ALTO_CONTRASTE) },
                 )
             }
         }

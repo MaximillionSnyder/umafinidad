@@ -87,12 +87,10 @@ class MainActivity : ComponentActivity() {
             val tema by vm.tema.collectAsState()
             val tamanoTexto by vm.tamanoTexto.collectAsState()
             val textoNegrita by vm.textoNegrita.collectAsState()
-            val altoContraste by vm.altoContraste.collectAsState()
             UmaAfinidadTheme(
                 tema = tema,
                 tamanoTexto = tamanoTexto,
                 negrita = textoNegrita,
-                altoContraste = altoContraste,
             ) {
                 App(vm)
             }
@@ -112,7 +110,6 @@ private fun App(vm: AppViewModel) {
     val tema by vm.tema.collectAsState()
     val tamanoTexto by vm.tamanoTexto.collectAsState()
     val textoNegrita by vm.textoNegrita.collectAsState()
-    val altoContraste by vm.altoContraste.collectAsState()
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -144,7 +141,7 @@ private fun App(vm: AppViewModel) {
     val esOscuro = when (tema) {
         ThemeMode.CLARO -> false
         ThemeMode.OSCURO -> true
-        ThemeMode.SISTEMA -> isSystemInDarkTheme()
+        ThemeMode.SISTEMA, ThemeMode.ALTO_CONTRASTE -> isSystemInDarkTheme()
     }
 
     /* Una config pedida desde Ajustes abre Mi corredora. */
@@ -329,8 +326,6 @@ private fun App(vm: AppViewModel) {
                                     onTamanoTexto = vm::setTamanoTexto,
                                     textoNegrita = textoNegrita,
                                     onTextoNegrita = vm::setTextoNegrita,
-                                    altoContraste = altoContraste,
-                                    onAltoContraste = vm::setAltoContraste,
                                     onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 )
                             }

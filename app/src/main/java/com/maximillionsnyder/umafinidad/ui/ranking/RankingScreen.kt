@@ -283,7 +283,7 @@ private fun CardFilaPadre(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    stringResource(R.string.ranking_padres_media, entry.puntosMedios, entry.totalAfinidad),
+                    stringResource(R.string.ranking_padres_media, entry.puntosMedios),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

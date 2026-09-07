@@ -135,11 +135,11 @@
     <string name="ranking_modo_padres">Mejores padres</string>
     <string name="ranking_padres_titulo">Mejores padres</string>
     <string name="ranking_padres_ajustes_desc">Umas elegidas más veces como padres óptimos</string>
-    <string name="ranking_padres_veces">%1$d · %2$d%%</string>
-    <string name="ranking_padres_media">media %1$dpt · afinidad %2$d</string>
+    <string name="ranking_padres_veces">%1$d umas - %2$d%%</string>
+    <string name="ranking_padres_media">media %1$dpt</string>
     <string name="ranking_padres_ayuda_corta">Las que más veces son la mejor opción como padre</string>
     <string name="ranking_padres_ayuda_titulo">¿Qué es este ranking?</string>
-    <string name="ranking_padres_ayuda_larga">Para cada uma calculamos sus padres perfectos y contamos cuántas veces gana cada una.\n\n16 · 12% significa que es la mejor opción para 16 umas (el 12% de todas).\n\nInvertí primero en las de arriba: sirven para casi todas.</string>
+    <string name="ranking_padres_ayuda_larga">Para cada uma calculamos sus padres perfectos y contamos cuántas veces gana cada una.\n\n16 umas - 12% significa que es la mejor opción para 16 umas (el 12% de todas).\n\nInvertí primero en las de arriba: sirven para casi todas.</string>
     <string name="entendido">Entendido</string>
     <string name="elenco_ajustes_desc">Tu elenco personal y sus mejores linajes</string>
     <string name="guardado_snack">Configuración guardada</string>

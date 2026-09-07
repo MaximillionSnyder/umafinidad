@@ -135,11 +135,11 @@
     <string name="ranking_modo_padres">最適な親</string>
     <string name="ranking_padres_titulo">最適な親</string>
     <string name="ranking_padres_ajustes_desc">最適な親として選ばれた回数が多いウマ娘</string>
-    <string name="ranking_padres_veces">%1$d · %2$d%%</string>
-    <string name="ranking_padres_media">平均 %1$dpt · 相性 %2$d</string>
+    <string name="ranking_padres_veces">%1$d人 - %2$d%%</string>
+    <string name="ranking_padres_media">平均 %1$dpt</string>
     <string name="ranking_padres_ayuda_corta">最適な親として選ばれた回数が多い順</string>
     <string name="ranking_padres_ayuda_titulo">このランキングとは？</string>
-    <string name="ranking_padres_ayuda_larga">全てのウマ娘について最適な親を計算し、選ばれた回数を数えています。\n\n16 · 12%は、16人（全体の12%）にとって最適な親であることを意味します。\n\nまずは上位に投資しましょう。ほぼ全ての育成で活躍します。</string>
+    <string name="ranking_padres_ayuda_larga">全てのウマ娘について最適な親を計算し、選ばれた回数を数えています。\n\n16人 - 12%は、16人（全体の12%）にとって最適な親であることを意味します。\n\nまずは上位に投資しましょう。ほぼ全ての育成で活躍します。</string>
     <string name="entendido">わかった</string>
     <string name="elenco_ajustes_desc">所持ウマとその最適血統</string>
     <string name="guardado_snack">保存しました</string>

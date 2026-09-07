@@ -1,6 +1,7 @@
 package com.maximillionsnyder.umafinidad.ui.ranking
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -23,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -65,6 +68,7 @@ fun RankingScreen(
     modoInicial: ModoRanking = ModoRanking.VERSATIL,
 ) {
     var modo by rememberSaveable { mutableStateOf(modoInicial) }
+    var mostrarAyuda by rememberSaveable { mutableStateOf(false) }
     var ranking by remember { mutableStateOf<List<AffinityModel.RankingAfinidad>?>(null) }
     var rankingPadres by remember { mutableStateOf<List<AffinityModel.RankingPadre>?>(null) }
 
@@ -102,8 +106,41 @@ fun RankingScreen(
         if (modo == ModoRanking.VERSATIL) {
             ContenidoVersatiles(ranking, modelo, japones)
         } else {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .clickable(onClick = { mostrarAyuda = true })
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    stringResource(R.string.ranking_padres_ayuda_corta),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f),
+                )
+                Icon(
+                    painterResource(R.drawable.ic_info),
+                    contentDescription = stringResource(R.string.ranking_padres_ayuda_titulo),
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
             ContenidoPadres(rankingPadres, japones)
         }
+    }
+
+    if (mostrarAyuda) {
+        AlertDialog(
+            onDismissRequest = { mostrarAyuda = false },
+            title = { Text(stringResource(R.string.ranking_padres_ayuda_titulo)) },
+            text = { Text(stringResource(R.string.ranking_padres_ayuda_larga)) },
+            confirmButton = {
+                TextButton(onClick = { mostrarAyuda = false }) {
+                    Text(stringResource(R.string.entendido))
+                }
+            },
+        )
     }
 }
 

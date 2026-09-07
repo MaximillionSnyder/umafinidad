@@ -137,6 +137,10 @@
     <string name="ranking_padres_ajustes_desc">Umas picked most often as optimal parents</string>
     <string name="ranking_padres_veces">%1$d · %2$d%%</string>
     <string name="ranking_padres_media">avg %1$dpt · affinity %2$d</string>
+    <string name="ranking_padres_ayuda_corta">Picked most often as the optimal parent</string>
+    <string name="ranking_padres_ayuda_titulo">What is this ranking?</string>
+    <string name="ranking_padres_ayuda_larga">For every uma we compute her perfect parents and count how often each uma wins.\n\n16 · 12% means she is the best option for 16 umas (12% of all).\n\nInvest in the top ones first: they work for almost everyone.</string>
+    <string name="entendido">Got it</string>
     <string name="elenco_ajustes_desc">Your personal roster and its best lineages</string>
     <string name="guardado_snack">Configuration saved</string>
     <string name="eliminado_snack">Configuration deleted</string>

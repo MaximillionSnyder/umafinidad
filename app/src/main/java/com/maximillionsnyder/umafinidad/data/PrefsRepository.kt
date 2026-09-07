@@ -5,6 +5,9 @@ import android.content.Context
 /* Modo de visualización de la grilla de personajes. */
 enum class ModoGrilla { TARJETAS, LISTA }
 
+/* Tamaño de texto de accesibilidad (multiplicador sobre la escala del sistema). */
+enum class TamanoTexto(val escala: Float) { NORMAL(1f), GRANDE(1.15f), MUY_GRANDE(1.3f) }
+
 /* Preferencias de UI persistidas (SharedPreferences, sin dependencias). */
 class PrefsRepository(context: Context) {
 
@@ -26,9 +29,26 @@ class PrefsRepository(context: Context) {
         } ?: Idioma.SISTEMA
         set(valor) = prefs.edit().putString(KEY_IDIOMA, valor.name).apply()
 
+    var tamanoTexto: TamanoTexto
+        get() = prefs.getString(KEY_TAMANO_TEXTO, null)?.let { raw ->
+            try { TamanoTexto.valueOf(raw) } catch (_: IllegalArgumentException) { TamanoTexto.NORMAL }
+        } ?: TamanoTexto.NORMAL
+        set(valor) = prefs.edit().putString(KEY_TAMANO_TEXTO, valor.name).apply()
+
+    var textoNegrita: Boolean
+        get() = prefs.getBoolean(KEY_TEXTO_NEGRITA, false)
+        set(valor) = prefs.edit().putBoolean(KEY_TEXTO_NEGRITA, valor).apply()
+
+    var altoContraste: Boolean
+        get() = prefs.getBoolean(KEY_ALTO_CONTRASTE, false)
+        set(valor) = prefs.edit().putBoolean(KEY_ALTO_CONTRASTE, valor).apply()
+
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
         const val KEY_TEMA = "tema_modo"
         const val KEY_IDIOMA = "idioma_modo"
+        const val KEY_TAMANO_TEXTO = "tamano_texto"
+        const val KEY_TEXTO_NEGRITA = "texto_negrita"
+        const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }
 }

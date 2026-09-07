@@ -10,6 +10,7 @@ import com.maximillionsnyder.umafinidad.data.ElencoRepository
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
+import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.fusionarArbol
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
@@ -95,6 +96,31 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun setIdioma(valor: Idioma) {
         prefs.idioma = valor
         _idioma.value = valor
+    }
+
+    /* Accesibilidad (baja visión): tamaño de texto, negrita y alto contraste. */
+    private val _tamanoTexto = MutableStateFlow(prefs.tamanoTexto)
+    val tamanoTexto: StateFlow<TamanoTexto> = _tamanoTexto
+
+    fun setTamanoTexto(valor: TamanoTexto) {
+        prefs.tamanoTexto = valor
+        _tamanoTexto.value = valor
+    }
+
+    private val _textoNegrita = MutableStateFlow(prefs.textoNegrita)
+    val textoNegrita: StateFlow<Boolean> = _textoNegrita
+
+    fun setTextoNegrita(valor: Boolean) {
+        prefs.textoNegrita = valor
+        _textoNegrita.value = valor
+    }
+
+    private val _altoContraste = MutableStateFlow(prefs.altoContraste)
+    val altoContraste: StateFlow<Boolean> = _altoContraste
+
+    fun setAltoContraste(valor: Boolean) {
+        prefs.altoContraste = valor
+        _altoContraste.value = valor
     }
 
     /* ===== Configuraciones de árbol guardadas ===== */

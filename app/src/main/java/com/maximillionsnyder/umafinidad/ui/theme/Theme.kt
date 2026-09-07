@@ -7,6 +7,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -17,9 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 
 val FondoArriba = Color(0xFF000000)
@@ -167,6 +173,9 @@ fun Modifier.fondoGradiente(isDark: Boolean = true): Modifier =
 @Composable
 fun UmaAfinidadTheme(
     tema: ThemeMode = ThemeMode.SISTEMA,
+    tamanoTexto: TamanoTexto = TamanoTexto.NORMAL,
+    negrita: Boolean = false,
+    altoContraste: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val esOscuro = when (tema) {
@@ -174,7 +183,29 @@ fun UmaAfinidadTheme(
         ThemeMode.OSCURO -> true
         ThemeMode.SISTEMA -> isSystemInDarkTheme()
     }
-    val esquema = if (esOscuro) EsquemaOscuro else EsquemaClaro
+    val esquemaBase = if (esOscuro) EsquemaOscuro else EsquemaClaro
+    /* Alto contraste: refuerza textos secundarios y contornos sin tocar
+       la identidad (primario y fondos quedan igual). */
+    val esquema = if (altoContraste) {
+        if (esOscuro) {
+            esquemaBase.copy(
+                onSurfaceVariant = Color(0xFFDDE3EA),
+                outline = Color(0xFFB6BDC8),
+                outlineVariant = Color(0xFF525252),
+            )
+        } else {
+            esquemaBase.copy(
+                onSurfaceVariant = Color(0xFF1F2937),
+                outline = Color(0xFF4B5563),
+                outlineVariant = Color(0xFF9CA3AF),
+            )
+        }
+    } else {
+        esquemaBase
+    }
+    val tipografia = if (negrita) Typography().enNegrita() else Typography()
+    val density = LocalDensity.current
+    val densityAccesible = Density(density.density, density.fontScale * tamanoTexto.escala)
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -195,11 +226,34 @@ fun UmaAfinidadTheme(
         }
     }
 
-    MaterialTheme(colorScheme = esquema, shapes = AppShapes) {
+    MaterialTheme(colorScheme = esquema, shapes = AppShapes, typography = tipografia) {
         CompositionLocalProvider(
             LocalColoresRango provides ColoresRango(RankGreat, RankGood, RankFair),
             LocalIsDark provides esOscuro,
+            LocalDensity provides densityAccesible,
             content = content,
         )
     }
 }
+
+/* Sube cada estilo al menos a Bold (los que ya son Bold/Black no cambian). */
+private fun TextStyle.conPesoMinimo(minimo: FontWeight): TextStyle =
+    if ((fontWeight?.weight ?: 400) >= minimo.weight) this else copy(fontWeight = minimo)
+
+private fun Typography.enNegrita(): Typography = copy(
+    displayLarge = displayLarge.conPesoMinimo(FontWeight.Bold),
+    displayMedium = displayMedium.conPesoMinimo(FontWeight.Bold),
+    displaySmall = displaySmall.conPesoMinimo(FontWeight.Bold),
+    headlineLarge = headlineLarge.conPesoMinimo(FontWeight.Bold),
+    headlineMedium = headlineMedium.conPesoMinimo(FontWeight.Bold),
+    headlineSmall = headlineSmall.conPesoMinimo(FontWeight.Bold),
+    titleLarge = titleLarge.conPesoMinimo(FontWeight.Bold),
+    titleMedium = titleMedium.conPesoMinimo(FontWeight.Bold),
+    titleSmall = titleSmall.conPesoMinimo(FontWeight.Bold),
+    bodyLarge = bodyLarge.conPesoMinimo(FontWeight.Bold),
+    bodyMedium = bodyMedium.conPesoMinimo(FontWeight.Bold),
+    bodySmall = bodySmall.conPesoMinimo(FontWeight.Bold),
+    labelLarge = labelLarge.conPesoMinimo(FontWeight.Bold),
+    labelMedium = labelMedium.conPesoMinimo(FontWeight.Bold),
+    labelSmall = labelSmall.conPesoMinimo(FontWeight.Bold),
+)

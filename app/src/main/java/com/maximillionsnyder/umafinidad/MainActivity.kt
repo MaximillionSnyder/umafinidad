@@ -85,7 +85,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val tema by vm.tema.collectAsState()
-            UmaAfinidadTheme(tema = tema) {
+            val tamanoTexto by vm.tamanoTexto.collectAsState()
+            val textoNegrita by vm.textoNegrita.collectAsState()
+            val altoContraste by vm.altoContraste.collectAsState()
+            UmaAfinidadTheme(
+                tema = tema,
+                tamanoTexto = tamanoTexto,
+                negrita = textoNegrita,
+                altoContraste = altoContraste,
+            ) {
                 App(vm)
             }
         }
@@ -102,6 +110,9 @@ private fun App(vm: AppViewModel) {
     val arbolPendiente by vm.arbolPendiente.collectAsState()
     val elenco by vm.elenco.collectAsState()
     val tema by vm.tema.collectAsState()
+    val tamanoTexto by vm.tamanoTexto.collectAsState()
+    val textoNegrita by vm.textoNegrita.collectAsState()
+    val altoContraste by vm.altoContraste.collectAsState()
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -314,6 +325,12 @@ private fun App(vm: AppViewModel) {
                                     onAbrirGrupos = { verGrupos = true },
                                     onAbrirRanking = { verRanking = true },
                                     onAbrirRankingPadres = { verRankingPadres = true },
+                                    tamanoTexto = tamanoTexto,
+                                    onTamanoTexto = vm::setTamanoTexto,
+                                    textoNegrita = textoNegrita,
+                                    onTextoNegrita = vm::setTextoNegrita,
+                                    altoContraste = altoContraste,
+                                    onAltoContraste = vm::setAltoContraste,
                                     onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 )
                             }

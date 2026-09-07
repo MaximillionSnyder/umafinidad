@@ -24,6 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,6 +45,7 @@ import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
+import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
@@ -66,8 +68,15 @@ fun SettingsScreen(
     onAbrirRanking: () -> Unit,
     onAbrirRankingPadres: () -> Unit,
     onAbrirElenco: () -> Unit,
+    tamanoTexto: TamanoTexto,
+    onTamanoTexto: (TamanoTexto) -> Unit,
+    textoNegrita: Boolean,
+    onTextoNegrita: (Boolean) -> Unit,
+    altoContraste: Boolean,
+    onAltoContraste: (Boolean) -> Unit,
 ) {
     var aparienciaAbierta by rememberSaveable { mutableStateOf(false) }
+    var accesibilidadAbierta by rememberSaveable { mutableStateOf(false) }
     var temaAbierto by rememberSaveable { mutableStateOf(false) }
     var idiomaAbierto by rememberSaveable { mutableStateOf(false) }
 
@@ -111,6 +120,51 @@ fun SettingsScreen(
                     descripcion = stringResource(R.string.modo_lista_desc),
                     seleccionado = modoGrilla == ModoGrilla.LISTA,
                     onClick = { onModoGrilla(ModoGrilla.LISTA) },
+                )
+            }
+        }
+
+        SeccionDesplegable(
+            titulo = stringResource(R.string.accesibilidad_titulo),
+            subtitulo = stringResource(R.string.accesibilidad_desc),
+            abierto = accesibilidadAbierta,
+            onToggle = { accesibilidadAbierta = !accesibilidadAbierta },
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    stringResource(R.string.tamano_texto_titulo),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.tamano_normal),
+                    descripcion = stringResource(R.string.tamano_normal_desc),
+                    seleccionado = tamanoTexto == TamanoTexto.NORMAL,
+                    onClick = { onTamanoTexto(TamanoTexto.NORMAL) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.tamano_grande),
+                    descripcion = stringResource(R.string.tamano_grande_desc),
+                    seleccionado = tamanoTexto == TamanoTexto.GRANDE,
+                    onClick = { onTamanoTexto(TamanoTexto.GRANDE) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.tamano_muy_grande),
+                    descripcion = stringResource(R.string.tamano_muy_grande_desc),
+                    seleccionado = tamanoTexto == TamanoTexto.MUY_GRANDE,
+                    onClick = { onTamanoTexto(TamanoTexto.MUY_GRANDE) },
+                )
+                FilaInterruptor(
+                    titulo = stringResource(R.string.negrita_titulo),
+                    descripcion = stringResource(R.string.negrita_desc),
+                    activado = textoNegrita,
+                    onCambio = onTextoNegrita,
+                )
+                FilaInterruptor(
+                    titulo = stringResource(R.string.contraste_titulo),
+                    descripcion = stringResource(R.string.contraste_desc),
+                    activado = altoContraste,
+                    onCambio = onAltoContraste,
                 )
             }
         }
@@ -331,6 +385,27 @@ fun SettingsScreen(
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+    }
+}
+
+@Composable
+private fun FilaInterruptor(titulo: String, descripcion: String, activado: Boolean, onCambio: (Boolean) -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = { onCambio(!activado) }),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(titulo, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                Text(descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            Switch(checked = activado, onCheckedChange = onCambio)
         }
     }
 }

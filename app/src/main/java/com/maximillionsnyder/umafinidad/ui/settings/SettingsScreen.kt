@@ -73,10 +73,13 @@ fun SettingsScreen(
     textoNegrita: Boolean,
     onTextoNegrita: (Boolean) -> Unit,
 ) {
-    var aparienciaAbierta by rememberSaveable { mutableStateOf(false) }
-    var accesibilidadAbierta by rememberSaveable { mutableStateOf(false) }
-    var temaAbierto by rememberSaveable { mutableStateOf(false) }
-    var idiomaAbierto by rememberSaveable { mutableStateOf(false) }
+    var seccionAbierta by rememberSaveable { mutableStateOf<String?>(null) }
+
+    /* Acordeón: una sola sección abierta; abrir otra cierra la anterior. */
+    fun estaAbierta(clave: String) = seccionAbierta == clave
+    fun alternar(clave: String) {
+        seccionAbierta = if (seccionAbierta == clave) null else clave
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderBar(titulo = stringResource(R.string.tab_mas))
@@ -98,8 +101,8 @@ fun SettingsScreen(
         ) {
         SeccionDesplegable(
             titulo = stringResource(R.string.ajustes_apariencia),
-            abierto = aparienciaAbierta,
-            onToggle = { aparienciaAbierta = !aparienciaAbierta },
+            abierto = estaAbierta("apariencia"),
+            onToggle = { alternar("apariencia") },
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
@@ -125,8 +128,8 @@ fun SettingsScreen(
         SeccionDesplegable(
             titulo = stringResource(R.string.accesibilidad_titulo),
             subtitulo = stringResource(R.string.accesibilidad_desc),
-            abierto = accesibilidadAbierta,
-            onToggle = { accesibilidadAbierta = !accesibilidadAbierta },
+            abierto = estaAbierta("accesibilidad"),
+            onToggle = { alternar("accesibilidad") },
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
@@ -164,8 +167,8 @@ fun SettingsScreen(
         SeccionDesplegable(
             titulo = stringResource(R.string.tema_titulo),
             subtitulo = stringResource(R.string.tema_desc),
-            abierto = temaAbierto,
-            onToggle = { temaAbierto = !temaAbierto },
+            abierto = estaAbierta("tema"),
+            onToggle = { alternar("tema") },
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OpcionGrilla(
@@ -198,8 +201,8 @@ fun SettingsScreen(
         SeccionDesplegable(
             titulo = stringResource(R.string.idioma_titulo),
             subtitulo = stringResource(R.string.idioma_desc),
-            abierto = idiomaAbierto,
-            onToggle = { idiomaAbierto = !idiomaAbierto },
+            abierto = estaAbierta("idioma"),
+            onToggle = { alternar("idioma") },
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OpcionGrilla(

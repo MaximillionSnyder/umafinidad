@@ -185,8 +185,9 @@ fun UmaAfinidadTheme(
         ThemeMode.SISTEMA -> isSystemInDarkTheme()
     }
     val esquemaBase = if (esOscuro) EsquemaOscuro else EsquemaClaro
-    /* Alto contraste: refuerza textos secundarios y contornos sin tocar
-       la identidad (primario y fondos quedan igual). */
+    /* Alto contraste: textos a negro puro, primario más oscuro y
+       contornos bien visibles. La diferencia con el claro normal es
+       deliberadamente marcada (es el punto del tema). */
     val esquema = if (contrasteAlto) {
         if (esOscuro) {
             esquemaBase.copy(
@@ -196,9 +197,16 @@ fun UmaAfinidadTheme(
             )
         } else {
             esquemaBase.copy(
-                onSurfaceVariant = Color(0xFF1F2937),
-                outline = Color(0xFF4B5563),
-                outlineVariant = Color(0xFF9CA3AF),
+                primary = Color(0xFF7C2D12),
+                onBackground = Color(0xFF000000),
+                onSurface = Color(0xFF000000),
+                onSurfaceVariant = Color(0xFF000000),
+                onPrimaryContainer = Color(0xFF000000),
+                onSecondaryContainer = Color(0xFF000000),
+                surfaceVariant = Color(0xFFE4E4E4),
+                surfaceContainerHighest = Color(0xFFE0E0E0),
+                outline = Color(0xFF424242),
+                outlineVariant = Color(0xFF757575),
             )
         }
     } else {

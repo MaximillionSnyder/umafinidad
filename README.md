@@ -14,6 +14,24 @@ nativa del visor web publicado en
 Los nombres de personajes se muestran en japonés (`jp_name`) si el teléfono
 está en japonés; en cualquier otro caso se usa `en_name`.
 
+## Accesibilidad
+
+La app funciona con TalkBack y con ajustes de baja visión:
+
+- **Tamaño de texto**: Normal, Grande (15 %) y Muy grande (30 %) sobre la
+  escala del sistema.
+- **Texto en negrita** y **tema de alto contraste**, en
+  **Ajustes → Accesibilidad**.
+- **Ventana de bienvenida**: en el primer inicio (y reabrible desde Ajustes)
+  propone estas opciones según las señales del sistema (fuente ampliada,
+  TalkBack, alto contraste del sistema), con vista previa en vivo.
+- Estado anunciado para lectores de pantalla: selección de Umas, secciones
+  desplegables, encabezados y total de herencia.
+
+Para reportar problemas de accesibilidad, abrí un issue en
+[GitHub](https://github.com/MaximillionSnyder/umafinidad/issues).
+Alineado con EN 301 549 capítulo 12 (documentación de accesibilidad).
+
 ## Estructura
 
 ```

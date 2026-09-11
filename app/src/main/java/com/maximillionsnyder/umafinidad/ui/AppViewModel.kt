@@ -115,6 +115,34 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _textoNegrita.value = valor
     }
 
+    /* Bienvenida de accesibilidad: se muestra hasta que se guarda u omite. */
+    private val _mostrarBienvenida = MutableStateFlow(!prefs.bienvenidaAccesibilidadVista)
+    val mostrarBienvenida: StateFlow<Boolean> = _mostrarBienvenida
+
+    private var snapshotBienvenida: Triple<ThemeMode, TamanoTexto, Boolean>? = null
+
+    fun abrirBienvenida() {
+        snapshotBienvenida = Triple(_tema.value, _tamanoTexto.value, _textoNegrita.value)
+        _mostrarBienvenida.value = true
+    }
+
+    fun confirmarBienvenida() {
+        snapshotBienvenida = null
+        prefs.bienvenidaAccesibilidadVista = true
+        _mostrarBienvenida.value = false
+    }
+
+    fun omitirBienvenida() {
+        snapshotBienvenida?.let { (tema, tamano, negrita) ->
+            setTema(tema)
+            setTamanoTexto(tamano)
+            setTextoNegrita(negrita)
+        }
+        snapshotBienvenida = null
+        prefs.bienvenidaAccesibilidadVista = true
+        _mostrarBienvenida.value = false
+    }
+
     /* ===== Configuraciones de árbol guardadas ===== */
 
     private val arbolesRepo = ArbolesRepository(application)

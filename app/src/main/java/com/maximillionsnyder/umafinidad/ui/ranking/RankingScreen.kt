@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
@@ -108,7 +109,11 @@ fun RankingScreen(
         } else {
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .clickable(onClick = { mostrarAyuda = true })
+                    .clickable(
+                        role = Role.Button,
+                        onClickLabel = stringResource(R.string.ranking_padres_ayuda_titulo),
+                        onClick = { mostrarAyuda = true },
+                    )
                     .padding(horizontal = 16.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),

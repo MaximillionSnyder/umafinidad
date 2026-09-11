@@ -8,6 +8,12 @@ enum class ModoGrilla { TARJETAS, LISTA }
 /* Tamaño de texto de accesibilidad (multiplicador sobre la escala del sistema). */
 enum class TamanoTexto(val escala: Float) { NORMAL(1f), GRANDE(1.15f), MUY_GRANDE(1.3f) }
 
+fun tamanoSegunFontScale(fontScale: Float): TamanoTexto = when {
+    fontScale >= 1.3f -> TamanoTexto.MUY_GRANDE
+    fontScale >= 1.15f -> TamanoTexto.GRANDE
+    else -> TamanoTexto.NORMAL
+}
+
 /* Preferencias de UI persistidas (SharedPreferences, sin dependencias). */
 class PrefsRepository(context: Context) {
 
@@ -51,12 +57,17 @@ class PrefsRepository(context: Context) {
         get() = prefs.getBoolean(KEY_TEXTO_NEGRITA, false)
         set(valor) = prefs.edit().putBoolean(KEY_TEXTO_NEGRITA, valor).apply()
 
+    var bienvenidaAccesibilidadVista: Boolean
+        get() = prefs.getBoolean(KEY_BIENVENIDA_ACCE, false)
+        set(valor) = prefs.edit().putBoolean(KEY_BIENVENIDA_ACCE, valor).apply()
+
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
         const val KEY_TEMA = "tema_modo"
         const val KEY_IDIOMA = "idioma_modo"
         const val KEY_TAMANO_TEXTO = "tamano_texto"
         const val KEY_TEXTO_NEGRITA = "texto_negrita"
+        const val KEY_BIENVENIDA_ACCE = "bienvenida_acce_vista"
         // Solo lectura para migrar instalaciones con el interruptor viejo.
         const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }

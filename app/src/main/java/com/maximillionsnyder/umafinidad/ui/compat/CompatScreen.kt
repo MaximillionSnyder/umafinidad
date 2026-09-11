@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -49,10 +50,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
+import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -222,7 +229,7 @@ fun CompatScreen(
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .clickable { elegirSugerencia(c.charId) }
+                                        .clickable(role = Role.Button) { elegirSugerencia(c.charId) }
                                         .padding(horizontal = 12.dp, vertical = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -270,6 +277,7 @@ fun CompatScreen(
         ) {
             ExtendedFloatingActionButton(
                 onClick = { sheetAbierto = true },
+                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 icon = { Icon(painterResource(R.drawable.ic_corazon), contentDescription = null) },
@@ -314,8 +322,13 @@ fun CompatScreen(
 @Composable
 private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val rolColor = colorDeGenealogia(slot)
+    val etiquetaQuitar = if (personaje != null) stringResource(R.string.quitar_personaje) else null
     Card(
-        modifier = modifier.clickable(onClick = onClick),
+        modifier = modifier.clickable(
+            role = if (personaje != null) Role.Button else null,
+            onClickLabel = etiquetaQuitar,
+            onClick = onClick,
+        ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         border = androidx.compose.foundation.BorderStroke(
@@ -376,10 +389,13 @@ private fun CardTarjeta(personaje: Character, seleccion: List<Int?>, japones: Bo
     val nombrePrincipal = personaje.displayName(japones)
     val nombreSecundario = if (japones) personaje.enName ?: "" else personaje.jpName ?: ""
     val roles = posicionesRes(seleccion, personaje.charId)
-
     val seleccionado = roles.isNotEmpty()
+    val rolesTexto = roles.map { stringResource(it) }.joinToString(", ")
+
     Card(
-        modifier = Modifier.clickable(onClick = onClick),
+        modifier = Modifier
+            .toggleable(value = seleccionado, role = Role.Checkbox, onValueChange = { onClick() })
+            .semantics { if (rolesTexto.isNotEmpty()) stateDescription = rolesTexto },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (seleccionado) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
@@ -406,9 +422,9 @@ private fun CardTarjeta(personaje: Character, seleccion: List<Int?>, japones: Bo
                     }
                 }
             }
-            Text(nombrePrincipal, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
+            Text(nombrePrincipal, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
             if (nombreSecundario.isNotEmpty()) {
-                Text(nombreSecundario, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
+                Text(nombreSecundario, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
             }
             if (roles.isNotEmpty()) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -455,9 +471,13 @@ private fun CardFila(personaje: Character, seleccion: List<Int?>, japones: Boole
     val nombreSecundario = if (japones) personaje.enName ?: "" else personaje.jpName ?: ""
     val roles = posicionesRes(seleccion, personaje.charId)
     val seleccionado = roles.isNotEmpty()
+    val rolesTexto = roles.map { stringResource(it) }.joinToString(", ")
 
     Card(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        modifier = Modifier
+            .fillMaxWidth()
+            .toggleable(value = seleccionado, role = Role.Checkbox, onValueChange = { onClick() })
+            .semantics { if (rolesTexto.isNotEmpty()) stateDescription = rolesTexto },
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         border = if (seleccionado) androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary) else null,
@@ -472,9 +492,9 @@ private fun CardFila(personaje: Character, seleccion: List<Int?>, japones: Boole
             Row(modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Avatar(personaje.charId, nombrePrincipal, modifier = Modifier.size(48.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(nombrePrincipal, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(nombrePrincipal, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     if (nombreSecundario.isNotEmpty()) {
-                        Text(nombreSecundario, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(nombreSecundario, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     }
                 }
                 AnimatedVisibility(visible = seleccionado) {
@@ -519,13 +539,19 @@ fun ResultadoPanel(modelo: AffinityModel, res: ResultadoCompat, japones: Boolean
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .semantics { liveRegion = LiveRegionMode.Polite }
                 .padding(horizontal = 16.dp)
                 .background(fondoTotal, RoundedCornerShape(20.dp))
                 .padding(vertical = 18.dp),
             contentAlignment = Alignment.Center,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(stringResource(R.string.total_herencia), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(
+                    stringResource(R.string.total_herencia),
+                    modifier = Modifier.headingSemantica(),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 RankPillGrande(res.rangoTotal, res.total ?: 0)
             }
         }
@@ -564,7 +590,7 @@ private fun RankPillGrande(rango: com.maximillionsnyder.umafinidad.domain.Rango?
 @Composable
 private fun SeccionVinculos(titulo: String, filas: List<FilaVinculoUi>, estado: EstadoSeccion, modelo: AffinityModel, japones: Boolean) {
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)) {
-        Text(titulo, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+        Text(titulo, modifier = Modifier.headingSemantica(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(6.dp))
         when (estado) {
             EstadoSeccion.CON_FILAS -> filas.forEach { FilaVinculo(it, modelo, japones) }
@@ -580,7 +606,7 @@ private fun SeccionVinculos(titulo: String, filas: List<FilaVinculoUi>, estado: 
 @Composable
 private fun SeccionEntrePadres(res: ResultadoCompat, modelo: AffinityModel, japones: Boolean) {
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)) {
-        Text(stringResource(R.string.sec_entre_padres), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.sec_entre_padres), modifier = Modifier.headingSemantica(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(6.dp))
         when (res.estadoEntrePadres) {
             EstadoSeccion.CON_FILAS -> res.entrePadres?.let { FilaVinculo(it, modelo, japones) }

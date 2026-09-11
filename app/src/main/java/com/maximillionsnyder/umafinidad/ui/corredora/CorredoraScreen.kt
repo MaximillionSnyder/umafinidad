@@ -45,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -361,7 +362,7 @@ private fun FilaSugerencia(c: Character, japones: Boolean, onClick: () -> Unit) 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable(role = Role.Button, onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -478,7 +479,7 @@ private fun ChipRol(etiqueta: String, personaje: Character?, slot: Int, japones:
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
+            .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier),
         shape = RoundedCornerShape(12.dp),
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         border = if (personaje != null && onClick != null) BorderStroke(1.dp, colorRol.copy(alpha = 0.45f)) else null,
@@ -544,7 +545,7 @@ private fun HojaAlternativas(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onElegir(alt.personaje.charId) }
+                        .clickable(role = Role.Button) { onElegir(alt.personaje.charId) }
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -616,7 +617,7 @@ private fun Nota(texto: String) {
 @Composable
 private fun TarjetaGuardada(guardada: ArbolGuardado, japones: Boolean, alTocar: () -> Unit, alBorrar: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = alTocar).padding(vertical = 3.dp),
+        modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = alTocar).padding(vertical = 3.dp),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
     ) {

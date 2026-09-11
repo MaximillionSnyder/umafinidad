@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -42,7 +43,11 @@ fun CardFilaTop(i: Int, combo: Linaje, modelo: AffinityModel, japones: Boolean, 
         .joinToString(" × ") { it.displayName(japones) }
 
     Card(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        modifier = Modifier.fillMaxWidth().clickable(
+            role = Role.Button,
+            onClickLabel = stringResource(R.string.ver_herencia),
+            onClick = onClick,
+        ),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (i < 3) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)

@@ -119,6 +119,17 @@
     <string name="tamano_muy_grande_desc">Texto 30% más grande</string>
     <string name="negrita_titulo">Texto en negrita</string>
     <string name="negrita_desc">Letras más gruesas y legibles</string>
+    <string name="expandido">Expandido</string>
+    <string name="contraido">Contraído</string>
+    <string name="quitar_personaje">Quitar personaje</string>
+    <string name="abrir_grupos">Abrir grupos</string>
+    <string name="abrir_ranking">Abrir ranking</string>
+    <string name="bienvenida_titulo">Configurá la accesibilidad</string>
+    <string name="bienvenida_desc">Elegí las opciones que te ayuden a leer y navegar mejor. Podés cambiarlas después en Ajustes.</string>
+    <string name="bienvenida_tamano">Tamaño del texto</string>
+    <string name="omitir">Omitir</string>
+    <string name="revisar_accesibilidad">Revisar accesibilidad</string>
+    <string name="revisar_accesibilidad_desc">Volver a mostrar esta ventana</string>
     <string name="modo_grilla_pregunta">¿Cómo querés ver los personajes?</string>
     <string name="modo_vertical">Tarjetas grandes</string>
     <string name="modo_vertical_desc">Grilla con avatares grandes y centrados</string>

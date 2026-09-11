@@ -119,6 +119,17 @@
     <string name="tamano_muy_grande_desc">30% bigger text</string>
     <string name="negrita_titulo">Bold text</string>
     <string name="negrita_desc">Thicker, more legible letters</string>
+    <string name="expandido">Expanded</string>
+    <string name="contraido">Collapsed</string>
+    <string name="quitar_personaje">Remove character</string>
+    <string name="abrir_grupos">Open groups</string>
+    <string name="abrir_ranking">Open ranking</string>
+    <string name="bienvenida_titulo">Set up accessibility</string>
+    <string name="bienvenida_desc">Choose the options that help you read and navigate better. You can change them later in Settings.</string>
+    <string name="bienvenida_tamano">Text size</string>
+    <string name="omitir">Skip</string>
+    <string name="revisar_accesibilidad">Review accessibility</string>
+    <string name="revisar_accesibilidad_desc">Show this setup window again</string>
     <string name="modo_grilla_pregunta">How would you like to view characters?</string>
     <string name="modo_vertical">Large cards</string>
     <string name="modo_vertical_desc">Grid with large centered avatars</string>

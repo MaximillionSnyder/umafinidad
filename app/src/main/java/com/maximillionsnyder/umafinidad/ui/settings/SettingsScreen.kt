@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -34,6 +36,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
@@ -49,6 +55,7 @@ import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
+import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
 
 /* Apartado de ajustes: por ahora, el modo de grilla de personajes. */
 @Composable
@@ -72,6 +79,7 @@ fun SettingsScreen(
     onTamanoTexto: (TamanoTexto) -> Unit,
     textoNegrita: Boolean,
     onTextoNegrita: (Boolean) -> Unit,
+    onAbrirBienvenida: () -> Unit,
 ) {
     var seccionAbierta by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -86,7 +94,7 @@ fun SettingsScreen(
 
         Text(
             stringResource(R.string.tab_ajustes),
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).headingSemantica(),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
@@ -238,7 +246,11 @@ fun SettingsScreen(
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         Spacer(Modifier.height(8.dp))
         Card(
-            modifier = Modifier.fillMaxWidth().clickable(onClick = onAbrirGrupos),
+            modifier = Modifier.fillMaxWidth().clickable(
+                role = Role.Button,
+                onClickLabel = stringResource(R.string.abrir_grupos),
+                onClick = onAbrirGrupos,
+            ),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -265,7 +277,11 @@ fun SettingsScreen(
 
         /* ===== Ranking (referencia, archivado de la barra inferior) ===== */
         Card(
-            modifier = Modifier.fillMaxWidth().clickable(onClick = onAbrirRanking),
+            modifier = Modifier.fillMaxWidth().clickable(
+                role = Role.Button,
+                onClickLabel = stringResource(R.string.abrir_ranking),
+                onClick = onAbrirRanking,
+            ),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -292,7 +308,7 @@ fun SettingsScreen(
 
         /* ===== Mejores padres (variante a probar; se queda una de las dos) ===== */
         Card(
-            modifier = Modifier.fillMaxWidth().clickable(onClick = onAbrirRankingPadres),
+            modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = onAbrirRankingPadres),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -319,7 +335,7 @@ fun SettingsScreen(
 
         /* ===== Mis Umas (referencia, archivado de la barra inferior) ===== */
         Card(
-            modifier = Modifier.fillMaxWidth().clickable(onClick = onAbrirElenco),
+            modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = onAbrirElenco),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -351,6 +367,7 @@ fun SettingsScreen(
             Spacer(Modifier.height(8.dp))
             Text(
                 stringResource(R.string.arboles_ajustes),
+                modifier = Modifier.headingSemantica(),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -358,7 +375,7 @@ fun SettingsScreen(
             arboles.forEach { a ->
                 val nombreHijo = modelo.porId(a.hijoId)?.displayName(japones) ?: "#${'$'}{a.hijoId}"
                 Card(
-                    modifier = Modifier.fillMaxWidth().clickable(onClick = { onAbrirArbol(a) }),
+                    modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = { onAbrirArbol(a) }),
                     shape = RoundedCornerShape(12.dp),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                 ) {
@@ -380,6 +397,37 @@ fun SettingsScreen(
             Spacer(Modifier.height(8.dp))
         }
 
+        /* ===== Revisar accesibilidad ===== */
+        Card(
+            modifier = Modifier.fillMaxWidth().clickable(
+                role = Role.Button,
+                onClickLabel = stringResource(R.string.revisar_accesibilidad),
+                onClick = onAbrirBienvenida,
+            ),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_tab_ajustes),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Column {
+                    Text(stringResource(R.string.revisar_accesibilidad), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.revisar_accesibilidad_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             Text(
                 "Uma Afinidad v${BuildConfig.VERSION_NAME}",
@@ -393,12 +441,15 @@ fun SettingsScreen(
 @Composable
 private fun FilaInterruptor(titulo: String, descripcion: String, activado: Boolean, onCambio: (Boolean) -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = { onCambio(!activado) }),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .toggleable(value = activado, role = Role.Switch, onValueChange = onCambio)
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
@@ -406,7 +457,7 @@ private fun FilaInterruptor(titulo: String, descripcion: String, activado: Boole
                 Text(titulo, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
                 Text(descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-            Switch(checked = activado, onCheckedChange = onCambio)
+            Switch(checked = activado, onCheckedChange = null)
         }
     }
 }
@@ -414,13 +465,19 @@ private fun FilaInterruptor(titulo: String, descripcion: String, activado: Boole
 @Composable
 private fun OpcionGrilla(titulo: String, descripcion: String, seleccionado: Boolean, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         border = if (seleccionado) BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary) else null,
     ) {
-        Row(modifier = Modifier.padding(horizontal = 6.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            RadioButton(selected = seleccionado, onClick = onClick)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .selectable(selected = seleccionado, role = Role.RadioButton, onClick = onClick)
+                .padding(horizontal = 6.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            RadioButton(selected = seleccionado, onClick = null)
             Column(modifier = Modifier.weight(1f)) {
                 Text(titulo, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
                 Text(descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -437,6 +494,7 @@ private fun SeccionDesplegable(
     subtitulo: String? = null,
     contenido: @Composable () -> Unit,
 ) {
+    val estadoTxt = stringResource(if (abierto) R.string.expandido else R.string.contraido)
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -446,19 +504,21 @@ private fun SeccionDesplegable(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = onToggle)
+                    .toggleable(value = abierto, role = Role.Button, onValueChange = { onToggle() })
+                    .semantics { stateDescription = estadoTxt }
                     .padding(horizontal = 12.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(titulo, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    Text(titulo, modifier = Modifier.headingSemantica(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                     if (subtitulo != null) {
                         Text(subtitulo, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
                 Text(
                     if (abierto) "∧" else "∨",
+                    modifier = Modifier.clearAndSetSemantics {},
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,

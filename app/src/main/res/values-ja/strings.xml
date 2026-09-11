@@ -119,6 +119,17 @@
     <string name="tamano_muy_grande_desc">30%大きい文字</string>
     <string name="negrita_titulo">太字テキスト</string>
     <string name="negrita_desc">太く読みやすい文字</string>
+    <string name="expandido">展開済み</string>
+    <string name="contraido">折りたたみ済み</string>
+    <string name="quitar_personaje">キャラを外す</string>
+    <string name="abrir_grupos">グループを開く</string>
+    <string name="abrir_ranking">ランキングを開く</string>
+    <string name="bienvenida_titulo">アクセシビリティ設定</string>
+    <string name="bienvenida_desc">読みやすく操作しやすい設定を選べます。後から設定で変更できます。</string>
+    <string name="bienvenida_tamano">文字の大きさ</string>
+    <string name="omitir">スキップ</string>
+    <string name="revisar_accesibilidad">アクセシビリティを見直す</string>
+    <string name="revisar_accesibilidad_desc">この案内をもう一度表示</string>
     <string name="modo_grilla_pregunta">ウマ娘の表示方法を選択</string>
     <string name="modo_vertical">大きなカード</string>
     <string name="modo_vertical_desc">大きいアイコンのグリッド表示</string>

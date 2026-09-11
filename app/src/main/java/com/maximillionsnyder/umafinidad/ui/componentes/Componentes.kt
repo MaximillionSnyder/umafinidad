@@ -136,7 +136,7 @@ fun HeaderBar(
             color = MaterialTheme.colorScheme.onBackground,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f, fill = false),
+            modifier = Modifier.weight(1f, fill = false).headingSemantica(),
         )
         chip?.let { contenido ->
             Box(modifier = Modifier.padding(start = 10.dp)) { contenido() }
@@ -186,7 +186,7 @@ fun HeaderBarConVolver(
             color = MaterialTheme.colorScheme.onBackground,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).headingSemantica(),
         )
         pillTexto?.let { texto ->
             Surface(

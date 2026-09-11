@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.aplicarIdioma
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
+import com.maximillionsnyder.umafinidad.ui.componentes.BienvenidaAccesibilidad
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
 import com.maximillionsnyder.umafinidad.ui.elenco.ElencoScreen
@@ -88,7 +89,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             val tema by vm.tema.collectAsState()
             val tamanoTexto by vm.tamanoTexto.collectAsState()
-            val textoNegrita by vm.textoNegrita.collectAsState()
+    val textoNegrita by vm.textoNegrita.collectAsState()
+    val mostrarBienvenida by vm.mostrarBienvenida.collectAsState()
             UmaAfinidadTheme(
                 tema = tema,
                 tamanoTexto = tamanoTexto,
@@ -367,6 +369,7 @@ private fun App(vm: AppViewModel) {
                                     onTamanoTexto = vm::setTamanoTexto,
                                     textoNegrita = textoNegrita,
                                     onTextoNegrita = vm::setTextoNegrita,
+                                    onAbrirBienvenida = vm::abrirBienvenida,
                                     onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
                                 )
                             }
@@ -392,6 +395,20 @@ private fun App(vm: AppViewModel) {
                         Text(stringResource(R.string.cancelar))
                     }
                 },
+            )
+        }
+
+        /* Bienvenida de accesibilidad: primer inicio o reapertura desde Ajustes. */
+        if (mostrarBienvenida) {
+            BienvenidaAccesibilidad(
+                tema = tema,
+                onTema = vm::setTema,
+                tamanoTexto = tamanoTexto,
+                onTamanoTexto = vm::setTamanoTexto,
+                textoNegrita = textoNegrita,
+                onTextoNegrita = vm::setTextoNegrita,
+                onGuardar = vm::confirmarBienvenida,
+                onOmitir = vm::omitirBienvenida,
             )
         }
 }

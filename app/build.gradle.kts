@@ -16,6 +16,7 @@ android {
         /* El workflow de release sobrescribe ambas vía entorno. */
         versionCode = (System.getenv("VERSION_CODE") ?: "1").toInt()
         versionName = System.getenv("VERSION_NAME") ?: "0.1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     /* Firma de release: el workflow decodifica el keystore desde los secrets
@@ -86,6 +87,12 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:$compose")
     implementation("androidx.compose.material3:material3:1.4.0")
     debugImplementation("androidx.compose.ui:ui-tooling:$compose")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose")
+
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4-accessibility:$compose")
+    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 

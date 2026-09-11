@@ -1,6 +1,7 @@
 package com.maximillionsnyder.umafinidad
 
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
+import com.maximillionsnyder.umafinidad.data.tamanoSegunFontScale
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -23,5 +24,23 @@ class AccesibilidadTest {
     fun valoresDocumentados() {
         assertEquals(1.15f, TamanoTexto.GRANDE.escala, 0.001f)
         assertEquals(1.3f, TamanoTexto.MUY_GRANDE.escala, 0.001f)
+    }
+
+    @Test
+    fun fontScaleNormalNoAjusta() {
+        assertEquals(TamanoTexto.NORMAL, tamanoSegunFontScale(1f))
+        assertEquals(TamanoTexto.NORMAL, tamanoSegunFontScale(1.14f))
+    }
+
+    @Test
+    fun fontScaleGrandeAjustaAGrande() {
+        assertEquals(TamanoTexto.GRANDE, tamanoSegunFontScale(1.15f))
+        assertEquals(TamanoTexto.GRANDE, tamanoSegunFontScale(1.29f))
+    }
+
+    @Test
+    fun fontScaleMuyGrandeAjustaAMuyGrande() {
+        assertEquals(TamanoTexto.MUY_GRANDE, tamanoSegunFontScale(1.3f))
+        assertEquals(TamanoTexto.MUY_GRANDE, tamanoSegunFontScale(2f))
     }
 }

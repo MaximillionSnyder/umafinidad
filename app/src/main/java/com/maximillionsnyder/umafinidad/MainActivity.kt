@@ -89,8 +89,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val tema by vm.tema.collectAsState()
             val tamanoTexto by vm.tamanoTexto.collectAsState()
-    val textoNegrita by vm.textoNegrita.collectAsState()
-    val mostrarBienvenida by vm.mostrarBienvenida.collectAsState()
+            val textoNegrita by vm.textoNegrita.collectAsState()
             UmaAfinidadTheme(
                 tema = tema,
                 tamanoTexto = tamanoTexto,
@@ -114,6 +113,7 @@ private fun App(vm: AppViewModel) {
     val tema by vm.tema.collectAsState()
     val tamanoTexto by vm.tamanoTexto.collectAsState()
     val textoNegrita by vm.textoNegrita.collectAsState()
+    val mostrarBienvenida by vm.mostrarBienvenida.collectAsState()
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
     val snackbarHostState = remember { SnackbarHostState() }

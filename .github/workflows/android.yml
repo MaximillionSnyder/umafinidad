@@ -2,7 +2,7 @@ name: Android
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
     tags: ['v*']
   pull_request:
   workflow_dispatch:
@@ -20,9 +20,9 @@ env:
   KEY_ALIAS: umafinidad
 
 jobs:
-  # ---- Build de control (push a main / PR) ----
+  # ---- Build de control (push a dev / PR) ----
   debug:
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'pull_request'
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/dev') || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

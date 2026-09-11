@@ -43,7 +43,7 @@ npm run icons              # regenerar íconos launcher legacy
 
 El workflow compila y firma automáticamente:
 
-- **push a `main`** → APK debug como artifact
+- **push a `dev`** → APK debug como artifact
 - **tag `v*`** → AAB + APK firmados y release en GitHub
 
 La primera vez hay que generar el keystore (modo bootstrap): ejecutar el

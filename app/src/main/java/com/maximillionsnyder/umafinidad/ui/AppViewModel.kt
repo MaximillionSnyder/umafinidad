@@ -7,6 +7,7 @@ import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.ArbolesRepository
 import com.maximillionsnyder.umafinidad.data.ElencoRepository
+import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
@@ -78,6 +79,15 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun setModoGrilla(modo: ModoGrilla) {
         prefs.modoGrilla = modo
         _modoGrilla.value = modo
+    }
+
+    /* Estilo de avatares persistido (color / 5 tonos / 1 bit). */
+    private val _estiloAvatar = MutableStateFlow(prefs.estiloAvatar)
+    val estiloAvatar: StateFlow<EstiloAvatar> = _estiloAvatar
+
+    fun setEstiloAvatar(valor: EstiloAvatar) {
+        prefs.estiloAvatar = valor
+        _estiloAvatar.value = valor
     }
 
     /* Tema persistido (sistema / claro / oscuro). */

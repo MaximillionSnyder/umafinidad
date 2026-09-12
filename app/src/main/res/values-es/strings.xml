@@ -135,6 +135,13 @@
     <string name="modo_vertical_desc">Grilla con avatares grandes y centrados</string>
     <string name="modo_lista">Lista compacta</string>
     <string name="modo_lista_desc">Filas horizontales con franja de color</string>
+    <string name="avatares_pregunta">Estilo de los avatares</string>
+    <string name="avatar_color">Color</string>
+    <string name="avatar_color_desc">Pixel-art a todo color</string>
+    <string name="avatar_grises">Blanco y negro · 5 tonos</string>
+    <string name="avatar_grises_desc">Pixel-art en escala de grises de cinco tonos</string>
+    <string name="avatar_monocromo">Blanco y negro · 1 bit</string>
+    <string name="avatar_monocromo_desc">Pixel-art en blanco y negro puro</string>
     <string name="seccion_herencia">Herencia</string>
     <string name="herencia_contador">%1$d/7</string>
     <string name="salir_titulo">¿Salir de Uma Afinidad?</string>

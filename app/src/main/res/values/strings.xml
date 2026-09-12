@@ -135,6 +135,13 @@
     <string name="modo_vertical_desc">Grid with large centered avatars</string>
     <string name="modo_lista">Compact list</string>
     <string name="modo_lista_desc">Horizontal rows with a color stripe</string>
+    <string name="avatares_pregunta">Avatar style</string>
+    <string name="avatar_color">Color</string>
+    <string name="avatar_color_desc">Full-color pixel art</string>
+    <string name="avatar_grises">Black and white · 5 shades</string>
+    <string name="avatar_grises_desc">Five-tone grayscale pixel art</string>
+    <string name="avatar_monocromo">Black and white · 1-bit</string>
+    <string name="avatar_monocromo_desc">Pure black-and-white pixel art</string>
     <string name="seccion_herencia">Inheritance</string>
     <string name="herencia_contador">%1$d/7</string>
     <string name="salir_titulo">Exit Uma Afinidad?</string>

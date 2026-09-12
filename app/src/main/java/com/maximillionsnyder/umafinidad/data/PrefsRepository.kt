@@ -23,6 +23,12 @@ class PrefsRepository(context: Context) {
         get() = if (prefs.getBoolean(KEY_GRID_VERTICAL, true)) ModoGrilla.TARJETAS else ModoGrilla.LISTA
         set(valor) = prefs.edit().putBoolean(KEY_GRID_VERTICAL, valor == ModoGrilla.TARJETAS).apply()
 
+    var estiloAvatar: EstiloAvatar
+        get() = prefs.getString(KEY_ESTILO_AVATAR, null)?.let { raw ->
+            try { EstiloAvatar.valueOf(raw) } catch (_: IllegalArgumentException) { EstiloAvatar.COLOR }
+        } ?: EstiloAvatar.COLOR
+        set(valor) = prefs.edit().putString(KEY_ESTILO_AVATAR, valor.name).apply()
+
     var tema: ThemeMode
         get() {
             prefs.getString(KEY_TEMA, null)?.let { raw ->
@@ -63,6 +69,7 @@ class PrefsRepository(context: Context) {
 
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
+        const val KEY_ESTILO_AVATAR = "estilo_avatar"
         const val KEY_TEMA = "tema_modo"
         const val KEY_IDIOMA = "idioma_modo"
         const val KEY_TAMANO_TEXTO = "tamano_texto"

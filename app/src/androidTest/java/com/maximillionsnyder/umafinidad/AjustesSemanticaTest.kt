@@ -14,6 +14,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
+import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
@@ -37,6 +38,8 @@ class AjustesSemanticaTest {
             SettingsScreen(
                 modoGrilla = ModoGrilla.TARJETAS,
                 onModoGrilla = {},
+                estiloAvatar = EstiloAvatar.COLOR,
+                onEstiloAvatar = {},
                 tema = ThemeMode.SISTEMA,
                 onTema = {},
                 idioma = Idioma.SISTEMA,
@@ -72,7 +75,7 @@ class AjustesSemanticaTest {
         componerAjustes()
         composeRule.onAllNodes(
             SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.RadioButton),
-        ).assertCountEquals(13)
+        ).assertCountEquals(16)
     }
 
     @Test

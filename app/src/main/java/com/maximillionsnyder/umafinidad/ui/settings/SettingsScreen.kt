@@ -49,10 +49,13 @@ import androidx.compose.ui.res.painterResource
 import com.maximillionsnyder.umafinidad.BuildConfig
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
+import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
+import com.maximillionsnyder.umafinidad.data.descripcionRes
+import com.maximillionsnyder.umafinidad.data.tituloRes
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
@@ -62,6 +65,8 @@ import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
 fun SettingsScreen(
     modoGrilla: ModoGrilla,
     onModoGrilla: (ModoGrilla) -> Unit,
+    estiloAvatar: EstiloAvatar,
+    onEstiloAvatar: (EstiloAvatar) -> Unit,
     tema: ThemeMode,
     onTema: (ThemeMode) -> Unit,
     idioma: Idioma,
@@ -129,6 +134,29 @@ fun SettingsScreen(
                     descripcion = stringResource(R.string.modo_lista_desc),
                     seleccionado = modoGrilla == ModoGrilla.LISTA,
                     onClick = { onModoGrilla(ModoGrilla.LISTA) },
+                )
+                Text(
+                    stringResource(R.string.avatares_pregunta),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OpcionGrilla(
+                    titulo = stringResource(EstiloAvatar.COLOR.tituloRes()),
+                    descripcion = stringResource(EstiloAvatar.COLOR.descripcionRes()),
+                    seleccionado = estiloAvatar == EstiloAvatar.COLOR,
+                    onClick = { onEstiloAvatar(EstiloAvatar.COLOR) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(EstiloAvatar.GRISES.tituloRes()),
+                    descripcion = stringResource(EstiloAvatar.GRISES.descripcionRes()),
+                    seleccionado = estiloAvatar == EstiloAvatar.GRISES,
+                    onClick = { onEstiloAvatar(EstiloAvatar.GRISES) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(EstiloAvatar.MONOCROMO.tituloRes()),
+                    descripcion = stringResource(EstiloAvatar.MONOCROMO.descripcionRes()),
+                    seleccionado = estiloAvatar == EstiloAvatar.MONOCROMO,
+                    onClick = { onEstiloAvatar(EstiloAvatar.MONOCROMO) },
                 )
             }
         }

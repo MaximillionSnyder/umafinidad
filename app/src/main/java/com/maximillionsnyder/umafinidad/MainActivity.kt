@@ -35,6 +35,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -62,6 +63,7 @@ import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.aplicarIdioma
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.componentes.BienvenidaAccesibilidad
+import com.maximillionsnyder.umafinidad.ui.componentes.LocalEstiloAvatar
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
 import com.maximillionsnyder.umafinidad.ui.elenco.ElencoScreen
@@ -90,12 +92,15 @@ class MainActivity : ComponentActivity() {
             val tema by vm.tema.collectAsState()
             val tamanoTexto by vm.tamanoTexto.collectAsState()
             val textoNegrita by vm.textoNegrita.collectAsState()
+            val estiloAvatar by vm.estiloAvatar.collectAsState()
             UmaAfinidadTheme(
                 tema = tema,
                 tamanoTexto = tamanoTexto,
                 negrita = textoNegrita,
             ) {
-                App(vm)
+                CompositionLocalProvider(LocalEstiloAvatar provides estiloAvatar) {
+                    App(vm)
+                }
             }
         }
     }
@@ -114,6 +119,7 @@ private fun App(vm: AppViewModel) {
     val tamanoTexto by vm.tamanoTexto.collectAsState()
     val textoNegrita by vm.textoNegrita.collectAsState()
     val mostrarBienvenida by vm.mostrarBienvenida.collectAsState()
+    val estiloAvatar = LocalEstiloAvatar.current
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -350,6 +356,8 @@ private fun App(vm: AppViewModel) {
                                 else -> SettingsScreen(
                                     modoGrilla = modoGrilla,
                                     onModoGrilla = vm::setModoGrilla,
+                                    estiloAvatar = estiloAvatar,
+                                    onEstiloAvatar = vm::setEstiloAvatar,
                                     tema = tema,
                                     onTema = vm::setTema,
                                     idioma = idioma,

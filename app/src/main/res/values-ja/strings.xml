@@ -135,6 +135,13 @@
     <string name="modo_vertical_desc">大きいアイコンのグリッド表示</string>
     <string name="modo_lista">コンパクトリスト</string>
     <string name="modo_lista_desc">色帯付きの横並び表示</string>
+    <string name="avatares_pregunta">アバターのスタイル</string>
+    <string name="avatar_color">カラー</string>
+    <string name="avatar_color_desc">フルカラーのピクセルアート</string>
+    <string name="avatar_grises">モノクロ・5階調</string>
+    <string name="avatar_grises_desc">5段階グレースケールのピクセルアート</string>
+    <string name="avatar_monocromo">モノクロ・1ビット</string>
+    <string name="avatar_monocromo_desc">白黒2階調のピクセルアート</string>
     <string name="seccion_herencia">継承</string>
     <string name="herencia_contador">%1$d/7</string>
     <string name="salir_titulo">Uma Afinidadを終了しますか？</string>

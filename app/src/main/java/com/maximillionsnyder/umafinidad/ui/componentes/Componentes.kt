@@ -58,7 +58,7 @@ fun inicialesDe(nombre: String): String =
 
 @Composable
 fun Avatar(id: Int, nombre: String, modifier: Modifier = Modifier) {
-    val avatar = avatarResFor(id)
+    val avatar = avatarResFor(id, LocalEstiloAvatar.current)
     if (avatar != null) {
         Image(
             painter = painterResource(avatar),

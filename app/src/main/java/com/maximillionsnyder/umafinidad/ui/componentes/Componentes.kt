@@ -1,5 +1,6 @@
 package com.maximillionsnyder.umafinidad.ui.componentes
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -56,16 +58,25 @@ fun inicialesDe(nombre: String): String =
 
 @Composable
 fun Avatar(id: Int, nombre: String, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.background(gradienteDeAvatar(id), CircleShape),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = inicialesDe(nombre),
-            style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
+    val avatar = avatarResFor(id)
+    if (avatar != null) {
+        Image(
+            painter = painterResource(avatar),
+            contentDescription = null,
+            modifier = modifier.clip(CircleShape),
         )
+    } else {
+        Box(
+            modifier = modifier.background(gradienteDeAvatar(id), CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = inicialesDe(nombre),
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+            )
+        }
     }
 }
 

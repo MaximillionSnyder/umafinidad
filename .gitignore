@@ -22,3 +22,6 @@ keystore-*.zip
 # Local tooling (no commitear)
 .codegraph/
 .opencode/
+
+# Pipeline pixel-art local (originales + venv + salidas)
+pixelwork/

@@ -1,0 +1,104 @@
+name: Sitio
+
+on:
+  push:
+    branches: [dev, main]
+    paths:
+      - 'sitio/**'
+      - 'app/src/main/assets/data/**'
+      - 'app/src/main/res/drawable-nodpi/**'
+      - 'app/src/main/res/values*/strings.xml'
+      - 'app/src/test/resources/fixtures/**'
+      - '.github/workflows/sitio.yml'
+  pull_request:
+    paths:
+      - 'sitio/**'
+      - 'app/src/main/assets/data/**'
+      - 'app/src/main/res/drawable-nodpi/**'
+      - 'app/src/main/res/values*/strings.xml'
+      - 'app/src/test/resources/fixtures/**'
+      - '.github/workflows/sitio.yml'
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Publicar en GitHub Pages (reemplaza la web React)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: sitio/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: sitio
+        run: npm ci
+
+      - name: Typecheck + Svelte
+        working-directory: sitio
+        run: npm run check
+
+      - name: Lint
+        working-directory: sitio
+        run: npm run lint
+
+      - name: Tests (dominio + paridad + accesibilidad)
+        working-directory: sitio
+        run: npm test
+
+      - name: Build para GitHub Pages
+        working-directory: sitio
+        env:
+          BASE_PATH: /umafinidad
+        run: npm run build
+
+      - name: Subir artefacto del sitio
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitio-build
+          path: sitio/build
+          retention-days: 7
+
+      - name: Configurar Pages
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Subir artefacto de Pages
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: sitio/build
+
+  deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

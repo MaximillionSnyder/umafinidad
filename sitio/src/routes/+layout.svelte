@@ -37,7 +37,12 @@ const NAV = [
 type RutaNav = '/compat' | '/top' | '/corredora' | '/elenco' | '/ajustes'
 
 function activa(ruta: RutaNav): boolean {
-  return page.url.pathname === resolve(ruta)
+  const actual = page.url.pathname
+  if (ruta === '/compat') {
+    const raiz = resolve('/')
+    return actual === resolve('/compat') || actual === raiz || actual === `${raiz}/`
+  }
+  return actual === resolve(ruta)
 }
 
 onMount(() => {

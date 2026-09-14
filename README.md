@@ -57,11 +57,10 @@ Alineado con EN 301 549 capítulo 12 (documentación de accesibilidad).
 │   ├── src/lib/                  # dominio, datos, worker, i18n, componentes
 │   ├── src/routes/               # rutas reales de la web
 │   └── static/                   # datos y avatares generados (no versionados)
-├── web/                          # Port React anterior (en transición)
 ├── scripts/
 │   ├── fetch-gametora.mjs        # actualiza assets/data desde GameTora
 │   └── generate-launcher-icons.mjs
-└── .github/workflows/android.yml # build debug (push) + release firmado (tags v*)
+└── .github/workflows/            # android.yml (APK) + sitio.yml (web)
 ```
 
 ## Uso
@@ -95,9 +94,9 @@ cargar los secrets `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD` y
 
 ## Web
 
-- `web/` (React) es el port anterior: GitHub Pages lo sigue publicando con
-  `web.yml` durante la transición.
-- `sitio/` es la web nueva: `sitio.yml` corre typecheck, lint, tests y build en
-  cada push/PR. Para publicarla hay que ejecutar el workflow **Sitio**
-  manualmente con `deploy` activado (Pages deja de servir el port React).
+`sitio/` es la web publicada en GitHub Pages
+(https://maximillionsnyder.github.io/umafinidad/). El workflow `sitio.yml`
+corre typecheck, lint, tests y build en cada push/PR; para republicar, ejecutar
+el workflow **Sitio** manualmente con `deploy` activado. El port React anterior
+(`web/`) se retiró una vez verificada la paridad y el deploy.
 

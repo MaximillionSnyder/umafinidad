@@ -32,7 +32,7 @@ data class TrioEstado(val ids: List<Int?> = List(SLOTS_TRIO) { null }) {
 
 data class TrioResultado(
     val puntos: Int,
-    val rango: Rango,
+    val rango: Rango?,
     val compartidos: List<GrupoCompartido>,
 )
 

@@ -62,7 +62,7 @@ class CalculadoraTrioTest {
     fun conDosElegidosCalculaPar() {
         val resultado = calcularTrio(modelo, TrioEstado().alternar(1).alternar(2))!!
         assertEquals(12, resultado.puntos)
-        assertEquals("rank-good", resultado.rango.clase)
+        assertEquals("rank-good", resultado.rango!!.clase)
         assertEquals(listOf(11, 10), resultado.compartidos.map { it.tipo })
     }
 
@@ -73,7 +73,7 @@ class CalculadoraTrioTest {
             TrioEstado().alternar(1).alternar(2).alternar(3),
         )!!
         assertEquals(7, resultado.puntos)
-        assertEquals("rank-fair", resultado.rango.clase)
+        assertEquals("rank-fair", resultado.rango!!.clase)
         assertEquals(listOf(11), resultado.compartidos.map { it.tipo })
     }
 

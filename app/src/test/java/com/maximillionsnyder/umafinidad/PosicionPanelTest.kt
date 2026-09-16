@@ -42,4 +42,20 @@ class PosicionPanelTest {
         assertEquals(margen, posicion.x)
         assertEquals(margen, posicion.y)
     }
+
+    /* Ancho proporcional con topes: teléfono chico, intermedio y tablet. */
+    @Test
+    fun elAnchoRespetaElMinimoEnTelefonosChicos() {
+        assertEquals(570, PosicionPanel.ancho(960, 0.50f, minPx = 570, maxPx = 900))
+    }
+
+    @Test
+    fun elAnchoRespetaElMaximoEnPantallasGrandes() {
+        assertEquals(900, PosicionPanel.ancho(2400, 0.50f, minPx = 570, maxPx = 900))
+    }
+
+    @Test
+    fun elAnchoEsProporcionalEnTamanosIntermedios() {
+        assertEquals(610, PosicionPanel.ancho(1220, 0.50f, minPx = 570, maxPx = 900))
+    }
 }

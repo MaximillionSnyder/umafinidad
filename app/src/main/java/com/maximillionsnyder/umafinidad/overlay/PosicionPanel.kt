@@ -5,6 +5,11 @@ package com.maximillionsnyder.umafinidad.overlay
 
 object PosicionPanel {
 
+    /* Ancho de la franja: proporcional a la pantalla, con topes para que no
+       quede una tira ilegible en teléfonos chicos ni enorme en tablets. */
+    fun ancho(pantallaAncho: Int, fraccion: Float, minPx: Int, maxPx: Int): Int =
+        (pantallaAncho * fraccion).toInt().coerceIn(minPx, maxPx)
+
     /* La franja va al borde opuesto al de la burbuja (para no taparla),
        centrada verticalmente y acotada a la pantalla. */
     fun calcular(

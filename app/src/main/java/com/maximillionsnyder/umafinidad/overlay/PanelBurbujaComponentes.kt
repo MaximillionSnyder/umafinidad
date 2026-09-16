@@ -71,22 +71,22 @@ internal fun SlotTrio(
         },
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 6.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 5.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (personaje != null) {
-                Avatar(personaje.charId, personaje.displayName(japones), modifier = Modifier.size(36.dp))
+                Avatar(personaje.charId, personaje.displayName(japones), modifier = Modifier.size(32.dp))
             } else {
                 Box(
                     modifier = Modifier
-                        .size(36.dp)
+                        .size(32.dp)
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         "＋",
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }

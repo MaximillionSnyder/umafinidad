@@ -280,11 +280,16 @@ class BurbujaService : Service() {
         }
     }
 
-    /* Franja angosta en el borde opuesto a la burbuja, centrada y con paso
-       de toques hacia la app de fondo. */
+    /* Franja en el borde opuesto a la burbuja, centrada y con paso de toques
+       hacia la app de fondo. Ancho y alto escalan con la pantalla. */
     private fun parametrosPanel(): WindowManager.LayoutParams {
         val pantalla = tamanoPantalla()
-        val anchoPanel = dp(ANCHO_PANEL_DP)
+        val anchoPanel = PosicionPanel.ancho(
+            pantalla.x,
+            FRACCION_ANCHO_PANEL,
+            dp(ANCHO_PANEL_MIN_DP),
+            dp(ANCHO_PANEL_MAX_DP),
+        )
         val altoPanel = (pantalla.y * FRACCION_ALTO_PANEL).toInt()
         val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
             parametrosBurbuja.x, pantalla.x, tamanoBurbuja,

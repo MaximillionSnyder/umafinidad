@@ -76,8 +76,8 @@ fun PanelBurbuja(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(14.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             /* ---- Cabecera ---- */
             Row(

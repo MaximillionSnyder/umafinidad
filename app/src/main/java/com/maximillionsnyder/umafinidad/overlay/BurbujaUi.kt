@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.maximillionsnyder.umafinidad.ui.theme.ContenedorPrimario
 import com.maximillionsnyder.umafinidad.ui.theme.Primario
+
+/* Geometría compartida con BurbujaService: la ventana del overlay usa
+   estos mismos valores para arrastre y "imán" a los bordes. */
+const val TAMANO_BURBUJA_DP = 56
+const val MARGEN_BURBUJA_DP = 8
 
 /* Burbuja circular flotante: tap = abrir/cerrar el panel; arrastrar = mover.
    El servicio mueve la ventana con los deltas que llegan por onMover. */
@@ -36,7 +42,7 @@ fun BurbujaContenido(
 ) {
     Box(
         modifier = Modifier
-            .size(56.dp)
+            .size(TAMANO_BURBUJA_DP.dp)
             .shadow(6.dp, CircleShape)
             .clip(CircleShape)
             .background(Brush.linearGradient(listOf(Primario, ContenedorPrimario)))
@@ -50,6 +56,12 @@ fun BurbujaContenido(
             .semantics {
                 contentDescription = descripcion
                 role = Role.Button
+                /* El tap por gestos no se expone solo a TalkBack: la acción
+                   declarada sí permite activar la burbuja por accesibilidad. */
+                onClick(label = descripcion) {
+                    onTap()
+                    true
+                }
             },
         contentAlignment = Alignment.Center,
     ) {

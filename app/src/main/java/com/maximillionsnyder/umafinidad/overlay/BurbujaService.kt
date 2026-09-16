@@ -1,7 +1,5 @@
 package com.maximillionsnyder.umafinidad.overlay
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
@@ -12,30 +10,23 @@ import android.graphics.Point
 import android.os.Build
 import android.os.IBinder
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
-import androidx.savedstate.SavedStateRegistry
-import androidx.savedstate.SavedStateRegistryController
-import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.maximillionsnyder.umafinidad.MainActivity
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.ui.Destino
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalEstiloAvatar
 import com.maximillionsnyder.umafinidad.ui.theme.UmaAfinidadTheme
 import kotlinx.coroutines.CoroutineScope
@@ -51,18 +42,11 @@ import kotlinx.coroutines.launch
 class BurbujaService : Service() {
 
     companion object {
-        private const val CANAL = "burbuja_acceso_rapido"
-        private const val ID_NOTIFICACION = 4101
-        private const val ACCION_OCULTAR = "com.maximillionsnyder.umafinidad.OCULTAR_BURBUJA"
-
-        /* Destinos de navegación, mismo formato que la pila de MainActivity. */
-        const val EXTRA_DESTINO = "destino"
-        const val DESTINO_COMPAT = "tab:0"
-        const val DESTINO_CORREDORA = "tab:2"
-        const val DESTINO_ELENCO = "tab:3"
-        const val DESTINO_AJUSTES = "tab:4"
-
         fun iniciar(context: Context) {
+            /* No arrancar con la pref apagada (race al alternar el interruptor):
+               un startForegroundService sin startForeground posterior puede
+               tumbar la app en Android 8+. */
+            if (!PrefsRepository(context).burbujaActiva) return
             ContextCompat.startForegroundService(
                 context,
                 Intent(context, BurbujaService::class.java),
@@ -94,8 +78,8 @@ class BurbujaService : Service() {
             return
         }
         ventanas = getSystemService(WINDOW_SERVICE) as WindowManager
-        tamanoBurbuja = dp(56)
-        margen = dp(8)
+        tamanoBurbuja = dp(TAMANO_BURBUJA_DP)
+        margen = dp(MARGEN_BURBUJA_DP)
         anfitrion.crear()
         iniciarForeground()
         crearBurbuja()
@@ -105,7 +89,7 @@ class BurbujaService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent?.action == ACCION_OCULTAR) {
+        if (intent?.action == NotificacionBurbuja.ACCION_OCULTAR) {
             prefs.burbujaActiva = false
             stopSelf()
             return START_NOT_STICKY
@@ -259,8 +243,23 @@ class BurbujaService : Service() {
             softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
         }
 
+        vista.setOnKeyListener { _, codigo, evento ->
+            if (codigo == KeyEvent.KEYCODE_BACK && evento.action == KeyEvent.ACTION_UP) {
+                quitarPanel()
+                true
+            } else {
+                false
+            }
+        }
+
         val agregada = runCatching { ventanas.addView(vista, parametros) }.isSuccess
-        if (agregada) vistaPanel = vista
+        if (agregada) {
+            vistaPanel = vista
+            /* La ventana del panel es focusable (teclado del buscador), así
+               que también recibe la tecla atrás para cerrar. */
+            vista.isFocusableInTouchMode = true
+            vista.requestFocus()
+        }
     }
 
     private fun quitarPanel() {
@@ -273,7 +272,7 @@ class BurbujaService : Service() {
     private fun abrirApp(destino: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            putExtra(EXTRA_DESTINO, destino)
+            putExtra(Destino.EXTRA, destino)
         }
         startActivity(intent)
     }
@@ -289,16 +288,7 @@ class BurbujaService : Service() {
     }
 
     private fun iniciarForeground() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val gestor = getSystemService(NotificationManager::class.java)
-            gestor.createNotificationChannel(
-                NotificationChannel(
-                    CANAL,
-                    getString(R.string.burbuja_canal),
-                    NotificationManager.IMPORTANCE_LOW,
-                ),
-            )
-        }
+        NotificacionBurbuja.crearCanal(this)
 
         val abrir = PendingIntent.getActivity(
             this, 0,
@@ -307,26 +297,17 @@ class BurbujaService : Service() {
         )
         val ocultar = PendingIntent.getService(
             this, 1,
-            Intent(this, BurbujaService::class.java).setAction(ACCION_OCULTAR),
+            Intent(this, BurbujaService::class.java).setAction(NotificacionBurbuja.ACCION_OCULTAR),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 
-        val notificacion = NotificationCompat.Builder(this, CANAL)
-            .setSmallIcon(R.drawable.ic_tab_compat)
-            .setContentTitle(getString(R.string.burbuja_notif_titulo))
-            .setContentText(getString(R.string.burbuja_notif_texto))
-            .setContentIntent(abrir)
-            .addAction(0, getString(R.string.burbuja_ocultar), ocultar)
-            .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .build()
-
+        val notificacion = NotificacionBurbuja.construir(this, abrir, ocultar)
         val tipo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
         } else {
             0
         }
-        ServiceCompat.startForeground(this, ID_NOTIFICACION, notificacion, tipo)
+        ServiceCompat.startForeground(this, NotificacionBurbuja.ID_NOTIFICACION, notificacion, tipo)
     }
 
     private fun tipoVentana(): Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -347,26 +328,4 @@ class BurbujaService : Service() {
     }
 
     private fun dp(valor: Int): Int = (valor * resources.displayMetrics.density).toInt()
-
-    /* Compose necesita dueños de ciclo de vida aunque no haya Activity. */
-    private class AnfitrionOverlay : LifecycleOwner, ViewModelStoreOwner, SavedStateRegistryOwner {
-
-        private val registro = LifecycleRegistry(this)
-        private val controladorGuardado = SavedStateRegistryController.create(this)
-
-        override val lifecycle: Lifecycle get() = registro
-        override val viewModelStore = ViewModelStore()
-        override val savedStateRegistry: SavedStateRegistry get() = controladorGuardado.savedStateRegistry
-
-        fun crear() {
-            controladorGuardado.performRestore(null)
-            registro.currentState = Lifecycle.State.CREATED
-            registro.currentState = Lifecycle.State.RESUMED
-        }
-
-        fun destruir() {
-            registro.currentState = Lifecycle.State.DESTROYED
-            viewModelStore.clear()
-        }
-    }
 }

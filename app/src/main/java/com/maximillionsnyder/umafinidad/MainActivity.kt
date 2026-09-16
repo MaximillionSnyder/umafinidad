@@ -75,6 +75,7 @@ import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.aplicarIdioma
 import com.maximillionsnyder.umafinidad.overlay.BurbujaService
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
+import com.maximillionsnyder.umafinidad.ui.Destino
 import com.maximillionsnyder.umafinidad.ui.componentes.BienvenidaAccesibilidad
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalEstiloAvatar
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
@@ -96,6 +97,9 @@ class MainActivity : ComponentActivity() {
     /* Destino pedido por la burbuja flotante (p. ej. "tab:2"). */
     private val destinoPendiente = mutableStateOf<String?>(null)
 
+    /* Se pidió "Mostrar sobre otras apps" y se espera el regreso de Ajustes. */
+    private var esperandoPermisoOverlay = false
+
     private val lanzadorNotificaciones =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (vm.burbujaActiva.value && Settings.canDrawOverlays(this)) {
@@ -110,7 +114,7 @@ class MainActivity : ComponentActivity() {
             aplicarIdioma(prefs.idioma)
         } catch (_: Exception) {}
         super.onCreate(savedInstanceState)
-        destinoPendiente.value = intent?.getStringExtra(BurbujaService.EXTRA_DESTINO)
+        destinoPendiente.value = intent?.getStringExtra(Destino.EXTRA)
         enableEdgeToEdge()
         setContent {
             val tema by vm.tema.collectAsState()
@@ -136,7 +140,7 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        destinoPendiente.value = intent.getStringExtra(BurbujaService.EXTRA_DESTINO)
+        destinoPendiente.value = intent.getStringExtra(Destino.EXTRA)
     }
 
     override fun onResume() {
@@ -145,15 +149,23 @@ class MainActivity : ComponentActivity() {
            sincroniza y, si sigue activa, el servicio se asegura al volver. */
         vm.refrescarBurbuja()
         if (vm.burbujaActiva.value) {
-            if (Settings.canDrawOverlays(this)) BurbujaService.iniciar(this)
+            if (Settings.canDrawOverlays(this)) {
+                BurbujaService.iniciar(this)
+            } else if (esperandoPermisoOverlay) {
+                /* Volvió de Ajustes sin conceder el permiso: revierte el
+                   switch para que el estado sea consistente. */
+                vm.setBurbujaActiva(false)
+            }
         } else {
             BurbujaService.detener(this)
         }
+        esperandoPermisoOverlay = false
     }
 
     /* Enciende la burbuja pidiendo antes los permisos que falten. */
     fun activarBurbuja() {
         if (!Settings.canDrawOverlays(this)) {
+            esperandoPermisoOverlay = true
             startActivity(
                 Intent(
                     Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -231,7 +243,7 @@ private fun App(
         verGrupos = destino == "grupos"
         verRanking = destino == "ranking"
         verRankingPadres = destino == "ranking-padres"
-        destino.removePrefix("tab:").toIntOrNull()?.let { pagina ->
+        Destino.pagina(destino)?.let { pagina ->
             if (pagerState.currentPage != pagina) scope.launch { pagerState.animateScrollToPage(pagina) }
         }
     }

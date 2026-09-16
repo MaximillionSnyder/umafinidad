@@ -193,4 +193,5 @@
     <string name="burbuja_calc_hint">2〜3人のウマ娘を選ぶと相性を表示します。</string>
     <string name="burbuja_total">相性</string>
     <string name="burbuja_abrir">アプリで開く</string>
+    <string name="burbuja_quitar_zona">ここにドロップしてバブルを削除</string>
 </resources>

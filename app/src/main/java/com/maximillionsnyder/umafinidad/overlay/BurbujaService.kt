@@ -66,12 +66,23 @@ class BurbujaService : Service() {
     private val prefs by lazy { PrefsRepository(this) }
     private val modelo = MutableStateFlow<AffinityModel?>(null)
 
+    /* Selección de la calculadora: vive en el servicio para que el panel la
+       recuerde al cerrarse y reabrirse mientras la burbuja siga activa. */
+    private val trio = MutableStateFlow(TrioEstado())
+    /* Resaltado de la zona de descarte mientras se arrastra la burbuja. */
+    private val sobreQuitar = MutableStateFlow(false)
+
     private var vistaBurbuja: ComposeView? = null
     private var vistaPanel: ComposeView? = null
+    private var vistaQuitar: ComposeView? = null
     private lateinit var parametrosBurbuja: WindowManager.LayoutParams
+    private lateinit var parametrosQuitar: WindowManager.LayoutParams
 
     private var tamanoBurbuja = 0
     private var margen = 0
+    private var tamanoQuitar = 0
+    private var margenQuitar = 0
+    private var agarreQuitar = 0
 
     override fun onCreate() {
         super.onCreate()
@@ -82,6 +93,9 @@ class BurbujaService : Service() {
         ventanas = getSystemService(WINDOW_SERVICE) as WindowManager
         tamanoBurbuja = dp(TAMANO_BURBUJA_DP)
         margen = dp(MARGEN_BURBUJA_DP)
+        tamanoQuitar = dp(TAMANO_QUITAR_DP)
+        margenQuitar = dp(MARGEN_QUITAR_DP)
+        agarreQuitar = dp(AGARRE_QUITAR_DP)
         anfitrion.crear()
         iniciarForeground()
         crearBurbuja()
@@ -92,8 +106,7 @@ class BurbujaService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == NotificacionBurbuja.ACCION_OCULTAR) {
-            prefs.burbujaActiva = false
-            stopSelf()
+            ocultarBurbuja()
             return START_NOT_STICKY
         }
         return START_STICKY
@@ -111,6 +124,12 @@ class BurbujaService : Service() {
             vistaPanel?.let { runCatching { ventanas.updateViewLayout(it, parametros) } }
         }
 
+        if (vistaQuitar != null) {
+            parametrosQuitar = crearParametrosQuitar()
+            sobreQuitar.value = false
+            vistaQuitar?.let { runCatching { ventanas.updateViewLayout(it, parametrosQuitar) } }
+        }
+
         vistaBurbuja?.let { vista ->
             val acotada = PosicionBurbuja.acotar(
                 parametrosBurbuja.x, parametrosBurbuja.y,
@@ -125,6 +144,7 @@ class BurbujaService : Service() {
     override fun onDestroy() {
         alcance.cancel()
         quitarPanel()
+        ocultarQuitar()
         vistaBurbuja?.let { vista ->
             runCatching { ventanas.removeView(vista) }
             vistaBurbuja = null
@@ -163,6 +183,7 @@ class BurbujaService : Service() {
             BurbujaContenido(
                 descripcion = descripcion,
                 onTap = { alternarPanel() },
+                onIniciarArrastre = ::mostrarQuitar,
                 onMover = ::moverBurbuja,
                 onSoltar = ::soltarBurbuja,
             )
@@ -200,10 +221,29 @@ class BurbujaService : Service() {
         parametrosBurbuja.x = acotada.x
         parametrosBurbuja.y = acotada.y
         vistaBurbuja?.let { runCatching { ventanas.updateViewLayout(it, parametrosBurbuja) } }
+
+        /* Mientras se arrastra, resalta la zona si la burbuja está encima. */
+        if (vistaQuitar != null) {
+            sobreQuitar.value = ZonaQuitar.sobre(
+                parametrosBurbuja.x, parametrosBurbuja.y, tamanoBurbuja,
+                parametrosQuitar.x, parametrosQuitar.y, tamanoQuitar, agarreQuitar,
+            )
+        }
     }
 
-    /* Al soltar, la burbuja se pega al borde más cercano y se recuerda. */
+    /* Al soltar: si quedó sobre la X se quita de pantalla; si no, se pega al
+       borde más cercano y se recuerda la posición. */
     private fun soltarBurbuja() {
+        val sobreZona = vistaQuitar != null && ZonaQuitar.sobre(
+            parametrosBurbuja.x, parametrosBurbuja.y, tamanoBurbuja,
+            parametrosQuitar.x, parametrosQuitar.y, tamanoQuitar, agarreQuitar,
+        )
+        ocultarQuitar()
+        if (sobreZona) {
+            ocultarBurbuja()
+            return
+        }
+
         val pantalla = tamanoPantalla()
         parametrosBurbuja.x = PosicionBurbuja.iman(
             parametrosBurbuja.x, pantalla.x, tamanoBurbuja, margen,
@@ -211,6 +251,55 @@ class BurbujaService : Service() {
         prefs.burbujaX = parametrosBurbuja.x
         prefs.burbujaY = parametrosBurbuja.y
         vistaBurbuja?.let { runCatching { ventanas.updateViewLayout(it, parametrosBurbuja) } }
+    }
+
+    /* Apaga la burbuja: se recupera desde Ajustes. */
+    private fun ocultarBurbuja() {
+        prefs.burbujaActiva = false
+        stopSelf()
+    }
+
+    /* ===== Zona de descarte ===== */
+
+    private fun mostrarQuitar() {
+        if (vistaQuitar != null) return
+        val vista = crearComposeView()
+        parametrosQuitar = crearParametrosQuitar()
+        val descripcion = getString(R.string.burbuja_quitar_zona)
+        vista.setContent {
+            val activo by sobreQuitar.collectAsState()
+            ObjetivoQuitar(descripcion = descripcion, activo = activo)
+        }
+        val agregada = runCatching { ventanas.addView(vista, parametrosQuitar) }.isSuccess
+        if (agregada) vistaQuitar = vista
+    }
+
+    private fun ocultarQuitar() {
+        sobreQuitar.value = false
+        vistaQuitar?.let { vista ->
+            runCatching { ventanas.removeView(vista) }
+        }
+        vistaQuitar = null
+    }
+
+    /* Ventana de la X: nunca recibe toques (solo es referencia visual y de
+       soltado); la app de fondo sigue interactiva. */
+    private fun crearParametrosQuitar(): WindowManager.LayoutParams {
+        val pantalla = tamanoPantalla()
+        val centro = ZonaQuitar.centro(pantalla.x, pantalla.y, tamanoQuitar, margenQuitar)
+        return WindowManager.LayoutParams(
+            tamanoQuitar,
+            tamanoQuitar,
+            tipoVentana(),
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT,
+        ).apply {
+            gravity = Gravity.TOP or Gravity.START
+            x = centro.x
+            y = centro.y
+        }
     }
 
     /* ===== Panel ===== */
@@ -232,16 +321,16 @@ class BurbujaService : Service() {
 
         vista.setContent {
             val modeloActual by modelo.collectAsState()
+            val trioActual by trio.collectAsState()
             UmaAfinidadTheme(tema = tema, tamanoTexto = tamanoTexto, negrita = negrita) {
                 CompositionLocalProvider(LocalEstiloAvatar provides estiloAvatar) {
                     PanelBurbuja(
                         modelo = modeloActual,
                         japones = japones,
+                        estado = trioActual,
+                        onEstado = { trio.value = it },
                         onCerrar = { quitarPanel() },
-                        onOcultar = {
-                            prefs.burbujaActiva = false
-                            stopSelf()
-                        },
+                        onOcultar = ::ocultarBurbuja,
                         onAbrirDestino = { destino ->
                             quitarPanel()
                             abrirApp(destino)

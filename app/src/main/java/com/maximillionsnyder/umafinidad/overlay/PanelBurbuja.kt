@@ -41,12 +41,13 @@ import com.maximillionsnyder.umafinidad.ui.Destino
 fun PanelBurbuja(
     modelo: AffinityModel?,
     japones: Boolean,
+    estado: TrioEstado,
+    onEstado: (TrioEstado) -> Unit,
     onCerrar: () -> Unit,
     onOcultar: () -> Unit,
     onAbrirDestino: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var estado by remember { mutableStateOf(TrioEstado()) }
     var filtro by remember { mutableStateOf("") }
 
     val sugerencias = remember(filtro, modelo) {
@@ -61,7 +62,7 @@ fun PanelBurbuja(
     }
 
     fun elegirSugerencia(id: Int) {
-        estado = estado.alternar(id)
+        onEstado(estado.alternar(id))
         filtro = ""
     }
 
@@ -113,7 +114,7 @@ fun PanelBurbuja(
                         ),
                         personaje = estado.ids[i]?.let { modelo?.porId(it) },
                         japones = japones,
-                        onClick = { estado = estado.quitar(i) },
+                        onClick = { onEstado(estado.quitar(i)) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
@@ -166,7 +167,7 @@ fun PanelBurbuja(
             }
 
             if (estado.ids.any { it != null }) {
-                TextButton(onClick = { estado = estado.limpiar() }) {
+                TextButton(onClick = { onEstado(estado.limpiar()) }) {
                     Text(stringResource(R.string.limpiar_todo))
                 }
             }

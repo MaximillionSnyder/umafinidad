@@ -40,7 +40,7 @@ import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
 
 /* Piezas del panel de acceso rápido de la burbuja flotante. */
 
-/* Slot de la calculadora: muestra el avatar o un "+" para elegir. */
+/* Slot de la calculadora en la franja: avatar (o "+") con nombre y rol. */
 @Composable
 internal fun SlotTrio(
     etiqueta: String,
@@ -70,24 +70,17 @@ internal fun SlotTrio(
             null
         },
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp, horizontal = 4.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             if (personaje != null) {
-                Avatar(personaje.charId, personaje.displayName(japones), modifier = Modifier.size(40.dp))
-                Text(
-                    personaje.displayName(japones),
-                    style = MaterialTheme.typography.labelSmall,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
-                )
+                Avatar(personaje.charId, personaje.displayName(japones), modifier = Modifier.size(36.dp))
             } else {
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(36.dp)
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -98,13 +91,27 @@ internal fun SlotTrio(
                     )
                 }
             }
-            Text(
-                etiqueta,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(1.dp),
+            ) {
+                if (personaje != null) {
+                    Text(
+                        personaje.displayName(japones),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                Text(
+                    etiqueta,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
     }
 }

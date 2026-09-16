@@ -31,6 +31,10 @@ import com.maximillionsnyder.umafinidad.ui.theme.Primario
 const val TAMANO_BURBUJA_DP = 56
 const val MARGEN_BURBUJA_DP = 8
 
+/* Franja del panel: ancho fijo y alto como fracción de la pantalla. */
+const val ANCHO_PANEL_DP = 280
+const val FRACCION_ALTO_PANEL = 0.72f
+
 /* Burbuja circular flotante: tap = abrir/cerrar el panel; arrastrar = mover.
    El servicio mueve la ventana con los deltas que llegan por onMover. */
 @Composable

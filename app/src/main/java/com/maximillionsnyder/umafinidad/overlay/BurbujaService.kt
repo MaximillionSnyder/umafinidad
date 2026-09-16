@@ -5,12 +5,14 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.content.res.Configuration
 import android.graphics.PixelFormat
 import android.graphics.Point
 import android.os.Build
 import android.os.IBinder
 import android.view.Gravity
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.WindowManager
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
@@ -98,6 +100,27 @@ class BurbujaService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
+
+    /* Al girar la pantalla se reacomodan la burbuja y la franja abierta. */
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val pantalla = tamanoPantalla()
+
+        if (vistaPanel != null) {
+            val parametros = parametrosPanel()
+            vistaPanel?.let { runCatching { ventanas.updateViewLayout(it, parametros) } }
+        }
+
+        vistaBurbuja?.let { vista ->
+            val acotada = PosicionBurbuja.acotar(
+                parametrosBurbuja.x, parametrosBurbuja.y,
+                pantalla.x, pantalla.y, tamanoBurbuja, margen,
+            )
+            parametrosBurbuja.x = acotada.x
+            parametrosBurbuja.y = acotada.y
+            runCatching { ventanas.updateViewLayout(vista, parametrosBurbuja) }
+        }
+    }
 
     override fun onDestroy() {
         alcance.cancel()
@@ -199,10 +222,7 @@ class BurbujaService : Service() {
     private fun abrirPanel() {
         if (vistaPanel != null) return
         val vista = crearComposeView()
-        val pantalla = tamanoPantalla()
-        val ladoDerecho = PosicionBurbuja.enLadoDerecho(
-            parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
-        )
+        val parametros = parametrosPanel()
 
         val tema = prefs.tema
         val tamanoTexto = prefs.tamanoTexto
@@ -217,7 +237,6 @@ class BurbujaService : Service() {
                     PanelBurbuja(
                         modelo = modeloActual,
                         japones = japones,
-                        ladoDerecho = ladoDerecho,
                         onCerrar = { quitarPanel() },
                         onOcultar = {
                             prefs.burbujaActiva = false
@@ -232,19 +251,19 @@ class BurbujaService : Service() {
             }
         }
 
-        val parametros = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT,
-            tipoVentana(),
-            0,
-            PixelFormat.TRANSLUCENT,
-        ).apply {
-            gravity = Gravity.TOP or Gravity.START
-            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-        }
-
         vista.setOnKeyListener { _, codigo, evento ->
             if (codigo == KeyEvent.KEYCODE_BACK && evento.action == KeyEvent.ACTION_UP) {
+                quitarPanel()
+                true
+            } else {
+                false
+            }
+        }
+
+        /* Toque fuera de la franja: cierra el panel sin robarle el evento
+           a la app de fondo (FLAG_NOT_TOUCH_MODAL + FLAG_WATCH_OUTSIDE_TOUCH). */
+        vista.setOnTouchListener { _, evento ->
+            if (evento.action == MotionEvent.ACTION_OUTSIDE) {
                 quitarPanel()
                 true
             } else {
@@ -255,10 +274,42 @@ class BurbujaService : Service() {
         val agregada = runCatching { ventanas.addView(vista, parametros) }.isSuccess
         if (agregada) {
             vistaPanel = vista
-            /* La ventana del panel es focusable (teclado del buscador), así
-               que también recibe la tecla atrás para cerrar. */
+            /* La ventana es focusable (buscador + atrás): pide el foco. */
             vista.isFocusableInTouchMode = true
             vista.requestFocus()
+        }
+    }
+
+    /* Franja angosta en el borde opuesto a la burbuja, centrada y con paso
+       de toques hacia la app de fondo. */
+    private fun parametrosPanel(): WindowManager.LayoutParams {
+        val pantalla = tamanoPantalla()
+        val anchoPanel = dp(ANCHO_PANEL_DP)
+        val altoPanel = (pantalla.y * FRACCION_ALTO_PANEL).toInt()
+        val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
+            parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
+        )
+        val posicion = PosicionPanel.calcular(
+            pantalla.x, pantalla.y, anchoPanel, altoPanel, margen, burbujaDerecha,
+        )
+
+        return WindowManager.LayoutParams(
+            anchoPanel,
+            altoPanel,
+            tipoVentana(),
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT,
+        ).apply {
+            gravity = Gravity.TOP or Gravity.START
+            x = posicion.x
+            y = posicion.y
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            }
         }
     }
 

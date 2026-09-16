@@ -43,6 +43,22 @@ Para reportar problemas de accesibilidad, abrí un issue en
 [GitHub](https://github.com/MaximillionSnyder/umafinidad/issues).
 Alineado con EN 301 549 capítulo 12 (documentación de accesibilidad).
 
+## Burbuja flotante (acceso rápido)
+
+Desde **Ajustes → Burbuja flotante** se puede activar una burbuja sobre
+cualquier app (estilo grabador de pantalla) para consultar afinidad mientras
+se juega:
+
+- al tocarla se despliega un panel lateral con la **calculadora rápida**
+  (hijo + dos padres, con buscador difuso y desglose de grupos compartidos);
+- incluye atajos para abrir Compatibilidad, Mi corredora, Mis Umas y Ajustes;
+- se arrastra y se pega al borde más cercano, recordando su posición, y se
+  oculta desde el propio panel o desde la notificación.
+
+Requiere el permiso **Mostrar sobre otras apps** (`SYSTEM_ALERT_WINDOW`); en
+Android 13+ también pide permiso de notificaciones para el aviso persistente.
+El servicio en primer plano declara tipo `specialUse` (Android 14+).
+
 ## Estructura
 
 ```
@@ -51,6 +67,7 @@ Alineado con EN 301 549 capítulo 12 (documentación de accesibilidad).
 │   └── .../umafinidad/
 │       ├── data/                 # DTOs + repositorio (lee assets)
 │       ├── domain/               # AffinityModel + Herencia (porte 1:1)
+│       ├── overlay/              # burbuja flotante + panel de acceso rápido
 │       └── ui/                   # tema M3 oscuro + pantallas
 ├── sitio/                        # Web nueva (SvelteKit + Svelte 5)
 │   ├── scripts/                  # sync de assets y extracción de strings

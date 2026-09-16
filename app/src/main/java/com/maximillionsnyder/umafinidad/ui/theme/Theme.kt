@@ -219,7 +219,9 @@ fun UmaAfinidadTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            val window = (view.context as Activity).window
+            /* En overlays (burbuja flotante) el contexto no es una Activity:
+               no hay ventana que ajustar y el tema se aplica igual. */
+            val window = (view.context as? Activity)?.window ?: return@SideEffect
             window.statusBarColor = Color.Transparent.toArgb()
             // Transparent nav bar where supported; fallback to solid background on legacy 3-button devices
             window.navigationBarColor = if (Build.VERSION.SDK_INT >= 29) {

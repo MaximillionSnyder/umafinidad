@@ -125,6 +125,22 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _textoNegrita.value = valor
     }
 
+    /* Burbuja flotante de acceso rápido (overlay sobre otras apps). */
+    private val _burbujaActiva = MutableStateFlow(prefs.burbujaActiva)
+    val burbujaActiva: StateFlow<Boolean> = _burbujaActiva
+
+    fun setBurbujaActiva(valor: Boolean) {
+        prefs.burbujaActiva = valor
+        _burbujaActiva.value = valor
+    }
+
+    /* El servicio pudo apagar la burbuja (acción de la notificación):
+       al volver a la app el switch se sincroniza sin reescribir la pref. */
+    fun refrescarBurbuja() {
+        val actual = prefs.burbujaActiva
+        if (_burbujaActiva.value != actual) _burbujaActiva.value = actual
+    }
+
     /* Bienvenida de accesibilidad: se muestra hasta que se guarda u omite. */
     private val _mostrarBienvenida = MutableStateFlow(!prefs.bienvenidaAccesibilidadVista)
     val mostrarBienvenida: StateFlow<Boolean> = _mostrarBienvenida

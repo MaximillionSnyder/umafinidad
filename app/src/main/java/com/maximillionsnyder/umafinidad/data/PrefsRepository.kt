@@ -67,6 +67,20 @@ class PrefsRepository(context: Context) {
         get() = prefs.getBoolean(KEY_BIENVENIDA_ACCE, false)
         set(valor) = prefs.edit().putBoolean(KEY_BIENVENIDA_ACCE, valor).apply()
 
+    /* Burbuja flotante de acceso rápido sobre otras apps. */
+    var burbujaActiva: Boolean
+        get() = prefs.getBoolean(KEY_BURBUJA_ACTIVA, false)
+        set(valor) = prefs.edit().putBoolean(KEY_BURBUJA_ACTIVA, valor).apply()
+
+    /* Posición guardada de la burbuja en píxeles; -1 = todavía sin ubicar. */
+    var burbujaX: Int
+        get() = prefs.getInt(KEY_BURBUJA_X, -1)
+        set(valor) = prefs.edit().putInt(KEY_BURBUJA_X, valor).apply()
+
+    var burbujaY: Int
+        get() = prefs.getInt(KEY_BURBUJA_Y, -1)
+        set(valor) = prefs.edit().putInt(KEY_BURBUJA_Y, valor).apply()
+
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
         const val KEY_ESTILO_AVATAR = "estilo_avatar"
@@ -75,6 +89,9 @@ class PrefsRepository(context: Context) {
         const val KEY_TAMANO_TEXTO = "tamano_texto"
         const val KEY_TEXTO_NEGRITA = "texto_negrita"
         const val KEY_BIENVENIDA_ACCE = "bienvenida_acce_vista"
+        const val KEY_BURBUJA_ACTIVA = "burbuja_activa"
+        const val KEY_BURBUJA_X = "burbuja_x"
+        const val KEY_BURBUJA_Y = "burbuja_y"
         // Solo lectura para migrar instalaciones con el interruptor viejo.
         const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }

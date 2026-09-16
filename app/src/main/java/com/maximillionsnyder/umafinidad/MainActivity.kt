@@ -1,10 +1,17 @@
 package com.maximillionsnyder.umafinidad
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -36,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -59,8 +67,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.aplicarIdioma
+import com.maximillionsnyder.umafinidad.overlay.BurbujaService
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.componentes.BienvenidaAccesibilidad
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalEstiloAvatar
@@ -80,6 +93,16 @@ class MainActivity : ComponentActivity() {
 
     private val vm by viewModels<AppViewModel>()
 
+    /* Destino pedido por la burbuja flotante (p. ej. "tab:2"). */
+    private val destinoPendiente = mutableStateOf<String?>(null)
+
+    private val lanzadorNotificaciones =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (vm.burbujaActiva.value && Settings.canDrawOverlays(this)) {
+                BurbujaService.iniciar(this)
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Aplica idioma guardado antes de inflar para que resources ya estén localizados
         try {
@@ -87,6 +110,7 @@ class MainActivity : ComponentActivity() {
             aplicarIdioma(prefs.idioma)
         } catch (_: Exception) {}
         super.onCreate(savedInstanceState)
+        destinoPendiente.value = intent?.getStringExtra(BurbujaService.EXTRA_DESTINO)
         enableEdgeToEdge()
         setContent {
             val tema by vm.tema.collectAsState()
@@ -99,15 +123,62 @@ class MainActivity : ComponentActivity() {
                 negrita = textoNegrita,
             ) {
                 CompositionLocalProvider(LocalEstiloAvatar provides estiloAvatar) {
-                    App(vm)
+                    App(
+                        vm = vm,
+                        destinoPendiente = destinoPendiente.value,
+                        onDestinoConsumido = { destinoPendiente.value = null },
+                    )
                 }
             }
         }
     }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        destinoPendiente.value = intent.getStringExtra(BurbujaService.EXTRA_DESTINO)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        /* La burbuja pudo ocultarse desde su notificación: el switch se
+           sincroniza y, si sigue activa, el servicio se asegura al volver. */
+        vm.refrescarBurbuja()
+        if (vm.burbujaActiva.value) {
+            if (Settings.canDrawOverlays(this)) BurbujaService.iniciar(this)
+        } else {
+            BurbujaService.detener(this)
+        }
+    }
+
+    /* Enciende la burbuja pidiendo antes los permisos que falten. */
+    fun activarBurbuja() {
+        if (!Settings.canDrawOverlays(this)) {
+            startActivity(
+                Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:$packageName"),
+                ),
+            )
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            lanzadorNotificaciones.launch(Manifest.permission.POST_NOTIFICATIONS)
+            return
+        }
+        BurbujaService.iniciar(this)
+    }
 }
 
 @Composable
-private fun App(vm: AppViewModel) {
+private fun App(
+    vm: AppViewModel,
+    destinoPendiente: String?,
+    onDestinoConsumido: () -> Unit,
+) {
     val modelo by vm.modelo.collectAsState()
     val seleccion by vm.seleccion.collectAsState()
     val resultado by vm.resultado.collectAsState()
@@ -119,6 +190,7 @@ private fun App(vm: AppViewModel) {
     val tamanoTexto by vm.tamanoTexto.collectAsState()
     val textoNegrita by vm.textoNegrita.collectAsState()
     val mostrarBienvenida by vm.mostrarBienvenida.collectAsState()
+    val burbujaActiva by vm.burbujaActiva.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
@@ -129,6 +201,19 @@ private fun App(vm: AppViewModel) {
 
     LaunchedEffect(idioma) {
         aplicarIdioma(context, idioma)
+    }
+
+    /* ¿Está concedido "Mostrar sobre otras apps"? Se revalida al volver
+       de los ajustes del sistema. */
+    var permisoOverlay by remember { mutableStateOf(Settings.canDrawOverlays(context)) }
+    DisposableEffect(context) {
+        val observador = LifecycleEventObserver { _, evento ->
+            if (evento == Lifecycle.Event.ON_RESUME) {
+                permisoOverlay = Settings.canDrawOverlays(context)
+            }
+        }
+        (context as? LifecycleOwner)?.lifecycle?.addObserver(observador)
+        onDispose { (context as? LifecycleOwner)?.lifecycle?.removeObserver(observador) }
     }
 
     /* Grupos y Ranking son referencias archivadas: se abren a
@@ -164,6 +249,14 @@ private fun App(vm: AppViewModel) {
         historial.removeLast()
         aplicarDestino(historial.last())
         return true
+    }
+
+    /* Un atajo del panel de la burbuja flotante pide abrir un destino. */
+    LaunchedEffect(destinoPendiente) {
+        if (destinoPendiente != null) {
+            irA(destinoPendiente)
+            onDestinoConsumido()
+        }
     }
 
     /* Registra taps, swipes y saltos (herencias, árbol pendiente): toda
@@ -362,6 +455,16 @@ private fun App(vm: AppViewModel) {
                                     onTema = vm::setTema,
                                     idioma = idioma,
                                     onIdioma = vm::setIdioma,
+                                    burbujaActiva = burbujaActiva,
+                                    burbujaPermiso = permisoOverlay,
+                                    onBurbuja = { activo ->
+                                        vm.setBurbujaActiva(activo)
+                                        if (activo) {
+                                            (context as? MainActivity)?.activarBurbuja()
+                                        } else {
+                                            BurbujaService.detener(context)
+                                        }
+                                    },
                                     modelo = m,
                                     japones = japones,
                                     arboles = arboles,

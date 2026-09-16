@@ -71,6 +71,9 @@ fun SettingsScreen(
     onTema: (ThemeMode) -> Unit,
     idioma: Idioma,
     onIdioma: (Idioma) -> Unit,
+    burbujaActiva: Boolean,
+    burbujaPermiso: Boolean,
+    onBurbuja: (Boolean) -> Unit,
     modelo: AffinityModel,
     japones: Boolean,
     arboles: List<ArbolGuardado>,
@@ -112,6 +115,29 @@ fun SettingsScreen(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
+        SeccionDesplegable(
+            titulo = stringResource(R.string.burbuja_titulo),
+            subtitulo = stringResource(R.string.burbuja_desc),
+            abierto = estaAbierta("burbuja"),
+            onToggle = { alternar("burbuja") },
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilaInterruptor(
+                    titulo = stringResource(R.string.burbuja_switch),
+                    descripcion = stringResource(R.string.burbuja_switch_desc),
+                    activado = burbujaActiva,
+                    onCambio = onBurbuja,
+                )
+                if (burbujaActiva && !burbujaPermiso) {
+                    Text(
+                        stringResource(R.string.burbuja_sin_permiso),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            }
+        }
+
         SeccionDesplegable(
             titulo = stringResource(R.string.ajustes_apariencia),
             abierto = estaAbierta("apariencia"),

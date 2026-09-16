@@ -175,4 +175,22 @@
     <string name="elenco_ajustes_desc">Your personal roster and its best lineages</string>
     <string name="guardado_snack">Configuration saved</string>
     <string name="eliminado_snack">Configuration deleted</string>
+
+    <!-- Acceso rápido (burbuja flotante) -->
+    <string name="burbuja_titulo">Floating bubble</string>
+    <string name="burbuja_desc">Quick access over other apps</string>
+    <string name="burbuja_switch">Floating bubble</string>
+    <string name="burbuja_switch_desc">Affinity calculator and shortcuts while you play</string>
+    <string name="burbuja_sin_permiso">The “Display over other apps” permission is missing. Turn the switch off and on to grant it.</string>
+    <string name="burbuja_canal">Quick access bubble</string>
+    <string name="burbuja_notif_titulo">Uma Afinidad</string>
+    <string name="burbuja_notif_texto">Floating bubble active</string>
+    <string name="burbuja_ocultar">Hide bubble</string>
+    <string name="burbuja_descripcion">Open quick affinity panel</string>
+    <string name="burbuja_panel_titulo">Quick affinity</string>
+    <string name="cerrar">Close</string>
+    <string name="burbuja_calc_titulo">Child and parents</string>
+    <string name="burbuja_calc_hint">Pick 2 or 3 Umas to see their affinity.</string>
+    <string name="burbuja_total">Affinity</string>
+    <string name="burbuja_abrir">Open in app</string>
 </resources>

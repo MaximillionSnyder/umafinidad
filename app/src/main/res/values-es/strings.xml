@@ -175,4 +175,22 @@
     <string name="elenco_ajustes_desc">Tu elenco personal y sus mejores linajes</string>
     <string name="guardado_snack">Configuración guardada</string>
     <string name="eliminado_snack">Configuración eliminada</string>
+
+    <!-- Acceso rápido (burbuja flotante) -->
+    <string name="burbuja_titulo">Burbuja flotante</string>
+    <string name="burbuja_desc">Acceso rápido sobre otras apps</string>
+    <string name="burbuja_switch">Burbuja flotante</string>
+    <string name="burbuja_switch_desc">Calculadora de afinidad y atajos mientras jugás</string>
+    <string name="burbuja_sin_permiso">Falta el permiso «Mostrar sobre otras apps». Apagá y encendé el interruptor para concederlo.</string>
+    <string name="burbuja_canal">Burbuja de acceso rápido</string>
+    <string name="burbuja_notif_titulo">Uma Afinidad</string>
+    <string name="burbuja_notif_texto">Burbuja flotante activa</string>
+    <string name="burbuja_ocultar">Ocultar burbuja</string>
+    <string name="burbuja_descripcion">Abrir panel rápido de afinidad</string>
+    <string name="burbuja_panel_titulo">Afinidad rápida</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="burbuja_calc_titulo">Hijo y padres</string>
+    <string name="burbuja_calc_hint">Elegí 2 o 3 Umas para ver su afinidad.</string>
+    <string name="burbuja_total">Afinidad</string>
+    <string name="burbuja_abrir">Abrir en la app</string>
 </resources>

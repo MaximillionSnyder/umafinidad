@@ -508,13 +508,14 @@ class AffinityModel private constructor(
         puntajeTrioRapido(idsTop[i], idsTop[j], idsTop[k])
 
     /* Abuelos de la rama del padre p ordenados por su aporte al trío
-       (hijo, padre, abuelo). Excluye al propio padre; el hijo entra con 0
-       (corredora), igual que en mejorParAbuelos. */
+       (hijo, padre, abuelo). Excluye al propio padre y al hijo: como abuelo
+       el hijo (corredora) siempre aporta 0, así que el autocompletar nunca
+       lo elige (la selección manual sí puede hacerlo). */
     private fun rankingAbuelos(h: Int, p: Int): IntArray {
         val key = h.toLong() * charsTop.size + p
         cacheRankingAbuelos[key]?.let { return it }
         val orden = (0 until charsTop.size)
-            .filter { it != p }
+            .filter { it != p && it != h }
             .sortedByDescending { trioEn(h, p, it) }
             .toIntArray()
         cacheRankingAbuelos[key] = orden
@@ -523,8 +524,9 @@ class AffinityModel private constructor(
 
     /* Completa los slots vacíos de una selección parcial maximizando el total
        y respetando lo ya cargado. Es exacto: con los padres fijos cada rama
-       se optimiza sola; si falta un padre se prueban todos los candidatos y,
-       si faltan ambos, cada par (mejorLinajeDe si no hay abuelos fijos). */
+       se optimiza sola y, si falta algún padre, se recorren los pares
+       ordenados (las ramas no son simétricas). El hijo nunca se propone como
+       abuelo: como corredora aporta 0. */
     fun completarSeleccion(seleccion: List<Int?>): List<Int?> {
         val hId = seleccion[0] ?: return seleccion
         val h = idsTop.indexOf(hId)
@@ -604,22 +606,8 @@ class AffinityModel private constructor(
                 if (padreValido(cand, 0, p2Fijo)) considerar(cand, p2Fijo)
             }
 
-            /* Sin padres: mejorLinajeDe es exacto cuando no hay abuelos fijos. */
-            fijosIdx.all { it.isEmpty() } -> {
-                val linaje = mejorLinajeDe(hId) ?: return seleccion
-                return listOf(
-                    linaje.hijo.charId,
-                    linaje.padre.charId,
-                    linaje.madre.charId,
-                    linaje.abuelos[0][0].charId,
-                    linaje.abuelos[0][1].charId,
-                    linaje.abuelos[1][0].charId,
-                    linaje.abuelos[1][1].charId,
-                )
-            }
-
-            /* Con abuelos fijos las ramas no son simétricas: se prueban los
-               pares ordenados (quién es padre de cada rama). */
+            /* Sin padres: se prueban los pares ordenados (con abuelos fijos
+               las ramas no son simétricas) y cada rama se completa sola. */
             else -> for (a in 0 until m) {
                 if (!padreValido(a, 0, -1)) continue
                 for (b in 0 until m) {

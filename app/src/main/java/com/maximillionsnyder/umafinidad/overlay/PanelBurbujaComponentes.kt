@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -28,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,7 +39,8 @@ import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Rango
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
-import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
+import com.maximillionsnyder.umafinidad.ui.theme.LocalColoresRango
+import com.maximillionsnyder.umafinidad.ui.theme.fondoDeRango
 
 /* Piezas del panel de acceso rápido de la burbuja flotante. */
 
@@ -172,26 +176,33 @@ internal fun FilaSugerencia(c: Character, japones: Boolean, onClick: () -> Unit)
     }
 }
 
-/* Total de la genealogía con el rango del juego. */
+/* Total de afinidad compacto "◎156", del mismo alto que los botones. */
 @Composable
-internal fun ResumenTotal(rango: Rango, puntos: Int) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+internal fun TotalCompacto(rango: Rango, puntos: Int, modifier: Modifier = Modifier) {
+    val colores = LocalColoresRango.current
+    val frente = when (rango.clase) {
+        "rank-great" -> colores.great
+        "rank-good" -> colores.good
+        "rank-fair" -> colores.fair
+        else -> MaterialTheme.colorScheme.onSurface
+    }
+    val fondo = fondoDeRango(rango.clase) ?: MaterialTheme.colorScheme.surfaceVariant
+    val descripcion = stringResource(R.string.burbuja_total)
+
+    Box(
+        modifier = modifier
+            .height(36.dp)
+            .background(fondo, RoundedCornerShape(18.dp))
+            .padding(horizontal = 10.dp)
+            .semantics { contentDescription = "$descripcion $puntos" },
+        contentAlignment = Alignment.Center,
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                stringResource(R.string.burbuja_total),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold,
-            )
-            RankPill(rango, puntos, grande = true)
-        }
+        Text(
+            "(${rango.simbolo})$puntos",
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Bold,
+            color = frente,
+        )
     }
 }
 

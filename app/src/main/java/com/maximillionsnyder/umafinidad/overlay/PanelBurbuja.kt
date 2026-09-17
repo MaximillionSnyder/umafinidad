@@ -3,6 +3,7 @@ package com.maximillionsnyder.umafinidad.overlay
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -117,8 +118,12 @@ fun PanelBurbuja(
                 }
             }
 
-            /* ---- Acciones rápidas: limpiar y autocompletar ---- */
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            /* ---- Acciones rápidas y afinidad total ---- */
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 BotonCompacto(
                     iconoRes = R.drawable.ic_limpiar,
                     descripcionRes = R.string.burbuja_limpiar,
@@ -134,6 +139,10 @@ fun PanelBurbuja(
                         seleccion.any { it == null },
                     onClick = onAutocompletar,
                 )
+                Spacer(Modifier.weight(1f))
+                if (modelo != null && total != null) {
+                    TotalCompacto(modelo.rangoTotal(total), total)
+                }
             }
 
             /* ---- Genealogía completa: hijo, dos padres y abuelos ---- */
@@ -194,9 +203,8 @@ fun PanelBurbuja(
                 }
             }
 
-            when {
-                modelo != null && total != null -> ResumenTotal(modelo.rangoTotal(total), total)
-                else -> Text(
+            if (modelo == null || total == null) {
+                Text(
                     stringResource(R.string.burbuja_calc_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

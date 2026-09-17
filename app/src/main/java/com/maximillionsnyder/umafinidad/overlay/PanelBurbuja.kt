@@ -31,10 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
-import com.maximillionsnyder.umafinidad.domain.Rol
 import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
-import com.maximillionsnyder.umafinidad.domain.rolDeSlot
 import com.maximillionsnyder.umafinidad.ui.Destino
 
 /* Franja lateral del panel de acceso rápido. El servicio la hospeda en su
@@ -139,15 +137,10 @@ fun PanelBurbuja(
             }
 
             /* ---- Genealogía completa: hijo, dos padres y abuelos ---- */
-            Text(
-                stringResource(R.string.burbuja_calc_titulo),
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold,
-            )
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 for (i in 0 until SLOTS) {
                     SlotGenealogia(
-                        etiqueta = stringResource(etiquetaDeRol(rolDeSlot(i))),
+                        etiqueta = stringResource(etiquetaDeSlot(i)),
                         personaje = seleccion[i]?.let { modelo?.porId(it) },
                         japones = japones,
                         onClick = { onSeleccion(quitar(seleccion, i)) },
@@ -240,8 +233,10 @@ fun PanelBurbuja(
     }
 }
 
-private fun etiquetaDeRol(rol: Rol): Int = when (rol) {
-    Rol.HIJO -> R.string.rol_corto_hijo
-    Rol.PADRE -> R.string.rol_corto_padre
-    Rol.ABUELO -> R.string.rol_corto_abuelo
+private fun etiquetaDeSlot(slot: Int): Int = when (slot) {
+    0 -> R.string.rol_hijo
+    1 -> R.string.rol_padre1
+    2 -> R.string.rol_padre2
+    3, 4 -> R.string.burbuja_abuelo_p1
+    else -> R.string.burbuja_abuelo_p2
 }

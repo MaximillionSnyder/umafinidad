@@ -258,6 +258,42 @@ function onArchivo(evento: Event): void {
             store.idioma === Idioma.JAPONES,
             () => store.setIdioma(Idioma.JAPONES),
           )}
+          {@render opcion(
+            i18n.t('idioma_chino_simplificado'),
+            i18n.t('idioma_chino_simplificado_desc'),
+            store.idioma === Idioma.CHINO_SIMPLIFICADO,
+            () => store.setIdioma(Idioma.CHINO_SIMPLIFICADO),
+          )}
+          {@render opcion(
+            i18n.t('idioma_chino_tradicional'),
+            i18n.t('idioma_chino_tradicional_desc'),
+            store.idioma === Idioma.CHINO_TRADICIONAL,
+            () => store.setIdioma(Idioma.CHINO_TRADICIONAL),
+          )}
+          {@render opcion(
+            i18n.t('idioma_coreano'),
+            i18n.t('idioma_coreano_desc'),
+            store.idioma === Idioma.COREANO,
+            () => store.setIdioma(Idioma.COREANO),
+          )}
+          {@render opcion(
+            i18n.t('idioma_indonesio'),
+            i18n.t('idioma_indonesio_desc'),
+            store.idioma === Idioma.INDONESIO,
+            () => store.setIdioma(Idioma.INDONESIO),
+          )}
+          {@render opcion(
+            i18n.t('idioma_tailandes'),
+            i18n.t('idioma_tailandes_desc'),
+            store.idioma === Idioma.TAILANDES,
+            () => store.setIdioma(Idioma.TAILANDES),
+          )}
+          {@render opcion(
+            i18n.t('idioma_vietnamita'),
+            i18n.t('idioma_vietnamita_desc'),
+            store.idioma === Idioma.VIETNAMITA,
+            () => store.setIdioma(Idioma.VIETNAMITA),
+          )}
         </div>
       {/if}
     </section>

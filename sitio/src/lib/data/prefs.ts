@@ -39,9 +39,26 @@ export enum Idioma {
   ESPANOL = 'ESPANOL',
   INGLES = 'INGLES',
   JAPONES = 'JAPONES',
+  CHINO_SIMPLIFICADO = 'CHINO_SIMPLIFICADO',
+  CHINO_TRADICIONAL = 'CHINO_TRADICIONAL',
+  COREANO = 'COREANO',
+  INDONESIO = 'INDONESIO',
+  TAILANDES = 'TAILANDES',
+  VIETNAMITA = 'VIETNAMITA',
 }
 
-export function codigoIdioma(idioma: Idioma): 'es' | 'en' | 'ja' | null {
+export type CodigoIdioma =
+  | 'es'
+  | 'en'
+  | 'ja'
+  | 'zh-CN'
+  | 'zh-TW'
+  | 'ko'
+  | 'id'
+  | 'th'
+  | 'vi'
+
+export function codigoIdioma(idioma: Idioma): CodigoIdioma | null {
   switch (idioma) {
     case Idioma.ESPANOL:
       return 'es'
@@ -49,6 +66,18 @@ export function codigoIdioma(idioma: Idioma): 'es' | 'en' | 'ja' | null {
       return 'en'
     case Idioma.JAPONES:
       return 'ja'
+    case Idioma.CHINO_SIMPLIFICADO:
+      return 'zh-CN'
+    case Idioma.CHINO_TRADICIONAL:
+      return 'zh-TW'
+    case Idioma.COREANO:
+      return 'ko'
+    case Idioma.INDONESIO:
+      return 'id'
+    case Idioma.TAILANDES:
+      return 'th'
+    case Idioma.VIETNAMITA:
+      return 'vi'
     default:
       return null
   }

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Uma Afinidad</string>
+    <string name="tab_compat">相性</string>
+    <string name="tab_groups">組合</string>
+    <string name="tab_elenco">我的賽馬娘</string>
+    <string name="tab_top">頂級血統</string>
+    <string name="tab_ranking">排行</string>
+
+    <!-- Compatibilidad -->
+    <string name="buscar">搜尋賽馬娘…</string>
+    <string name="sin_resultados">無結果。</string>
+    <string name="ver_afinidad">查看相性</string>
+    <string name="seleccion_completa">已選滿（7/7）</string>
+    <string name="regla_slots">遊戲規則：子代不能作為父母；同一分支內父母與祖父母不可重複</string>
+
+    <!-- Resultado -->
+    <string name="elegi_hijo_empezar">先選擇子代。</string>
+    <string name="total_herencia">繼承總分</string>
+    <string name="sec_hijo_padres">子代 × 父母</string>
+    <string name="sec_entre_padres">父母之間</string>
+    <string name="sec_hijo_padres_abuelos">子代 × 父母 × 祖父母</string>
+    <string name="falta_hijo">還沒有選擇子代。</string>
+    <string name="elige_un_padre">至少選擇一位父母。</string>
+    <string name="elegi_otro_padre">選擇另一位父母。</string>
+    <string name="faltan_padres">缺少父母。</string>
+    <string name="no_hay_abuelos">還沒有祖父母。</string>
+    <string name="sin_hijo_completa">沒有子代時無法計算完整血統。</string>
+    <string name="corredora_nota">遊戲內相性為 0 —— 是同一匹賽馬娘。</string>
+    <string name="sin_grupos_comun">沒有共同組合。</string>
+    <string name="mas_grupos">還有 %1$d 個…</string>
+
+    <!-- Diálogo quitar hijo -->
+    <string name="quitar_hijo_titulo">要移除子代嗎？</string>
+    <string name="quitar_solo_hijo">僅移除子代</string>
+    <string name="limpiar_todo">全部清除</string>
+    <string name="cancelar">取消</string>
+
+    <!-- Grupos -->
+    <string name="filtro_todos">全部</string>
+    <string name="filtro_pt">%1$d+ 分</string>
+    <string name="miembros_cantidad">%1$d 名成員</string>
+    <string name="sin_grupos_filtro">沒有達到該分數的組合。</string>
+
+    <!-- My Umas (elenco propio) -->
+    <string name="elenco_tab_editar">編輯我的賽馬娘</string>
+    <string name="elenco_tab_linajes">我的血統</string>
+    <string name="elenco_contador">%1$d/%2$d</string>
+    <string name="elenco_marcar_visibles">標記可見賽馬娘</string>
+    <string name="elenco_limpiar_titulo">要清空我的賽馬娘嗎？</string>
+    <string name="elenco_limpiar_mensaje">所有賽馬娘將被取消標記。</string>
+    <string name="elenco_minimo">至少標記 3 名賽馬娘才能計算最佳血統。</string>
+    <string name="volver">返回</string>
+
+    <!-- Top linajes -->
+    <string name="calculando">計算中…</string>
+    <string name="sin_datos">無資料。</string>
+    <string name="ver_herencia">查看血統</string>
+
+    <!-- Roles -->
+    <string name="rol_hijo">子代</string>
+    <string name="rol_padre1">父母 1</string>
+    <string name="rol_padre2">父母 2</string>
+    <string name="rol_abuelo1_p1">祖父母 1 · 父母 1</string>
+    <string name="rol_abuelo2_p1">祖父母 2 · 父母 1</string>
+    <string name="rol_abuelo1_p2">祖父母 1 · 父母 2</string>
+    <string name="rol_abuelo2_p2">祖父母 2 · 父母 2</string>
+    <string name="rol_corto_hijo">子代</string>
+    <string name="rol_corto_padre">父母</string>
+    <string name="rol_corto_abuelo">祖父母</string>
+
+    <!-- Aptitudes -->
+    <string name="apt_pista">場地</string>
+    <string name="apt_distancia">距離</string>
+    <string name="apt_estilo">跑法</string>
+    <string name="apt_turf">草地</string>
+    <string name="apt_dirt">泥地</string>
+    <string name="apt_corta">短距離</string>
+    <string name="apt_milla">英里</string>
+    <string name="apt_media">中距離</string>
+    <string name="apt_larga">長距離</string>
+    <string name="apt_fuga">逃馬</string>
+    <string name="apt_vanguardia">先行</string>
+    <string name="apt_remate">差馬</string>
+    <string name="apt_retraso">追馬</string>
+
+    <!-- Ajustes -->
+    <string name="tab_ajustes">設定</string>
+    <string name="tab_mas">更多</string>
+    <string name="ajustes_apariencia">外觀</string>
+    <string name="idioma_titulo">語言</string>
+    <string name="idioma_desc">選擇應用語言</string>
+    <string name="idioma_sistema">跟隨系統</string>
+    <string name="idioma_sistema_desc">跟隨系統語言</string>
+    <string name="idioma_espanol">西班牙語</string>
+    <string name="idioma_espanol_desc">Español</string>
+    <string name="idioma_ingles">英語</string>
+    <string name="idioma_ingles_desc">English</string>
+    <string name="idioma_japones">日語</string>
+    <string name="idioma_japones_desc">日本語</string>
+    <string name="idioma_chino_simplificado">簡體中文</string>
+    <string name="idioma_chino_simplificado_desc">简体中文</string>
+    <string name="idioma_chino_tradicional">繁體中文</string>
+    <string name="idioma_chino_tradicional_desc">繁體中文</string>
+    <string name="idioma_coreano">韓語</string>
+    <string name="idioma_coreano_desc">한국어</string>
+    <string name="idioma_indonesio">印尼語</string>
+    <string name="idioma_indonesio_desc">Bahasa Indonesia</string>
+    <string name="idioma_tailandes">泰語</string>
+    <string name="idioma_tailandes_desc">ไทย</string>
+    <string name="idioma_vietnamita">越南語</string>
+    <string name="idioma_vietnamita_desc">Tiếng Việt</string>
+    <string name="tema_titulo">主題</string>
+    <string name="tema_desc">選擇應用外觀</string>
+    <string name="tema_sistema">跟隨系統</string>
+    <string name="tema_sistema_desc">跟隨系統設定</string>
+    <string name="tema_claro">淺色</string>
+    <string name="tema_claro_desc">淺色背景</string>
+    <string name="tema_oscuro">深色</string>
+    <string name="tema_oscuro_desc">深色背景</string>
+    <string name="tema_contraste">高對比度</string>
+    <string name="tema_contraste_desc">淺色背景、對比度更高</string>
+    <string name="accesibilidad_titulo">無障礙</string>
+    <string name="accesibilidad_desc">低視力可讀性選項</string>
+    <string name="tamano_texto_titulo">文字要多大？</string>
+    <string name="tamano_normal">標準</string>
+    <string name="tamano_normal_desc">標準大小</string>
+    <string name="tamano_grande">大</string>
+    <string name="tamano_grande_desc">文字大 15%</string>
+    <string name="tamano_muy_grande">特大</string>
+    <string name="tamano_muy_grande_desc">文字大 30%</string>
+    <string name="negrita_titulo">粗體文字</string>
+    <string name="negrita_desc">筆畫更粗、更易讀</string>
+    <string name="expandido">已展開</string>
+    <string name="contraido">已收起</string>
+    <string name="quitar_personaje">移除角色</string>
+    <string name="abrir_grupos">開啟組合</string>
+    <string name="abrir_ranking">開啟排行</string>
+    <string name="bienvenida_titulo">設定無障礙</string>
+    <string name="bienvenida_desc">選擇有助於閱讀和操作的選項，之後可在設定中修改。</string>
+    <string name="bienvenida_tamano">文字大小</string>
+    <string name="omitir">跳過</string>
+    <string name="revisar_accesibilidad">重新查看無障礙設定</string>
+    <string name="revisar_accesibilidad_desc">再次顯示此設定視窗</string>
+    <string name="modo_grilla_pregunta">想怎樣查看角色？</string>
+    <string name="modo_vertical">大卡片</string>
+    <string name="modo_vertical_desc">居中大頭像的網格</string>
+    <string name="modo_lista">緊湊列表</string>
+    <string name="modo_lista_desc">帶色條的橫向列表</string>
+    <string name="avatares_pregunta">頭像樣式</string>
+    <string name="avatar_color">彩色</string>
+    <string name="avatar_color_desc">全彩像素畫</string>
+    <string name="avatar_grises">黑白 · 5 級灰階</string>
+    <string name="avatar_grises_desc">五級灰階像素畫</string>
+    <string name="avatar_monocromo">黑白 · 1 位元</string>
+    <string name="avatar_monocromo_desc">純黑白像素畫</string>
+    <string name="seccion_herencia">繼承</string>
+    <string name="herencia_contador">%1$d/7</string>
+    <string name="salir_titulo">退出 Uma Afinidad？</string>
+    <string name="salir_mensaje">確定要離開應用嗎？</string>
+    <string name="salir_salir">退出</string>
+    <string name="tab_corredora">我的賽馬娘</string>
+    <string name="buscar_corredora">搜尋賽馬娘…</string>
+    <string name="mejor_de">%1$s 的最佳血統</string>
+    <string name="corredora_invalida">該角色不可育成，無法計算血統。</string>
+    <string name="corredora_hint">輸入賽馬娘名字查看她的最佳血統。</string>
+    <string name="alternativas_titulo">%1$s 的備選</string>
+    <string name="restablecer_optimo">恢復最佳方案</string>
+    <string name="sin_alternativas">該位置沒有有效備選。</string>
+    <string name="guardar_config">保存配置</string>
+    <string name="guardar">保存</string>
+    <string name="nombre_sugerido">%1$s · %2$d分</string>
+    <string name="guardadas_de">為 %1$s 儲存的配置</string>
+    <string name="arboles_ajustes">已儲存的血統</string>
+    <string name="grupos_ajustes_desc">相性組合及其成員</string>
+    <string name="ranking_ajustes_desc">按相性總和排出的最百搭賽馬娘</string>
+    <string name="ranking_modo_versatil">百搭</string>
+    <string name="ranking_modo_padres">最佳父母</string>
+    <string name="ranking_padres_titulo">最佳父母</string>
+    <string name="ranking_padres_ajustes_desc">最常被選為最佳父母的賽馬娘</string>
+    <string name="ranking_padres_veces">%1$d 名賽馬娘 - %2$d%%</string>
+    <string name="ranking_padres_media">平均 %1$d分</string>
+    <string name="ranking_padres_ayuda_corta">最常成為最佳父母</string>
+    <string name="ranking_padres_ayuda_titulo">這個排行是什麼？</string>
+    <string name="ranking_padres_ayuda_larga">我們為每位賽馬娘計算最完美的父母，並統計每位賽馬娘勝出的次數。\n\n16 名賽馬娘 - 12% 表示她是 16 名賽馬娘的最佳選擇（占全部的 12%）。\n\n優先培養排名靠前的賽馬娘：她們幾乎適合所有人。</string>
+    <string name="entendido">知道了</string>
+    <string name="elenco_ajustes_desc">你的賽馬娘名單及其最佳血統</string>
+    <string name="guardado_snack">配置已保存</string>
+    <string name="eliminado_snack">配置已刪除</string>
+
+    <!-- Acceso rápido (burbuja flotante) -->
+    <string name="burbuja_titulo">懸浮球</string>
+    <string name="burbuja_desc">在其他應用上快速查看</string>
+    <string name="burbuja_switch">懸浮球</string>
+    <string name="burbuja_switch_desc">遊戲時查看相性計算與快捷入口</string>
+    <string name="burbuja_sin_permiso">缺少「顯示在其他應用上層」權限。關閉再打開開關即可授予。</string>
+    <string name="burbuja_canal">快捷懸浮球</string>
+    <string name="burbuja_notif_titulo">Uma Afinidad</string>
+    <string name="burbuja_notif_texto">懸浮球已啟用</string>
+    <string name="burbuja_ocultar">隱藏懸浮球</string>
+    <string name="burbuja_descripcion">開啟相性快捷面板</string>
+    <string name="burbuja_panel_titulo">快速相性</string>
+    <string name="cerrar">關閉</string>
+    <string name="burbuja_calc_hint">選擇角色即可查看相性。</string>
+    <string name="burbuja_total">相性</string>
+    <string name="burbuja_abrir">在應用內開啟</string>
+    <string name="burbuja_quitar_zona">拖到這裡移除懸浮球</string>
+    <string name="burbuja_limpiar">清空血統</string>
+    <string name="burbuja_autocompletar">用最高相性自動補齊空位</string>
+    <string name="burbuja_abuelo_p1">祖父母 (1)</string>
+    <string name="burbuja_abuelo_p2">祖父母 (2)</string>
+</resources>

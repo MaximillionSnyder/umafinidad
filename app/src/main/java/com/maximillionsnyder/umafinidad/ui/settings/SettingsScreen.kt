@@ -291,6 +291,42 @@ fun SettingsScreen(
                     seleccionado = idioma == Idioma.JAPONES,
                     onClick = { onIdioma(Idioma.JAPONES) },
                 )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_chino_simplificado),
+                    descripcion = stringResource(R.string.idioma_chino_simplificado_desc),
+                    seleccionado = idioma == Idioma.CHINO_SIMPLIFICADO,
+                    onClick = { onIdioma(Idioma.CHINO_SIMPLIFICADO) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_chino_tradicional),
+                    descripcion = stringResource(R.string.idioma_chino_tradicional_desc),
+                    seleccionado = idioma == Idioma.CHINO_TRADICIONAL,
+                    onClick = { onIdioma(Idioma.CHINO_TRADICIONAL) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_coreano),
+                    descripcion = stringResource(R.string.idioma_coreano_desc),
+                    seleccionado = idioma == Idioma.COREANO,
+                    onClick = { onIdioma(Idioma.COREANO) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_indonesio),
+                    descripcion = stringResource(R.string.idioma_indonesio_desc),
+                    seleccionado = idioma == Idioma.INDONESIO,
+                    onClick = { onIdioma(Idioma.INDONESIO) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_tailandes),
+                    descripcion = stringResource(R.string.idioma_tailandes_desc),
+                    seleccionado = idioma == Idioma.TAILANDES,
+                    onClick = { onIdioma(Idioma.TAILANDES) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.idioma_vietnamita),
+                    descripcion = stringResource(R.string.idioma_vietnamita_desc),
+                    seleccionado = idioma == Idioma.VIETNAMITA,
+                    onClick = { onIdioma(Idioma.VIETNAMITA) },
+                )
             }
         }
 

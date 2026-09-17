@@ -6,22 +6,61 @@ import { codigoIdioma, Idioma } from '../data/prefs'
 import en from './locales/en.json'
 import es from './locales/es.json'
 import ja from './locales/ja.json'
+import zhCN from './locales/zh-CN.json'
+import zhTW from './locales/zh-TW.json'
+import ko from './locales/ko.json'
+import id from './locales/id.json'
+import th from './locales/th.json'
+import vi from './locales/vi.json'
 import { EXTRA } from './extra'
 
-export type CodigoIdioma = 'en' | 'es' | 'ja'
+export type CodigoIdioma =
+  | 'en'
+  | 'es'
+  | 'ja'
+  | 'zh-CN'
+  | 'zh-TW'
+  | 'ko'
+  | 'id'
+  | 'th'
+  | 'vi'
 
 const LOCALES: Record<CodigoIdioma, Record<string, string>> = {
   en: { ...en, ...EXTRA.en },
   es: { ...es, ...EXTRA.es },
   ja: { ...ja, ...EXTRA.ja },
+  'zh-CN': { ...zhCN, ...EXTRA['zh-CN'] },
+  'zh-TW': { ...zhTW, ...EXTRA['zh-TW'] },
+  ko: { ...ko, ...EXTRA.ko },
+  id: { ...id, ...EXTRA.id },
+  th: { ...th, ...EXTRA.th },
+  vi: { ...vi, ...EXTRA.vi },
+}
+
+/* Códigos de navegador a locales soportados (chino por escritura). */
+function idiomaDelNavegador(tag: string): CodigoIdioma {
+  const t = tag.toLowerCase()
+  if (t.startsWith('es')) return 'es'
+  if (t.startsWith('ja')) return 'ja'
+  if (t.startsWith('ko')) return 'ko'
+  if (t.startsWith('id') || t.startsWith('in')) return 'id'
+  if (t.startsWith('th')) return 'th'
+  if (t.startsWith('vi')) return 'vi'
+  if (t.startsWith('zh')) {
+    if (t.includes('tw') || t.includes('hk') || t.includes('mo') || t.includes('hant')) {
+      return 'zh-TW'
+    }
+    return 'zh-CN'
+  }
+  return 'en'
 }
 
 export function resolverIdioma(idioma: Idioma): CodigoIdioma {
   const codigo = codigoIdioma(idioma)
   if (codigo !== null) return codigo
   const navegador =
-    typeof navigator !== 'undefined' ? navigator.language.slice(0, 2).toLowerCase() : 'en'
-  return navegador === 'es' || navegador === 'ja' ? navegador : 'en'
+    typeof navigator !== 'undefined' ? navigator.language : 'en'
+  return idiomaDelNavegador(navegador)
 }
 
 export function formatear(plantilla: string, args: (string | number)[]): string {

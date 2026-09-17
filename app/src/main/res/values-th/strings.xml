@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Uma Afinidad</string>
+    <string name="tab_compat">ความเข้ากัน</string>
+    <string name="tab_groups">กลุ่ม</string>
+    <string name="tab_elenco">อุมะของฉัน</string>
+    <string name="tab_top">สายเลือดที่ดีที่สุด</string>
+    <string name="tab_ranking">จัดอันดับ</string>
+
+    <!-- Compatibilidad -->
+    <string name="buscar">ค้นหาตัวละคร…</string>
+    <string name="sin_resultados">ไม่พบผลลัพธ์</string>
+    <string name="ver_afinidad">ดูความเข้ากัน</string>
+    <string name="seleccion_completa">เลือกครบแล้ว (7/7)</string>
+    <string name="regla_slots">กฎของเกม: ลูกเป็นพ่อแม่ไม่ได้ และพ่อแม่กับปู่ย่าตายายต้องไม่ซ้ำในสายเดียวกัน</string>
+
+    <!-- Resultado -->
+    <string name="elegi_hijo_empezar">เลือกลูกก่อนเริ่ม</string>
+    <string name="total_herencia">คะแนนสืบทอดรวม</string>
+    <string name="sec_hijo_padres">ลูก × พ่อแม่</string>
+    <string name="sec_entre_padres">ระหว่างพ่อแม่</string>
+    <string name="sec_hijo_padres_abuelos">ลูก × พ่อแม่ × ปู่ย่าตายาย</string>
+    <string name="falta_hijo">ยังไม่ได้เลือกลูก</string>
+    <string name="elige_un_padre">เลือกพ่อแม่อย่างน้อยหนึ่งคน</string>
+    <string name="elegi_otro_padre">เลือกพ่อแม่อีกคน</string>
+    <string name="faltan_padres">ยังขาดพ่อแม่</string>
+    <string name="no_hay_abuelos">ยังไม่มีปู่ย่าตายาย</string>
+    <string name="sin_hijo_completa">หากไม่มีลูก จะคำนวณสายเลือดทั้งหมดไม่ได้</string>
+    <string name="corredora_nota">ความเข้ากันในเกมเป็น 0 — เป็นตัวเดียวกัน</string>
+    <string name="sin_grupos_comun">ไม่มีกลุ่มร่วม</string>
+    <string name="mas_grupos">อีก %1$d กลุ่ม…</string>
+
+    <!-- Diálogo quitar hijo -->
+    <string name="quitar_hijo_titulo">ลบลูกหรือไม่?</string>
+    <string name="quitar_solo_hijo">ลบเฉพาะลูก</string>
+    <string name="limpiar_todo">ล้างทั้งหมด</string>
+    <string name="cancelar">ยกเลิก</string>
+
+    <!-- Grupos -->
+    <string name="filtro_todos">ทั้งหมด</string>
+    <string name="filtro_pt">%1$d+ แต้ม</string>
+    <string name="miembros_cantidad">สมาชิก %1$d คน</string>
+    <string name="sin_grupos_filtro">ไม่มีกลุ่มที่ได้คะแนนนั้น</string>
+
+    <!-- My Umas (elenco propio) -->
+    <string name="elenco_tab_editar">แก้ไขอุมะของฉัน</string>
+    <string name="elenco_tab_linajes">สายเลือดของฉัน</string>
+    <string name="elenco_contador">%1$d/%2$d</string>
+    <string name="elenco_marcar_visibles">ทำเครื่องหมายอุมะที่มองเห็น</string>
+    <string name="elenco_limpiar_titulo">ล้างอุมะของฉันหรือไม่?</string>
+    <string name="elenco_limpiar_mensaje">อุมะทั้งหมดจะถูกยกเลิกเครื่องหมาย</string>
+    <string name="elenco_minimo">ทำเครื่องหมายอย่างน้อย 3 อุมะเพื่อคำนวณสายเลือดที่ดีที่สุด</string>
+    <string name="volver">กลับ</string>
+
+    <!-- Top linajes -->
+    <string name="calculando">กำลังคำนวณ…</string>
+    <string name="sin_datos">ไม่มีข้อมูล</string>
+    <string name="ver_herencia">ดูสายเลือด</string>
+
+    <!-- Roles -->
+    <string name="rol_hijo">ลูก</string>
+    <string name="rol_padre1">พ่อแม่ 1</string>
+    <string name="rol_padre2">พ่อแม่ 2</string>
+    <string name="rol_abuelo1_p1">ปู่ย่าตายาย 1 · พ่อแม่ 1</string>
+    <string name="rol_abuelo2_p1">ปู่ย่าตายาย 2 · พ่อแม่ 1</string>
+    <string name="rol_abuelo1_p2">ปู่ย่าตายาย 1 · พ่อแม่ 2</string>
+    <string name="rol_abuelo2_p2">ปู่ย่าตายาย 2 · พ่อแม่ 2</string>
+    <string name="rol_corto_hijo">ลูก</string>
+    <string name="rol_corto_padre">พ่อแม่</string>
+    <string name="rol_corto_abuelo">ปู่ย่าตายาย</string>
+
+    <!-- Aptitudes -->
+    <string name="apt_pista">สนาม</string>
+    <string name="apt_distancia">ระยะ</string>
+    <string name="apt_estilo">สไตล์</string>
+    <string name="apt_turf">Turf</string>
+    <string name="apt_dirt">Dirt</string>
+    <string name="apt_corta">Sprint</string>
+    <string name="apt_milla">Mile</string>
+    <string name="apt_media">Medium</string>
+    <string name="apt_larga">Long</string>
+    <string name="apt_fuga">Front</string>
+    <string name="apt_vanguardia">Pace</string>
+    <string name="apt_remate">Late</string>
+    <string name="apt_retraso">End</string>
+
+    <!-- Ajustes -->
+    <string name="tab_ajustes">ตั้งค่า</string>
+    <string name="tab_mas">เพิ่มเติม</string>
+    <string name="ajustes_apariencia">รูปลักษณ์</string>
+    <string name="idioma_titulo">ภาษา</string>
+    <string name="idioma_desc">เลือกภาษาของแอป</string>
+    <string name="idioma_sistema">ระบบ</string>
+    <string name="idioma_sistema_desc">ตามภาษาของระบบ</string>
+    <string name="idioma_espanol">สเปน</string>
+    <string name="idioma_espanol_desc">Español</string>
+    <string name="idioma_ingles">อังกฤษ</string>
+    <string name="idioma_ingles_desc">English</string>
+    <string name="idioma_japones">ญี่ปุ่น</string>
+    <string name="idioma_japones_desc">日本語</string>
+    <string name="idioma_chino_simplificado">จีนตัวย่อ</string>
+    <string name="idioma_chino_simplificado_desc">简体中文</string>
+    <string name="idioma_chino_tradicional">จีนตัวเต็ม</string>
+    <string name="idioma_chino_tradicional_desc">繁體中文</string>
+    <string name="idioma_coreano">เกาหลี</string>
+    <string name="idioma_coreano_desc">한국어</string>
+    <string name="idioma_indonesio">อินโดนีเซีย</string>
+    <string name="idioma_indonesio_desc">Bahasa Indonesia</string>
+    <string name="idioma_tailandes">ไทย</string>
+    <string name="idioma_tailandes_desc">ไทย</string>
+    <string name="idioma_vietnamita">เวียดนาม</string>
+    <string name="idioma_vietnamita_desc">Tiếng Việt</string>
+    <string name="tema_titulo">ธีม</string>
+    <string name="tema_desc">เลือกลักษณะของแอป</string>
+    <string name="tema_sistema">ระบบ</string>
+    <string name="tema_sistema_desc">ตามการตั้งค่าระบบ</string>
+    <string name="tema_claro">สว่าง</string>
+    <string name="tema_claro_desc">พื้นหลังสว่าง</string>
+    <string name="tema_oscuro">มืด</string>
+    <string name="tema_oscuro_desc">พื้นหลังมืด</string>
+    <string name="tema_contraste">คอนทราสต์สูง</string>
+    <string name="tema_contraste_desc">พื้นหลังสว่างที่คมชัดขึ้น</string>
+    <string name="accesibilidad_titulo">การเข้าถึง</string>
+    <string name="accesibilidad_desc">ตัวเลือกการอ่านสำหรับผู้มีสายตาเลือนราง</string>
+    <string name="tamano_texto_titulo">อยากให้ข้อความใหญ่แค่ไหน?</string>
+    <string name="tamano_normal">ปกติ</string>
+    <string name="tamano_normal_desc">ขนาดมาตรฐาน</string>
+    <string name="tamano_grande">ใหญ่</string>
+    <string name="tamano_grande_desc">ข้อความใหญ่ขึ้น 15%</string>
+    <string name="tamano_muy_grande">ใหญ่พิเศษ</string>
+    <string name="tamano_muy_grande_desc">ข้อความใหญ่ขึ้น 30%</string>
+    <string name="negrita_titulo">ข้อความตัวหนา</string>
+    <string name="negrita_desc">ตัวหนาขึ้น อ่านง่ายขึ้น</string>
+    <string name="expandido">ขยายอยู่</string>
+    <string name="contraido">ย่ออยู่</string>
+    <string name="quitar_personaje">เอาตัวละครออก</string>
+    <string name="abrir_grupos">เปิดกลุ่ม</string>
+    <string name="abrir_ranking">เปิดจัดอันดับ</string>
+    <string name="bienvenida_titulo">ตั้งค่าการเข้าถึง</string>
+    <string name="bienvenida_desc">เลือกตัวเลือกที่ช่วยให้อ่านและใช้งานง่ายขึ้น แก้ไขได้ภายหลังในการตั้งค่า</string>
+    <string name="bienvenida_tamano">ขนาดข้อความ</string>
+    <string name="omitir">ข้าม</string>
+    <string name="revisar_accesibilidad">ดูการเข้าถึงอีกครั้ง</string>
+    <string name="revisar_accesibilidad_desc">แสดงหน้าต่างตั้งค่านี้อีกครั้ง</string>
+    <string name="modo_grilla_pregunta">อยากดูตัวละครแบบไหน?</string>
+    <string name="modo_vertical">การ์ดใหญ่</string>
+    <string name="modo_vertical_desc">ตารางอวาตาร์ใหญ่กลางจอ</string>
+    <string name="modo_lista">รายการกระชับ</string>
+    <string name="modo_lista_desc">แถวแนวนอนพร้อมแถบสี</string>
+    <string name="avatares_pregunta">สไตล์อวาตาร์</string>
+    <string name="avatar_color">สี</string>
+    <string name="avatar_color_desc">พิกเซลอาร์ตเต็มสี</string>
+    <string name="avatar_grises">ขาวดำ · 5 ระดับ</string>
+    <string name="avatar_grises_desc">พิกเซลอาร์ตขาวดำ 5 ระดับ</string>
+    <string name="avatar_monocromo">ขาวดำ · 1 บิต</string>
+    <string name="avatar_monocromo_desc">พิกเซลอาร์ตขาวดำล้วน</string>
+    <string name="seccion_herencia">การสืบทอด</string>
+    <string name="herencia_contador">%1$d/7</string>
+    <string name="salir_titulo">ออกจาก Uma Afinidad?</string>
+    <string name="salir_mensaje">ยืนยันออกจากแอป?</string>
+    <string name="salir_salir">ออก</string>
+    <string name="tab_corredora">อุมะของฉัน</string>
+    <string name="buscar_corredora">ค้นหาอุมะ…</string>
+    <string name="mejor_de">สายเลือดที่ดีที่สุดของ %1$s</string>
+    <string name="corredora_invalida">ตัวละครนี้เล่นไม่ได้ จึงคำนวณสายเลือดไม่ได้</string>
+    <string name="corredora_hint">พิมพ์ชื่ออุมะเพื่อดูสายเลือดที่ดีที่สุด</string>
+    <string name="alternativas_titulo">ตัวเลือกของ %1$s</string>
+    <string name="restablecer_optimo">กลับไปค่าเหมาะที่สุด</string>
+    <string name="sin_alternativas">ไม่มีตัวเลือกที่ใช้ได้สำหรับช่องนี้</string>
+    <string name="guardar_config">บันทึกการตั้งค่า</string>
+    <string name="guardar">บันทึก</string>
+    <string name="nombre_sugerido">%1$s · %2$dpt</string>
+    <string name="guardadas_de">บันทึกไว้สำหรับ %1$s</string>
+    <string name="arboles_ajustes">สายเลือดที่บันทึก</string>
+    <string name="grupos_ajustes_desc">กลุ่มความเข้ากันและสมาชิก</string>
+    <string name="ranking_ajustes_desc">อุมะที่ปรับตัวได้ดีที่สุดตามความเข้ากันรวม</string>
+    <string name="ranking_modo_versatil">อเนกประสงค์</string>
+    <string name="ranking_modo_padres">พ่อแม่ที่ดีที่สุด</string>
+    <string name="ranking_padres_titulo">พ่อแม่ที่ดีที่สุด</string>
+    <string name="ranking_padres_ajustes_desc">อุมะที่ถูกเลือกเป็นพ่อแม่เหมาะที่สุดบ่อยที่สุด</string>
+    <string name="ranking_padres_veces">%1$d อุมะ - %2$d%%</string>
+    <string name="ranking_padres_media">เฉลี่ย %1$dpt</string>
+    <string name="ranking_padres_ayuda_corta">ถูกเลือกเป็นพ่อแม่เหมาะที่สุดบ่อยที่สุด</string>
+    <string name="ranking_padres_ayuda_titulo">อันดับนี้คืออะไร?</string>
+    <string name="ranking_padres_ayuda_larga">เราคำนวณพ่อแม่ที่สมบูรณ์แบบของทุกอุมะ และนับจำนวนครั้งที่แต่ละตัวชนะ\n\n16 อุมะ - 12% หมายถึงเป็นตัวเลือกที่ดีที่สุดสำหรับ 16 อุมะ (12% ของทั้งหมด)\n\nลงทุนกับตัวท็อปก่อน: ใช้ได้กับเกือบทุกตัว</string>
+    <string name="entendido">เข้าใจแล้ว</string>
+    <string name="elenco_ajustes_desc">รายชื่ออุมะของคุณและสายเลือดที่ดีที่สุด</string>
+    <string name="guardado_snack">บันทึกการตั้งค่าแล้ว</string>
+    <string name="eliminado_snack">ลบการตั้งค่าแล้ว</string>
+
+    <!-- Acceso rápido (burbuja flotante) -->
+    <string name="burbuja_titulo">บับเบิ้ลลอย</string>
+    <string name="burbuja_desc">เข้าถึงเร็วเหนือแอปอื่น</string>
+    <string name="burbuja_switch">บับเบิ้ลลอย</string>
+    <string name="burbuja_switch_desc">เครื่องคิดความเข้ากันและทางลัดขณะเล่น</string>
+    <string name="burbuja_sin_permiso">ยังไม่ได้สิทธิ์ "แสดงเหนือแอปอื่น" ปิดแล้วเปิดสวิตช์อีกครั้งเพื่ออนุญาต</string>
+    <string name="burbuja_canal">บับเบิ้ลเข้าถึงเร็ว</string>
+    <string name="burbuja_notif_titulo">Uma Afinidad</string>
+    <string name="burbuja_notif_texto">เปิดบับเบิ้ลลอยอยู่</string>
+    <string name="burbuja_ocultar">ซ่อนบับเบิ้ล</string>
+    <string name="burbuja_descripcion">เปิดแผงความเข้ากันแบบเร็ว</string>
+    <string name="burbuja_panel_titulo">ความเข้ากันแบบเร็ว</string>
+    <string name="cerrar">ปิด</string>
+    <string name="burbuja_calc_hint">เลือกตัวละครเพื่อดูความเข้ากัน</string>
+    <string name="burbuja_total">ความเข้ากัน</string>
+    <string name="burbuja_abrir">เปิดในแอป</string>
+    <string name="burbuja_quitar_zona">ปล่อยที่นี่เพื่อลบบับเบิ้ล</string>
+    <string name="burbuja_limpiar">ล้างสายเลือด</string>
+    <string name="burbuja_autocompletar">เติมช่องว่างอัตโนมัติด้วยความเข้ากันสูงสุด</string>
+    <string name="burbuja_abuelo_p1">ปู่ย่าตายาย (1)</string>
+    <string name="burbuja_abuelo_p2">ปู่ย่าตายาย (2)</string>
+</resources>

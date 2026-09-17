@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Uma Afinidad</string>
+    <string name="tab_compat">인연</string>
+    <string name="tab_groups">조합</string>
+    <string name="tab_elenco">내 우마무스메</string>
+    <string name="tab_top">최고 혈통</string>
+    <string name="tab_ranking">랭킹</string>
+
+    <!-- Compatibilidad -->
+    <string name="buscar">우마무스메 검색…</string>
+    <string name="sin_resultados">결과 없음.</string>
+    <string name="ver_afinidad">인연 보기</string>
+    <string name="seleccion_completa">선택 완료 (7/7)</string>
+    <string name="regla_slots">게임 규칙: 자녀는 부모가 될 수 없고, 같은 계보에서 부모와 조부모는 중복될 수 없습니다</string>
+
+    <!-- Resultado -->
+    <string name="elegi_hijo_empezar">자녀를 선택하세요.</string>
+    <string name="total_herencia">상속 총점</string>
+    <string name="sec_hijo_padres">자녀 × 부모</string>
+    <string name="sec_entre_padres">부모 간</string>
+    <string name="sec_hijo_padres_abuelos">자녀 × 부모 × 조부모</string>
+    <string name="falta_hijo">아직 자녀를 선택하지 않았습니다.</string>
+    <string name="elige_un_padre">부모를 최소 한 명 선택하세요.</string>
+    <string name="elegi_otro_padre">다른 부모를 선택하세요.</string>
+    <string name="faltan_padres">부모가 없습니다.</string>
+    <string name="no_hay_abuelos">아직 조부모가 없습니다.</string>
+    <string name="sin_hijo_completa">자녀 없이는 전체 혈통을 계산할 수 없습니다.</string>
+    <string name="corredora_nota">게임 내 인연은 0입니다 — 같은 우마무스메입니다.</string>
+    <string name="sin_grupos_comun">공통 조합이 없습니다.</string>
+    <string name="mas_grupos">%1$d개 더…</string>
+
+    <!-- Diálogo quitar hijo -->
+    <string name="quitar_hijo_titulo">자녀를 제거할까요?</string>
+    <string name="quitar_solo_hijo">자녀만 제거</string>
+    <string name="limpiar_todo">모두 지우기</string>
+    <string name="cancelar">취소</string>
+
+    <!-- Grupos -->
+    <string name="filtro_todos">전체</string>
+    <string name="filtro_pt">%1$d점 이상</string>
+    <string name="miembros_cantidad">구성원 %1$d명</string>
+    <string name="sin_grupos_filtro">해당 점수의 조합이 없습니다.</string>
+
+    <!-- My Umas (elenco propio) -->
+    <string name="elenco_tab_editar">내 우마무스메 편집</string>
+    <string name="elenco_tab_linajes">내 혈통</string>
+    <string name="elenco_contador">%1$d/%2$d</string>
+    <string name="elenco_marcar_visibles">보이는 우마무스메 표시</string>
+    <string name="elenco_limpiar_titulo">내 우마무스메를 비울까요?</string>
+    <string name="elenco_limpiar_mensaje">모든 우마무스메의 표시가 해제됩니다.</string>
+    <string name="elenco_minimo">최고 혈통을 계산하려면 우마무스메를 3명 이상 표시하세요.</string>
+    <string name="volver">뒤로</string>
+
+    <!-- Top linajes -->
+    <string name="calculando">계산 중…</string>
+    <string name="sin_datos">데이터 없음.</string>
+    <string name="ver_herencia">혈통 보기</string>
+
+    <!-- Roles -->
+    <string name="rol_hijo">자녀</string>
+    <string name="rol_padre1">부모 1</string>
+    <string name="rol_padre2">부모 2</string>
+    <string name="rol_abuelo1_p1">조부모 1 · 부모 1</string>
+    <string name="rol_abuelo2_p1">조부모 2 · 부모 1</string>
+    <string name="rol_abuelo1_p2">조부모 1 · 부모 2</string>
+    <string name="rol_abuelo2_p2">조부모 2 · 부모 2</string>
+    <string name="rol_corto_hijo">자녀</string>
+    <string name="rol_corto_padre">부모</string>
+    <string name="rol_corto_abuelo">조부모</string>
+
+    <!-- Aptitudes -->
+    <string name="apt_pista">트랙</string>
+    <string name="apt_distancia">거리</string>
+    <string name="apt_estilo">각질</string>
+    <string name="apt_turf">잔디</string>
+    <string name="apt_dirt">더트</string>
+    <string name="apt_corta">단거리</string>
+    <string name="apt_milla">마일</string>
+    <string name="apt_media">중거리</string>
+    <string name="apt_larga">장거리</string>
+    <string name="apt_fuga">도주</string>
+    <string name="apt_vanguardia">선행</string>
+    <string name="apt_remate">차입</string>
+    <string name="apt_retraso">추입</string>
+
+    <!-- Ajustes -->
+    <string name="tab_ajustes">설정</string>
+    <string name="tab_mas">더보기</string>
+    <string name="ajustes_apariencia">화면</string>
+    <string name="idioma_titulo">언어</string>
+    <string name="idioma_desc">앱 언어 선택</string>
+    <string name="idioma_sistema">시스템</string>
+    <string name="idioma_sistema_desc">시스템 언어 따르기</string>
+    <string name="idioma_espanol">스페인어</string>
+    <string name="idioma_espanol_desc">Español</string>
+    <string name="idioma_ingles">영어</string>
+    <string name="idioma_ingles_desc">English</string>
+    <string name="idioma_japones">일본어</string>
+    <string name="idioma_japones_desc">日本語</string>
+    <string name="idioma_chino_simplificado">중국어(간체)</string>
+    <string name="idioma_chino_simplificado_desc">简体中文</string>
+    <string name="idioma_chino_tradicional">중국어(번체)</string>
+    <string name="idioma_chino_tradicional_desc">繁體中文</string>
+    <string name="idioma_coreano">한국어</string>
+    <string name="idioma_coreano_desc">한국어</string>
+    <string name="idioma_indonesio">인도네시아어</string>
+    <string name="idioma_indonesio_desc">Bahasa Indonesia</string>
+    <string name="idioma_tailandes">태국어</string>
+    <string name="idioma_tailandes_desc">ไทย</string>
+    <string name="idioma_vietnamita">베트남어</string>
+    <string name="idioma_vietnamita_desc">Tiếng Việt</string>
+    <string name="tema_titulo">테마</string>
+    <string name="tema_desc">앱 화면 선택</string>
+    <string name="tema_sistema">시스템</string>
+    <string name="tema_sistema_desc">시스템 설정 따르기</string>
+    <string name="tema_claro">밝게</string>
+    <string name="tema_claro_desc">밝은 배경</string>
+    <string name="tema_oscuro">어둡게</string>
+    <string name="tema_oscuro_desc">어두운 배경</string>
+    <string name="tema_contraste">고대비</string>
+    <string name="tema_contraste_desc">밝은 배경에 더 강한 대비</string>
+    <string name="accesibilidad_titulo">접근성</string>
+    <string name="accesibilidad_desc">저시력 사용자를 위한 가독성 옵션</string>
+    <string name="tamano_texto_titulo">글자 크기는?</string>
+    <string name="tamano_normal">보통</string>
+    <string name="tamano_normal_desc">기본 크기</string>
+    <string name="tamano_grande">크게</string>
+    <string name="tamano_grande_desc">글자 15% 확대</string>
+    <string name="tamano_muy_grande">아주 크게</string>
+    <string name="tamano_muy_grande_desc">글자 30% 확대</string>
+    <string name="negrita_titulo">굵은 글씨</string>
+    <string name="negrita_desc">더 굵고 읽기 쉬운 글자</string>
+    <string name="expandido">펼침</string>
+    <string name="contraido">접힘</string>
+    <string name="quitar_personaje">캐릭터 제거</string>
+    <string name="abrir_grupos">조합 열기</string>
+    <string name="abrir_ranking">랭킹 열기</string>
+    <string name="bienvenida_titulo">접근성 설정</string>
+    <string name="bienvenida_desc">읽고 사용하기 편한 옵션을 선택하세요. 나중에 설정에서 변경할 수 있습니다.</string>
+    <string name="bienvenida_tamano">글자 크기</string>
+    <string name="omitir">건너뛰기</string>
+    <string name="revisar_accesibilidad">접근성 다시 보기</string>
+    <string name="revisar_accesibilidad_desc">이 설정 창을 다시 표시</string>
+    <string name="modo_grilla_pregunta">캐릭터를 어떻게 볼까요?</string>
+    <string name="modo_vertical">큰 카드</string>
+    <string name="modo_vertical_desc">가운데 큰 아바타 그리드</string>
+    <string name="modo_lista">간단 목록</string>
+    <string name="modo_lista_desc">색상 띠가 있는 가로 목록</string>
+    <string name="avatares_pregunta">아바타 스타일</string>
+    <string name="avatar_color">컬러</string>
+    <string name="avatar_color_desc">컬러 픽셀 아트</string>
+    <string name="avatar_grises">흑백 · 5단계</string>
+    <string name="avatar_grises_desc">5단계 흑백 픽셀 아트</string>
+    <string name="avatar_monocromo">흑백 · 1비트</string>
+    <string name="avatar_monocromo_desc">순수 흑백 픽셀 아트</string>
+    <string name="seccion_herencia">상속</string>
+    <string name="herencia_contador">%1$d/7</string>
+    <string name="salir_titulo">Uma Afinidad를 종료할까요?</string>
+    <string name="salir_mensaje">앱을 나갈까요?</string>
+    <string name="salir_salir">종료</string>
+    <string name="tab_corredora">내 우마무스메</string>
+    <string name="buscar_corredora">우마무스메 검색…</string>
+    <string name="mejor_de">%1$s의 최고 혈통</string>
+    <string name="corredora_invalida">육성 불가 캐릭터라 혈통을 계산할 수 없습니다.</string>
+    <string name="corredora_hint">우마무스메 이름을 입력하면 최고의 혈통을 볼 수 있습니다.</string>
+    <string name="alternativas_titulo">%1$s의 대안</string>
+    <string name="restablecer_optimo">최적으로 되돌리기</string>
+    <string name="sin_alternativas">이 슬롯에 유효한 대안이 없습니다.</string>
+    <string name="guardar_config">설정 저장</string>
+    <string name="guardar">저장</string>
+    <string name="nombre_sugerido">%1$s · %2$d점</string>
+    <string name="guardadas_de">%1$s 저장됨</string>
+    <string name="arboles_ajustes">저장된 혈통</string>
+    <string name="grupos_ajustes_desc">인연 조합과 구성원</string>
+    <string name="ranking_ajustes_desc">총 인연이 높은 다재다능한 우마무스메</string>
+    <string name="ranking_modo_versatil">다재다능</string>
+    <string name="ranking_modo_padres">최적 부모</string>
+    <string name="ranking_padres_titulo">최적 부모</string>
+    <string name="ranking_padres_ajustes_desc">최적 부모로 가장 자주 선택된 우마무스메</string>
+    <string name="ranking_padres_veces">%1$d명 - %2$d%%</string>
+    <string name="ranking_padres_media">평균 %1$d점</string>
+    <string name="ranking_padres_ayuda_corta">최적 부모로 가장 자주 선택됨</string>
+    <string name="ranking_padres_ayuda_titulo">이 랭킹은 무엇인가요?</string>
+    <string name="ranking_padres_ayuda_larga">모든 우마무스메의 완벽한 부모를 계산해 각 우마무스메가 선택된 횟수를 세었습니다.\n\n16명 - 12%는 16명(전체의 12%)에게 최적이라는 뜻입니다.\n\n상위 우마무스메부터 투자하세요. 거의 모든 육성에 도움이 됩니다.</string>
+    <string name="entendido">확인</string>
+    <string name="elenco_ajustes_desc">나만의 우마무스메 목록과 최고 혈통</string>
+    <string name="guardado_snack">설정이 저장되었습니다</string>
+    <string name="eliminado_snack">설정이 삭제되었습니다</string>
+
+    <!-- Acceso rápido (burbuja flotante) -->
+    <string name="burbuja_titulo">플로팅 버블</string>
+    <string name="burbuja_desc">다른 앱 위에서 빠르게 접근</string>
+    <string name="burbuja_switch">플로팅 버블</string>
+    <string name="burbuja_switch_desc">게임 중 인연 계산과 바로가기</string>
+    <string name="burbuja_sin_permiso">"다른 앱 위에 표시" 권한이 없습니다. 스위치를 껐다 켜서 허용하세요.</string>
+    <string name="burbuja_canal">빠른 접근 버블</string>
+    <string name="burbuja_notif_titulo">Uma Afinidad</string>
+    <string name="burbuja_notif_texto">플로팅 버블 사용 중</string>
+    <string name="burbuja_ocultar">버블 숨기기</string>
+    <string name="burbuja_descripcion">인연 빠른 패널 열기</string>
+    <string name="burbuja_panel_titulo">빠른 인연</string>
+    <string name="cerrar">닫기</string>
+    <string name="burbuja_calc_hint">캐릭터를 선택하면 인연을 볼 수 있습니다.</string>
+    <string name="burbuja_total">인연</string>
+    <string name="burbuja_abrir">앱에서 열기</string>
+    <string name="burbuja_quitar_zona">여기에 놓아 버블 제거</string>
+    <string name="burbuja_limpiar">혈통 비우기</string>
+    <string name="burbuja_autocompletar">가장 높은 인연으로 빈 칸 자동 채우기</string>
+    <string name="burbuja_abuelo_p1">조부모 (1)</string>
+    <string name="burbuja_abuelo_p2">조부모 (2)</string>
+</resources>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Uma Afinidad</string>
+    <string name="tab_compat">Độ tương thích</string>
+    <string name="tab_groups">Nhóm</string>
+    <string name="tab_elenco">Uma của tôi</string>
+    <string name="tab_top">Huyết thống tốt nhất</string>
+    <string name="tab_ranking">Xếp hạng</string>
+
+    <!-- Compatibilidad -->
+    <string name="buscar">Tìm nhân vật…</string>
+    <string name="sin_resultados">Không có kết quả.</string>
+    <string name="ver_afinidad">Xem độ tương thích</string>
+    <string name="seleccion_completa">Đã chọn đủ (7/7)</string>
+    <string name="regla_slots">Luật game: con không thể làm bố mẹ; bố mẹ và ông bà không được trùng trong cùng một nhánh</string>
+
+    <!-- Resultado -->
+    <string name="elegi_hijo_empezar">Chọn con để bắt đầu.</string>
+    <string name="total_herencia">Tổng di truyền</string>
+    <string name="sec_hijo_padres">Con × Bố mẹ</string>
+    <string name="sec_entre_padres">Giữa bố mẹ</string>
+    <string name="sec_hijo_padres_abuelos">Con × Bố mẹ × Ông bà</string>
+    <string name="falta_hijo">Chưa chọn con.</string>
+    <string name="elige_un_padre">Chọn ít nhất một bố/mẹ.</string>
+    <string name="elegi_otro_padre">Chọn bố/mẹ còn lại.</string>
+    <string name="faltan_padres">Thiếu bố mẹ.</string>
+    <string name="no_hay_abuelos">Chưa có ông bà.</string>
+    <string name="sin_hijo_completa">Không có con thì không tính được toàn bộ huyết thống.</string>
+    <string name="corredora_nota">Độ tương thích trong game là 0 — cùng một nhân vật.</string>
+    <string name="sin_grupos_comun">Không có nhóm chung.</string>
+    <string name="mas_grupos">%1$d nhóm nữa…</string>
+
+    <!-- Diálogo quitar hijo -->
+    <string name="quitar_hijo_titulo">Xóa con?</string>
+    <string name="quitar_solo_hijo">Chỉ xóa con</string>
+    <string name="limpiar_todo">Xóa tất cả</string>
+    <string name="cancelar">Hủy</string>
+
+    <!-- Grupos -->
+    <string name="filtro_todos">Tất cả</string>
+    <string name="filtro_pt">%1$d+ điểm</string>
+    <string name="miembros_cantidad">%1$d thành viên</string>
+    <string name="sin_grupos_filtro">Không có nhóm với số điểm đó.</string>
+
+    <!-- My Umas (elenco propio) -->
+    <string name="elenco_tab_editar">Sửa danh sách uma</string>
+    <string name="elenco_tab_linajes">Huyết thống của tôi</string>
+    <string name="elenco_contador">%1$d/%2$d</string>
+    <string name="elenco_marcar_visibles">Đánh dấu uma đang hiện</string>
+    <string name="elenco_limpiar_titulo">Xóa danh sách uma?</string>
+    <string name="elenco_limpiar_mensaje">Tất cả uma sẽ bị bỏ đánh dấu.</string>
+    <string name="elenco_minimo">Đánh dấu ít nhất 3 uma để tính huyết thống tốt nhất.</string>
+    <string name="volver">Quay lại</string>
+
+    <!-- Top linajes -->
+    <string name="calculando">Đang tính…</string>
+    <string name="sin_datos">Không có dữ liệu.</string>
+    <string name="ver_herencia">Xem huyết thống</string>
+
+    <!-- Roles -->
+    <string name="rol_hijo">Con</string>
+    <string name="rol_padre1">Bố mẹ 1</string>
+    <string name="rol_padre2">Bố mẹ 2</string>
+    <string name="rol_abuelo1_p1">Ông bà 1 · Bố mẹ 1</string>
+    <string name="rol_abuelo2_p1">Ông bà 2 · Bố mẹ 1</string>
+    <string name="rol_abuelo1_p2">Ông bà 1 · Bố mẹ 2</string>
+    <string name="rol_abuelo2_p2">Ông bà 2 · Bố mẹ 2</string>
+    <string name="rol_corto_hijo">Con</string>
+    <string name="rol_corto_padre">Bố mẹ</string>
+    <string name="rol_corto_abuelo">Ông bà</string>
+
+    <!-- Aptitudes -->
+    <string name="apt_pista">Đường đua</string>
+    <string name="apt_distancia">Cự ly</string>
+    <string name="apt_estilo">Kiểu chạy</string>
+    <string name="apt_turf">Turf</string>
+    <string name="apt_dirt">Dirt</string>
+    <string name="apt_corta">Sprint</string>
+    <string name="apt_milla">Mile</string>
+    <string name="apt_media">Medium</string>
+    <string name="apt_larga">Long</string>
+    <string name="apt_fuga">Front</string>
+    <string name="apt_vanguardia">Pace</string>
+    <string name="apt_remate">Late</string>
+    <string name="apt_retraso">End</string>
+
+    <!-- Ajustes -->
+    <string name="tab_ajustes">Cài đặt</string>
+    <string name="tab_mas">Thêm</string>
+    <string name="ajustes_apariencia">Giao diện</string>
+    <string name="idioma_titulo">Ngôn ngữ</string>
+    <string name="idioma_desc">Chọn ngôn ngữ ứng dụng</string>
+    <string name="idioma_sistema">Hệ thống</string>
+    <string name="idioma_sistema_desc">Theo ngôn ngữ hệ thống</string>
+    <string name="idioma_espanol">Tiếng Tây Ban Nha</string>
+    <string name="idioma_espanol_desc">Español</string>
+    <string name="idioma_ingles">Tiếng Anh</string>
+    <string name="idioma_ingles_desc">English</string>
+    <string name="idioma_japones">Tiếng Nhật</string>
+    <string name="idioma_japones_desc">日本語</string>
+    <string name="idioma_chino_simplificado">Tiếng Trung giản thể</string>
+    <string name="idioma_chino_simplificado_desc">简体中文</string>
+    <string name="idioma_chino_tradicional">Tiếng Trung phồn thể</string>
+    <string name="idioma_chino_tradicional_desc">繁體中文</string>
+    <string name="idioma_coreano">Tiếng Hàn</string>
+    <string name="idioma_coreano_desc">한국어</string>
+    <string name="idioma_indonesio">Tiếng Indonesia</string>
+    <string name="idioma_indonesio_desc">Bahasa Indonesia</string>
+    <string name="idioma_tailandes">Tiếng Thái</string>
+    <string name="idioma_tailandes_desc">ไทย</string>
+    <string name="idioma_vietnamita">Tiếng Việt</string>
+    <string name="idioma_vietnamita_desc">Tiếng Việt</string>
+    <string name="tema_titulo">Chủ đề</string>
+    <string name="tema_desc">Chọn giao diện ứng dụng</string>
+    <string name="tema_sistema">Hệ thống</string>
+    <string name="tema_sistema_desc">Theo cài đặt hệ thống</string>
+    <string name="tema_claro">Sáng</string>
+    <string name="tema_claro_desc">Nền sáng</string>
+    <string name="tema_oscuro">Tối</string>
+    <string name="tema_oscuro_desc">Nền tối</string>
+    <string name="tema_contraste">Tương phản cao</string>
+    <string name="tema_contraste_desc">Nền sáng với độ tương phản mạnh hơn</string>
+    <string name="accesibilidad_titulo">Trợ năng</string>
+    <string name="accesibilidad_desc">Tùy chọn dễ đọc cho người thị lực kém</string>
+    <string name="tamano_texto_titulo">Chữ lớn cỡ nào?</string>
+    <string name="tamano_normal">Bình thường</string>
+    <string name="tamano_normal_desc">Kích thước chuẩn</string>
+    <string name="tamano_grande">Lớn</string>
+    <string name="tamano_grande_desc">Chữ lớn hơn 15%</string>
+    <string name="tamano_muy_grande">Rất lớn</string>
+    <string name="tamano_muy_grande_desc">Chữ lớn hơn 30%</string>
+    <string name="negrita_titulo">Chữ đậm</string>
+    <string name="negrita_desc">Nét dày hơn, dễ đọc hơn</string>
+    <string name="expandido">Đang mở</string>
+    <string name="contraido">Đang thu gọn</string>
+    <string name="quitar_personaje">Bỏ nhân vật</string>
+    <string name="abrir_grupos">Mở nhóm</string>
+    <string name="abrir_ranking">Mở xếp hạng</string>
+    <string name="bienvenida_titulo">Thiết lập trợ năng</string>
+    <string name="bienvenida_desc">Chọn các tùy chọn giúp bạn đọc và thao tác tốt hơn. Có thể đổi sau trong Cài đặt.</string>
+    <string name="bienvenida_tamano">Cỡ chữ</string>
+    <string name="omitir">Bỏ qua</string>
+    <string name="revisar_accesibilidad">Xem lại trợ năng</string>
+    <string name="revisar_accesibilidad_desc">Hiện lại cửa sổ thiết lập này</string>
+    <string name="modo_grilla_pregunta">Bạn muốn xem nhân vật thế nào?</string>
+    <string name="modo_vertical">Thẻ lớn</string>
+    <string name="modo_vertical_desc">Lưới với ảnh đại diện lớn ở giữa</string>
+    <string name="modo_lista">Danh sách gọn</string>
+    <string name="modo_lista_desc">Hàng ngang với sọc màu</string>
+    <string name="avatares_pregunta">Kiểu ảnh đại diện</string>
+    <string name="avatar_color">Màu</string>
+    <string name="avatar_color_desc">Pixel art đầy đủ màu</string>
+    <string name="avatar_grises">Đen trắng · 5 mức</string>
+    <string name="avatar_grises_desc">Pixel art thang xám 5 mức</string>
+    <string name="avatar_monocromo">Đen trắng · 1-bit</string>
+    <string name="avatar_monocromo_desc">Pixel art đen trắng thuần</string>
+    <string name="seccion_herencia">Di truyền</string>
+    <string name="herencia_contador">%1$d/7</string>
+    <string name="salir_titulo">Thoát Uma Afinidad?</string>
+    <string name="salir_mensaje">Bạn chắc chắn muốn rời ứng dụng?</string>
+    <string name="salir_salir">Thoát</string>
+    <string name="tab_corredora">Uma của tôi</string>
+    <string name="buscar_corredora">Tìm uma…</string>
+    <string name="mejor_de">Huyết thống tốt nhất cho %1$s</string>
+    <string name="corredora_invalida">Nhân vật này không chơi được; không thể tính huyết thống.</string>
+    <string name="corredora_hint">Nhập tên uma để xem huyết thống tốt nhất.</string>
+    <string name="alternativas_titulo">Lựa chọn cho %1$s</string>
+    <string name="restablecer_optimo">Khôi phục tối ưu</string>
+    <string name="sin_alternativas">Không có lựa chọn hợp lệ cho ô này.</string>
+    <string name="guardar_config">Lưu cấu hình</string>
+    <string name="guardar">Lưu</string>
+    <string name="nombre_sugerido">%1$s · %2$dpt</string>
+    <string name="guardadas_de">Đã lưu cho %1$s</string>
+    <string name="arboles_ajustes">Huyết thống đã lưu</string>
+    <string name="grupos_ajustes_desc">Các nhóm tương thích và thành viên</string>
+    <string name="ranking_ajustes_desc">Uma linh hoạt nhất theo tổng tương thích</string>
+    <string name="ranking_modo_versatil">Linh hoạt</string>
+    <string name="ranking_modo_padres">Bố mẹ tốt nhất</string>
+    <string name="ranking_padres_titulo">Bố mẹ tốt nhất</string>
+    <string name="ranking_padres_ajustes_desc">Uma được chọn làm bố mẹ tối ưu nhiều nhất</string>
+    <string name="ranking_padres_veces">%1$d uma - %2$d%%</string>
+    <string name="ranking_padres_media">trung bình %1$dpt</string>
+    <string name="ranking_padres_ayuda_corta">Được chọn làm bố mẹ tối ưu nhiều nhất</string>
+    <string name="ranking_padres_ayuda_titulo">Bảng xếp hạng này là gì?</string>
+    <string name="ranking_padres_ayuda_larga">Với mỗi uma, chúng tôi tính bố mẹ hoàn hảo nhất và đếm số lần mỗi uma thắng.\n\n16 uma - 12% nghĩa là cô ấy là lựa chọn tốt nhất cho 16 uma (12% tổng số).\n\nHãy đầu tư vào những uma đứng đầu trước: chúng hợp với gần như tất cả.</string>
+    <string name="entendido">Đã hiểu</string>
+    <string name="elenco_ajustes_desc">Danh sách uma của bạn và huyết thống tốt nhất</string>
+    <string name="guardado_snack">Đã lưu cấu hình</string>
+    <string name="eliminado_snack">Đã xóa cấu hình</string>
+
+    <!-- Acceso rápido (burbuja flotante) -->
+    <string name="burbuja_titulo">Bong bóng nổi</string>
+    <string name="burbuja_desc">Truy cập nhanh trên ứng dụng khác</string>
+    <string name="burbuja_switch">Bong bóng nổi</string>
+    <string name="burbuja_switch_desc">Máy tính tương thích và phím tắt khi chơi</string>
+    <string name="burbuja_sin_permiso">Thiếu quyền "Hiển thị trên ứng dụng khác". Tắt rồi bật lại công tắc để cấp quyền.</string>
+    <string name="burbuja_canal">Bong bóng truy cập nhanh</string>
+    <string name="burbuja_notif_titulo">Uma Afinidad</string>
+    <string name="burbuja_notif_texto">Bong bóng nổi đang bật</string>
+    <string name="burbuja_ocultar">Ẩn bong bóng</string>
+    <string name="burbuja_descripcion">Mở bảng tương thích nhanh</string>
+    <string name="burbuja_panel_titulo">Tương thích nhanh</string>
+    <string name="cerrar">Đóng</string>
+    <string name="burbuja_calc_hint">Chọn nhân vật để xem độ tương thích.</string>
+    <string name="burbuja_total">Tương thích</string>
+    <string name="burbuja_abrir">Mở trong ứng dụng</string>
+    <string name="burbuja_quitar_zona">Thả vào đây để xóa bong bóng</string>
+    <string name="burbuja_limpiar">Xóa huyết thống</string>
+    <string name="burbuja_autocompletar">Tự động điền ô trống với tương thích cao nhất</string>
+    <string name="burbuja_abuelo_p1">Ông bà (1)</string>
+    <string name="burbuja_abuelo_p2">Ông bà (2)</string>
+</resources>

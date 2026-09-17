@@ -17,6 +17,12 @@ const idiomas = [
   { carpeta: 'values', codigo: 'en' },
   { carpeta: 'values-es', codigo: 'es' },
   { carpeta: 'values-ja', codigo: 'ja' },
+  { carpeta: 'values-zh-rCN', codigo: 'zh-CN' },
+  { carpeta: 'values-zh-rTW', codigo: 'zh-TW' },
+  { carpeta: 'values-ko', codigo: 'ko' },
+  { carpeta: 'values-id', codigo: 'id' },
+  { carpeta: 'values-th', codigo: 'th' },
+  { carpeta: 'values-vi', codigo: 'vi' },
 ]
 
 const desescapaXml = (s) =>
@@ -75,4 +81,4 @@ for (const { codigo } of idiomas) {
     process.exit(1)
   }
 }
-console.log('Paridad de claves OK (en/es/ja)')
+console.log('Paridad de claves OK (9 idiomas)')

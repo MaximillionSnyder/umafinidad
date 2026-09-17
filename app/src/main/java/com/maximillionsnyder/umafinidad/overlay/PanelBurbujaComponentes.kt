@@ -16,9 +16,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,6 +39,40 @@ import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
 
 /* Piezas del panel de acceso rápido de la burbuja flotante. */
+
+/* Botón chico de acción (limpiar / autocompletar) para la cabecera. */
+@Composable
+internal fun BotonCompacto(
+    iconoRes: Int,
+    descripcionRes: Int,
+    enabled: Boolean,
+    tonal: Boolean = true,
+    onClick: () -> Unit,
+) {
+    val modifier = Modifier.size(36.dp)
+    val contenido: @Composable () -> Unit = {
+        Icon(
+            painterResource(iconoRes),
+            contentDescription = stringResource(descripcionRes),
+            modifier = Modifier.size(20.dp),
+        )
+    }
+    if (tonal) {
+        FilledTonalIconButton(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            content = contenido,
+        )
+    } else {
+        OutlinedIconButton(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            content = contenido,
+        )
+    }
+}
 
 /* Slot de la genealogía en la franja: avatar (o "+") con nombre y rol. */
 @Composable

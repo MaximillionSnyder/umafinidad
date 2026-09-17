@@ -194,4 +194,6 @@
     <string name="burbuja_total">相性</string>
     <string name="burbuja_abrir">アプリで開く</string>
     <string name="burbuja_quitar_zona">ここにドロップしてバブルを削除</string>
+    <string name="burbuja_limpiar">血統をクリア</string>
+    <string name="burbuja_autocompletar">空きを最高相性で自動入力</string>
 </resources>

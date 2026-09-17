@@ -45,7 +45,9 @@ fun PanelBurbuja(
     modelo: AffinityModel?,
     japones: Boolean,
     seleccion: List<Int?>,
+    autocompletando: Boolean,
     onSeleccion: (List<Int?>) -> Unit,
+    onAutocompletar: () -> Unit,
     onCerrar: () -> Unit,
     onOcultar: () -> Unit,
     onAbrirDestino: (String) -> Unit,
@@ -115,6 +117,25 @@ fun PanelBurbuja(
                         contentDescription = stringResource(R.string.cerrar),
                     )
                 }
+            }
+
+            /* ---- Acciones rápidas: limpiar y autocompletar ---- */
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                BotonCompacto(
+                    iconoRes = R.drawable.ic_limpiar,
+                    descripcionRes = R.string.burbuja_limpiar,
+                    enabled = seleccion.any { it != null },
+                    tonal = false,
+                    onClick = { onSeleccion(seleccionVacia) },
+                )
+                BotonCompacto(
+                    iconoRes = R.drawable.ic_autocompletar,
+                    descripcionRes = R.string.burbuja_autocompletar,
+                    enabled = !autocompletando &&
+                        seleccion[0] != null &&
+                        seleccion.any { it == null },
+                    onClick = onAutocompletar,
+                )
             }
 
             /* ---- Genealogía completa: hijo, dos padres y abuelos ---- */
@@ -187,12 +208,6 @@ fun PanelBurbuja(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-            }
-
-            if (seleccion.any { it != null }) {
-                TextButton(onClick = { onSeleccion(seleccionVacia) }) {
-                    Text(stringResource(R.string.limpiar_todo))
-                }
             }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)

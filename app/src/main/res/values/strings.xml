@@ -194,4 +194,6 @@
     <string name="burbuja_total">Affinity</string>
     <string name="burbuja_abrir">Open in app</string>
     <string name="burbuja_quitar_zona">Drop here to remove the bubble</string>
+    <string name="burbuja_limpiar">Clear lineage</string>
+    <string name="burbuja_autocompletar">Autofill empty slots with the best affinity</string>
 </resources>

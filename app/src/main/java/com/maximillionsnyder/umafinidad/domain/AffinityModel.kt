@@ -495,8 +495,153 @@ class AffinityModel private constructor(
         return resultados
             .sortedWith(
                 compareByDescending<AlternativaSlot> { it.total }
-                    .thenByDescending { it.puntosDirectos },
+                    .thenByDescending<AlternativaSlot> { it.puntosDirectos },
             )
             .take(limite)
+    }
+
+    /* ===== Autocompletar la genealogía (panel de la burbuja) ===== */
+
+    private val cacheRankingAbuelos = HashMap<Long, IntArray>()
+
+    private fun trioEn(i: Int, j: Int, k: Int): Int =
+        puntajeTrioRapido(idsTop[i], idsTop[j], idsTop[k])
+
+    /* Abuelos de la rama del padre p ordenados por su aporte al trío
+       (hijo, padre, abuelo). Excluye al propio padre; el hijo entra con 0
+       (corredora), igual que en mejorParAbuelos. */
+    private fun rankingAbuelos(h: Int, p: Int): IntArray {
+        val key = h.toLong() * charsTop.size + p
+        cacheRankingAbuelos[key]?.let { return it }
+        val orden = (0 until charsTop.size)
+            .filter { it != p }
+            .sortedByDescending { trioEn(h, p, it) }
+            .toIntArray()
+        cacheRankingAbuelos[key] = orden
+        return orden
+    }
+
+    /* Completa los slots vacíos de una selección parcial maximizando el total
+       y respetando lo ya cargado. Es exacto: con los padres fijos cada rama
+       se optimiza sola; si falta un padre se prueban todos los candidatos y,
+       si faltan ambos, cada par (mejorLinajeDe si no hay abuelos fijos). */
+    fun completarSeleccion(seleccion: List<Int?>): List<Int?> {
+        val hId = seleccion[0] ?: return seleccion
+        val h = idsTop.indexOf(hId)
+        if (h < 0) return seleccion
+        if (seleccion.any { it != null && idsTop.indexOf(it) < 0 }) return seleccion
+
+        val fijosIdx = List(2) { rama ->
+            listOfNotNull(seleccion[3 + rama * 2], seleccion[4 + rama * 2])
+                .map { idsTop.indexOf(it) }
+        }
+
+        /* Abuelos finales de una rama: los fijos en su slot y los huecos con
+           los mejores del ranking que no repitan. */
+        fun abuelosDeRama(p: Int, rama: Int): Array<Int?> {
+            val elegidos = arrayOfNulls<Int>(2)
+            for (slot in 0..1) {
+                val id = seleccion[3 + rama * 2 + slot] ?: continue
+                elegidos[slot] = idsTop.indexOf(id)
+            }
+            val usados = elegidos.filterNotNull().toMutableSet()
+            for (cand in rankingAbuelos(h, p)) {
+                val libre = elegidos.indexOfFirst { it == null }
+                if (libre == -1) break
+                if (cand in usados) continue
+                elegidos[libre] = cand
+                usados += cand
+            }
+            return elegidos
+        }
+
+        fun aporteRama(p: Int, abuelos: Array<Int?>): Int {
+            var total = 0
+            for (g in abuelos) {
+                if (g == null) continue
+                total += if (g == h) 0 else trioEn(h, p, g)
+            }
+            return total
+        }
+
+        fun totalDe(p1: Int, p2: Int): Int =
+            parEn(h, p1) + parEn(h, p2) + parEn(p1, p2) +
+                aporteRama(p1, abuelosDeRama(p1, 0)) +
+                aporteRama(p2, abuelosDeRama(p2, 1))
+
+        /* Reglas del padre: no puede ser el hijo, ni el otro padre, ni un
+           abuelo de su propia rama. */
+        fun padreValido(idx: Int, rama: Int, otroPadre: Int): Boolean {
+            if (idx == h || idx == otroPadre) return false
+            return idx !in fijosIdx[rama]
+        }
+
+        val p1Fijo = seleccion[1]?.let { idsTop.indexOf(it) } ?: -1
+        val p2Fijo = seleccion[2]?.let { idsTop.indexOf(it) } ?: -1
+        val m = charsTop.size
+
+        var mejores = intArrayOf(-1, -1)
+        var mejorAbuelos: Array<Array<Int?>>? = null
+        var mejorTotal = -1
+
+        fun considerar(p1: Int, p2: Int) {
+            val total = totalDe(p1, p2)
+            if (total > mejorTotal) {
+                mejorTotal = total
+                mejores = intArrayOf(p1, p2)
+                mejorAbuelos = arrayOf(abuelosDeRama(p1, 0), abuelosDeRama(p2, 1))
+            }
+        }
+
+        when {
+            p1Fijo >= 0 && p2Fijo >= 0 -> considerar(p1Fijo, p2Fijo)
+
+            p1Fijo >= 0 -> for (cand in 0 until m) {
+                if (padreValido(cand, 1, p1Fijo)) considerar(p1Fijo, cand)
+            }
+
+            p2Fijo >= 0 -> for (cand in 0 until m) {
+                if (padreValido(cand, 0, p2Fijo)) considerar(cand, p2Fijo)
+            }
+
+            /* Sin padres: mejorLinajeDe es exacto cuando no hay abuelos fijos. */
+            fijosIdx.all { it.isEmpty() } -> {
+                val linaje = mejorLinajeDe(hId) ?: return seleccion
+                return listOf(
+                    linaje.hijo.charId,
+                    linaje.padre.charId,
+                    linaje.madre.charId,
+                    linaje.abuelos[0][0].charId,
+                    linaje.abuelos[0][1].charId,
+                    linaje.abuelos[1][0].charId,
+                    linaje.abuelos[1][1].charId,
+                )
+            }
+
+            /* Con abuelos fijos las ramas no son simétricas: se prueban los
+               pares ordenados (quién es padre de cada rama). */
+            else -> for (a in 0 until m) {
+                if (!padreValido(a, 0, -1)) continue
+                for (b in 0 until m) {
+                    if (!padreValido(b, 1, a)) continue
+                    considerar(a, b)
+                }
+            }
+        }
+
+        if (mejorTotal < 0 || mejores[0] < 0 || mejores[1] < 0) return seleccion
+
+        val abuelos = mejorAbuelos
+            ?: arrayOf(abuelosDeRama(mejores[0], 0), abuelosDeRama(mejores[1], 1))
+        val salida = seleccion.toMutableList()
+        salida[0] = hId
+        salida[1] = idsTop[mejores[0]]
+        salida[2] = idsTop[mejores[1]]
+        for (rama in 0..1) {
+            for (slot in 0..1) {
+                salida[3 + rama * 2 + slot] = abuelos[rama][slot]?.let { idsTop[it] }
+            }
+        }
+        return salida
     }
 }

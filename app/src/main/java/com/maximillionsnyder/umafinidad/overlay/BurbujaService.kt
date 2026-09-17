@@ -69,6 +69,8 @@ class BurbujaService : Service() {
     /* Selección de la genealogía: vive en el servicio para que el panel la
        recuerde al cerrarse y reabrirse mientras la burbuja siga activa. */
     private val seleccion = MutableStateFlow(seleccionVacia)
+    /* Cálculo del autocompletado en curso (deshabilita el botón). */
+    private val autocompletando = MutableStateFlow(false)
     /* Resaltado de la zona de descarte mientras se arrastra la burbuja. */
     private val sobreQuitar = MutableStateFlow(false)
 
@@ -322,13 +324,16 @@ class BurbujaService : Service() {
         vista.setContent {
             val modeloActual by modelo.collectAsState()
             val seleccionActual by seleccion.collectAsState()
+            val calculando by autocompletando.collectAsState()
             UmaAfinidadTheme(tema = tema, tamanoTexto = tamanoTexto, negrita = negrita) {
                 CompositionLocalProvider(LocalEstiloAvatar provides estiloAvatar) {
                     PanelBurbuja(
                         modelo = modeloActual,
                         japones = japones,
                         seleccion = seleccionActual,
+                        autocompletando = calculando,
                         onSeleccion = { seleccion.value = it },
+                        onAutocompletar = ::autocompletar,
                         onCerrar = { quitarPanel() },
                         onOcultar = ::ocultarBurbuja,
                         onAbrirDestino = { destino ->
@@ -412,6 +417,24 @@ class BurbujaService : Service() {
             runCatching { ventanas.removeView(vista) }
         }
         vistaPanel = null
+    }
+
+    /* Completa los huecos de la genealogía con la mayor afinidad posible
+       respetando lo ya cargado (cálculo exacto, fuera del hilo principal). */
+    private fun autocompletar() {
+        val modeloActual = modelo.value ?: return
+        if (autocompletando.value) return
+        val actual = seleccion.value
+        if (actual[0] == null || actual.none { it == null }) return
+
+        autocompletando.value = true
+        alcance.launch(Dispatchers.Default) {
+            try {
+                seleccion.value = modeloActual.completarSeleccion(actual)
+            } finally {
+                autocompletando.value = false
+            }
+        }
     }
 
     private fun abrirApp(destino: String) {

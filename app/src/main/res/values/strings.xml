@@ -189,8 +189,8 @@
     <string name="burbuja_descripcion">Open quick affinity panel</string>
     <string name="burbuja_panel_titulo">Quick affinity</string>
     <string name="cerrar">Close</string>
-    <string name="burbuja_calc_titulo">Child and parents</string>
-    <string name="burbuja_calc_hint">Pick 2 or 3 Umas to see their affinity.</string>
+    <string name="burbuja_calc_titulo">Lineage</string>
+    <string name="burbuja_calc_hint">Pick characters to see their affinity.</string>
     <string name="burbuja_total">Affinity</string>
     <string name="burbuja_abrir">Open in app</string>
     <string name="burbuja_quitar_zona">Drop here to remove the bubble</string>

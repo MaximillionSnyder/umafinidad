@@ -189,8 +189,8 @@
     <string name="burbuja_descripcion">Abrir panel rápido de afinidad</string>
     <string name="burbuja_panel_titulo">Afinidad rápida</string>
     <string name="cerrar">Cerrar</string>
-    <string name="burbuja_calc_titulo">Hijo y padres</string>
-    <string name="burbuja_calc_hint">Elegí 2 o 3 Umas para ver su afinidad.</string>
+    <string name="burbuja_calc_titulo">Genealogía</string>
+    <string name="burbuja_calc_hint">Elegí personajes para ver la afinidad.</string>
     <string name="burbuja_total">Afinidad</string>
     <string name="burbuja_abrir">Abrir en la app</string>
     <string name="burbuja_quitar_zona">Soltá aquí para quitar la burbuja</string>

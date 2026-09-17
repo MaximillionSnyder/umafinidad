@@ -31,7 +31,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.domain.Rol
+import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
+import com.maximillionsnyder.umafinidad.domain.rolDeSlot
 import com.maximillionsnyder.umafinidad.ui.Destino
 
 /* Franja lateral del panel de acceso rápido. El servicio la hospeda en su
@@ -41,14 +44,16 @@ import com.maximillionsnyder.umafinidad.ui.Destino
 fun PanelBurbuja(
     modelo: AffinityModel?,
     japones: Boolean,
-    estado: TrioEstado,
-    onEstado: (TrioEstado) -> Unit,
+    seleccion: List<Int?>,
+    onSeleccion: (List<Int?>) -> Unit,
     onCerrar: () -> Unit,
     onOcultar: () -> Unit,
     onAbrirDestino: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var filtro by remember { mutableStateOf("") }
+    /* Aviso de regla o selección completa al intentar elegir una sugerencia. */
+    var aviso by remember { mutableStateOf<Int?>(null) }
 
     val sugerencias = remember(filtro, modelo) {
         if (modelo == null || filtro.trim().length < 2) {
@@ -62,11 +67,23 @@ fun PanelBurbuja(
     }
 
     fun elegirSugerencia(id: Int) {
-        onEstado(estado.alternar(id))
-        filtro = ""
+        val colocacion = alternar(seleccion, id)
+        if (colocacion.resultado == ColocacionResultado.COLOCADO ||
+            colocacion.resultado == ColocacionResultado.QUITADO
+        ) {
+            onSeleccion(colocacion.seleccion)
+            filtro = ""
+            aviso = null
+        } else {
+            aviso = if (colocacion.resultado == ColocacionResultado.COMPLETA) {
+                R.string.seleccion_completa
+            } else {
+                R.string.regla_slots
+            }
+        }
     }
 
-    val resultado = remember(modelo, estado) { modelo?.let { calcularTrio(it, estado) } }
+    val total = remember(modelo, seleccion) { modelo?.let { totalDe(it, seleccion) } }
 
     Card(
         modifier = modifier.fillMaxSize(),
@@ -100,21 +117,19 @@ fun PanelBurbuja(
                 }
             }
 
-            /* ---- Calculadora rápida: hijo + dos padres, en columna ---- */
+            /* ---- Genealogía completa: hijo, dos padres y abuelos ---- */
             Text(
                 stringResource(R.string.burbuja_calc_titulo),
                 style = MaterialTheme.typography.labelLarge,
                 fontWeight = FontWeight.Bold,
             )
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                for (i in 0 until SLOTS_TRIO) {
-                    SlotTrio(
-                        etiqueta = stringResource(
-                            if (i == 0) R.string.rol_corto_hijo else R.string.rol_corto_padre,
-                        ),
-                        personaje = estado.ids[i]?.let { modelo?.porId(it) },
+                for (i in 0 until SLOTS) {
+                    SlotGenealogia(
+                        etiqueta = stringResource(etiquetaDeRol(rolDeSlot(i))),
+                        personaje = seleccion[i]?.let { modelo?.porId(it) },
                         japones = japones,
-                        onClick = { onEstado(estado.quitar(i)) },
+                        onClick = { onSeleccion(quitar(seleccion, i)) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
@@ -142,6 +157,14 @@ fun PanelBurbuja(
                 placeholder = { Text(stringResource(R.string.buscar)) },
             )
 
+            aviso?.let { texto ->
+                Text(
+                    stringResource(texto),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+
             if (sugerencias.isNotEmpty()) {
                 Card(
                     shape = RoundedCornerShape(14.dp),
@@ -158,7 +181,7 @@ fun PanelBurbuja(
             }
 
             when {
-                resultado != null -> ResumenTrio(resultado)
+                modelo != null && total != null -> ResumenTotal(modelo.rangoTotal(total), total)
                 else -> Text(
                     stringResource(R.string.burbuja_calc_hint),
                     style = MaterialTheme.typography.bodySmall,
@@ -166,8 +189,8 @@ fun PanelBurbuja(
                 )
             }
 
-            if (estado.ids.any { it != null }) {
-                TextButton(onClick = { onEstado(estado.limpiar()) }) {
+            if (seleccion.any { it != null }) {
+                TextButton(onClick = { onSeleccion(seleccionVacia) }) {
                     Text(stringResource(R.string.limpiar_todo))
                 }
             }
@@ -200,4 +223,10 @@ fun PanelBurbuja(
             }
         }
     }
+}
+
+private fun etiquetaDeRol(rol: Rol): Int = when (rol) {
+    Rol.HIJO -> R.string.rol_corto_hijo
+    Rol.PADRE -> R.string.rol_corto_padre
+    Rol.ABUELO -> R.string.rol_corto_abuelo
 }

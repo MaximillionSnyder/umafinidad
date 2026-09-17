@@ -6,8 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +19,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,14 +32,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.Character
+import com.maximillionsnyder.umafinidad.domain.Rango
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
 
 /* Piezas del panel de acceso rápido de la burbuja flotante. */
 
-/* Slot de la calculadora en la franja: avatar (o "+") con nombre y rol. */
+/* Slot de la genealogía en la franja: avatar (o "+") con nombre y rol. */
 @Composable
-internal fun SlotTrio(
+internal fun SlotGenealogia(
     etiqueta: String,
     personaje: Character?,
     japones: Boolean,
@@ -138,56 +136,25 @@ internal fun FilaSugerencia(c: Character, japones: Boolean, onClick: () -> Unit)
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+/* Total de la genealogía con el rango del juego. */
 @Composable
-internal fun ResumenTrio(resultado: TrioResultado) {
+internal fun ResumenTotal(rango: Rango, puntos: Int) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
     ) {
-        Column(
+        Row(
             modifier = Modifier.fillMaxWidth().padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    stringResource(R.string.burbuja_total),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                )
-                RankPill(resultado.rango, resultado.puntos, grande = true)
-            }
-            if (resultado.compartidos.isEmpty()) {
-                Text(
-                    stringResource(R.string.sin_grupos_comun),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            } else {
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
-                ) {
-                    resultado.compartidos.forEach { grupo ->
-                        Surface(
-                            shape = RoundedCornerShape(999.dp),
-                            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                        ) {
-                            Text(
-                                "#${grupo.tipo} · ${grupo.puntos}pt",
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                }
-            }
+            Text(
+                stringResource(R.string.burbuja_total),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+            )
+            RankPill(rango, puntos, grande = true)
         }
     }
 }

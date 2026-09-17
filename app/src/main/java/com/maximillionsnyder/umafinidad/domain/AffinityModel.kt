@@ -439,8 +439,8 @@ class AffinityModel private constructor(
 
     /* Total del árbol completo con la semántica de result.js:
        hijo×padres + entre padres + tríos hijo-padre-abuelo (corredora 0). */
-    private fun totalDeSeleccion(seleccion: Array<Int?>): Int =
-        vinculos(armarArbol(seleccion)).sumOf { v ->
+    fun totalDeSeleccion(seleccion: List<Int?>): Int =
+        vinculos(armarArbol(seleccion.toTypedArray())).sumOf { v ->
             if (v.esCorredora) 0
             else if (v.ids.size == 3) puntajeTrioRapido(v.ids[0], v.ids[1], v.ids[2])
             else puntajePar(v.ids[0], v.ids[1])
@@ -489,7 +489,7 @@ class AffinityModel private constructor(
             }
 
             val nuevo = selArr.copyOf().also { it[slot] = candidato.charId }
-            resultados += AlternativaSlot(candidato, directos, totalDeSeleccion(nuevo))
+            resultados += AlternativaSlot(candidato, directos, totalDeSeleccion(nuevo.toList()))
         }
 
         return resultados

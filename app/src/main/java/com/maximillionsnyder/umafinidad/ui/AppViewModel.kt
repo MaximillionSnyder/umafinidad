@@ -320,11 +320,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 )
             }
 
-            val total = vs.sumOf { v ->
-                if (v.esCorredora) 0
-                else if (v.ids.size == 3) modelo.puntajeTrio(v.ids[0], v.ids[1], v.ids[2])
-                else modelo.puntajePar(v.ids[0], v.ids[1])
-            }
+            val total = modelo.totalDeSeleccion(seleccion)
 
             val hp = vs.filter { it.tipo == TipoVinculo.HIJO_PADRE }.map(::fila)
             val ep = vs.filter { it.tipo == TipoVinculo.ENTRE_PADRES }.map(::fila)

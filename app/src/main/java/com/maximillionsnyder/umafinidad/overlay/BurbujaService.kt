@@ -66,9 +66,9 @@ class BurbujaService : Service() {
     private val prefs by lazy { PrefsRepository(this) }
     private val modelo = MutableStateFlow<AffinityModel?>(null)
 
-    /* Selección de la calculadora: vive en el servicio para que el panel la
+    /* Selección de la genealogía: vive en el servicio para que el panel la
        recuerde al cerrarse y reabrirse mientras la burbuja siga activa. */
-    private val trio = MutableStateFlow(TrioEstado())
+    private val seleccion = MutableStateFlow(seleccionVacia)
     /* Resaltado de la zona de descarte mientras se arrastra la burbuja. */
     private val sobreQuitar = MutableStateFlow(false)
 
@@ -321,14 +321,14 @@ class BurbujaService : Service() {
 
         vista.setContent {
             val modeloActual by modelo.collectAsState()
-            val trioActual by trio.collectAsState()
+            val seleccionActual by seleccion.collectAsState()
             UmaAfinidadTheme(tema = tema, tamanoTexto = tamanoTexto, negrita = negrita) {
                 CompositionLocalProvider(LocalEstiloAvatar provides estiloAvatar) {
                     PanelBurbuja(
                         modelo = modeloActual,
                         japones = japones,
-                        estado = trioActual,
-                        onEstado = { trio.value = it },
+                        seleccion = seleccionActual,
+                        onSeleccion = { seleccion.value = it },
                         onCerrar = { quitarPanel() },
                         onOcultar = ::ocultarBurbuja,
                         onAbrirDestino = { destino ->

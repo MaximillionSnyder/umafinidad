@@ -36,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,8 +48,11 @@ import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
+import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
 import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoElemento
 import com.maximillionsnyder.umafinidad.ui.theme.MedalBronce
 import com.maximillionsnyder.umafinidad.ui.theme.MedalOro
 import com.maximillionsnyder.umafinidad.ui.theme.MedalPlata
@@ -67,6 +71,7 @@ fun RankingScreen(
     japones: Boolean,
     onVolver: () -> Unit,
     modoInicial: ModoRanking = ModoRanking.VERSATIL,
+    claveOverlay: String = ClavesTransicion.OVERLAY_RANKING,
 ) {
     var modo by rememberSaveable { mutableStateOf(modoInicial) }
     var mostrarAyuda by rememberSaveable { mutableStateOf(false) }
@@ -79,59 +84,67 @@ fun RankingScreen(
         rankingPadres = p
     }
 
-    Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
-        HeaderBarConVolver(
-            titulo = stringResource(R.string.tab_ranking),
-            onVolver = onVolver,
-        )
+    Surface(
+        modifier = Modifier.fillMaxSize().compartidoBounds(claveOverlay),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+    ) {
+        Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+            HeaderBarConVolver(
+                titulo = stringResource(R.string.tab_ranking),
+                onVolver = onVolver,
+                iconoRes = R.drawable.ic_tab_ranking,
+                modifierTitulo = Modifier.compartidoBounds(ClavesTransicion.titulo(claveOverlay)),
+                modifierIcono = Modifier.compartidoElemento(ClavesTransicion.icono(claveOverlay)),
+            )
 
-        SingleChoiceSegmentedButtonRow(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
-        ) {
-            SegmentedButton(
-                selected = modo == ModoRanking.VERSATIL,
-                onClick = { modo = ModoRanking.VERSATIL },
-                shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
+            SingleChoiceSegmentedButtonRow(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
             ) {
-                Text(stringResource(R.string.ranking_modo_versatil))
+                SegmentedButton(
+                    selected = modo == ModoRanking.VERSATIL,
+                    onClick = { modo = ModoRanking.VERSATIL },
+                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
+                ) {
+                    Text(stringResource(R.string.ranking_modo_versatil))
+                }
+                SegmentedButton(
+                    selected = modo == ModoRanking.PADRES,
+                    onClick = { modo = ModoRanking.PADRES },
+                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
+                ) {
+                    Text(stringResource(R.string.ranking_modo_padres))
+                }
             }
-            SegmentedButton(
-                selected = modo == ModoRanking.PADRES,
-                onClick = { modo = ModoRanking.PADRES },
-                shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
-            ) {
-                Text(stringResource(R.string.ranking_modo_padres))
-            }
-        }
-
-        if (modo == ModoRanking.VERSATIL) {
-            ContenidoVersatiles(ranking, modelo, japones)
-        } else {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .clickable(
-                        role = Role.Button,
-                        onClickLabel = stringResource(R.string.ranking_padres_ayuda_titulo),
-                        onClick = { mostrarAyuda = true },
+    
+            if (modo == ModoRanking.VERSATIL) {
+                ContenidoVersatiles(ranking, modelo, japones)
+            } else {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .clickable(
+                            role = Role.Button,
+                            onClickLabel = stringResource(R.string.ranking_padres_ayuda_titulo),
+                            onClick = { mostrarAyuda = true },
+                        )
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        stringResource(R.string.ranking_padres_ayuda_corta),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1f),
                     )
-                    .padding(horizontal = 16.dp, vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text(
-                    stringResource(R.string.ranking_padres_ayuda_corta),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.weight(1f),
-                )
-                Icon(
-                    painterResource(R.drawable.ic_info),
-                    contentDescription = stringResource(R.string.ranking_padres_ayuda_titulo),
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp),
-                )
+                    Icon(
+                        painterResource(R.drawable.ic_info),
+                        contentDescription = stringResource(R.string.ranking_padres_ayuda_titulo),
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp),
+                    )
+                }
+                ContenidoPadres(rankingPadres, japones)
             }
-            ContenidoPadres(rankingPadres, japones)
         }
     }
 

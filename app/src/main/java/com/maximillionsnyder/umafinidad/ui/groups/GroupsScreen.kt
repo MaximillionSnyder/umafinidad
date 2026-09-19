@@ -48,7 +48,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoElemento
 import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
 import com.maximillionsnyder.umafinidad.ui.theme.colorDeRango
 
@@ -63,101 +66,109 @@ fun GroupsScreen(modelo: AffinityModel, japones: Boolean, onVolver: () -> Unit) 
     var min by rememberSaveable { mutableIntStateOf(0) }
     var grupoAbierto by rememberSaveable { mutableStateOf<Int?>(null) }
 
-    Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
-        HeaderBarConVolver(
-            titulo = stringResource(R.string.tab_groups),
-            onVolver = onVolver,
-        )
+    Surface(
+        modifier = Modifier.fillMaxSize().compartidoBounds(ClavesTransicion.OVERLAY_GRUPOS),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+    ) {
+        Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+            HeaderBarConVolver(
+                titulo = stringResource(R.string.tab_groups),
+                onVolver = onVolver,
+                iconoRes = R.drawable.ic_tab_groups,
+                modifierTitulo = Modifier.compartidoBounds(ClavesTransicion.titulo(ClavesTransicion.OVERLAY_GRUPOS)),
+                modifierIcono = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_GRUPOS)),
+            )
 
-        LazyRow(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            itemsIndexed(OPCIONES) { _, valor ->
-                FilterChip(
-                    selected = valor == min,
-                    onClick = { min = valor },
-                    label = {
-                        Text(if (valor == 0) stringResource(R.string.filtro_todos) else stringResource(R.string.filtro_pt, valor))
-                    },
-                )
+            LazyRow(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                itemsIndexed(OPCIONES) { _, valor ->
+                    FilterChip(
+                        selected = valor == min,
+                        onClick = { min = valor },
+                        label = {
+                            Text(if (valor == 0) stringResource(R.string.filtro_todos) else stringResource(R.string.filtro_pt, valor))
+                        },
+                    )
+                }
             }
-        }
-
-        val grupos = modelo.todosLosGrupos().filter { it.puntos >= min }
-
-        if (grupos.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.sin_grupos_filtro), color = MaterialTheme.colorScheme.onSurfaceVariant)
+    
+            val grupos = modelo.todosLosGrupos().filter { it.puntos >= min }
+    
+            if (grupos.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(stringResource(R.string.sin_grupos_filtro), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                return@Column
             }
-            return@Column
-        }
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            itemsIndexed(grupos, key = { _, g -> g.tipo }) { _, grupo ->
-                val miembros = modelo.miembrosDeGrupo(grupo.tipo)
-                val abierto = grupoAbierto == grupo.tipo
-                val estadoTxt = stringResource(if (abierto) R.string.expandido else R.string.contraido)
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .toggleable(
-                            value = abierto,
-                            role = Role.Button,
-                            onValueChange = { grupoAbierto = if (abierto) null else grupo.tipo },
-                        )
-                        .semantics { stateDescription = estadoTxt },
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-                ) {
-                    Column(modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.primaryContainer) {
+    
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                itemsIndexed(grupos, key = { _, g -> g.tipo }) { _, grupo ->
+                    val miembros = modelo.miembrosDeGrupo(grupo.tipo)
+                    val abierto = grupoAbierto == grupo.tipo
+                    val estadoTxt = stringResource(if (abierto) R.string.expandido else R.string.contraido)
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .toggleable(
+                                value = abierto,
+                                role = Role.Button,
+                                onValueChange = { grupoAbierto = if (abierto) null else grupo.tipo },
+                            )
+                            .semantics { stateDescription = estadoTxt },
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+                    ) {
+                        Column(modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.primaryContainer) {
+                                    Text(
+                                        "#${grupo.tipo}",
+                                        modifier = Modifier.padding(horizontal = 9.dp, vertical = 2.dp).headingSemantica(),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    )
+                                }
                                 Text(
-                                    "#${grupo.tipo}",
-                                    modifier = Modifier.padding(horizontal = 9.dp, vertical = 2.dp).headingSemantica(),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    stringResource(R.string.miembros_cantidad, miembros.size),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.weight(1f),
+                                )
+                                Text(
+                                    "${grupo.puntos}pt",
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Black,
+                                    color = colorDeRango(claseDePuntos(grupo.puntos)) ?: MaterialTheme.colorScheme.onSurface,
                                 )
                             }
-                            Text(
-                                stringResource(R.string.miembros_cantidad, miembros.size),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.weight(1f),
-                            )
-                            Text(
-                                "${grupo.puntos}pt",
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Black,
-                                color = colorDeRango(claseDePuntos(grupo.puntos)) ?: MaterialTheme.colorScheme.onSurface,
-                            )
-                        }
-                        AnimatedVisibility(
-                            visible = abierto,
-                            enter = expandVertically(tween(200)) + fadeIn(tween(150)),
-                            exit = shrinkVertically(tween(200)) + fadeOut(tween(120)),
-                        ) {
-                            FlowRow(
-                                horizontalArrangement = Arrangement.spacedBy(5.dp),
-                                verticalArrangement = Arrangement.spacedBy(5.dp),
+                            AnimatedVisibility(
+                                visible = abierto,
+                                enter = expandVertically(tween(200)) + fadeIn(tween(150)),
+                                exit = shrinkVertically(tween(200)) + fadeOut(tween(120)),
                             ) {
-                                miembros.forEach { m ->
-                                    Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
-                                        Text(
-                                            m.displayName(japones),
-                                            modifier = Modifier.padding(horizontal = 9.dp, vertical = 3.dp),
-                                            style = MaterialTheme.typography.bodySmall,
-                                        )
+                                FlowRow(
+                                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                    verticalArrangement = Arrangement.spacedBy(5.dp),
+                                ) {
+                                    miembros.forEach { m ->
+                                        Surface(shape = RoundedCornerShape(999.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
+                                            Text(
+                                                m.displayName(japones),
+                                                modifier = Modifier.padding(horizontal = 9.dp, vertical = 3.dp),
+                                                style = MaterialTheme.typography.bodySmall,
+                                            )
+                                        }
                                     }
                                 }
                             }

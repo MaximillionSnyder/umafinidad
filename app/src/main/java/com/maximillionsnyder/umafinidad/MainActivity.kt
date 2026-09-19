@@ -13,8 +13,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
@@ -77,7 +82,10 @@ import com.maximillionsnyder.umafinidad.overlay.BurbujaService
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.Destino
 import com.maximillionsnyder.umafinidad.ui.componentes.BienvenidaAccesibilidad
+import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
+import com.maximillionsnyder.umafinidad.ui.componentes.LocalAnimatedVisibilityScope
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalEstiloAvatar
+import com.maximillionsnyder.umafinidad.ui.componentes.LocalSharedTransitionScope
 import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
 import com.maximillionsnyder.umafinidad.ui.elenco.ElencoScreen
@@ -305,196 +313,227 @@ private fun App(
 
     /* Fondo con gradiente en toda la app. */
     Box(modifier = Modifier.fillMaxSize().fondoGradiente(esOscuro)) {
-        if (verGrupos) {
-            val m = modelo
-            if (m == null) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            } else {
-                GroupsScreen(modelo = m, japones = japones, onVolver = { volver() })
-            }
-        } else if (verRanking) {
-            val m = modelo
-            if (m == null) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            } else {
-                RankingScreen(modelo = m, japones = japones, onVolver = { volver() })
-            }
-        } else if (verRankingPadres) {
-            val m = modelo
-            if (m == null) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                }
-            } else {
-                RankingScreen(
-                    modelo = m,
-                    japones = japones,
-                    onVolver = { volver() },
-                    modoInicial = ModoRanking.PADRES,
-                )
-            }
-        } else {
-            Scaffold(
-                containerColor = Color.Transparent,
-                contentWindowInsets = WindowInsets.navigationBars,
-                snackbarHost = { SnackbarHost(snackbarHostState) },
-                bottomBar = {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .navigationBarsPadding()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        NavigationBar(
-                            modifier = Modifier
-                                .widthIn(max = 640.dp)
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(28.dp))
-                                .shadow(8.dp, RoundedCornerShape(28.dp)),
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                            tonalElevation = 3.dp,
-                            windowInsets = WindowInsets(0.dp),
-                        ) {
-                            NavigationBarItem(
-                                selected = pagerState.currentPage == 0,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
-                                icon = { TabIcon(R.drawable.ic_tab_compat, pagerState.currentPage == 0) },
-                                label = { TabLabel(stringResource(R.string.tab_compat)) },
-                                alwaysShowLabel = true,
-                            )
-                            NavigationBarItem(
-                                selected = pagerState.currentPage == 1,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
-                                icon = { TabIcon(R.drawable.ic_tab_top, pagerState.currentPage == 1) },
-                                label = { TabLabel(stringResource(R.string.tab_top)) },
-                                alwaysShowLabel = true,
-                            )
-                            NavigationBarItem(
-                                selected = pagerState.currentPage == 2,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
-                                icon = { TabIcon(R.drawable.ic_tab_corredora, pagerState.currentPage == 2) },
-                                label = { TabLabel(stringResource(R.string.tab_corredora)) },
-                                alwaysShowLabel = true,
-                            )
-                            NavigationBarItem(
-                                selected = pagerState.currentPage == 3,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
-                                icon = { TabIcon(R.drawable.ic_tab_elenco, pagerState.currentPage == 3) },
-                                label = { TabLabel(stringResource(R.string.tab_elenco)) },
-                                alwaysShowLabel = true,
-                            )
-                            NavigationBarItem(
-                                selected = pagerState.currentPage == 4,
-                                onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
-                                icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 4) },
-                                label = { TabLabel(stringResource(R.string.tab_mas)) },
-                                alwaysShowLabel = true,
+        /* Destino activo: null = tabs; overlay = pantalla de referencia.
+           SharedTransitionLayout + AnimatedContent dan continuidad visual
+           entre la card de Ajustes y la pantalla que abre. */
+        val destinoActivo = when {
+            verGrupos -> ClavesTransicion.OVERLAY_GRUPOS
+            verRanking -> ClavesTransicion.OVERLAY_RANKING
+            verRankingPadres -> ClavesTransicion.OVERLAY_RANKING_PADRES
+            else -> null
+        }
+
+        SharedTransitionLayout(modifier = Modifier.fillMaxSize()) {
+            val scopeCompartido = this
+            AnimatedContent(
+                targetState = destinoActivo,
+                transitionSpec = { fadeIn(tween(220)) togetherWith fadeOut(tween(160)) },
+                label = "destino",
+            ) { destino ->
+                val scopeVisibilidad = this
+                CompositionLocalProvider(
+                    LocalSharedTransitionScope provides scopeCompartido,
+                    LocalAnimatedVisibilityScope provides scopeVisibilidad,
+                ) {
+                    if (destino == ClavesTransicion.OVERLAY_GRUPOS) {
+                        val m = modelo
+                        if (m == null) {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
+                            GroupsScreen(modelo = m, japones = japones, onVolver = { volver() })
+                        }
+                    } else if (destino == ClavesTransicion.OVERLAY_RANKING) {
+                        val m = modelo
+                        if (m == null) {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
+                            RankingScreen(
+                                modelo = m,
+                                japones = japones,
+                                onVolver = { volver() },
+                                claveOverlay = ClavesTransicion.OVERLAY_RANKING,
                             )
                         }
-                    }
-                },
-            ) { padding ->
-                Box(modifier = Modifier.fillMaxSize().padding(padding)) {
-                    val m = modelo
-                    if (m == null) {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                    } else if (destino == ClavesTransicion.OVERLAY_RANKING_PADRES) {
+                        val m = modelo
+                        if (m == null) {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
+                            RankingScreen(
+                                modelo = m,
+                                japones = japones,
+                                onVolver = { volver() },
+                                modoInicial = ModoRanking.PADRES,
+                                claveOverlay = ClavesTransicion.OVERLAY_RANKING_PADRES,
+                            )
                         }
                     } else {
-                        HorizontalPager(
-                            state = pagerState,
-                            modifier = Modifier.fillMaxSize(),
-                        ) { page ->
-                            when (page) {
-                                0 -> CompatScreen(
-                                    modelo = m,
-                                    seleccion = seleccion,
-                                    resultado = resultado,
-                                    modoGrilla = modoGrilla,
-                                    japones = japones,
-                                    onToggle = vm::toggle,
-                                    onQuitarSlot = vm::quitarSlot,
-                                    onConfirmarQuitarSoloHijo = vm::confirmarQuitarSoloHijo,
-                                    onLimpiarTodo = vm::limpiarTodo,
-                                    avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
-                                )
-                                1 -> TopLinajesScreen(
-                                    modelo = m,
-                                    japones = japones,
-                                    onVerHerencia = { linaje ->
-                                        vm.cargarLinaje(linaje)
-                                        scope.launch { pagerState.animateScrollToPage(0) }
-                                    },
-                                )
-                                2 -> CorredoraScreen(
-                                    modelo = m,
-                                    japones = japones,
-                                    arboles = arboles,
-                                    pendiente = arbolPendiente,
-                                    onGuardarArbol = vm::guardarArbol,
-                                    onEliminarArbol = vm::eliminarArbol,
-                                    onConsumirPendiente = vm::consumirArbolPendiente,
-                                    avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
-                                    onVerHerencia = { sel ->
-                                        vm.cargarSeleccion(sel)
-                                        scope.launch { pagerState.animateScrollToPage(0) }
-                                    },
-                                )
-                                3 -> ElencoScreen(
-                                    modelo = m,
-                                    japones = japones,
-                                    elenco = elenco,
-                                    onToggle = vm::toggleElenco,
-                                    onMarcar = vm::marcarElenco,
-                                    onLimpiar = vm::limpiarElenco,
-                                    onVerHerencia = { linaje ->
-                                        vm.cargarLinaje(linaje)
-                                        scope.launch { pagerState.animateScrollToPage(0) }
-                                    },
-                                    onVolver = null,
-                                )
-                                else -> SettingsScreen(
-                                    modoGrilla = modoGrilla,
-                                    onModoGrilla = vm::setModoGrilla,
-                                    estiloAvatar = estiloAvatar,
-                                    onEstiloAvatar = vm::setEstiloAvatar,
-                                    tema = tema,
-                                    onTema = vm::setTema,
-                                    idioma = idioma,
-                                    onIdioma = vm::setIdioma,
-                                    burbujaActiva = burbujaActiva,
-                                    burbujaPermiso = permisoOverlay,
-                                    onBurbuja = { activo ->
-                                        vm.setBurbujaActiva(activo)
-                                        if (activo) {
-                                            (context as? MainActivity)?.activarBurbuja()
-                                        } else {
-                                            BurbujaService.detener(context)
+                        Scaffold(
+                            containerColor = Color.Transparent,
+                            contentWindowInsets = WindowInsets.navigationBars,
+                            snackbarHost = { SnackbarHost(snackbarHostState) },
+                            bottomBar = {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .navigationBarsPadding()
+                                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    NavigationBar(
+                                        modifier = Modifier
+                                            .widthIn(max = 640.dp)
+                                            .fillMaxWidth()
+                                            .clip(RoundedCornerShape(28.dp))
+                                            .shadow(8.dp, RoundedCornerShape(28.dp)),
+                                        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                                        tonalElevation = 3.dp,
+                                        windowInsets = WindowInsets(0.dp),
+                                    ) {
+                                        NavigationBarItem(
+                                            selected = pagerState.currentPage == 0,
+                                            onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
+                                            icon = { TabIcon(R.drawable.ic_tab_compat, pagerState.currentPage == 0) },
+                                            label = { TabLabel(stringResource(R.string.tab_compat)) },
+                                            alwaysShowLabel = true,
+                                        )
+                                        NavigationBarItem(
+                                            selected = pagerState.currentPage == 1,
+                                            onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
+                                            icon = { TabIcon(R.drawable.ic_tab_top, pagerState.currentPage == 1) },
+                                            label = { TabLabel(stringResource(R.string.tab_top)) },
+                                            alwaysShowLabel = true,
+                                        )
+                                        NavigationBarItem(
+                                            selected = pagerState.currentPage == 2,
+                                            onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
+                                            icon = { TabIcon(R.drawable.ic_tab_corredora, pagerState.currentPage == 2) },
+                                            label = { TabLabel(stringResource(R.string.tab_corredora)) },
+                                            alwaysShowLabel = true,
+                                        )
+                                        NavigationBarItem(
+                                            selected = pagerState.currentPage == 3,
+                                            onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
+                                            icon = { TabIcon(R.drawable.ic_tab_elenco, pagerState.currentPage == 3) },
+                                            label = { TabLabel(stringResource(R.string.tab_elenco)) },
+                                            alwaysShowLabel = true,
+                                        )
+                                        NavigationBarItem(
+                                            selected = pagerState.currentPage == 4,
+                                            onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
+                                            icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 4) },
+                                            label = { TabLabel(stringResource(R.string.tab_mas)) },
+                                            alwaysShowLabel = true,
+                                        )
+                                    }
+                                }
+                            },
+                        ) { padding ->
+                            Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+                                val m = modelo
+                                if (m == null) {
+                                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                                    }
+                                } else {
+                                    HorizontalPager(
+                                        state = pagerState,
+                                        modifier = Modifier.fillMaxSize(),
+                                    ) { page ->
+                                        when (page) {
+                                            0 -> CompatScreen(
+                                                modelo = m,
+                                                seleccion = seleccion,
+                                                resultado = resultado,
+                                                modoGrilla = modoGrilla,
+                                                japones = japones,
+                                                onToggle = vm::toggle,
+                                                onQuitarSlot = vm::quitarSlot,
+                                                onConfirmarQuitarSoloHijo = vm::confirmarQuitarSoloHijo,
+                                                onLimpiarTodo = vm::limpiarTodo,
+                                                avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
+                                            )
+                                            1 -> TopLinajesScreen(
+                                                modelo = m,
+                                                japones = japones,
+                                                onVerHerencia = { linaje ->
+                                                    vm.cargarLinaje(linaje)
+                                                    scope.launch { pagerState.animateScrollToPage(0) }
+                                                },
+                                            )
+                                            2 -> CorredoraScreen(
+                                                modelo = m,
+                                                japones = japones,
+                                                arboles = arboles,
+                                                pendiente = arbolPendiente,
+                                                onGuardarArbol = vm::guardarArbol,
+                                                onEliminarArbol = vm::eliminarArbol,
+                                                onConsumirPendiente = vm::consumirArbolPendiente,
+                                                avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
+                                                onVerHerencia = { sel ->
+                                                    vm.cargarSeleccion(sel)
+                                                    scope.launch { pagerState.animateScrollToPage(0) }
+                                                },
+                                            )
+                                            3 -> ElencoScreen(
+                                                modelo = m,
+                                                japones = japones,
+                                                elenco = elenco,
+                                                onToggle = vm::toggleElenco,
+                                                onMarcar = vm::marcarElenco,
+                                                onLimpiar = vm::limpiarElenco,
+                                                onVerHerencia = { linaje ->
+                                                    vm.cargarLinaje(linaje)
+                                                    scope.launch { pagerState.animateScrollToPage(0) }
+                                                },
+                                                onVolver = null,
+                                            )
+                                            else -> SettingsScreen(
+                                                modoGrilla = modoGrilla,
+                                                onModoGrilla = vm::setModoGrilla,
+                                                estiloAvatar = estiloAvatar,
+                                                onEstiloAvatar = vm::setEstiloAvatar,
+                                                tema = tema,
+                                                onTema = vm::setTema,
+                                                idioma = idioma,
+                                                onIdioma = vm::setIdioma,
+                                                burbujaActiva = burbujaActiva,
+                                                burbujaPermiso = permisoOverlay,
+                                                onBurbuja = { activo ->
+                                                    vm.setBurbujaActiva(activo)
+                                                    if (activo) {
+                                                        (context as? MainActivity)?.activarBurbuja()
+                                                    } else {
+                                                        BurbujaService.detener(context)
+                                                    }
+                                                },
+                                                modelo = m,
+                                                japones = japones,
+                                                arboles = arboles,
+                                                onAbrirArbol = { a ->
+                                                    vm.abrirArbol(a)
+                                                    scope.launch { pagerState.animateScrollToPage(2) }
+                                                },
+                                                onEliminarArbol = vm::eliminarArbol,
+                                                onAbrirGrupos = { irA("grupos") },
+                                                onAbrirRanking = { irA("ranking") },
+                                                onAbrirRankingPadres = { irA("ranking-padres") },
+                                                tamanoTexto = tamanoTexto,
+                                                onTamanoTexto = vm::setTamanoTexto,
+                                                textoNegrita = textoNegrita,
+                                                onTextoNegrita = vm::setTextoNegrita,
+                                                onAbrirBienvenida = vm::abrirBienvenida,
+                                                onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
+                                            )
                                         }
-                                    },
-                                    modelo = m,
-                                    japones = japones,
-                                    arboles = arboles,
-                                    onAbrirArbol = { a ->
-                                        vm.abrirArbol(a)
-                                        scope.launch { pagerState.animateScrollToPage(2) }
-                                    },
-                                    onEliminarArbol = vm::eliminarArbol,
-                                    onAbrirGrupos = { irA("grupos") },
-                                    onAbrirRanking = { irA("ranking") },
-                                    onAbrirRankingPadres = { irA("ranking-padres") },
-                                    tamanoTexto = tamanoTexto,
-                                    onTamanoTexto = vm::setTamanoTexto,
-                                    textoNegrita = textoNegrita,
-                                    onTextoNegrita = vm::setTextoNegrita,
-                                    onAbrirBienvenida = vm::abrirBienvenida,
-                                    onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
-                                )
+                                    }
+                                }
                             }
                         }
                     }

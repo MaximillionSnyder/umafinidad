@@ -1,8 +1,13 @@
 package com.maximillionsnyder.umafinidad.ui.elenco
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +42,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -60,8 +66,11 @@ import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.coincideDifuso
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
+import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
+import com.maximillionsnyder.umafinidad.ui.componentes.LocalAnimatedVisibilityScope
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -82,41 +91,100 @@ fun ElencoScreen(
     val totalJugables = remember(modelo) {
         modelo.personajes.count { it.playable == true && it.active == true }
     }
+    val contador = stringResource(R.string.elenco_contador, elenco.size, totalJugables)
 
     Column(
         modifier = Modifier.fillMaxSize().then(
             if (onVolver != null) Modifier.navigationBarsPadding() else Modifier
         )
     ) {
-        if (onVolver != null) {
-            HeaderBarConVolver(
-                titulo = stringResource(R.string.tab_elenco),
-                onVolver = onVolver,
-                pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables),
-            )
-        } else {
-            HeaderBar(
-                titulo = stringResource(R.string.tab_elenco),
-                pillTexto = stringResource(R.string.elenco_contador, elenco.size, totalJugables),
-            )
-        }
+        /* Header y contenido van juntos en el AnimatedContent para que la
+           pastilla del contador viaje del header a la lista de linajes
+           como elemento compartido (misma clave en ambos destinos). */
+        AnimatedContent(
+            targetState = tab,
+            transitionSpec = { fadeIn(tween(220)) togetherWith fadeOut(tween(180)) },
+            label = "tabElenco",
+            modifier = Modifier.fillMaxSize(),
+        ) { destino ->
+            CompositionLocalProvider(LocalAnimatedVisibilityScope provides this) {
+                if (destino == 0) {
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        if (onVolver != null) {
+                            HeaderBarConVolver(
+                                titulo = stringResource(R.string.tab_elenco),
+                                onVolver = onVolver,
+                                pillTexto = contador,
+                                modifierPill = Modifier.compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
+                            )
+                        } else {
+                            HeaderBar(
+                                titulo = stringResource(R.string.tab_elenco),
+                                pillTexto = contador,
+                                modifierPill = Modifier.compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
+                            )
+                        }
 
-        TabRow(selectedTabIndex = tab) {
-            Tab(
-                selected = tab == 0,
-                onClick = { tab = 0 },
-                text = { Text(stringResource(R.string.elenco_tab_editar)) },
-            )
-            Tab(
-                selected = tab == 1,
-                onClick = { tab = 1 },
-                text = { Text(stringResource(R.string.elenco_tab_linajes)) },
-            )
-        }
+                        TabRow(selectedTabIndex = destino) {
+                            Tab(
+                                selected = true,
+                                onClick = { tab = 0 },
+                                text = { Text(stringResource(R.string.elenco_tab_editar)) },
+                            )
+                            Tab(
+                                selected = false,
+                                onClick = { tab = 1 },
+                                text = { Text(stringResource(R.string.elenco_tab_linajes)) },
+                            )
+                        }
 
-        when (tab) {
-            0 -> EditorElenco(modelo, japones, elenco, onToggle, onMarcar, onLimpiar)
-            else -> LinajesElenco(modelo, japones, elenco, onVerHerencia)
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .compartidoBounds(ClavesTransicion.ELENCO_PANEL)
+                        ) {
+                            EditorElenco(modelo, japones, elenco, onToggle, onMarcar, onLimpiar)
+                        }
+                    }
+                } else {
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        if (onVolver != null) {
+                            HeaderBarConVolver(
+                                titulo = stringResource(R.string.tab_elenco),
+                                onVolver = onVolver,
+                            )
+                        } else {
+                            HeaderBar(titulo = stringResource(R.string.tab_elenco))
+                        }
+
+                        TabRow(selectedTabIndex = destino) {
+                            Tab(
+                                selected = false,
+                                onClick = { tab = 0 },
+                                text = { Text(stringResource(R.string.elenco_tab_editar)) },
+                            )
+                            Tab(
+                                selected = true,
+                                onClick = { tab = 1 },
+                                text = { Text(stringResource(R.string.elenco_tab_linajes)) },
+                            )
+                        }
+
+                        Surface(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .padding(12.dp)
+                                .compartidoBounds(ClavesTransicion.ELENCO_PANEL),
+                            shape = RoundedCornerShape(16.dp),
+                            color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        ) {
+                            LinajesElenco(modelo, japones, elenco, contador, onVerHerencia)
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -269,6 +337,7 @@ private fun LinajesElenco(
     modelo: AffinityModel,
     japones: Boolean,
     elenco: Set<Int>,
+    contador: String,
     onVerHerencia: (Linaje) -> Unit,
 ) {
     var linajes by remember { mutableStateOf<List<Linaje>?>(null) }
@@ -278,36 +347,56 @@ private fun LinajesElenco(
         linajes = withContext(Dispatchers.Default) { modelo.topLinajesDeElenco(elenco, 40) }
     }
 
-    val lista = linajes
-    if (lista == null) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                CircularProgressIndicator()
-                Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        }
-        return
-    }
-
-    if (lista.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Surface(
+            shape = RoundedCornerShape(999.dp),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .padding(start = 12.dp, top = 8.dp)
+                .compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
+        ) {
             Text(
-                stringResource(R.string.elenco_minimo),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 32.dp),
+                text = contador,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
             )
         }
-        return
-    }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(12.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        itemsIndexed(lista) { i, combo ->
-            CardFilaTop(i, combo, modelo, japones) { onVerHerencia(combo) }
+        val lista = linajes
+        when {
+            lista == null -> Box(
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    CircularProgressIndicator()
+                    Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+
+            lista.isEmpty() -> Box(
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    stringResource(R.string.elenco_minimo),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 32.dp),
+                )
+            }
+
+            else -> LazyColumn(
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                contentPadding = PaddingValues(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                itemsIndexed(lista) { i, combo ->
+                    CardFilaTop(i, combo, modelo, japones) { onVerHerencia(combo) }
+                }
+            }
         }
     }
 }

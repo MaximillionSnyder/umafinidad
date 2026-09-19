@@ -130,6 +130,7 @@ fun HeaderBar(
     pillTexto: String? = null,
     modifier: Modifier = Modifier,
     chip: (@Composable () -> Unit)? = null,
+    modifierPill: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -156,7 +157,7 @@ fun HeaderBar(
             Surface(
                 shape = RoundedCornerShape(999.dp),
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(start = 12.dp),
+                modifier = Modifier.padding(start = 12.dp).then(modifierPill),
             ) {
                 Text(
                     text = texto,
@@ -178,6 +179,10 @@ fun HeaderBarConVolver(
     onVolver: () -> Unit,
     pillTexto: String? = null,
     modifier: Modifier = Modifier,
+    iconoRes: Int? = null,
+    modifierTitulo: Modifier = Modifier,
+    modifierIcono: Modifier = Modifier,
+    modifierPill: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -190,6 +195,14 @@ fun HeaderBarConVolver(
         IconButton(onClick = onVolver) {
             Icon(painterResource(R.drawable.ic_atras), contentDescription = stringResource(R.string.volver))
         }
+        iconoRes?.let { id ->
+            Icon(
+                painterResource(id),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(end = 8.dp).then(modifierIcono),
+            )
+        }
         Text(
             text = titulo,
             style = MaterialTheme.typography.titleLarge,
@@ -197,13 +210,13 @@ fun HeaderBarConVolver(
             color = MaterialTheme.colorScheme.onBackground,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f).headingSemantica(),
+            modifier = Modifier.weight(1f).headingSemantica().then(modifierTitulo),
         )
         pillTexto?.let { texto ->
             Surface(
                 shape = RoundedCornerShape(999.dp),
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(start = 12.dp),
+                modifier = Modifier.padding(start = 12.dp).then(modifierPill),
             ) {
                 Text(
                     text = texto,

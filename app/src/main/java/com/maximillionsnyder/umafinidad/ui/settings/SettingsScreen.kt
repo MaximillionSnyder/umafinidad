@@ -57,7 +57,10 @@ import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.descripcionRes
 import com.maximillionsnyder.umafinidad.data.tituloRes
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoElemento
 import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
 
 /* Apartado de ajustes: por ahora, el modo de grilla de personajes. */
@@ -336,11 +339,13 @@ fun SettingsScreen(
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         Spacer(Modifier.height(8.dp))
         Card(
-            modifier = Modifier.fillMaxWidth().clickable(
-                role = Role.Button,
-                onClickLabel = stringResource(R.string.abrir_grupos),
-                onClick = onAbrirGrupos,
-            ),
+            modifier = Modifier.fillMaxWidth()
+                .compartidoBounds(ClavesTransicion.OVERLAY_GRUPOS)
+                .clickable(
+                    role = Role.Button,
+                    onClickLabel = stringResource(R.string.abrir_grupos),
+                    onClick = onAbrirGrupos,
+                ),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -353,9 +358,15 @@ fun SettingsScreen(
                     painterResource(R.drawable.ic_tab_groups),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_GRUPOS)),
                 )
                 Column {
-                    Text(stringResource(R.string.tab_groups), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.tab_groups),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.compartidoBounds(ClavesTransicion.titulo(ClavesTransicion.OVERLAY_GRUPOS)),
+                    )
                     Text(
                         stringResource(R.string.grupos_ajustes_desc),
                         style = MaterialTheme.typography.labelSmall,
@@ -367,11 +378,13 @@ fun SettingsScreen(
 
         /* ===== Ranking (referencia, archivado de la barra inferior) ===== */
         Card(
-            modifier = Modifier.fillMaxWidth().clickable(
-                role = Role.Button,
-                onClickLabel = stringResource(R.string.abrir_ranking),
-                onClick = onAbrirRanking,
-            ),
+            modifier = Modifier.fillMaxWidth()
+                .compartidoBounds(ClavesTransicion.OVERLAY_RANKING)
+                .clickable(
+                    role = Role.Button,
+                    onClickLabel = stringResource(R.string.abrir_ranking),
+                    onClick = onAbrirRanking,
+                ),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -384,9 +397,15 @@ fun SettingsScreen(
                     painterResource(R.drawable.ic_tab_ranking),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_RANKING)),
                 )
                 Column {
-                    Text(stringResource(R.string.tab_ranking), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.tab_ranking),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.compartidoBounds(ClavesTransicion.titulo(ClavesTransicion.OVERLAY_RANKING)),
+                    )
                     Text(
                         stringResource(R.string.ranking_ajustes_desc),
                         style = MaterialTheme.typography.labelSmall,
@@ -398,7 +417,9 @@ fun SettingsScreen(
 
         /* ===== Mejores padres (variante a probar; se queda una de las dos) ===== */
         Card(
-            modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = onAbrirRankingPadres),
+            modifier = Modifier.fillMaxWidth()
+                .compartidoBounds(ClavesTransicion.OVERLAY_RANKING_PADRES)
+                .clickable(role = Role.Button, onClick = onAbrirRankingPadres),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -411,9 +432,15 @@ fun SettingsScreen(
                     painterResource(R.drawable.ic_tab_ranking),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_RANKING_PADRES)),
                 )
                 Column {
-                    Text(stringResource(R.string.ranking_padres_titulo), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.ranking_padres_titulo),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.compartidoBounds(ClavesTransicion.titulo(ClavesTransicion.OVERLAY_RANKING_PADRES)),
+                    )
                     Text(
                         stringResource(R.string.ranking_padres_ajustes_desc),
                         style = MaterialTheme.typography.labelSmall,

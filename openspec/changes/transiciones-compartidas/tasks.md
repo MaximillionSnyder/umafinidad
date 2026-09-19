@@ -1,7 +1,7 @@
 ## 1. Dependency and transition infrastructure
 
-- [ ] 1.1 Add `implementation("androidx.compose.animation:animation:1.11.4")` to `app/build.gradle.kts` next to the other pinned Compose artifacts — verify `./gradlew :app:assembleDebug` succeeds
-- [ ] 1.2 Create `app/src/main/java/com/maximillionsnyder/umafinidad/ui/componentes/Transiciones.kt` with the key object (`overlay-grupos`, `overlay-ranking`, `overlay-ranking-padres`, `…-titulo`, `…-icono`, `elenco-panel`, `elenco-contador`), nullable `LocalSharedTransitionScope`/`LocalAnimatedVisibilityScope`, and `Modifier.compartido(...)` that no-ops when a scope is missing — verify it compiles with `./gradlew :app:assembleDebug` and that previews/tests without scopes are unaffected
+- [x] 1.1 Add `implementation("androidx.compose.animation:animation:1.11.4")` to `app/build.gradle.kts` next to the other pinned Compose artifacts — verify `./gradlew :app:assembleDebug` succeeds
+- [x] 1.2 Create `app/src/main/java/com/maximillionsnyder/umafinidad/ui/componentes/Transiciones.kt` with the key object (`overlay-grupos`, `overlay-ranking`, `overlay-ranking-padres`, `…-titulo`, `…-icono`, `elenco-panel`, `elenco-contador`), nullable `LocalSharedTransitionScope`/`LocalAnimatedVisibilityScope`, and `Modifier.compartido(...)` that no-ops when a scope is missing — verify it compiles with `./gradlew :app:assembleDebug` and that previews/tests without scopes are unaffected
 - [x] 1.3 Confirm whether `@OptIn(ExperimentalSharedTransitionApi::class)` is required by Compose 1.11.4 and centralize it in `Transiciones.kt` (remove it if the marker no longer exists) — confirmed: shared transitions went stable in Compose Animation 1.10, so no opt-in is used anywhere; the build is validated by the release workflow
 
 ## 2. Overlay host in MainActivity
@@ -36,5 +36,12 @@
 
 ## 7. Validation
 
-- [ ] 7.1 Run `openspec validate transiciones-compartidas --strict` and fix any spec-format issues until it passes
-- [ ] 7.2 Review the final diff against the spec scenarios (`specs/screen-transitions/spec.md`) and confirm each scenario is either covered by a test or recorded in the change notes
+- [x] 7.1 Run `openspec validate transiciones-compartidas --strict` and fix any spec-format issues until it passes
+- [x] 7.2 Review the final diff against the spec scenarios (`specs/screen-transitions/spec.md`) and confirm each scenario is either covered by a test or recorded in the change notes
+
+## 8. Verification notes (CI / pendientes de dispositivo)
+
+- Debug job (run 35440039451, commit `7992a90`): `:app:assembleDebug :app:testDebugUnitTest` green — tasks 1.1, 1.2, 3.1, 4.1 compile-verified and unit tests unaffected.
+- Release job (run 35440155244, tag `v4.2.0`): signed AAB + APK built and published; release compiles with minify/shrink, confirming the new animation dependency survives R8.
+- Instrumented test (6.1) is written but not executed: the `androidtest` job runs on PRs only and this change went straight to `dev`; run it with `./gradlew :app:connectedDebugAndroidTest` on an emulator (or via a PR) before considering the accessibility scenarios fully covered.
+- Device QA pending (2.2, 2.3, 4.4, 5.4, 6.3): bubble-shortcut fallback, reduced motion/interrupted back, overlay morph QA, Elenco state across tabs, and TalkBack pass with animations on/off.

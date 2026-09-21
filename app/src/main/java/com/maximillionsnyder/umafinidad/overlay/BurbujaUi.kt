@@ -59,10 +59,6 @@ const val ANCHO_PANEL_MIN_DP = 190
 const val ANCHO_PANEL_MAX_DP = 300
 const val FRACCION_ALTO_PANEL = 0.66f
 
-/* Espera antes de reintentar el teclado al reabrir el panel: la ventana
-   recupera el foco antes que el campo del buscador. */
-const val ESPERA_TECLADO_MS = 250L
-
 /* Ficha de personaje del carrusel del buscador. */
 const val FICHA_OPCION_DP = 44
 const val ESPACIO_FICHAS_DP = 6

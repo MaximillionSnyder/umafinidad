@@ -18,13 +18,9 @@ import android.view.WindowManager
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
@@ -40,7 +36,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -82,17 +77,11 @@ class BurbujaService : Service() {
     /* Resaltado de la zona de descarte mientras se arrastra la burbuja. */
     private val sobreQuitar = MutableStateFlow(false)
 
-    /* Visibilidad del panel y del teclado, como estado: la composición las
-       observa para mostrar/ocultar el IME sin recrear la ventana. */
-    private val panelAbierto = MutableStateFlow(false)
-    private val mostrarTeclado = MutableStateFlow(false)
-    private val reconectarTeclado = MutableStateFlow(false)
 
     private var vistaBurbuja: ComposeView? = null
     private var vistaPanel: ComposeView? = null
     private var vistaQuitar: ComposeView? = null
     private lateinit var parametrosBurbuja: WindowManager.LayoutParams
-    private lateinit var parametrosPanel: WindowManager.LayoutParams
     private lateinit var parametrosQuitar: WindowManager.LayoutParams
     private var animacionIman: Job? = null
 
@@ -117,7 +106,6 @@ class BurbujaService : Service() {
         anfitrion.crear()
         iniciarForeground()
         crearBurbuja()
-        crearPanel()
         crearZonaQuitar()
         estado.cargar()
     }
@@ -138,10 +126,9 @@ class BurbujaService : Service() {
         val pantalla = tamanoPantalla()
 
         animacionIman?.cancel()
-        if (vistaPanel != null) {
-            parametrosPanel = parametrosPanel(visible = panelVisible)
-            actualizarVentana(vistaPanel, parametrosPanel)
-        }
+        /* El panel se monta con el tamaño de pantalla del momento: si estaba
+           abierto, se cierra para que la próxima apertura use el nuevo. */
+        if (vistaPanel != null) quitarPanel()
 
         if (vistaQuitar != null) {
             parametrosQuitar = crearParametrosQuitar()
@@ -371,27 +358,33 @@ class BurbujaService : Service() {
 
     /* ===== Panel ===== */
 
-    /* El panel se crea una vez y se muestra u oculta: así el buscador, la
-       selección y los avatares ya cargados siguen ahí al reabrirlo, sin el
-       costo de volver a montar la composición. */
-    private fun crearPanel() {
+    /* El panel se monta en una ventana nueva cada vez que se abre y se
+       desmonta al cerrarlo. Es a propósito: el buscador necesita el teclado, y
+       una ventana de overlay recién creada es la que engancha el IME. Lo que
+       se conserva entre aperturas es el estado (búsqueda, selección,
+       sugerencias), que vive en EstadoBurbuja, no la vista. */
+    private fun alternarPanel() {
+        if (vistaPanel != null) quitarPanel() else abrirPanel()
+    }
+
+    private fun abrirPanel() {
+        if (vistaPanel != null) return
         val vista = crearComposeView()
-        parametrosPanel = parametrosPanel(visible = false)
-        vista.visibility = View.GONE
+        val parametros = parametrosPanel()
 
         val japones = resources.configuration.locales[0].language == "ja"
-        vista.setContent {
-            val modelo by estado.modelo.collectAsState()
-            val seleccion by estado.seleccion.collectAsState()
-            val calculando by estado.autocompletando.collectAsState()
-            val filtro by estado.filtro.collectAsState()
-            val aviso by estado.aviso.collectAsState()
-            val sugerencias by estado.sugerencias.collectAsState(initial = emptyList())
-            val ladoDerecho by ladoPanel.collectAsState()
-            val abierto by panelAbierto.collectAsState()
-            val teclado by mostrarTeclado.collectAsState()
-            val reconectar by reconectarTeclado.collectAsState()
 
+        vista.setContent {
+            val modeloActual by estado.modelo.collectAsState()
+            val seleccionActual by estado.seleccion.collectAsState()
+            val calculando by estado.autocompletando.collectAsState()
+            val filtroActual by estado.filtro.collectAsState()
+            val avisoActual by estado.aviso.collectAsState()
+            val sugerenciasActuales by estado.sugerencias.collectAsState(initial = emptyList())
+            val pantalla = tamanoPantalla()
+            val ladoDerecho = PosicionBurbuja.enLadoDerecho(
+                parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
+            )
             UmaAfinidadTheme(
                 tema = prefs.tema,
                 tamanoTexto = prefs.tamanoTexto,
@@ -399,24 +392,14 @@ class BurbujaService : Service() {
             ) {
                 CompositionLocalProvider(LocalEstiloAvatar provides prefs.estiloAvatar) {
                     PanelBurbuja(
-                        modifier = Modifier.onFocusChanged { foco ->
-                            /* El teclado del panel es una ventana aparte: se
-                               pide recién cuando el buscador tiene el foco y
-                               se reintenta al volver a abrir el panel. */
-                            mostrarTeclado.value = foco.isFocused && abierto
-                            if (foco.isFocused && abierto) reconectarTeclado.value = true
-                        },
-                        modelo = modelo,
+                        modelo = modeloActual,
                         japones = japones,
-                        seleccion = seleccion,
-                        filtro = filtro,
-                        aviso = aviso,
-                        sugerencias = sugerencias,
+                        seleccion = seleccionActual,
+                        filtro = filtroActual,
+                        aviso = avisoActual,
+                        sugerencias = sugerenciasActuales,
                         autocompletando = calculando,
                         ladoDerecho = ladoDerecho,
-                        mostrarTeclado = teclado,
-                        panelAbierto = abierto,
-                        reconectarTeclado = reconectar,
                         onFiltro = estado::buscar,
                         onAlternar = estado::alternar,
                         onQuitarSlot = estado::quitarSlot,
@@ -453,71 +436,18 @@ class BurbujaService : Service() {
             }
         }
 
-        val agregada = runCatching { ventanas.addView(vista, parametrosPanel) }.isSuccess
+        val agregada = runCatching { ventanas.addView(vista, parametros) }.isSuccess
         if (!agregada) return
         vistaPanel = vista
-        /* La ventana es focusable (buscador + atrás) cuando está visible. */
+        /* La ventana es focusable (buscador + atrás): pide el foco y con eso
+           sale el teclado, como en cualquier ventana de la app. */
         vista.isFocusableInTouchMode = true
-    }
-
-    private fun alternarPanel() {
-        if (panelVisible) quitarPanel() else abrirPanel()
-    }
-
-    private var panelVisible = false
-
-    /* El lado de la franja se decide al abrir y se publica como estado para
-       que la composición no tenga que mirar la posición de la ventana. */
-    private val ladoPanel = MutableStateFlow(true)
-
-    private fun abrirPanel() {
-        val vista = vistaPanel ?: return
-        if (panelVisible) return
-
-        val pantalla = tamanoPantalla()
-        val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
-            parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
-        )
-        ladoPanel.value = burbujaDerecha
-        parametrosPanel = parametrosPanel(visible = true)
-
-        panelVisible = true
-        vista.visibility = View.VISIBLE
-        actualizarVentana(vista, parametrosPanel)
-        /* El buscador toma el foco y, con él, el panel pide el teclado. */
         vista.requestFocus()
-        panelAbierto.value = true
-        mostrarTeclado.value = true
-    }
-
-    private fun quitarPanel() {
-        val vista = vistaPanel ?: return
-        if (!panelVisible) return
-        panelVisible = false
-        mostrarTeclado.value = false
-        ocultarIme(vista)
-        vista.visibility = View.GONE
-        parametrosPanel = parametrosPanel(visible = false)
-        actualizarVentana(vista, parametrosPanel)
-        panelAbierto.value = false
-    }
-
-    /* ===== Teclado del buscador ===== */
-
-    /* En una ventana de overlay el IME no se muestra con que el campo tenga el
-       foco: hay que pedirlo. El panel observa `mostrarTeclado` y lo hace desde
-       la composición (ver PanelBurbuja), que es donde vive el campo. */
-    private fun ocultarIme(vista: View) {
-        runCatching {
-            /* El controlador del IME cuelga del árbol de vistas del panel. */
-            @Suppress("DEPRECATION")
-            ViewCompat.getWindowInsetsController(vista)?.hide(WindowInsetsCompat.Type.ime())
-        }
     }
 
     /* Franja en el borde opuesto a la burbuja, centrada y con paso de toques
        hacia la app de fondo. Ancho y alto escalan con la pantalla. */
-    private fun parametrosPanel(visible: Boolean): WindowManager.LayoutParams {
+    private fun parametrosPanel(): WindowManager.LayoutParams {
         val pantalla = tamanoPantalla()
         val anchoPanel = PosicionPanel.ancho(
             pantalla.x,
@@ -533,36 +463,31 @@ class BurbujaService : Service() {
             pantalla.x, pantalla.y, anchoPanel, altoPanel, margen, burbujaDerecha,
         )
 
-        /* Oculta: la ventana deja pasar los toques. Visible: focusable para
-           el buscador y la tecla atrás, con cierre al tocar afuera. */
-        val flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-            /* Focusable siempre (se necesita para el buscador y la tecla
-               atrás); oculta solo deja de recibir toques. */
-            if (visible) {
-                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
-            } else {
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-            }
-
         return WindowManager.LayoutParams(
             anchoPanel,
             altoPanel,
             tipoVentana(),
-            flags,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.START
             x = posicion.x
             y = posicion.y
-            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 layoutInDisplayCutoutMode =
                     WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             }
         }
+    }
+
+    private fun quitarPanel() {
+        vistaPanel?.let { vista ->
+            runCatching { ventanas.removeView(vista) }
+        }
+        vistaPanel = null
     }
 
     private fun abrirApp(destino: String) {

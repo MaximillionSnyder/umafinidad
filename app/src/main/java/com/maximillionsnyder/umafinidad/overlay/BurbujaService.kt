@@ -18,9 +18,13 @@ import android.view.WindowManager
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
@@ -36,6 +40,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -76,6 +81,12 @@ class BurbujaService : Service() {
 
     /* Resaltado de la zona de descarte mientras se arrastra la burbuja. */
     private val sobreQuitar = MutableStateFlow(false)
+
+    /* Visibilidad del panel y del teclado, como estado: la composición las
+       observa para mostrar/ocultar el IME sin recrear la ventana. */
+    private val panelAbierto = MutableStateFlow(false)
+    private val mostrarTeclado = MutableStateFlow(false)
+    private val reconectarTeclado = MutableStateFlow(false)
 
     private var vistaBurbuja: ComposeView? = null
     private var vistaPanel: ComposeView? = null
@@ -377,6 +388,9 @@ class BurbujaService : Service() {
             val aviso by estado.aviso.collectAsState()
             val sugerencias by estado.sugerencias.collectAsState(initial = emptyList())
             val ladoDerecho by ladoPanel.collectAsState()
+            val abierto by panelAbierto.collectAsState()
+            val teclado by mostrarTeclado.collectAsState()
+            val reconectar by reconectarTeclado.collectAsState()
 
             UmaAfinidadTheme(
                 tema = prefs.tema,
@@ -385,6 +399,13 @@ class BurbujaService : Service() {
             ) {
                 CompositionLocalProvider(LocalEstiloAvatar provides prefs.estiloAvatar) {
                     PanelBurbuja(
+                        modifier = Modifier.onFocusChanged { foco ->
+                            /* El teclado del panel es una ventana aparte: se
+                               pide recién cuando el buscador tiene el foco y
+                               se reintenta al volver a abrir el panel. */
+                            mostrarTeclado.value = foco.isFocused && abierto
+                            if (foco.isFocused && abierto) reconectarTeclado.value = true
+                        },
                         modelo = modelo,
                         japones = japones,
                         seleccion = seleccion,
@@ -393,6 +414,9 @@ class BurbujaService : Service() {
                         sugerencias = sugerencias,
                         autocompletando = calculando,
                         ladoDerecho = ladoDerecho,
+                        mostrarTeclado = teclado,
+                        panelAbierto = abierto,
+                        reconectarTeclado = reconectar,
                         onFiltro = estado::buscar,
                         onAlternar = estado::alternar,
                         onQuitarSlot = estado::quitarSlot,
@@ -460,16 +484,35 @@ class BurbujaService : Service() {
         panelVisible = true
         vista.visibility = View.VISIBLE
         actualizarVentana(vista, parametrosPanel)
+        /* El buscador toma el foco y, con él, el panel pide el teclado. */
         vista.requestFocus()
+        panelAbierto.value = true
+        mostrarTeclado.value = true
     }
 
     private fun quitarPanel() {
         val vista = vistaPanel ?: return
         if (!panelVisible) return
         panelVisible = false
+        mostrarTeclado.value = false
+        ocultarIme(vista)
         vista.visibility = View.GONE
         parametrosPanel = parametrosPanel(visible = false)
         actualizarVentana(vista, parametrosPanel)
+        panelAbierto.value = false
+    }
+
+    /* ===== Teclado del buscador ===== */
+
+    /* En una ventana de overlay el IME no se muestra con que el campo tenga el
+       foco: hay que pedirlo. El panel observa `mostrarTeclado` y lo hace desde
+       la composición (ver PanelBurbuja), que es donde vive el campo. */
+    private fun ocultarIme(vista: View) {
+        runCatching {
+            /* El controlador del IME cuelga del árbol de vistas del panel. */
+            @Suppress("DEPRECATION")
+            ViewCompat.getWindowInsetsController(vista)?.hide(WindowInsetsCompat.Type.ime())
+        }
     }
 
     /* Franja en el borde opuesto a la burbuja, centrada y con paso de toques
@@ -495,11 +538,12 @@ class BurbujaService : Service() {
         val flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
             WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+            /* Focusable siempre (se necesita para el buscador y la tecla
+               atrás); oculta solo deja de recibir toques. */
             if (visible) {
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
             } else {
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             }
 
         return WindowManager.LayoutParams(
@@ -512,7 +556,8 @@ class BurbujaService : Service() {
             gravity = Gravity.TOP or Gravity.START
             x = posicion.x
             y = posicion.y
-            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 layoutInDisplayCutoutMode =
                     WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES

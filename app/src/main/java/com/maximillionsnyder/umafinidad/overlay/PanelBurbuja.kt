@@ -26,6 +26,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
@@ -45,6 +47,7 @@ import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.ui.Destino
+import kotlinx.coroutines.delay
 
 /* Franja lateral del panel de acceso rápido. El servicio la hospeda en su
    propia ventana de overlay, ya recortada al tamaño de la franja: sin velo
@@ -71,6 +74,9 @@ fun PanelBurbuja(
     onCerrar: () -> Unit,
     onOcultar: () -> Unit,
     onAbrirDestino: (String) -> Unit,
+    mostrarTeclado: Boolean = false,
+    panelAbierto: Boolean = false,
+    reconectarTeclado: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
     /* Cada slot se resuelve una sola vez por selección y modelo, no en cada
@@ -85,6 +91,23 @@ fun PanelBurbuja(
         if (modelo != null && total != null) modelo.rangoTotal(total) else null
     }
     val hayHuecos = remember(seleccion) { seleccion.any { it == null } }
+
+    /* Teclado de una ventana de overlay: no alcanza con que el campo tenga el
+       foco, hay que pedir el IME explícitamente. Al reabrir el panel la ventana
+       recupera el foco y el campo recién después, así que se reintenta una vez
+       con la ventana ya en pantalla. */
+    val teclado = LocalSoftwareKeyboardController.current
+    LaunchedEffect(mostrarTeclado, panelAbierto, reconectarTeclado) {
+        if (!panelAbierto || !mostrarTeclado) {
+            teclado?.hide()
+            return@LaunchedEffect
+        }
+        teclado?.show()
+        if (reconectarTeclado) {
+            delay(ESPERA_TECLADO_MS)
+            teclado?.show()
+        }
+    }
 
     Card(
         modifier = modifier.fillMaxSize(),

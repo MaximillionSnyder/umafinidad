@@ -51,13 +51,22 @@ se juega:
 
 - al tocarla se despliega un panel lateral con la **calculadora rápida**
   (hijo + dos padres, con buscador difuso y desglose de grupos compartidos);
+- el buscador propone las caras que entran a lo ancho de la franja, en un
+  carrusel deslizable (el degradado del borde avisa que hay más);
 - incluye atajos para abrir Compatibilidad, Mi corredora, Mis Umas y Ajustes;
-- se arrastra y se pega al borde más cercano, recordando su posición, y se
-  oculta desde el propio panel o desde la notificación.
+- se arrastra y se pega al borde más cercano con una animación corta,
+  recordando su posición, y se oculta desde el propio panel o desde la
+  notificación.
 
 Requiere el permiso **Mostrar sobre otras apps** (`SYSTEM_ALERT_WINDOW`); en
 Android 13+ también pide permiso de notificaciones para el aviso persistente.
 El servicio en primer plano declara tipo `specialUse` (Android 14+).
+
+Las tres ventanas del overlay (burbuja, panel y zona de descarte) se crean una
+sola vez por servicio: abrir y cerrar el panel solo alterna su visibilidad, así
+que la búsqueda, la selección y los avatares ya cargados siguen ahí. El tamaño
+de la burbuja y de la franja no depende de eso: son los mismos valores de
+siempre (`TAMANO_BURBUJA_DP`, `FRACCION_ANCHO_PANEL`, `FRACCION_ALTO_PANEL`).
 
 ## Estructura
 

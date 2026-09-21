@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -87,6 +89,7 @@ internal fun SlotGenealogia(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val nombre = personaje?.displayName(japones)
     Card(
         modifier = modifier.clickable(
             enabled = personaje != null,
@@ -113,8 +116,8 @@ internal fun SlotGenealogia(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            if (personaje != null) {
-                Avatar(personaje.charId, personaje.displayName(japones), modifier = Modifier.size(32.dp))
+            if (personaje != null && nombre != null) {
+                Avatar(personaje.charId, nombre, modifier = Modifier.size(32.dp))
             } else {
                 Box(
                     modifier = Modifier
@@ -133,9 +136,9 @@ internal fun SlotGenealogia(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(1.dp),
             ) {
-                if (personaje != null) {
+                if (nombre != null) {
                     Text(
-                        personaje.displayName(japones),
+                        nombre,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -154,24 +157,39 @@ internal fun SlotGenealogia(
     }
 }
 
+/* Ficha de una cara sugerida por el buscador. El ancho llega ya repartido en
+   píxeles (ver RepartoPanel.kt); el nombre completo sigue disponible para
+   TalkBack aunque en pantalla se recorte. */
 @Composable
-internal fun FilaSugerencia(c: Character, japones: Boolean, onClick: () -> Unit) {
-    val nombrePrincipal = c.displayName(japones)
-    Row(
+internal fun FichaOpcion(
+    c: Character,
+    japones: Boolean,
+    ancho: Int,
+    onClick: () -> Unit,
+) {
+    val nombre = c.displayName(japones)
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+            .width(with(LocalDensity.current) { ancho.toDp() })
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(
+                role = Role.Button,
+                onClickLabel = nombre,
+                onClick = onClick,
+            )
+            .padding(vertical = 4.dp, horizontal = 2.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
-        Avatar(c.charId, nombrePrincipal, modifier = Modifier.size(32.dp))
+        Avatar(c.charId, nombre, modifier = Modifier.size(32.dp))
         Text(
-            nombrePrincipal,
-            style = MaterialTheme.typography.bodyMedium,
+            nombre,
+            style = MaterialTheme.typography.labelSmall,
             fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
         )
     }
 }

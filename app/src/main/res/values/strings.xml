@@ -194,6 +194,8 @@
     <string name="burbuja_switch">Floating bubble</string>
     <string name="burbuja_switch_desc">Affinity calculator and shortcuts while you play</string>
     <string name="burbuja_sin_permiso">The “Display over other apps” permission is missing. Turn the switch off and on to grant it.</string>
+    <string name="burbuja_panel_translucido">Translucent panel</string>
+    <string name="burbuja_panel_translucido_desc">See the game behind the affinity panel (55% opacity)</string>
     <string name="burbuja_canal">Quick access bubble</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Floating bubble active</string>

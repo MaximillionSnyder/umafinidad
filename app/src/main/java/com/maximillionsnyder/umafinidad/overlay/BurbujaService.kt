@@ -373,6 +373,7 @@ class BurbujaService : Service() {
         val parametros = parametrosPanel()
 
         val japones = resources.configuration.locales[0].language == "ja"
+        val translucido = prefs.panelTranslucido
 
         vista.setContent {
             val modeloActual by estado.modelo.collectAsState()
@@ -400,6 +401,7 @@ class BurbujaService : Service() {
                         sugerencias = sugerenciasActuales,
                         autocompletando = calculando,
                         ladoDerecho = ladoDerecho,
+                        translucido = translucido,
                         onFiltro = estado::buscar,
                         onAlternar = estado::alternar,
                         onQuitarSlot = estado::quitarSlot,

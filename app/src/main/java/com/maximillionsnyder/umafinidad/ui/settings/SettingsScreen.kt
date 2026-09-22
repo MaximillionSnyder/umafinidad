@@ -77,6 +77,8 @@ fun SettingsScreen(
     burbujaActiva: Boolean,
     burbujaPermiso: Boolean,
     onBurbuja: (Boolean) -> Unit,
+    panelTranslucido: Boolean,
+    onPanelTranslucido: (Boolean) -> Unit,
     modelo: AffinityModel,
     japones: Boolean,
     arboles: List<ArbolGuardado>,
@@ -130,6 +132,12 @@ fun SettingsScreen(
                     descripcion = stringResource(R.string.burbuja_switch_desc),
                     activado = burbujaActiva,
                     onCambio = onBurbuja,
+                )
+                FilaInterruptor(
+                    titulo = stringResource(R.string.burbuja_panel_translucido),
+                    descripcion = stringResource(R.string.burbuja_panel_translucido_desc),
+                    activado = panelTranslucido,
+                    onCambio = onPanelTranslucido,
                 )
                 if (burbujaActiva && !burbujaPermiso) {
                     Text(

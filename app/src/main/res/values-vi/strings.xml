@@ -194,6 +194,8 @@
     <string name="burbuja_switch">Bong bóng nổi</string>
     <string name="burbuja_switch_desc">Máy tính tương thích và phím tắt khi chơi</string>
     <string name="burbuja_sin_permiso">Thiếu quyền "Hiển thị trên ứng dụng khác". Tắt rồi bật lại công tắc để cấp quyền.</string>
+    <string name="burbuja_panel_translucido">Bảng trong suốt</string>
+    <string name="burbuja_panel_translucido_desc">Thấy trò chơi phía sau bảng tương thích (độ mờ 55%)</string>
     <string name="burbuja_canal">Bong bóng truy cập nhanh</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Bong bóng nổi đang bật</string>

@@ -81,6 +81,11 @@ class PrefsRepository(context: Context) {
         get() = prefs.getInt(KEY_BURBUJA_Y, -1)
         set(valor) = prefs.edit().putInt(KEY_BURBUJA_Y, valor).apply()
 
+    /* Fondo del panel de la burbuja: translúcido deja ver la app de atrás. */
+    var panelTranslucido: Boolean
+        get() = prefs.getBoolean(KEY_PANEL_TRANSLUCIDO, true)
+        set(valor) = prefs.edit().putBoolean(KEY_PANEL_TRANSLUCIDO, valor).apply()
+
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
         const val KEY_ESTILO_AVATAR = "estilo_avatar"
@@ -92,6 +97,7 @@ class PrefsRepository(context: Context) {
         const val KEY_BURBUJA_ACTIVA = "burbuja_activa"
         const val KEY_BURBUJA_X = "burbuja_x"
         const val KEY_BURBUJA_Y = "burbuja_y"
+        const val KEY_PANEL_TRANSLUCIDO = "panel_translucido"
         // Solo lectura para migrar instalaciones con el interruptor viejo.
         const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }

@@ -194,6 +194,8 @@
     <string name="burbuja_switch">フローティングバブル</string>
     <string name="burbuja_switch_desc">プレイ中に相性計算とショートカット</string>
     <string name="burbuja_sin_permiso">「他のアプリの上に重ねて表示」の権限がありません。スイッチを切り直して許可してください。</string>
+    <string name="burbuja_panel_translucido">半透明パネル</string>
+    <string name="burbuja_panel_translucido_desc">相性パネルの後ろのゲームが透けて見えます（不透明度55%）</string>
     <string name="burbuja_canal">クイックアクセスバブル</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">フローティングバブルが有効です</string>

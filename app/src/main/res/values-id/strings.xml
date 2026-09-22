@@ -194,6 +194,8 @@
     <string name="burbuja_switch">Bola melayang</string>
     <string name="burbuja_switch_desc">Kalkulator afinitas dan pintasan saat bermain</string>
     <string name="burbuja_sin_permiso">Izin "Tampilkan di atas aplikasi lain" belum diberikan. Matikan lalu nyalakan sakelar untuk memberikannya.</string>
+    <string name="burbuja_panel_translucido">Panel transparan</string>
+    <string name="burbuja_panel_translucido_desc">Lihat gim di balik panel afinitas (opasitas 55%)</string>
     <string name="burbuja_canal">Bola akses cepat</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Bola melayang aktif</string>

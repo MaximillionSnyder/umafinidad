@@ -141,6 +141,15 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         if (_burbujaActiva.value != actual) _burbujaActiva.value = actual
     }
 
+    /* Fondo del panel de la burbuja: translúcido u opaco. */
+    private val _panelTranslucido = MutableStateFlow(prefs.panelTranslucido)
+    val panelTranslucido: StateFlow<Boolean> = _panelTranslucido
+
+    fun setPanelTranslucido(valor: Boolean) {
+        prefs.panelTranslucido = valor
+        _panelTranslucido.value = valor
+    }
+
     /* Bienvenida de accesibilidad: se muestra hasta que se guarda u omite. */
     private val _mostrarBienvenida = MutableStateFlow(!prefs.bienvenidaAccesibilidadVista)
     val mostrarBienvenida: StateFlow<Boolean> = _mostrarBienvenida

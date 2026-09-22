@@ -64,6 +64,7 @@ fun PanelBurbuja(
     sugerencias: List<Character>,
     autocompletando: Boolean,
     ladoDerecho: Boolean,
+    translucido: Boolean,
     onFiltro: (String) -> Unit,
     onAlternar: (Int) -> Unit,
     onQuitarSlot: (Int) -> Unit,
@@ -87,17 +88,23 @@ fun PanelBurbuja(
     }
     val hayHuecos = remember(seleccion) { seleccion.any { it == null } }
 
+    val colorPanel = if (translucido) {
+        MaterialTheme.colorScheme.surfaceContainer.copy(alpha = ALPHA_PANEL)
+    } else {
+        MaterialTheme.colorScheme.surfaceContainer
+    }
     Card(
         modifier = modifier.fillMaxSize(),
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = ALPHA_PANEL),
+        colors = CardDefaults.cardColors(containerColor = colorPanel),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (translucido) 0.dp else 1.dp,
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        border = BorderStroke(
-            1.dp,
-            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
-        ),
+        border = if (translucido) {
+            BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+        } else {
+            null
+        },
     ) {
         Column(
             modifier = Modifier

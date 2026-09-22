@@ -194,6 +194,8 @@
     <string name="burbuja_switch">悬浮球</string>
     <string name="burbuja_switch_desc">游戏时查看相性计算与快捷入口</string>
     <string name="burbuja_sin_permiso">缺少“显示在其他应用上层”权限。关闭再打开开关即可授予。</string>
+    <string name="burbuja_panel_translucido">半透明面板</string>
+    <string name="burbuja_panel_translucido_desc">透过相性面板可以看到游戏画面（不透明度 55%）</string>
     <string name="burbuja_canal">快捷悬浮球</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">悬浮球已启用</string>

@@ -12,8 +12,9 @@ Además, el repo incluye **`sitio/`**, la versión web nueva derivada de la app
   `/grupos`, `/ranking`, `/ranking-padres`), pensadas para el navegador;
 - **compartir la selección por URL** (`?s=...`), con validación de ids;
 - **export/import** de las configuraciones guardadas como archivo JSON;
-- tema claro minimalista con modo oscuro y alto contraste, i18n es/en/ja y
-  la misma lógica de dominio que la app (tests de paridad incluidos).
+- tema claro minimalista con modo oscuro y alto contraste, los mismos 9
+  idiomas que la app y la misma lógica de dominio (tests de paridad
+  incluidos).
 
 
 ## Idiomas
@@ -21,9 +22,15 @@ Además, el repo incluye **`sitio/`**, la versión web nueva derivada de la app
 - Inglés (por defecto)
 - Español (`values-es`)
 - Japonés (`values-ja`)
+- Chino simplificado (`values-zh-rCN`) y tradicional (`values-zh-rTW`)
+- Coreano (`values-ko`)
+- Indonesio (`values-id`)
+- Tailandés (`values-th`)
+- Vietnamita (`values-vi`)
 
-Los nombres de personajes se muestran en japonés (`jp_name`) si el teléfono
-está en japonés; en cualquier otro caso se usa `en_name`.
+El idioma se puede forzar desde **Ajustes**. Los nombres de personajes se
+muestran en japonés (`jp_name`) si el teléfono está en japonés; en cualquier
+otro caso se usa `en_name`.
 
 ## Accesibilidad
 
@@ -50,9 +57,16 @@ cualquier app (estilo grabador de pantalla) para consultar afinidad mientras
 se juega:
 
 - al tocarla se despliega un panel lateral con la **calculadora rápida**
-  (hijo + dos padres, con buscador difuso y desglose de grupos compartidos);
+  (genealogía completa de 7 posiciones, buscador difuso, autocompletar y
+  total de afinidad);
 - el buscador propone las caras que entran a lo ancho de la franja, en un
   carrusel deslizable (el degradado del borde avisa que hay más);
+- se puede **elegir el lugar**: tocar un slot vacío lo marca como destino y
+  la próxima ficha va ahí, aunque no sea el próximo del orden; si el
+  personaje ya estaba colocado, se mueve. Sin destino elegido, se coloca en
+  el primer hueco válido como siempre;
+- el fondo del panel se puede dejar **translúcido** para ver el juego detrás
+  (**Ajustes → Burbuja flotante → Panel translúcido**, activado por defecto);
 - incluye atajos para abrir Compatibilidad, Mi corredora, Mis Umas y Ajustes;
 - se arrastra y se pega al borde más cercano con una animación corta,
   recordando su posición, y se oculta desde el propio panel o desde la
@@ -62,11 +76,13 @@ Requiere el permiso **Mostrar sobre otras apps** (`SYSTEM_ALERT_WINDOW`); en
 Android 13+ también pide permiso de notificaciones para el aviso persistente.
 El servicio en primer plano declara tipo `specialUse` (Android 14+).
 
-Las tres ventanas del overlay (burbuja, panel y zona de descarte) se crean una
-sola vez por servicio: abrir y cerrar el panel solo alterna su visibilidad, así
-que la búsqueda, la selección y los avatares ya cargados siguen ahí. El tamaño
-de la burbuja y de la franja no depende de eso: son los mismos valores de
-siempre (`TAMANO_BURBUJA_DP`, `FRACCION_ANCHO_PANEL`, `FRACCION_ALTO_PANEL`).
+La burbuja y la zona de descarte se crean una sola vez por servicio. El panel
+se monta en una ventana nueva en cada apertura (una ventana recién creada es
+la que engancha el teclado del buscador). El estado —selección, búsqueda,
+sugerencias y slot destino— vive en `EstadoBurbuja`, así que cerrar y reabrir
+el panel no lo pierde. El tamaño de la burbuja y de la franja son los mismos
+valores de siempre (`TAMANO_BURBUJA_DP`, `FRACCION_ANCHO_PANEL`,
+`FRACCION_ALTO_PANEL`).
 
 ## Estructura
 

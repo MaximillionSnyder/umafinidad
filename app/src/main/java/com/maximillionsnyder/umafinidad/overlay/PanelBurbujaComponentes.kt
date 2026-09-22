@@ -80,35 +80,39 @@ internal fun BotonCompacto(
     }
 }
 
-/* Slot de la genealogía en la franja: avatar (o "+") con nombre y rol. */
+/* Slot de la genealogía en la franja: avatar (o "+") con nombre y rol.
+   Tocado, quita al ocupante o marca el hueco como destino de la próxima
+   colocación. */
 @Composable
 internal fun SlotGenealogia(
     etiqueta: String,
     personaje: Character?,
     japones: Boolean,
+    seleccionado: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nombre = personaje?.displayName(japones)
     Card(
         modifier = modifier.clickable(
-            enabled = personaje != null,
             role = Role.Button,
-            onClickLabel = stringResource(R.string.quitar_personaje),
+            onClickLabel = stringResource(
+                if (personaje != null) R.string.quitar_personaje else R.string.burbuja_elegir_lugar,
+            ),
             onClick = onClick,
         ),
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (personaje != null) {
-                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
-            } else {
-                MaterialTheme.colorScheme.surfaceContainerLow
+            containerColor = when {
+                personaje != null -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+                seleccionado -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
+                else -> MaterialTheme.colorScheme.surfaceContainerLow
             },
         ),
-        border = if (personaje != null) {
-            BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary)
-        } else {
-            null
+        border = when {
+            personaje != null -> BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary)
+            seleccionado -> BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
+            else -> null
         },
     ) {
         Row(

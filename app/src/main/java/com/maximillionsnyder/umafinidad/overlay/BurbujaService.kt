@@ -382,6 +382,7 @@ class BurbujaService : Service() {
             val filtroActual by estado.filtro.collectAsState()
             val avisoActual by estado.aviso.collectAsState()
             val sugerenciasActuales by estado.sugerencias.collectAsState(initial = emptyList())
+            val slotDestinoActual by estado.slotDestino.collectAsState()
             val pantalla = tamanoPantalla()
             val ladoDerecho = PosicionBurbuja.enLadoDerecho(
                 parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
@@ -402,9 +403,10 @@ class BurbujaService : Service() {
                         autocompletando = calculando,
                         ladoDerecho = ladoDerecho,
                         translucido = translucido,
+                        slotDestino = slotDestinoActual,
                         onFiltro = estado::buscar,
                         onAlternar = estado::alternar,
-                        onQuitarSlot = estado::quitarSlot,
+                        onSlot = estado::tocarSlot,
                         onLimpiar = estado::limpiar,
                         onAutocompletar = estado::autocompletar,
                         onCerrar = { quitarPanel() },

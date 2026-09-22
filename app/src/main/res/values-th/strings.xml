@@ -196,6 +196,8 @@
     <string name="burbuja_sin_permiso">ยังไม่ได้สิทธิ์ "แสดงเหนือแอปอื่น" ปิดแล้วเปิดสวิตช์อีกครั้งเพื่ออนุญาต</string>
     <string name="burbuja_panel_translucido">แผงโปร่งแสง</string>
     <string name="burbuja_panel_translucido_desc">มองเห็นเกมด้านหลังแผงความเข้ากันได้ (ความทึบ 55%)</string>
+    <string name="burbuja_elegir_lugar">เลือกตำแหน่งนี้</string>
+    <string name="burbuja_destino">จะวางใน: %1$s</string>
     <string name="burbuja_canal">บับเบิ้ลเข้าถึงเร็ว</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">เปิดบับเบิ้ลลอยอยู่</string>

@@ -65,9 +65,10 @@ fun PanelBurbuja(
     autocompletando: Boolean,
     ladoDerecho: Boolean,
     translucido: Boolean,
+    slotDestino: Int?,
     onFiltro: (String) -> Unit,
     onAlternar: (Int) -> Unit,
-    onQuitarSlot: (Int) -> Unit,
+    onSlot: (Int) -> Unit,
     onLimpiar: () -> Unit,
     onAutocompletar: () -> Unit,
     onCerrar: () -> Unit,
@@ -170,10 +171,19 @@ fun PanelBurbuja(
                         etiqueta = stringResource(etiquetaDeSlot(i)),
                         personaje = personajes[i],
                         japones = japones,
-                        onClick = { onQuitarSlot(i) },
+                        seleccionado = slotDestino == i,
+                        onClick = { onSlot(i) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
+            }
+
+            slotDestino?.let { slot ->
+                Text(
+                    stringResource(R.string.burbuja_destino, stringResource(etiquetaDeSlot(slot))),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
             }
 
             OutlinedTextField(

@@ -100,4 +100,47 @@ class CalculadoraGenealogiaTest {
         val total = totalDe(modelo, listOf(1, 2, null, 1, null, null, null))
         assertEquals(12, total)
     }
+
+    /* ---- Slot destino ---- */
+
+    @Test
+    fun colocaEnElSlotElegidoAunqueNoSeaElProximo() {
+        /* Con solo el hijo cargado, el destino Abuelo 1 · Padre 2 (slot 5)
+           recibe al personaje sin pasar por los padres. */
+        val base = listOf<Int?>(1, null, null, null, null, null, null)
+        val colocacion = alternar(base, 2, destino = 5)
+        assertEquals(ColocacionResultado.COLOCADO, colocacion.resultado)
+        assertEquals(listOf<Int?>(1, null, null, null, null, 2, null), colocacion.seleccion)
+    }
+
+    @Test
+    fun moverAlDestinoLiberaElSlotViejo() {
+        /* 3 estaba como Abuelo 2 · Padre 2 (slot 6): se mueve a Padre 1. */
+        val base = listOf<Int?>(1, null, null, null, null, null, 3)
+        val colocacion = alternar(base, 3, destino = 1)
+        assertEquals(ColocacionResultado.COLOCADO, colocacion.resultado)
+        assertEquals(listOf<Int?>(1, 3, null, null, null, null, null), colocacion.seleccion)
+    }
+
+    @Test
+    fun elDestinoOcupadoPorOtroRechazaLaColocacion() {
+        val base = listOf<Int?>(1, 2, null, null, null, null, null)
+        val colocacion = alternar(base, 3, destino = 1)
+        assertEquals(ColocacionResultado.REGLA, colocacion.resultado)
+        assertEquals(base, colocacion.seleccion)
+    }
+
+    @Test
+    fun conDestinoMandaElDestinoYNoElOrden() {
+        val colocacion = alternar(seleccionVacia, 1, destino = 2)
+        assertEquals(ColocacionResultado.COLOCADO, colocacion.resultado)
+        assertEquals(listOf<Int?>(null, null, 1, null, null, null, null), colocacion.seleccion)
+    }
+
+    @Test
+    fun unDestinoFueraDeRangoNoRompe() {
+        val colocacion = alternar(seleccionVacia, 1, destino = 99)
+        assertEquals(ColocacionResultado.REGLA, colocacion.resultado)
+        assertEquals(seleccionVacia, colocacion.seleccion)
+    }
 }

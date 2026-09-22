@@ -22,9 +22,17 @@ data class Colocacion(
     val resultado: ColocacionResultado,
 )
 
-/* Mismo gesto que la pantalla de compatibilidad: si el personaje ya estaba,
-   se quita; si no, va al primer hueco donde las reglas lo permitan. */
-fun alternar(seleccion: List<Int?>, id: Int): Colocacion {
+/* Mismo gesto que la pantalla de compatibilidad, con un slot destino
+   opcional: si se indicó, el personaje va ahí (movido desde su posición
+   actual si ya estaba); si no, va al primer hueco donde las reglas lo
+   permitan. */
+fun alternar(seleccion: List<Int?>, id: Int, destino: Int? = null): Colocacion {
+    if (destino != null) {
+        val colocado = colocarEn(seleccion, destino, id)
+            ?: return Colocacion(seleccion, ColocacionResultado.REGLA)
+        return Colocacion(colocado, ColocacionResultado.COLOCADO)
+    }
+
     val actual = seleccion.toTypedArray()
     val posiciones = actual.withIndex().filter { it.value == id }.map { it.index }
     if (posiciones.isNotEmpty()) {
@@ -38,6 +46,21 @@ fun alternar(seleccion: List<Int?>, id: Int): Colocacion {
         return Colocacion(colocado, ColocacionResultado.COLOCADO)
     }
     return Colocacion(seleccion, if (slot == -1) ColocacionResultado.COMPLETA else ColocacionResultado.REGLA)
+}
+
+/* Coloca `id` en el slot indicado. Si ya estaba en la selección, primero se
+   lo saca de su última posición (mover): así las reglas se evalúan sin el
+   ocupante viejo (p. ej. mover un padre al otro slot de padre). Devuelve
+   null cuando el destino no admite al personaje o ya tiene a otro. */
+fun colocarEn(seleccion: List<Int?>, slot: Int, id: Int): List<Int?>? {
+    if (slot !in seleccion.indices) return null
+    val base = seleccion.toMutableList()
+    val anterior = base.indexOfLast { it == id }
+    if (anterior >= 0) base[anterior] = null
+    if (base[slot] != null) return null
+    if (!puedeIrEn(base.toTypedArray(), slot, id)) return null
+    base[slot] = id
+    return base
 }
 
 fun quitar(seleccion: List<Int?>, slot: Int): List<Int?> {

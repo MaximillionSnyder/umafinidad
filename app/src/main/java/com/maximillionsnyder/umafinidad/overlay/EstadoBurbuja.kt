@@ -3,6 +3,7 @@ package com.maximillionsnyder.umafinidad.overlay
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.domain.puedeIrEn
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,11 @@ internal class EstadoBurbuja(
     private val _filtro = MutableStateFlow("")
     val filtro = _filtro.asStateFlow()
 
+    /* Slot elegido como destino de la próxima colocación; null = automático
+       (primer hueco válido en orden). */
+    private val _slotDestino = MutableStateFlow<Int?>(null)
+    val slotDestino = _slotDestino.asStateFlow()
+
     /* Aviso de regla o selección completa; se limpia al acertar. */
     private val _aviso = MutableStateFlow<Int?>(null)
     val aviso = _aviso.asStateFlow()
@@ -55,10 +61,19 @@ internal class EstadoBurbuja(
         .flowOn(Dispatchers.Default)
 
     /* Sugerencias del buscador. `combine` recalcula solo cuando cambian los
-       candidatos o el texto, y `flowOn` lo corre en el hilo de fondo porque la
-       distancia de edición no es gratis. */
-    val sugerencias = combine(jugables, _filtro) { candidatos, texto ->
-        rankearSugerencias(candidatos, texto)
+       candidatos, el texto, el destino o la selección, y `flowOn` lo corre en
+       el hilo de fondo porque la distancia de edición no es gratis. Con un
+       destino elegido solo se ofrecen los personajes que pueden ir ahí. */
+    val sugerencias = combine(
+        jugables, _filtro, _slotDestino, _seleccion,
+    ) { candidatos, texto, destino, seleccion ->
+        val base = if (destino == null || seleccion.getOrNull(destino) != null) {
+            candidatos
+        } else {
+            val actual = seleccion.toTypedArray()
+            candidatos.filter { puedeIrEn(actual, destino, it.charId) }
+        }
+        rankearSugerencias(base, texto)
     }.flowOn(Dispatchers.Default)
 
     fun cargar() {
@@ -71,13 +86,17 @@ internal class EstadoBurbuja(
     }
 
     fun alternar(id: Int) {
-        val colocacion = alternar(_seleccion.value, id)
+        val destino = _slotDestino.value?.takeIf { _seleccion.value.getOrNull(it) == null }
+        val colocacion = alternar(_seleccion.value, id, destino)
         if (colocacion.resultado == ColocacionResultado.COLOCADO ||
             colocacion.resultado == ColocacionResultado.QUITADO
         ) {
             _seleccion.value = colocacion.seleccion
             _filtro.value = ""
             _aviso.value = null
+            if (destino != null && colocacion.resultado == ColocacionResultado.COLOCADO) {
+                _slotDestino.value = null
+            }
         } else {
             _aviso.value = if (colocacion.resultado == ColocacionResultado.COMPLETA) {
                 R.string.seleccion_completa
@@ -87,8 +106,20 @@ internal class EstadoBurbuja(
         }
     }
 
+    /* Tocar un slot ocupado lo quita; tocar uno vacío lo marca o desmarca
+       como destino de la próxima colocación. */
+    fun tocarSlot(slot: Int) {
+        if (_seleccion.value.getOrNull(slot) != null) {
+            quitarSlot(slot)
+            return
+        }
+        _slotDestino.value = if (_slotDestino.value == slot) null else slot
+        _aviso.value = null
+    }
+
     fun quitarSlot(slot: Int) {
         _seleccion.value = quitar(_seleccion.value, slot)
+        if (_slotDestino.value == slot) _slotDestino.value = null
         _aviso.value = null
     }
 
@@ -96,6 +127,7 @@ internal class EstadoBurbuja(
         _seleccion.value = seleccionVacia
         _filtro.value = ""
         _aviso.value = null
+        _slotDestino.value = null
     }
 
     fun buscar(texto: String) {
@@ -111,6 +143,7 @@ internal class EstadoBurbuja(
         val actual = _seleccion.value
         if (actual[0] == null || actual.none { it == null }) return
 
+        _slotDestino.value = null
         _autocompletando.value = true
         alcance.launch(Dispatchers.Default) {
             try {

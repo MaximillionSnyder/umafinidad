@@ -196,6 +196,8 @@
     <string name="burbuja_sin_permiso">Falta el permiso «Mostrar sobre otras apps». Apagá y encendé el interruptor para concederlo.</string>
     <string name="burbuja_panel_translucido">Panel translúcido</string>
     <string name="burbuja_panel_translucido_desc">Deja ver el juego detrás del panel de afinidad (55% de opacidad)</string>
+    <string name="burbuja_elegir_lugar">Elegir este lugar</string>
+    <string name="burbuja_destino">Se va a colocar en: %1$s</string>
     <string name="burbuja_canal">Burbuja de acceso rápido</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Burbuja flotante activa</string>

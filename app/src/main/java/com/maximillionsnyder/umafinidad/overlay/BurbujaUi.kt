@@ -58,6 +58,7 @@ const val FRACCION_ANCHO_PANEL = 0.50f
 const val ANCHO_PANEL_MIN_DP = 190
 const val ANCHO_PANEL_MAX_DP = 300
 const val FRACCION_ALTO_PANEL = 0.66f
+const val ALPHA_PANEL = 0.55f
 
 /* Ficha de personaje del carrusel del buscador. */
 const val FICHA_OPCION_DP = 44

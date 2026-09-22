@@ -25,5 +25,11 @@ object PosicionBurbuja {
     fun enLadoDerecho(x: Int, ancho: Int, tamano: Int): Boolean =
         centro(x, tamano) >= ancho / 2
 
+    /* ¿El punto (en coordenadas de pantalla) cayó dentro de la ventana de la
+       burbuja? Se usa para distinguir el toque sobre la burbuja del toque
+       fuera del panel. */
+    fun contiene(x: Int, y: Int, tamano: Int, puntoX: Float, puntoY: Float): Boolean =
+        puntoX >= x && puntoX <= x + tamano && puntoY >= y && puntoY <= y + tamano
+
     private fun centro(x: Int, tamano: Int): Int = x + tamano / 2
 }

@@ -247,6 +247,9 @@ class BurbujaService : Service() {
 
     private fun iniciarArrastre() {
         animacionIman?.cancel()
+        /* Tocar la burbuja cierra el panel también cuando el gesto va a
+           arrastrar: el toque sobre la burbuja ya no llega como ACTION_OUTSIDE. */
+        if (vistaPanel != null) quitarPanel()
         val pantalla = tamanoPantalla()
         arrastre = ArrastreBurbuja(
             origenX = parametrosBurbuja.x,
@@ -430,10 +433,12 @@ class BurbujaService : Service() {
         }
 
         /* Toque fuera de la franja: cierra el panel sin robarle el evento
-           a la app de fondo (FLAG_NOT_TOUCH_MODAL + FLAG_WATCH_OUTSIDE_TOUCH). */
+           a la app de fondo (FLAG_NOT_TOUCH_MODAL + FLAG_WATCH_OUTSIDE_TOUCH).
+           Si el toque cayó sobre la burbuja, no se cierra acá: de eso se
+           encarga su tap (si no, este mismo gesto lo cerraría y lo reabriría). */
         vista.setOnTouchListener { _, evento ->
             if (evento.action == MotionEvent.ACTION_OUTSIDE) {
-                quitarPanel()
+                if (!sobreBurbuja(evento.rawX, evento.rawY)) quitarPanel()
                 true
             } else {
                 false
@@ -493,6 +498,12 @@ class BurbujaService : Service() {
         }
         vistaPanel = null
     }
+
+    /* ¿El toque crudo cayó sobre la ventana de la burbuja? */
+    private fun sobreBurbuja(rawX: Float, rawY: Float): Boolean =
+        PosicionBurbuja.contiene(
+            parametrosBurbuja.x, parametrosBurbuja.y, tamanoBurbuja, rawX, rawY,
+        )
 
     private fun abrirApp(destino: String) {
         val intent = Intent(this, MainActivity::class.java).apply {

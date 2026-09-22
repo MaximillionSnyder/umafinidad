@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
 import android.content.res.Configuration
 import android.graphics.PixelFormat
@@ -12,7 +13,6 @@ import android.os.Build
 import android.os.IBinder
 import android.view.Gravity
 import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import androidx.compose.runtime.CompositionLocalProvider
@@ -39,14 +39,15 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 /* Burbuja flotante de acceso rápido (estilo grabador de pantalla): una
    ventana de overlay arrastrable que al tocarla abre un panel lateral con la
    calculadora de afinidad y atajos a la app.
 
-   Las tres ventanas (burbuja, panel y zona de descarte) se crean una sola vez
-   y después solo se muestran u ocultan: recrear una ventana obliga a Compose a
-   recomponer desde cero y a recargar avatares y recursos. */
+   La burbuja y la zona de descarte se crean una sola vez por servicio; el
+   panel se monta en una ventana nueva en cada apertura (una ventana recién
+   creada es la que engancha el teclado del buscador). */
 class BurbujaService : Service() {
 
     companion object {
@@ -82,8 +83,13 @@ class BurbujaService : Service() {
     private var vistaPanel: ComposeView? = null
     private var vistaQuitar: ComposeView? = null
     private lateinit var parametrosBurbuja: WindowManager.LayoutParams
+    private var parametrosPanel: WindowManager.LayoutParams? = null
     private lateinit var parametrosQuitar: WindowManager.LayoutParams
     private var animacionIman: Job? = null
+
+    /* Tamaño actual del círculo, en dp; la vista Compose lo observa. */
+    private val tamanoBurbujaDp = MutableStateFlow(TAMANO_BURBUJA_DP)
+    private var escuchaTamano: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     private var tamanoBurbuja = 0
     private var margen = 0
@@ -98,7 +104,8 @@ class BurbujaService : Service() {
             return
         }
         ventanas = getSystemService(WINDOW_SERVICE) as WindowManager
-        tamanoBurbuja = dp(TAMANO_BURBUJA_DP)
+        tamanoBurbujaDp.value = prefs.tamanoBurbuja.dp
+        tamanoBurbuja = dp(tamanoBurbujaDp.value)
         margen = dp(MARGEN_BURBUJA_DP)
         tamanoQuitar = dp(TAMANO_QUITAR_DP)
         margenQuitar = dp(MARGEN_QUITAR_DP)
@@ -107,6 +114,7 @@ class BurbujaService : Service() {
         iniciarForeground()
         crearBurbuja()
         crearZonaQuitar()
+        escuchaTamano = prefs.observarTamanoBurbuja { aplicarTamanoBurbuja() }
         estado.cargar()
     }
 
@@ -147,6 +155,8 @@ class BurbujaService : Service() {
 
     override fun onDestroy() {
         animacionIman?.cancel()
+        escuchaTamano?.let { prefs.dejarDeObservar(it) }
+        escuchaTamano = null
         alcance.cancel()
         listOf(vistaBurbuja, vistaPanel, vistaQuitar).forEach { vista ->
             vista?.let { runCatching { ventanas.removeView(it) } }
@@ -210,7 +220,9 @@ class BurbujaService : Service() {
 
         val descripcion = getString(R.string.burbuja_descripcion)
         vista.setContent {
+            val tamanoDp by tamanoBurbujaDp.collectAsState()
             BurbujaContenido(
+                tamanoDp = tamanoDp,
                 descripcion = descripcion,
                 onTap = { alternarPanel() },
                 onIniciarArrastre = ::iniciarArrastre,
@@ -247,8 +259,8 @@ class BurbujaService : Service() {
 
     private fun iniciarArrastre() {
         animacionIman?.cancel()
-        /* Tocar la burbuja cierra el panel también cuando el gesto va a
-           arrastrar: el toque sobre la burbuja ya no llega como ACTION_OUTSIDE. */
+        /* El panel no se cierra por toques afuera; arrastrar la burbuja sí,
+           para no quedar con la franja y la burbuja superpuestas. */
         if (vistaPanel != null) quitarPanel()
         val pantalla = tamanoPantalla()
         arrastre = ArrastreBurbuja(
@@ -304,6 +316,30 @@ class BurbujaService : Service() {
             prefs.burbujaX = parametrosBurbuja.x
             prefs.burbujaY = parametrosBurbuja.y
         }
+    }
+
+    /* El tamaño del círculo se elige en Ajustes: se aplica en vivo y se
+       reacomoda la burbuja pegada a su borde (puede haber cambiado de
+       tamaño y ya no entrar donde estaba). */
+    private fun aplicarTamanoBurbuja() {
+        val nuevoDp = prefs.tamanoBurbuja.dp
+        if (nuevoDp == tamanoBurbujaDp.value) return
+        tamanoBurbujaDp.value = nuevoDp
+        tamanoBurbuja = dp(nuevoDp)
+        val vista = vistaBurbuja ?: return
+        val pantalla = tamanoPantalla()
+        val acotada = PosicionBurbuja.acotar(
+            parametrosBurbuja.x, parametrosBurbuja.y,
+            pantalla.x, pantalla.y, tamanoBurbuja, margen,
+        )
+        val x = PosicionBurbuja.iman(acotada.x, pantalla.x, tamanoBurbuja, margen)
+        parametrosBurbuja.width = tamanoBurbuja
+        parametrosBurbuja.height = tamanoBurbuja
+        parametrosBurbuja.x = x
+        parametrosBurbuja.y = acotada.y
+        runCatching { ventanas.updateViewLayout(vista, parametrosBurbuja) }
+        prefs.burbujaX = x
+        prefs.burbujaY = acotada.y
     }
 
     /* Apaga la burbuja: se recupera desde Ajustes. */
@@ -373,7 +409,8 @@ class BurbujaService : Service() {
     private fun abrirPanel() {
         if (vistaPanel != null) return
         val vista = crearComposeView()
-        val parametros = parametrosPanel()
+        parametrosPanel = crearParametrosPanel()
+        val parametros = parametrosPanel ?: return
 
         val japones = resources.configuration.locales[0].language == "ja"
         val translucido = prefs.panelTranslucido
@@ -412,6 +449,8 @@ class BurbujaService : Service() {
                         onSlot = estado::tocarSlot,
                         onLimpiar = estado::limpiar,
                         onAutocompletar = estado::autocompletar,
+                        onRedimensionar = ::redimensionarPanel,
+                        onFinRedimension = ::guardarTamanoPanel,
                         onCerrar = { quitarPanel() },
                         onOcultar = ::ocultarBurbuja,
                         onAbrirDestino = { destino ->
@@ -432,19 +471,6 @@ class BurbujaService : Service() {
             }
         }
 
-        /* Toque fuera de la franja: cierra el panel sin robarle el evento
-           a la app de fondo (FLAG_NOT_TOUCH_MODAL + FLAG_WATCH_OUTSIDE_TOUCH).
-           Si el toque cayó sobre la burbuja, no se cierra acá: de eso se
-           encarga su tap (si no, este mismo gesto lo cerraría y lo reabriría). */
-        vista.setOnTouchListener { _, evento ->
-            if (evento.action == MotionEvent.ACTION_OUTSIDE) {
-                if (!sobreBurbuja(evento.rawX, evento.rawY)) quitarPanel()
-                true
-            } else {
-                false
-            }
-        }
-
         val agregada = runCatching { ventanas.addView(vista, parametros) }.isSuccess
         if (!agregada) return
         vistaPanel = vista
@@ -455,16 +481,24 @@ class BurbujaService : Service() {
     }
 
     /* Franja en el borde opuesto a la burbuja, centrada y con paso de toques
-       hacia la app de fondo. Ancho y alto escalan con la pantalla. */
-    private fun parametrosPanel(): WindowManager.LayoutParams {
+       hacia la app de fondo. Los toques de afuera no la cierran: solo se
+       cierra de forma explícita (burbuja, X, Atrás, Ocultar o giro). Si el
+       usuario la redimensionó, manda el tamaño guardado en dp. */
+    private fun crearParametrosPanel(): WindowManager.LayoutParams {
         val pantalla = tamanoPantalla()
-        val anchoPanel = PosicionPanel.ancho(
-            pantalla.x,
-            FRACCION_ANCHO_PANEL,
-            dp(ANCHO_PANEL_MIN_DP),
-            dp(ANCHO_PANEL_MAX_DP),
-        )
-        val altoPanel = (pantalla.y * FRACCION_ALTO_PANEL).toInt()
+        val minAncho = dp(ANCHO_PANEL_MIN_DP)
+        val maxAncho = PosicionPanel.maxAncho(pantalla.x, tamanoBurbuja, margen, minAncho)
+        val anchoPanel = prefs.panelAnchoDp.takeIf { it > 0 }?.coerceIn(minAncho, maxAncho)
+            ?: PosicionPanel.ancho(
+                pantalla.x,
+                FRACCION_ANCHO_PANEL,
+                minAncho,
+                dp(ANCHO_PANEL_MAX_DP),
+            )
+        val minAlto = dp(ALTO_PANEL_MIN_DP)
+        val maxAlto = (pantalla.y - 2 * margen).coerceAtLeast(minAlto)
+        val altoPanel = prefs.panelAltoDp.takeIf { it > 0 }?.coerceIn(minAlto, maxAlto)
+            ?: (pantalla.y * FRACCION_ALTO_PANEL).toInt()
         val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
             parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
         )
@@ -477,7 +511,6 @@ class BurbujaService : Service() {
             altoPanel,
             tipoVentana(),
             WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             PixelFormat.TRANSLUCENT,
         ).apply {
@@ -492,18 +525,50 @@ class BurbujaService : Service() {
         }
     }
 
+    /* Arrastre de la manija del panel: cambia ancho y alto en vivo, con el
+       borde superior anclado (la franja no se recentra durante el gesto). */
+    private fun redimensionarPanel(dx: Float, dy: Float) {
+        val vista = vistaPanel ?: return
+        val parametros = parametrosPanel ?: return
+        val pantalla = tamanoPantalla()
+        val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
+            parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
+        )
+        val tamano = PosicionPanel.redimensionar(
+            anchoActual = parametros.width,
+            altoActual = parametros.height,
+            dx = dx,
+            dy = dy,
+            pantallaAncho = pantalla.x,
+            pantallaAlto = pantalla.y,
+            y = parametros.y,
+            margen = margen,
+            burbujaDerecha = burbujaDerecha,
+            tamanoBurbuja = tamanoBurbuja,
+            minAncho = dp(ANCHO_PANEL_MIN_DP),
+            minAlto = dp(ALTO_PANEL_MIN_DP),
+        )
+        if (tamano.ancho == parametros.width && tamano.alto == parametros.height) return
+        parametros.width = tamano.ancho
+        parametros.height = tamano.alto
+        parametros.x = PosicionPanel.x(pantalla.x, tamano.ancho, margen, burbujaDerecha)
+        runCatching { ventanas.updateViewLayout(vista, parametros) }
+    }
+
+    /* Al soltar la manija se recuerda el tamaño para las próximas aperturas. */
+    private fun guardarTamanoPanel() {
+        val parametros = parametrosPanel ?: return
+        prefs.panelAnchoDp = pxADp(parametros.width)
+        prefs.panelAltoDp = pxADp(parametros.height)
+    }
+
     private fun quitarPanel() {
         vistaPanel?.let { vista ->
             runCatching { ventanas.removeView(vista) }
         }
         vistaPanel = null
+        parametrosPanel = null
     }
-
-    /* ¿El toque crudo cayó sobre la ventana de la burbuja? */
-    private fun sobreBurbuja(rawX: Float, rawY: Float): Boolean =
-        PosicionBurbuja.contiene(
-            parametrosBurbuja.x, parametrosBurbuja.y, tamanoBurbuja, rawX, rawY,
-        )
 
     private fun abrirApp(destino: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
@@ -564,4 +629,6 @@ class BurbujaService : Service() {
     }
 
     private fun dp(valor: Int): Int = (valor * resources.displayMetrics.density).toInt()
+
+    private fun pxADp(valor: Int): Int = (valor / resources.displayMetrics.density).roundToInt()
 }

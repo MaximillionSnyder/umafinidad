@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">인연 패널 뒤의 게임이 비칩니다(불투명도 55%)</string>
     <string name="burbuja_elegir_lugar">이 자리 선택</string>
     <string name="burbuja_destino">배치 위치: %1$s</string>
+    <string name="burbuja_redimensionar">패널 크기 조정</string>
+    <string name="burbuja_tamano_titulo">버블 크기</string>
+    <string name="burbuja_tamano_chico">작게</string>
+    <string name="burbuja_tamano_chico_desc">더 작고 화면을 덜 차지함</string>
+    <string name="burbuja_tamano_normal">보통</string>
+    <string name="burbuja_tamano_normal_desc">기존 크기</string>
+    <string name="burbuja_tamano_grande">크게</string>
+    <string name="burbuja_tamano_grande_desc">터치하기 쉬움</string>
+    <string name="burbuja_tamano_muy_grande">아주 크게</string>
+    <string name="burbuja_tamano_muy_grande_desc">큰 화면용</string>
+    <string name="burbuja_restablecer">크기 초기화</string>
     <string name="burbuja_canal">빠른 접근 버블</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">플로팅 버블 사용 중</string>

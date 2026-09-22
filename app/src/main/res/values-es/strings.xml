@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">Deja ver el juego detrás del panel de afinidad (55% de opacidad)</string>
     <string name="burbuja_elegir_lugar">Elegir este lugar</string>
     <string name="burbuja_destino">Se va a colocar en: %1$s</string>
+    <string name="burbuja_redimensionar">Redimensionar panel</string>
+    <string name="burbuja_tamano_titulo">Tamaño de la burbuja</string>
+    <string name="burbuja_tamano_chico">Chico</string>
+    <string name="burbuja_tamano_chico_desc">Más discreta, ocupa menos pantalla</string>
+    <string name="burbuja_tamano_normal">Normal</string>
+    <string name="burbuja_tamano_normal_desc">El tamaño de siempre</string>
+    <string name="burbuja_tamano_grande">Grande</string>
+    <string name="burbuja_tamano_grande_desc">Más fácil de tocar</string>
+    <string name="burbuja_tamano_muy_grande">Muy grande</string>
+    <string name="burbuja_tamano_muy_grande_desc">Pensada para pantallas grandes</string>
+    <string name="burbuja_restablecer">Restablecer tamaño</string>
     <string name="burbuja_canal">Burbuja de acceso rápido</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Burbuja flotante activa</string>

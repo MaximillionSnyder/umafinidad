@@ -11,6 +11,7 @@ import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
+import com.maximillionsnyder.umafinidad.data.TamanoBurbuja
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.fusionarArbol
@@ -148,6 +149,22 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun setPanelTranslucido(valor: Boolean) {
         prefs.panelTranslucido = valor
         _panelTranslucido.value = valor
+    }
+
+    /* Tamaño del círculo de la burbuja (el servicio lo aplica en vivo). */
+    private val _tamanoBurbuja = MutableStateFlow(prefs.tamanoBurbuja)
+    val tamanoBurbuja: StateFlow<TamanoBurbuja> = _tamanoBurbuja
+
+    fun setTamanoBurbuja(valor: TamanoBurbuja) {
+        prefs.tamanoBurbuja = valor
+        _tamanoBurbuja.value = valor
+    }
+
+    /* Restablece burbuja (56 dp) y panel (tamaño automático). */
+    fun restablecerTamanos() {
+        prefs.panelAnchoDp = -1
+        prefs.panelAltoDp = -1
+        setTamanoBurbuja(TamanoBurbuja.NORMAL)
     }
 
     /* Bienvenida de accesibilidad: se muestra hasta que se guarda u omite. */

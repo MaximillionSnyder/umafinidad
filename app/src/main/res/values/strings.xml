@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">See the game behind the affinity panel (55% opacity)</string>
     <string name="burbuja_elegir_lugar">Choose this slot</string>
     <string name="burbuja_destino">Will be placed in: %1$s</string>
+    <string name="burbuja_redimensionar">Resize panel</string>
+    <string name="burbuja_tamano_titulo">Bubble size</string>
+    <string name="burbuja_tamano_chico">Small</string>
+    <string name="burbuja_tamano_chico_desc">More discreet, takes less screen</string>
+    <string name="burbuja_tamano_normal">Normal</string>
+    <string name="burbuja_tamano_normal_desc">The usual size</string>
+    <string name="burbuja_tamano_grande">Large</string>
+    <string name="burbuja_tamano_grande_desc">Easier to tap</string>
+    <string name="burbuja_tamano_muy_grande">Extra large</string>
+    <string name="burbuja_tamano_muy_grande_desc">For big screens</string>
+    <string name="burbuja_restablecer">Reset size</string>
     <string name="burbuja_canal">Quick access bubble</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Floating bubble active</string>

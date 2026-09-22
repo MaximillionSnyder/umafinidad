@@ -1,7 +1,10 @@
 package com.maximillionsnyder.umafinidad.overlay
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,7 +35,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -71,6 +78,8 @@ fun PanelBurbuja(
     onSlot: (Int) -> Unit,
     onLimpiar: () -> Unit,
     onAutocompletar: () -> Unit,
+    onRedimensionar: (Float, Float) -> Unit,
+    onFinRedimension: () -> Unit,
     onCerrar: () -> Unit,
     onOcultar: () -> Unit,
     onAbrirDestino: (String) -> Unit,
@@ -94,167 +103,229 @@ fun PanelBurbuja(
     } else {
         MaterialTheme.colorScheme.surfaceContainer
     }
-    Card(
-        modifier = modifier.fillMaxSize(),
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = colorPanel),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = if (translucido) 0.dp else 1.dp,
-        ),
-        border = if (translucido) {
-            BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-        } else {
-            null
-        },
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+    Box(modifier = modifier.fillMaxSize()) {
+        Card(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(containerColor = colorPanel),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = if (translucido) 0.dp else 1.dp,
+            ),
+            border = if (translucido) {
+                BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+            } else {
+                null
+            },
         ) {
-            /* ---- Cabecera ---- */
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text(
-                    stringResource(R.string.burbuja_panel_titulo),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .weight(1f)
-                        .semantics { heading() },
-                )
-                IconButton(onClick = onCerrar) {
-                    Icon(
-                        painterResource(R.drawable.ic_cerrar),
-                        contentDescription = stringResource(R.string.cerrar),
+                /* ---- Cabecera ---- */
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        stringResource(R.string.burbuja_panel_titulo),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .weight(1f)
+                            .semantics { heading() },
                     )
-                }
-            }
-
-            /* ---- Acciones rápidas y afinidad total ---- */
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                BotonCompacto(
-                    iconoRes = R.drawable.ic_limpiar,
-                    descripcionRes = R.string.burbuja_limpiar,
-                    enabled = seleccion.any { it != null },
-                    tonal = false,
-                    onClick = onLimpiar,
-                )
-                BotonCompacto(
-                    iconoRes = R.drawable.ic_autocompletar,
-                    descripcionRes = R.string.burbuja_autocompletar,
-                    enabled = !autocompletando && hayHuecos,
-                    onClick = onAutocompletar,
-                )
-                Spacer(Modifier.weight(1f))
-                if (rango != null && total != null) {
-                    TotalCompacto(rango, total)
-                }
-            }
-            if (autocompletando) {
-                BarraProgreso()
-            }
-
-            /* ---- Genealogía completa: hijo, dos padres y abuelos ---- */
-            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                for (i in 0 until SLOTS) {
-                    SlotGenealogia(
-                        etiqueta = stringResource(etiquetaDeSlot(i)),
-                        personaje = personajes[i],
-                        japones = japones,
-                        seleccionado = slotDestino == i,
-                        onClick = { onSlot(i) },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-            }
-
-            slotDestino?.let { slot ->
-                Text(
-                    stringResource(R.string.burbuja_destino, stringResource(etiquetaDeSlot(slot))),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
-
-            OutlinedTextField(
-                value = filtro,
-                onValueChange = onFiltro,
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                shape = RoundedCornerShape(14.dp),
-                leadingIcon = {
-                    Icon(painterResource(R.drawable.ic_buscar), contentDescription = null)
-                },
-                trailingIcon = {
-                    if (filtro.isNotEmpty()) {
-                        IconButton(onClick = { onFiltro("") }) {
-                            Icon(
-                                painterResource(R.drawable.ic_cerrar),
-                                contentDescription = stringResource(R.string.limpiar_todo),
-                            )
-                        }
+                    IconButton(onClick = onCerrar) {
+                        Icon(
+                            painterResource(R.drawable.ic_cerrar),
+                            contentDescription = stringResource(R.string.cerrar),
+                        )
                     }
-                },
-                placeholder = { Text(stringResource(R.string.buscar)) },
-            )
+                }
 
-            aviso?.let { texto ->
-                Text(
-                    stringResource(texto),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
+                /* ---- Acciones rápidas y afinidad total ---- */
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    BotonCompacto(
+                        iconoRes = R.drawable.ic_limpiar,
+                        descripcionRes = R.string.burbuja_limpiar,
+                        enabled = seleccion.any { it != null },
+                        tonal = false,
+                        onClick = onLimpiar,
+                    )
+                    BotonCompacto(
+                        iconoRes = R.drawable.ic_autocompletar,
+                        descripcionRes = R.string.burbuja_autocompletar,
+                        enabled = !autocompletando && hayHuecos,
+                        onClick = onAutocompletar,
+                    )
+                    Spacer(Modifier.weight(1f))
+                    if (rango != null && total != null) {
+                        TotalCompacto(rango, total)
+                    }
+                }
+                if (autocompletando) {
+                    BarraProgreso()
+                }
+
+                /* ---- Genealogía completa: hijo, dos padres y abuelos ---- */
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    for (i in 0 until SLOTS) {
+                        SlotGenealogia(
+                            etiqueta = stringResource(etiquetaDeSlot(i)),
+                            personaje = personajes[i],
+                            japones = japones,
+                            seleccionado = slotDestino == i,
+                            onClick = { onSlot(i) },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
+                }
+
+                slotDestino?.let { slot ->
+                    Text(
+                        stringResource(
+                            R.string.burbuja_destino,
+                            stringResource(etiquetaDeSlot(slot)),
+                        ),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+
+                OutlinedTextField(
+                    value = filtro,
+                    onValueChange = onFiltro,
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(14.dp),
+                    leadingIcon = {
+                        Icon(painterResource(R.drawable.ic_buscar), contentDescription = null)
+                    },
+                    trailingIcon = {
+                        if (filtro.isNotEmpty()) {
+                            IconButton(onClick = { onFiltro("") }) {
+                                Icon(
+                                    painterResource(R.drawable.ic_cerrar),
+                                    contentDescription = stringResource(R.string.limpiar_todo),
+                                )
+                            }
+                        }
+                    },
+                    placeholder = { Text(stringResource(R.string.buscar)) },
                 )
-            }
 
-            if (sugerencias.isNotEmpty()) {
-                CarruselSugerencias(sugerencias, japones, ladoDerecho, onAlternar)
-            }
+                aviso?.let { texto ->
+                    Text(
+                        stringResource(texto),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
 
-            if (modelo == null || total == null) {
+                if (sugerencias.isNotEmpty()) {
+                    CarruselSugerencias(sugerencias, japones, ladoDerecho, onAlternar)
+                }
+
+                if (modelo == null || total == null) {
+                    Text(
+                        stringResource(R.string.burbuja_calc_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+                /* ---- Atajos a la app ---- */
                 Text(
-                    stringResource(R.string.burbuja_calc_hint),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    stringResource(R.string.burbuja_abrir),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.semantics { heading() },
                 )
+                BotonDestino(R.string.tab_compat, R.drawable.ic_tab_compat) {
+                    onAbrirDestino(Destino.TAB_COMPAT)
+                }
+                BotonDestino(R.string.tab_corredora, R.drawable.ic_tab_corredora) {
+                    onAbrirDestino(Destino.TAB_CORREDORA)
+                }
+                BotonDestino(R.string.tab_elenco, R.drawable.ic_tab_elenco) {
+                    onAbrirDestino(Destino.TAB_ELENCO)
+                }
+                BotonDestino(R.string.tab_ajustes, R.drawable.ic_tab_ajustes) {
+                    onAbrirDestino(Destino.TAB_AJUSTES)
+                }
+
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+                TextButton(onClick = onOcultar, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.burbuja_ocultar))
+                }
             }
+        }
 
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        ManijaRedimension(
+            onRedimensionar = onRedimensionar,
+            onFinRedimension = onFinRedimension,
+            modifier = Modifier.align(
+                if (ladoDerecho) Alignment.BottomEnd else Alignment.BottomStart,
+            ),
+        )
+    }
+}
 
-            /* ---- Atajos a la app ---- */
-            Text(
-                stringResource(R.string.burbuja_abrir),
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.semantics { heading() },
+/* Manija de la esquina inferior interna: arrastrarla cambia el tamaño de la
+   franja (el servicio aplica el nuevo tamaño a la ventana). */
+@Composable
+private fun ManijaRedimension(
+    onRedimensionar: (Float, Float) -> Unit,
+    onFinRedimension: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val color = MaterialTheme.colorScheme.primary
+    val descripcion = stringResource(R.string.burbuja_redimensionar)
+    Box(
+        modifier = modifier
+            .padding(6.dp)
+            .size(TAMANO_MANIJA_DP.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(color.copy(alpha = 0.18f))
+            .border(1.dp, color.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
+            .pointerInput(Unit) {
+                detectDragGestures(
+                    onDragEnd = { onFinRedimension() },
+                    onDragCancel = { onFinRedimension() },
+                ) { cambio, delta ->
+                    cambio.consume()
+                    onRedimensionar(delta.x, delta.y)
+                }
+            }
+            .semantics { contentDescription = descripcion },
+        contentAlignment = Alignment.Center,
+    ) {
+        Canvas(modifier = Modifier.size(18.dp)) {
+            val grosor = 2.dp.toPx()
+            drawLine(
+                color = color,
+                start = Offset(size.width * 0.15f, size.height * 0.85f),
+                end = Offset(size.width * 0.85f, size.height * 0.15f),
+                strokeWidth = grosor,
+                cap = StrokeCap.Round,
             )
-            BotonDestino(R.string.tab_compat, R.drawable.ic_tab_compat) {
-                onAbrirDestino(Destino.TAB_COMPAT)
-            }
-            BotonDestino(R.string.tab_corredora, R.drawable.ic_tab_corredora) {
-                onAbrirDestino(Destino.TAB_CORREDORA)
-            }
-            BotonDestino(R.string.tab_elenco, R.drawable.ic_tab_elenco) {
-                onAbrirDestino(Destino.TAB_ELENCO)
-            }
-            BotonDestino(R.string.tab_ajustes, R.drawable.ic_tab_ajustes) {
-                onAbrirDestino(Destino.TAB_AJUSTES)
-            }
-
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-
-            TextButton(onClick = onOcultar, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.burbuja_ocultar))
-            }
+            drawLine(
+                color = color,
+                start = Offset(size.width * 0.45f, size.height * 0.85f),
+                end = Offset(size.width * 0.85f, size.height * 0.45f),
+                strokeWidth = grosor,
+                cap = StrokeCap.Round,
+            )
         }
     }
 }

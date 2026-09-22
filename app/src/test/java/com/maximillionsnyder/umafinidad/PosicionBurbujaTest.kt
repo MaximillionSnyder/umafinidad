@@ -43,18 +43,4 @@ class PosicionBurbujaTest {
         assertFalse(PosicionBurbuja.enLadoDerecho(100, ancho, tamano))
         assertTrue(PosicionBurbuja.enLadoDerecho(800, ancho, tamano))
     }
-
-    @Test
-    fun elToqueDentroDeLaBurbujaCuenta() {
-        assertTrue(PosicionBurbuja.contiene(300, 700, tamano, 300f, 700f))
-        assertTrue(PosicionBurbuja.contiene(300, 700, tamano, 300f + tamano, 700f + tamano))
-        assertTrue(PosicionBurbuja.contiene(300, 700, tamano, 380f, 750f))
-    }
-
-    @Test
-    fun elToqueFueraDeLaBurbujaNoCuenta() {
-        assertFalse(PosicionBurbuja.contiene(300, 700, tamano, 299f, 700f))
-        assertFalse(PosicionBurbuja.contiene(300, 700, tamano, 300f + tamano + 0.5f, 700f))
-        assertFalse(PosicionBurbuja.contiene(300, 700, tamano, 300f, 700f + tamano + 0.5f))
-    }
 }

@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">透过相性面板可以看到游戏画面（不透明度 55%）</string>
     <string name="burbuja_elegir_lugar">选择此处</string>
     <string name="burbuja_destino">将放入：%1$s</string>
+    <string name="burbuja_redimensionar">调整面板大小</string>
+    <string name="burbuja_tamano_titulo">悬浮球大小</string>
+    <string name="burbuja_tamano_chico">小</string>
+    <string name="burbuja_tamano_chico_desc">更小巧，占用更少屏幕</string>
+    <string name="burbuja_tamano_normal">标准</string>
+    <string name="burbuja_tamano_normal_desc">一直以来的大小</string>
+    <string name="burbuja_tamano_grande">大</string>
+    <string name="burbuja_tamano_grande_desc">更容易点按</string>
+    <string name="burbuja_tamano_muy_grande">特大</string>
+    <string name="burbuja_tamano_muy_grande_desc">适合大屏幕</string>
+    <string name="burbuja_restablecer">重置大小</string>
     <string name="burbuja_canal">快捷悬浮球</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">悬浮球已启用</string>

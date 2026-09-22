@@ -58,7 +58,9 @@ const val FRACCION_ANCHO_PANEL = 0.50f
 const val ANCHO_PANEL_MIN_DP = 190
 const val ANCHO_PANEL_MAX_DP = 300
 const val FRACCION_ALTO_PANEL = 0.66f
+const val ALTO_PANEL_MIN_DP = 240
 const val ALPHA_PANEL = 0.55f
+const val TAMANO_MANIJA_DP = 34
 
 /* Ficha de personaje del carrusel del buscador. */
 const val FICHA_OPCION_DP = 44
@@ -74,6 +76,7 @@ const val MAX_FICHAS_VISIBLES = 6
    Ni el tamaño de la ventana ni la posición final del imán cambian. */
 @Composable
 fun BurbujaContenido(
+    tamanoDp: Int,
     descripcion: String,
     onTap: () -> Unit,
     onIniciarArrastre: () -> Unit,
@@ -89,7 +92,7 @@ fun BurbujaContenido(
 
     Box(
         modifier = Modifier
-            .size(TAMANO_BURBUJA_DP.dp)
+            .size(tamanoDp.dp)
             .scale(escala)
             .shadow(6.dp, CircleShape)
             .clip(CircleShape)
@@ -135,7 +138,7 @@ fun BurbujaContenido(
         Text(
             text = "◎",
             color = Color.White,
-            fontSize = 26.sp,
+            fontSize = (tamanoDp * 0.46f).sp,
             fontWeight = FontWeight.Black,
         )
     }

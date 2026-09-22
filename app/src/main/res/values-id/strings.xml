@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">Lihat gim di balik panel afinitas (opasitas 55%)</string>
     <string name="burbuja_elegir_lugar">Pilih tempat ini</string>
     <string name="burbuja_destino">Akan ditempatkan di: %1$s</string>
+    <string name="burbuja_redimensionar">Ubah ukuran panel</string>
+    <string name="burbuja_tamano_titulo">Ukuran bola</string>
+    <string name="burbuja_tamano_chico">Kecil</string>
+    <string name="burbuja_tamano_chico_desc">Lebih ringkas, memakai layar lebih sedikit</string>
+    <string name="burbuja_tamano_normal">Normal</string>
+    <string name="burbuja_tamano_normal_desc">Ukuran seperti biasa</string>
+    <string name="burbuja_tamano_grande">Besar</string>
+    <string name="burbuja_tamano_grande_desc">Lebih mudah disentuh</string>
+    <string name="burbuja_tamano_muy_grande">Sangat besar</string>
+    <string name="burbuja_tamano_muy_grande_desc">Untuk layar besar</string>
+    <string name="burbuja_restablecer">Setel ulang ukuran</string>
     <string name="burbuja_canal">Bola akses cepat</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Bola melayang aktif</string>

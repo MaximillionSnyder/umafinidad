@@ -28,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,6 +53,7 @@ import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
+import com.maximillionsnyder.umafinidad.data.TamanoBurbuja
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.descripcionRes
@@ -79,6 +81,9 @@ fun SettingsScreen(
     onBurbuja: (Boolean) -> Unit,
     panelTranslucido: Boolean,
     onPanelTranslucido: (Boolean) -> Unit,
+    tamanoBurbuja: TamanoBurbuja,
+    onTamanoBurbuja: (TamanoBurbuja) -> Unit,
+    onRestablecerTamanos: () -> Unit,
     modelo: AffinityModel,
     japones: Boolean,
     arboles: List<ArbolGuardado>,
@@ -139,6 +144,39 @@ fun SettingsScreen(
                     activado = panelTranslucido,
                     onCambio = onPanelTranslucido,
                 )
+                Text(
+                    stringResource(R.string.burbuja_tamano_titulo),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.burbuja_tamano_chico),
+                    descripcion = stringResource(R.string.burbuja_tamano_chico_desc),
+                    seleccionado = tamanoBurbuja == TamanoBurbuja.CHICO,
+                    onClick = { onTamanoBurbuja(TamanoBurbuja.CHICO) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.burbuja_tamano_normal),
+                    descripcion = stringResource(R.string.burbuja_tamano_normal_desc),
+                    seleccionado = tamanoBurbuja == TamanoBurbuja.NORMAL,
+                    onClick = { onTamanoBurbuja(TamanoBurbuja.NORMAL) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.burbuja_tamano_grande),
+                    descripcion = stringResource(R.string.burbuja_tamano_grande_desc),
+                    seleccionado = tamanoBurbuja == TamanoBurbuja.GRANDE,
+                    onClick = { onTamanoBurbuja(TamanoBurbuja.GRANDE) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.burbuja_tamano_muy_grande),
+                    descripcion = stringResource(R.string.burbuja_tamano_muy_grande_desc),
+                    seleccionado = tamanoBurbuja == TamanoBurbuja.MUY_GRANDE,
+                    onClick = { onTamanoBurbuja(TamanoBurbuja.MUY_GRANDE) },
+                )
+                TextButton(onClick = onRestablecerTamanos) {
+                    Text(stringResource(R.string.burbuja_restablecer))
+                }
                 if (burbujaActiva && !burbujaPermiso) {
                     Text(
                         stringResource(R.string.burbuja_sin_permiso),

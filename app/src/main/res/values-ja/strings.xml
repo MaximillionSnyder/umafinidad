@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">相性パネルの後ろのゲームが透けて見えます（不透明度55%）</string>
     <string name="burbuja_elegir_lugar">この場所を選ぶ</string>
     <string name="burbuja_destino">配置先: %1$s</string>
+    <string name="burbuja_redimensionar">パネルのサイズ変更</string>
+    <string name="burbuja_tamano_titulo">バブルのサイズ</string>
+    <string name="burbuja_tamano_chico">小</string>
+    <string name="burbuja_tamano_chico_desc">より控えめで画面を取らない</string>
+    <string name="burbuja_tamano_normal">標準</string>
+    <string name="burbuja_tamano_normal_desc">これまでと同じサイズ</string>
+    <string name="burbuja_tamano_grande">大</string>
+    <string name="burbuja_tamano_grande_desc">タップしやすい</string>
+    <string name="burbuja_tamano_muy_grande">特大</string>
+    <string name="burbuja_tamano_muy_grande_desc">大きな画面向け</string>
+    <string name="burbuja_restablecer">サイズをリセット</string>
     <string name="burbuja_canal">クイックアクセスバブル</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">フローティングバブルが有効です</string>

@@ -67,6 +67,12 @@ se juega:
   el primer hueco válido como siempre;
 - el fondo del panel se puede dejar **translúcido** para ver el juego detrás
   (**Ajustes → Burbuja flotante → Panel translúcido**, activado por defecto);
+- el panel se puede **redimensionar** con la manija de su esquina inferior
+  interna (el tamaño se recuerda), y el círculo de la burbuja se elige en
+  **Ajustes → Burbuja flotante → Tamaño de la burbuja** (Chico 44, Normal 56,
+  Grande 72, Muy grande 88 dp; hay un botón para restablecer ambos tamaños);
+- el panel **no se cierra al tocar afuera**: solo con la burbuja, la X, Atrás
+  o el botón Ocultar, así podés seguir jugando con la franja abierta;
 - incluye atajos para abrir Compatibilidad, Mi corredora, Mis Umas y Ajustes;
 - se arrastra y se pega al borde más cercano con una animación corta,
   recordando su posición, y se oculta desde el propio panel o desde la
@@ -80,9 +86,9 @@ La burbuja y la zona de descarte se crean una sola vez por servicio. El panel
 se monta en una ventana nueva en cada apertura (una ventana recién creada es
 la que engancha el teclado del buscador). El estado —selección, búsqueda,
 sugerencias y slot destino— vive en `EstadoBurbuja`, así que cerrar y reabrir
-el panel no lo pierde. El tamaño de la burbuja y de la franja son los mismos
-valores de siempre (`TAMANO_BURBUJA_DP`, `FRACCION_ANCHO_PANEL`,
-`FRACCION_ALTO_PANEL`).
+el panel no lo pierde. El tamaño automático de la franja sigue saliendo de las
+fracciones de siempre (`FRACCION_ANCHO_PANEL`, `FRACCION_ALTO_PANEL`), salvo
+que el usuario la haya redimensionado a mano.
 
 ## Estructura
 

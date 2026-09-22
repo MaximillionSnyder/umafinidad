@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">Thấy trò chơi phía sau bảng tương thích (độ mờ 55%)</string>
     <string name="burbuja_elegir_lugar">Chọn vị trí này</string>
     <string name="burbuja_destino">Sẽ đặt vào: %1$s</string>
+    <string name="burbuja_redimensionar">Đổi kích thước bảng</string>
+    <string name="burbuja_tamano_titulo">Kích thước bong bóng</string>
+    <string name="burbuja_tamano_chico">Nhỏ</string>
+    <string name="burbuja_tamano_chico_desc">Gọn hơn, chiếm ít màn hình</string>
+    <string name="burbuja_tamano_normal">Bình thường</string>
+    <string name="burbuja_tamano_normal_desc">Kích thước cũ</string>
+    <string name="burbuja_tamano_grande">Lớn</string>
+    <string name="burbuja_tamano_grande_desc">Dễ chạm hơn</string>
+    <string name="burbuja_tamano_muy_grande">Rất lớn</string>
+    <string name="burbuja_tamano_muy_grande_desc">Cho màn hình lớn</string>
+    <string name="burbuja_restablecer">Đặt lại kích thước</string>
     <string name="burbuja_canal">Bong bóng truy cập nhanh</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">Bong bóng nổi đang bật</string>

@@ -212,6 +212,7 @@ private fun App(
     val mostrarBienvenida by vm.mostrarBienvenida.collectAsState()
     val burbujaActiva by vm.burbujaActiva.collectAsState()
     val panelTranslucido by vm.panelTranslucido.collectAsState()
+    val tamanoBurbuja by vm.tamanoBurbuja.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
@@ -516,6 +517,9 @@ private fun App(
                                                 },
                                                 panelTranslucido = panelTranslucido,
                                                 onPanelTranslucido = vm::setPanelTranslucido,
+                                                tamanoBurbuja = tamanoBurbuja,
+                                                onTamanoBurbuja = vm::setTamanoBurbuja,
+                                                onRestablecerTamanos = vm::restablecerTamanos,
                                                 modelo = m,
                                                 japones = japones,
                                                 arboles = arboles,

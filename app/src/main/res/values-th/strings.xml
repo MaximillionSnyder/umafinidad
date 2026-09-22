@@ -198,6 +198,17 @@
     <string name="burbuja_panel_translucido_desc">มองเห็นเกมด้านหลังแผงความเข้ากันได้ (ความทึบ 55%)</string>
     <string name="burbuja_elegir_lugar">เลือกตำแหน่งนี้</string>
     <string name="burbuja_destino">จะวางใน: %1$s</string>
+    <string name="burbuja_redimensionar">ปรับขนาดแผง</string>
+    <string name="burbuja_tamano_titulo">ขนาดบับเบิ้ล</string>
+    <string name="burbuja_tamano_chico">เล็ก</string>
+    <string name="burbuja_tamano_chico_desc">กะทัดรัด ใช้พื้นที่น้อยลง</string>
+    <string name="burbuja_tamano_normal">ปกติ</string>
+    <string name="burbuja_tamano_normal_desc">ขนาดเดิม</string>
+    <string name="burbuja_tamano_grande">ใหญ่</string>
+    <string name="burbuja_tamano_grande_desc">แตะง่ายขึ้น</string>
+    <string name="burbuja_tamano_muy_grande">ใหญ่พิเศษ</string>
+    <string name="burbuja_tamano_muy_grande_desc">สำหรับหน้าจอใหญ่</string>
+    <string name="burbuja_restablecer">รีเซ็ตขนาด</string>
     <string name="burbuja_canal">บับเบิ้ลเข้าถึงเร็ว</string>
     <string name="burbuja_notif_titulo">Uma Afinidad</string>
     <string name="burbuja_notif_texto">เปิดบับเบิ้ลลอยอยู่</string>

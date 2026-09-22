@@ -1,12 +1,16 @@
 package com.maximillionsnyder.umafinidad.data
 
 import android.content.Context
+import android.content.SharedPreferences
 
 /* Modo de visualización de la grilla de personajes. */
 enum class ModoGrilla { TARJETAS, LISTA }
 
 /* Tamaño de texto de accesibilidad (multiplicador sobre la escala del sistema). */
 enum class TamanoTexto(val escala: Float) { NORMAL(1f), GRANDE(1.15f), MUY_GRANDE(1.3f) }
+
+/* Tamaño del círculo de la burbuja flotante, en dp (Normal = 56 dp). */
+enum class TamanoBurbuja(val dp: Int) { CHICO(44), NORMAL(56), GRANDE(72), MUY_GRANDE(88) }
 
 fun tamanoSegunFontScale(fontScale: Float): TamanoTexto = when {
     fontScale >= 1.3f -> TamanoTexto.MUY_GRANDE
@@ -86,6 +90,42 @@ class PrefsRepository(context: Context) {
         get() = prefs.getBoolean(KEY_PANEL_TRANSLUCIDO, true)
         set(valor) = prefs.edit().putBoolean(KEY_PANEL_TRANSLUCIDO, valor).apply()
 
+    /* Tamaño del círculo de la burbuja flotante. */
+    var tamanoBurbuja: TamanoBurbuja
+        get() = prefs.getString(KEY_TAMANO_BURBUJA, null)?.let { raw ->
+            try {
+                TamanoBurbuja.valueOf(raw)
+            } catch (_: IllegalArgumentException) {
+                TamanoBurbuja.NORMAL
+            }
+        } ?: TamanoBurbuja.NORMAL
+        set(valor) = prefs.edit().putString(KEY_TAMANO_BURBUJA, valor.name).apply()
+
+    /* Panel redimensionado a mano (dp); -1 = tamaño automático por fracción. */
+    var panelAnchoDp: Int
+        get() = prefs.getInt(KEY_PANEL_ANCHO_DP, -1)
+        set(valor) = prefs.edit().putInt(KEY_PANEL_ANCHO_DP, valor).apply()
+
+    var panelAltoDp: Int
+        get() = prefs.getInt(KEY_PANEL_ALTO_DP, -1)
+        set(valor) = prefs.edit().putInt(KEY_PANEL_ALTO_DP, valor).apply()
+
+    /* Avisa cuando cambia el tamaño de la burbuja, para aplicarlo en vivo
+       (el servicio lo observa; la pref se cambia desde Ajustes). */
+    fun observarTamanoBurbuja(
+        alCambiar: () -> Unit,
+    ): SharedPreferences.OnSharedPreferenceChangeListener {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, clave ->
+            if (clave == KEY_TAMANO_BURBUJA) alCambiar()
+        }
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+        return listener
+    }
+
+    fun dejarDeObservar(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        prefs.unregisterOnSharedPreferenceChangeListener(listener)
+    }
+
     private companion object {
         const val KEY_GRID_VERTICAL = "grid_vertical"
         const val KEY_ESTILO_AVATAR = "estilo_avatar"
@@ -98,6 +138,9 @@ class PrefsRepository(context: Context) {
         const val KEY_BURBUJA_X = "burbuja_x"
         const val KEY_BURBUJA_Y = "burbuja_y"
         const val KEY_PANEL_TRANSLUCIDO = "panel_translucido"
+        const val KEY_TAMANO_BURBUJA = "burbuja_tamano"
+        const val KEY_PANEL_ANCHO_DP = "panel_ancho_dp"
+        const val KEY_PANEL_ALTO_DP = "panel_alto_dp"
         // Solo lectura para migrar instalaciones con el interruptor viejo.
         const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }

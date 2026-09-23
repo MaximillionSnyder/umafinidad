@@ -90,16 +90,50 @@ el panel no lo pierde. El tamaño automático de la franja sigue saliendo de las
 fracciones de siempre (`FRACCION_ANCHO_PANEL`, `FRACCION_ALTO_PANEL`), salvo
 que el usuario la haya redimensionado a mano.
 
+## Versión Pro
+
+Tres funciones se desbloquean con una **licencia Pro** de pago único,
+validada en el propio dispositivo (sin cuentas, sin servidor y sin permisos
+nuevos):
+
+- **Burbuja: redimensionar el panel** — la manija de la esquina solo existe
+  con licencia; sin ella el panel muestra un candado que abre la pantalla Pro
+  y vuelve al tamaño automático (el tamaño guardado no se borra: al activar
+  Pro vuelve).
+- **Mejores padres** — el modo queda a la vista con un candado y, sin
+  licencia, ni se calcula (es el cálculo más pesado de la app).
+- **Guardar genealogías** — el botón de guardar en Mi corredora lleva a la
+  pantalla Pro. Leer y borrar las genealogías ya guardadas sigue siendo
+  gratis.
+
+La pantalla Pro (**Ajustes → Uma Afinidad Pro**, o el candado de cada
+función) lista las funciones, explica cómo conseguir un código y permite
+activarlo, desactivarlo y volver a activarlo. El código tiene la forma
+`UMA-XXXX-XXXX-XXXX`: 8 caracteres de cuerpo y 4 de firma (checksum FNV-1a de
+32 bits con finalizador de murmur3); la validación tolera minúsculas, espacios
+y guiones, y el alfabeto no usa caracteres ambiguos (`0/O`, `1/I/L`).
+
+Para emitir códigos (mantenedor):
+
+```bash
+node scripts/generar-codigos-pro.mjs        # 5 códigos
+node scripts/generar-codigos-pro.mjs 20     # 20 códigos
+node scripts/generar-codigos-pro.mjs --verificar UMA-XXXX-XXXX-XXXX
+```
+
+El script y `LicenciaPro` comparten el algoritmo; `ProTest` fija vectores
+comunes para que no se separen.
+
 ## Estructura
 
 ```
 ├── app/src/main/assets/data/     # JSON datamined (committeados)
 ├── app/src/main/java/            # Kotlin (Compose + lógica porteada)
 │   └── .../umafinidad/
-│       ├── data/                 # DTOs + repositorio (lee assets)
+│       ├── data/                 # DTOs + repositorio (lee assets) + licencia Pro
 │       ├── domain/               # AffinityModel + Herencia (porte 1:1)
 │       ├── overlay/              # burbuja flotante + panel de acceso rápido
-│       └── ui/                   # tema M3 oscuro + pantallas
+│       └── ui/                   # tema M3 oscuro + pantallas (+ ui/pro)
 ├── sitio/                        # Web nueva (SvelteKit + Svelte 5)
 │   ├── scripts/                  # sync de assets y extracción de strings
 │   ├── src/lib/                  # dominio, datos, worker, i18n, componentes
@@ -117,6 +151,8 @@ que el usuario la haya redimensionado a mano.
 npm run fetch              # actualizar datos datamined (incluye aptitudes) → app/src/main/assets/data/
 npm run fetch:aptitudes    # solo aptitudes (track/distancia/estilo) por personaje
 npm run icons              # regenerar íconos launcher legacy
+node scripts/generar-codigos-pro.mjs   # emitir códigos de licencia Pro
+node scripts/verificar-strings.mjs     # paridad de claves/marcadores i18n
 ./gradlew :app:assembleDebug          # APK debug
 ./gradlew :app:testDebugUnitTest      # tests de paridad con la web
 

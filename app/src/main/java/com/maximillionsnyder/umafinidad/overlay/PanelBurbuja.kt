@@ -80,6 +80,8 @@ fun PanelBurbuja(
     onAutocompletar: () -> Unit,
     onRedimensionar: (Float, Float) -> Unit,
     onFinRedimension: () -> Unit,
+    esPro: Boolean,
+    onIrAPro: () -> Unit,
     onCerrar: () -> Unit,
     onOcultar: () -> Unit,
     onAbrirDestino: (String) -> Unit,
@@ -265,19 +267,48 @@ fun PanelBurbuja(
 
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
+                /* Sin licencia, el atajo a Pro ocupa el lugar de la manija. */
+                if (!esPro) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_candado),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(16.dp),
+                        )
+                        Text(
+                            stringResource(R.string.pro_burbuja_cta),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.weight(1f),
+                        )
+                        TextButton(onClick = onIrAPro) {
+                            Text(stringResource(R.string.pro_activar))
+                        }
+                    }
+                }
+
                 TextButton(onClick = onOcultar, modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.burbuja_ocultar))
                 }
             }
         }
 
-        ManijaRedimension(
-            onRedimensionar = onRedimensionar,
-            onFinRedimension = onFinRedimension,
-            modifier = Modifier.align(
-                if (ladoDerecho) Alignment.BottomEnd else Alignment.BottomStart,
-            ),
-        )
+        /* Redimensionar la franja es función Pro: sin licencia la manija no
+           está y en su lugar queda el atajo a la pantalla Pro. */
+        if (esPro) {
+            ManijaRedimension(
+                onRedimensionar = onRedimensionar,
+                onFinRedimension = onFinRedimension,
+                modifier = Modifier.align(
+                    if (ladoDerecho) Alignment.BottomEnd else Alignment.BottomStart,
+                ),
+            )
+        }
     }
 }
 

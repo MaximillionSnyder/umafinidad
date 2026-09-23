@@ -224,4 +224,39 @@
     <string name="burbuja_autocompletar">เติมช่องว่างอัตโนมัติด้วยความเข้ากันสูงสุด</string>
     <string name="burbuja_abuelo_p1">ปู่ย่าตายาย (1)</string>
     <string name="burbuja_abuelo_p2">ปู่ย่าตายาย (2)</string>
+
+    <!-- เวอร์ชัน Pro -->
+    <string name="pro_titulo">Uma Afinidad Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pro_desc">ปลดล็อกเครื่องมือขั้นสูงด้วยใบอนุญาตแบบจ่ายครั้งเดียว</string>
+    <string name="pro_estado_activo">Pro เปิดใช้งานอยู่</string>
+    <string name="pro_estado_gratis">เวอร์ชันฟรี</string>
+    <string name="pro_funciones_titulo">Pro มีอะไรบ้าง</string>
+    <string name="pro_func_burbuja">ปรับขนาดแผงลอย</string>
+    <string name="pro_func_burbuja_desc">ลากที่จับมุมเพื่อขยายแผงความเข้ากันแบบเร็วให้ใหญ่ได้ตามต้องการขณะเล่น</string>
+    <string name="pro_func_padres">จัดอันดับพ่อแม่ที่ดีที่สุด</string>
+    <string name="pro_func_padres_desc">ดูว่าอุมะตัวไหนถูกเลือกเป็นพ่อแม่ที่เหมาะที่สุดบ่อยที่สุด พร้อมคะแนนเฉลี่ย</string>
+    <string name="pro_func_arboles">บันทึกสายเลือดของคุณ</string>
+    <string name="pro_func_arboles_desc">เก็บทุกการตั้งค่าที่คุณสร้างไว้ แล้วเปิดกลับมาทีหลังได้จากตั้งค่าหรืออุมะของฉัน</string>
+    <string name="pro_incluida">รวมอยู่</string>
+    <string name="pro_bloqueada">ล็อกอยู่</string>
+    <string name="pro_activar_titulo">เปิดใช้งาน Pro</string>
+    <string name="pro_activar_desc">กรอกรหัสใบอนุญาตที่ได้รับพร้อมการซื้อของคุณ ระบบตรวจสอบบนอุปกรณ์: ไม่ต้องมีบัญชีหรือเชื่อมต่ออินเทอร์เน็ต</string>
+    <string name="pro_codigo_etiqueta">รหัสใบอนุญาต</string>
+    <string name="pro_codigo_ejemplo">UMA-XXXX-XXXX-XXXX</string>
+    <string name="pro_activar">เปิดใช้งาน</string>
+    <string name="pro_activado_ok">เปิดใช้งาน Pro แล้ว ขอบคุณสำหรับการสนับสนุน!</string>
+    <string name="pro_codigo_invalido">รหัสไม่ถูกต้อง ตรวจสอบแล้วลองอีกครั้ง</string>
+    <string name="pro_ya_activo">Pro เปิดใช้งานอยู่แล้วบนอุปกรณ์นี้</string>
+    <string name="pro_desactivar">ปิดใช้งาน Pro บนอุปกรณ์นี้</string>
+    <string name="pro_desactivar_titulo">ปิดใช้งาน Pro หรือไม่?</string>
+    <string name="pro_desactivar_mensaje">เครื่องมือ Pro จะถูกล็อกอีกครั้งบนอุปกรณ์นี้ คุณเปิดใช้งานใหม่ได้ภายหลังด้วยรหัสเดิม</string>
+    <string name="pro_como_obtener">ขอรหัสได้จากที่ไหน?</string>
+    <string name="pro_como_obtener_desc">เราส่งรหัสให้ทุกครั้งที่มีการสนับสนุนโครงการ เปิดที่เก็บโค้ดเพื่อดูตัวเลือกที่มี</string>
+    <string name="pro_abrir_repo">เปิดที่เก็บโค้ด</string>
+    <string name="pro_codigo_actual">รหัส: %1$s</string>
+    <string name="pro_activado_el">เปิดใช้งานเมื่อ %1$s</string>
+    <string name="pro_burbuja_cta">ปรับขนาด (Pro)</string>
+    <string name="pro_padres_cta">ปลดล็อกด้วย Pro</string>
+    <string name="pro_guardar_cta">การบันทึกสายเลือดเป็นฟีเจอร์ของ Pro</string>
 </resources>

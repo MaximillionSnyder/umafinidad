@@ -224,4 +224,39 @@
     <string name="burbuja_autocompletar">Autofill empty slots with the best affinity</string>
     <string name="burbuja_abuelo_p1">Grandparent (1)</string>
     <string name="burbuja_abuelo_p2">Grandparent (2)</string>
+
+    <!-- Pro version -->
+    <string name="pro_titulo">Uma Afinidad Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pro_desc">Unlock the advanced tools with a one-time license.</string>
+    <string name="pro_estado_activo">Pro active</string>
+    <string name="pro_estado_gratis">Free version</string>
+    <string name="pro_funciones_titulo">What Pro includes</string>
+    <string name="pro_func_burbuja">Resize the floating panel</string>
+    <string name="pro_func_burbuja_desc">Drag the corner handle to make the quick panel as big as you need while you play.</string>
+    <string name="pro_func_padres">Best parents ranking</string>
+    <string name="pro_func_padres_desc">See which Umas win most often as the optimal parent, with their average points.</string>
+    <string name="pro_func_arboles">Save your lineages</string>
+    <string name="pro_func_arboles_desc">Keep every configuration you build and reopen it later from Settings or My runner.</string>
+    <string name="pro_incluida">Included</string>
+    <string name="pro_bloqueada">Locked</string>
+    <string name="pro_activar_titulo">Activate Pro</string>
+    <string name="pro_activar_desc">Enter the license code that came with your purchase. It is checked on the device: no account or connection needed.</string>
+    <string name="pro_codigo_etiqueta">License code</string>
+    <string name="pro_codigo_ejemplo">UMA-XXXX-XXXX-XXXX</string>
+    <string name="pro_activar">Activate</string>
+    <string name="pro_activado_ok">Pro activated. Thanks for the support!</string>
+    <string name="pro_codigo_invalido">That code is not valid. Check it and try again.</string>
+    <string name="pro_ya_activo">Pro is already active on this device.</string>
+    <string name="pro_desactivar">Deactivate Pro on this device</string>
+    <string name="pro_desactivar_titulo">Deactivate Pro?</string>
+    <string name="pro_desactivar_mensaje">The Pro tools will be locked again on this device. You can reactivate them later with the same code.</string>
+    <string name="pro_como_obtener">How do I get a code?</string>
+    <string name="pro_como_obtener_desc">Codes are sent with every contribution to the project. Open the repository to see the available options.</string>
+    <string name="pro_abrir_repo">Open repository</string>
+    <string name="pro_codigo_actual">Code: %1$s</string>
+    <string name="pro_activado_el">Activated on %1$s</string>
+    <string name="pro_burbuja_cta">Resize (Pro)</string>
+    <string name="pro_padres_cta">Unlock with Pro</string>
+    <string name="pro_guardar_cta">Saving lineages is a Pro feature</string>
 </resources>

@@ -224,4 +224,39 @@
     <string name="burbuja_autocompletar">Isi otomatis slot kosong dengan afinitas terbaik</string>
     <string name="burbuja_abuelo_p1">Kakek-nenek (1)</string>
     <string name="burbuja_abuelo_p2">Kakek-nenek (2)</string>
+
+    <!-- Versi Pro -->
+    <string name="pro_titulo">Uma Afinidad Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pro_desc">Buka alat lanjutan dengan lisensi sekali beli.</string>
+    <string name="pro_estado_activo">Pro aktif</string>
+    <string name="pro_estado_gratis">Versi gratis</string>
+    <string name="pro_funciones_titulo">Apa saja yang ada di Pro</string>
+    <string name="pro_func_burbuja">Ubah ukuran panel melayang</string>
+    <string name="pro_func_burbuja_desc">Seret tuas di sudut agar panel cepat sebesar yang Anda butuhkan saat bermain.</string>
+    <string name="pro_func_padres">Peringkat orang tua terbaik</string>
+    <string name="pro_func_padres_desc">Lihat uma yang paling sering menang sebagai orang tua optimal, lengkap dengan rata-rata poinnya.</string>
+    <string name="pro_func_arboles">Simpan silsilah Anda</string>
+    <string name="pro_func_arboles_desc">Simpan setiap konfigurasi yang Anda buat dan buka lagi nanti dari Pengaturan atau Uma saya.</string>
+    <string name="pro_incluida">Termasuk</string>
+    <string name="pro_bloqueada">Terkunci</string>
+    <string name="pro_activar_titulo">Aktifkan Pro</string>
+    <string name="pro_activar_desc">Masukkan kode lisensi dari pembelian Anda. Kode diperiksa di perangkat: tanpa akun atau koneksi.</string>
+    <string name="pro_codigo_etiqueta">Kode lisensi</string>
+    <string name="pro_codigo_ejemplo">UMA-XXXX-XXXX-XXXX</string>
+    <string name="pro_activar">Aktifkan</string>
+    <string name="pro_activado_ok">Pro diaktifkan. Terima kasih atas dukungannya!</string>
+    <string name="pro_codigo_invalido">Kode itu tidak valid. Periksa lagi dan coba ulang.</string>
+    <string name="pro_ya_activo">Pro sudah aktif di perangkat ini.</string>
+    <string name="pro_desactivar">Nonaktifkan Pro di perangkat ini</string>
+    <string name="pro_desactivar_titulo">Nonaktifkan Pro?</string>
+    <string name="pro_desactivar_mensaje">Alat Pro akan terkunci lagi di perangkat ini. Anda bisa mengaktifkannya kembali nanti dengan kode yang sama.</string>
+    <string name="pro_como_obtener">Bagaimana cara mendapatkan kode?</string>
+    <string name="pro_como_obtener_desc">Kode dikirim untuk setiap kontribusi ke proyek ini. Buka repositori untuk melihat opsi yang tersedia.</string>
+    <string name="pro_abrir_repo">Buka repositori</string>
+    <string name="pro_codigo_actual">Kode: %1$s</string>
+    <string name="pro_activado_el">Diaktifkan pada %1$s</string>
+    <string name="pro_burbuja_cta">Ubah ukuran (Pro)</string>
+    <string name="pro_padres_cta">Buka dengan Pro</string>
+    <string name="pro_guardar_cta">Menyimpan silsilah adalah fitur Pro</string>
 </resources>

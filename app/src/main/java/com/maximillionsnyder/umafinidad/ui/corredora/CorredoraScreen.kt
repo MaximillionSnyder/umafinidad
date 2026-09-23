@@ -71,7 +71,9 @@ import kotlinx.coroutines.withContext
 /* Pestaña "Mi corredora": buscás una corredora y ves SU mejor linaje
    exacto. Los 6 roles secundarios son intercambiables: al tocarlos se
    ofrecen alternativas ordenadas por total resultante (con los puntos
-   directos del candidato como referencia). */
+   directos del candidato como referencia).
+   Guardar la configuración es función Pro: sin licencia el botón lleva a la
+   pantalla Pro en vez de abrir el diálogo. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CorredoraScreen(
@@ -84,6 +86,8 @@ fun CorredoraScreen(
     onConsumirPendiente: () -> Unit,
     avisar: (String) -> Unit,
     onVerHerencia: (List<Int?>) -> Unit,
+    esPro: Boolean = true,
+    onIrAPro: () -> Unit = {},
 ) {
     var filtro by rememberSaveable { mutableStateOf("") }
     var elegidaId by rememberSaveable { mutableIntStateOf(-1) }
@@ -263,13 +267,30 @@ fun CorredoraScreen(
                         onVerHerencia = { onVerHerencia(seleccionActual) },
                     )
 
-                    /* Guardar la configuración actual (aunque difiera del óptimo). */
+                    /* Guardar la configuración actual (aunque difiera del óptimo).
+                       Sin licencia Pro el botón abre la pantalla Pro. */
                     val totalActual = AppViewModel.calcular(modelo, seleccionActual).total ?: 0
                     Button(
-                        onClick = { mostrarGuardar = true },
+                        onClick = { if (esPro) mostrarGuardar = true else onIrAPro() },
                         modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
                     ) {
+                        if (!esPro) {
+                            Icon(
+                                painterResource(R.drawable.ic_candado),
+                                contentDescription = stringResource(R.string.pro_bloqueada),
+                                modifier = Modifier.size(18.dp),
+                            )
+                            Spacer(Modifier.size(8.dp))
+                        }
                         Text(stringResource(R.string.guardar_config), fontWeight = FontWeight.Bold)
+                    }
+                    if (!esPro) {
+                        Text(
+                            stringResource(R.string.pro_guardar_cta),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(start = 4.dp, top = 4.dp),
+                        )
                     }
 
                     /* Configuraciones guardadas de esta corredora. */
@@ -305,8 +326,8 @@ fun CorredoraScreen(
         }
     }
 
-    /* Diálogo de guardado con nombre opcional. */
-    if (mostrarGuardar && seleccionActual.isNotEmpty()) {
+    /* Diálogo de guardado con nombre opcional (solo con licencia Pro). */
+    if (mostrarGuardar && esPro && seleccionActual.isNotEmpty()) {
         val totalActual = AppViewModel.calcular(modelo, seleccionActual).total ?: 0
         val nombreSugerido = stringResource(
             R.string.nombre_sugerido,

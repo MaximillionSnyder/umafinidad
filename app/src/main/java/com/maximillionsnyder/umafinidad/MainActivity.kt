@@ -90,6 +90,7 @@ import com.maximillionsnyder.umafinidad.ui.compat.CompatScreen
 import com.maximillionsnyder.umafinidad.ui.corredora.CorredoraScreen
 import com.maximillionsnyder.umafinidad.ui.elenco.ElencoScreen
 import com.maximillionsnyder.umafinidad.ui.groups.GroupsScreen
+import com.maximillionsnyder.umafinidad.ui.pro.ProScreen
 import com.maximillionsnyder.umafinidad.ui.ranking.ModoRanking
 import com.maximillionsnyder.umafinidad.ui.ranking.RankingScreen
 import com.maximillionsnyder.umafinidad.ui.settings.SettingsScreen
@@ -213,6 +214,9 @@ private fun App(
     val burbujaActiva by vm.burbujaActiva.collectAsState()
     val panelTranslucido by vm.panelTranslucido.collectAsState()
     val tamanoBurbuja by vm.tamanoBurbuja.collectAsState()
+    val esPro by vm.esPro.collectAsState()
+    val codigoPro by vm.codigoPro.collectAsState()
+    val activadoEnPro by vm.activadoEnPro.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
@@ -243,8 +247,9 @@ private fun App(
     var verGrupos by rememberSaveable { mutableStateOf(false) }
     var verRanking by rememberSaveable { mutableStateOf(false) }
     var verRankingPadres by rememberSaveable { mutableStateOf(false) }
+    var verPro by rememberSaveable { mutableStateOf(false) }
 
-    /* Pila de navegación ("tab:N", "grupos", "ranking", "ranking-padres"):
+    /* Pila de navegación ("tab:N", "grupos", "ranking", "ranking-padres", "pro"):
        atrás desapila hasta volver al inicio y recién ahí pregunta si salir. */
     val historial = rememberSaveable { mutableStateListOf("tab:0") }
 
@@ -253,6 +258,7 @@ private fun App(
         verGrupos = destino == "grupos"
         verRanking = destino == "ranking"
         verRankingPadres = destino == "ranking-padres"
+        verPro = destino == Destino.PRO
         Destino.pagina(destino)?.let { pagina ->
             if (pagerState.currentPage != pagina) scope.launch { pagerState.animateScrollToPage(pagina) }
         }
@@ -287,7 +293,7 @@ private fun App(
        settledPage (y no currentPage) para no apilar intermedias de la animación. */
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { pagina ->
-            if (!verGrupos && !verRanking && !verRankingPadres) {
+            if (!verGrupos && !verRanking && !verRankingPadres && !verPro) {
                 val destino = "tab:$pagina"
                 if (historial.last() != destino) historial.add(destino)
             }
@@ -322,6 +328,7 @@ private fun App(
             verGrupos -> ClavesTransicion.OVERLAY_GRUPOS
             verRanking -> ClavesTransicion.OVERLAY_RANKING
             verRankingPadres -> ClavesTransicion.OVERLAY_RANKING_PADRES
+            verPro -> ClavesTransicion.OVERLAY_PRO
             else -> null
         }
 
@@ -337,7 +344,16 @@ private fun App(
                     LocalSharedTransitionScope provides scopeCompartido,
                     LocalAnimatedVisibilityScope provides scopeVisibilidad,
                 ) {
-                    if (destino == ClavesTransicion.OVERLAY_GRUPOS) {
+                    if (destino == ClavesTransicion.OVERLAY_PRO) {
+                        ProScreen(
+                            esPro = esPro,
+                            codigo = codigoPro,
+                            activadoEn = activadoEnPro,
+                            onActivar = vm::activarPro,
+                            onDesactivar = vm::desactivarPro,
+                            onVolver = { volver() },
+                        )
+                    } else if (destino == ClavesTransicion.OVERLAY_GRUPOS) {
                         val m = modelo
                         if (m == null) {
                             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -358,6 +374,8 @@ private fun App(
                                 japones = japones,
                                 onVolver = { volver() },
                                 claveOverlay = ClavesTransicion.OVERLAY_RANKING,
+                                esPro = esPro,
+                                onIrAPro = { irA(Destino.PRO) },
                             )
                         }
                     } else if (destino == ClavesTransicion.OVERLAY_RANKING_PADRES) {
@@ -373,6 +391,8 @@ private fun App(
                                 onVolver = { volver() },
                                 modoInicial = ModoRanking.PADRES,
                                 claveOverlay = ClavesTransicion.OVERLAY_RANKING_PADRES,
+                                esPro = esPro,
+                                onIrAPro = { irA(Destino.PRO) },
                             )
                         }
                     } else {
@@ -474,7 +494,9 @@ private fun App(
                                                 japones = japones,
                                                 arboles = arboles,
                                                 pendiente = arbolPendiente,
-                                                onGuardarArbol = vm::guardarArbol,
+                                                onGuardarArbol = { hijoId, nombre, sel, total ->
+                                                    vm.guardarArbol(hijoId, nombre, sel, total)
+                                                },
                                                 onEliminarArbol = vm::eliminarArbol,
                                                 onConsumirPendiente = vm::consumirArbolPendiente,
                                                 avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
@@ -482,6 +504,8 @@ private fun App(
                                                     vm.cargarSeleccion(sel)
                                                     scope.launch { pagerState.animateScrollToPage(0) }
                                                 },
+                                                esPro = esPro,
+                                                onIrAPro = { irA(Destino.PRO) },
                                             )
                                             3 -> ElencoScreen(
                                                 modelo = m,
@@ -531,6 +555,8 @@ private fun App(
                                                 onAbrirGrupos = { irA("grupos") },
                                                 onAbrirRanking = { irA("ranking") },
                                                 onAbrirRankingPadres = { irA("ranking-padres") },
+                                                esPro = esPro,
+                                                onAbrirPro = { irA(Destino.PRO) },
                                                 tamanoTexto = tamanoTexto,
                                                 onTamanoTexto = vm::setTamanoTexto,
                                                 textoNegrita = textoNegrita,

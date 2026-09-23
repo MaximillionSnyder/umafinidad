@@ -224,4 +224,39 @@
     <string name="burbuja_autocompletar">가장 높은 인연으로 빈 칸 자동 채우기</string>
     <string name="burbuja_abuelo_p1">조부모 (1)</string>
     <string name="burbuja_abuelo_p2">조부모 (2)</string>
+
+    <!-- Pro 버전 -->
+    <string name="pro_titulo">Uma Afinidad Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pro_desc">일회성 라이선스로 고급 도구를 잠금 해제하세요.</string>
+    <string name="pro_estado_activo">Pro 사용 중</string>
+    <string name="pro_estado_gratis">무료 버전</string>
+    <string name="pro_funciones_titulo">Pro에 포함된 기능</string>
+    <string name="pro_func_burbuja">플로팅 패널 크기 조정</string>
+    <string name="pro_func_burbuja_desc">게임 중 모서리 핸들을 끌어 빠른 패널을 원하는 만큼 크게 조정하세요.</string>
+    <string name="pro_func_padres">최적 부모 랭킹</string>
+    <string name="pro_func_padres_desc">최적 부모로 가장 자주 선택되는 우마무스메를 평균 점수와 함께 확인하세요.</string>
+    <string name="pro_func_arboles">혈통 저장</string>
+    <string name="pro_func_arboles_desc">만든 설정을 모두 보관하고 나중에 설정이나 내 우마무스메에서 다시 여세요.</string>
+    <string name="pro_incluida">포함됨</string>
+    <string name="pro_bloqueada">잠김</string>
+    <string name="pro_activar_titulo">Pro 활성화</string>
+    <string name="pro_activar_desc">구매 시 받은 라이선스 코드를 입력하세요. 기기에서 확인하며 계정이나 인터넷 연결이 필요하지 않습니다.</string>
+    <string name="pro_codigo_etiqueta">라이선스 코드</string>
+    <string name="pro_codigo_ejemplo">UMA-XXXX-XXXX-XXXX</string>
+    <string name="pro_activar">활성화</string>
+    <string name="pro_activado_ok">Pro가 활성화되었습니다. 응원해 주셔서 감사합니다!</string>
+    <string name="pro_codigo_invalido">코드가 유효하지 않습니다. 확인 후 다시 시도하세요.</string>
+    <string name="pro_ya_activo">이 기기에서 Pro가 이미 활성화되어 있습니다.</string>
+    <string name="pro_desactivar">이 기기에서 Pro 비활성화</string>
+    <string name="pro_desactivar_titulo">Pro를 비활성화할까요?</string>
+    <string name="pro_desactivar_mensaje">이 기기에서 Pro 도구가 다시 잠깁니다. 나중에 같은 코드로 다시 활성화할 수 있습니다.</string>
+    <string name="pro_como_obtener">코드는 어떻게 받나요?</string>
+    <string name="pro_como_obtener_desc">코드는 프로젝트에 기여할 때마다 발송됩니다. 저장소를 열어 가능한 옵션을 확인하세요.</string>
+    <string name="pro_abrir_repo">저장소 열기</string>
+    <string name="pro_codigo_actual">코드: %1$s</string>
+    <string name="pro_activado_el">%1$s 활성화됨</string>
+    <string name="pro_burbuja_cta">크기 조정 (Pro)</string>
+    <string name="pro_padres_cta">Pro로 잠금 해제</string>
+    <string name="pro_guardar_cta">혈통 저장은 Pro 기능입니다</string>
 </resources>

@@ -11,10 +11,13 @@ import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
+import com.maximillionsnyder.umafinidad.data.ProRepository
+import com.maximillionsnyder.umafinidad.data.ResultadoActivacion
 import com.maximillionsnyder.umafinidad.data.TamanoBurbuja
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.fusionarArbol
+import com.maximillionsnyder.umafinidad.data.puedeGuardarArboles
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.GrupoCompartido
 import com.maximillionsnyder.umafinidad.domain.Linaje
@@ -195,13 +198,47 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _mostrarBienvenida.value = false
     }
 
+    /* ===== Versión Pro (licencia local, sin cuentas ni servidor) ===== */
+
+    private val proRepo = ProRepository(application)
+
+    private val _esPro = MutableStateFlow(proRepo.esPro)
+    val esPro: StateFlow<Boolean> = _esPro
+
+    private val _codigoPro = MutableStateFlow(proRepo.codigo)
+    val codigoPro: StateFlow<String?> = _codigoPro
+
+    private val _activadoEnPro = MutableStateFlow(proRepo.activadoEn)
+    val activadoEnPro: StateFlow<Long> = _activadoEnPro
+
+    fun activarPro(codigo: String): ResultadoActivacion {
+        val resultado = proRepo.activar(codigo)
+        if (resultado == ResultadoActivacion.ACTIVADO) {
+            _esPro.value = true
+            _codigoPro.value = proRepo.codigo
+            _activadoEnPro.value = proRepo.activadoEn
+        }
+        return resultado
+    }
+
+    fun desactivarPro() {
+        proRepo.desactivar()
+        _esPro.value = false
+        _codigoPro.value = null
+        _activadoEnPro.value = 0L
+    }
+
     /* ===== Configuraciones de árbol guardadas ===== */
 
     private val arbolesRepo = ArbolesRepository(application)
     private val _arboles = MutableStateFlow(arbolesRepo.todos())
     val arboles: StateFlow<List<ArbolGuardado>> = _arboles
 
-    fun guardarArbol(hijoId: Int, nombre: String, seleccion: List<Int?>, total: Int) {
+    /* Guardar genealogías es función Pro: la pantalla ya no ofrece el
+       diálogo sin licencia, y acá se vuelve a verificar por si el estado
+       cambió con la pantalla abierta. Devuelve false si no se guardó. */
+    fun guardarArbol(hijoId: Int, nombre: String, seleccion: List<Int?>, total: Int): Boolean {
+        if (!puedeGuardarArboles(_esPro.value)) return false
         val nuevo = ArbolGuardado(
             id = System.currentTimeMillis(),
             hijoId = hijoId,
@@ -213,6 +250,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         val fusion = fusionarArbol(_arboles.value, nuevo)
         arbolesRepo.reemplazarTodos(fusion)
         _arboles.value = fusion
+        return true
     }
 
     fun eliminarArbol(id: Long) {

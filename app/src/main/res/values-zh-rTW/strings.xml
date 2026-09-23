@@ -224,4 +224,39 @@
     <string name="burbuja_autocompletar">用最高相性自動補齊空位</string>
     <string name="burbuja_abuelo_p1">祖父母 (1)</string>
     <string name="burbuja_abuelo_p2">祖父母 (2)</string>
+
+    <!-- Pro 版 -->
+    <string name="pro_titulo">Uma Afinidad Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pro_desc">一次性授權即可解鎖進階工具。</string>
+    <string name="pro_estado_activo">Pro 已啟用</string>
+    <string name="pro_estado_gratis">免費版</string>
+    <string name="pro_funciones_titulo">Pro 版包含的功能</string>
+    <string name="pro_func_burbuja">調整懸浮面板大小</string>
+    <string name="pro_func_burbuja_desc">拖曳角落握把，遊戲時可把快捷面板調整成需要的大小。</string>
+    <string name="pro_func_padres">最佳父母排行</string>
+    <string name="pro_func_padres_desc">查看最常成為最佳父母的賽馬娘，以及她們的平均分數。</string>
+    <string name="pro_func_arboles">儲存你的血統</string>
+    <string name="pro_func_arboles_desc">保留你建立的每個配置，之後可從設定或我的賽馬娘重新開啟。</string>
+    <string name="pro_incluida">已包含</string>
+    <string name="pro_bloqueada">已鎖定</string>
+    <string name="pro_activar_titulo">啟用 Pro</string>
+    <string name="pro_activar_desc">輸入購買時取得的授權碼。驗證在本機進行：無需帳號或網路連線。</string>
+    <string name="pro_codigo_etiqueta">授權碼</string>
+    <string name="pro_codigo_ejemplo">UMA-XXXX-XXXX-XXXX</string>
+    <string name="pro_activar">啟用</string>
+    <string name="pro_activado_ok">Pro 已啟用。感謝你的支持！</string>
+    <string name="pro_codigo_invalido">該授權碼無效。請檢查後再試一次。</string>
+    <string name="pro_ya_activo">此裝置的 Pro 已啟用。</string>
+    <string name="pro_desactivar">停用此裝置的 Pro</string>
+    <string name="pro_desactivar_titulo">要停用 Pro 嗎？</string>
+    <string name="pro_desactivar_mensaje">此裝置上的 Pro 工具將再次被鎖定。之後可用同一組授權碼重新啟用。</string>
+    <string name="pro_como_obtener">如何取得授權碼？</string>
+    <string name="pro_como_obtener_desc">每次對本專案的貢獻都會附上授權碼。開啟專案庫即可查看可選方案。</string>
+    <string name="pro_abrir_repo">開啟專案庫</string>
+    <string name="pro_codigo_actual">授權碼：%1$s</string>
+    <string name="pro_activado_el">啟用於 %1$s</string>
+    <string name="pro_burbuja_cta">調整大小（Pro）</string>
+    <string name="pro_padres_cta">用 Pro 解鎖</string>
+    <string name="pro_guardar_cta">儲存血統是 Pro 版功能</string>
 </resources>

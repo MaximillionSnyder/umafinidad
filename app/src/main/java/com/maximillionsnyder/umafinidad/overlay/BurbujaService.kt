@@ -28,6 +28,7 @@ import com.maximillionsnyder.umafinidad.MainActivity
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
+import com.maximillionsnyder.umafinidad.data.ProRepository
 import com.maximillionsnyder.umafinidad.ui.Destino
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalEstiloAvatar
 import com.maximillionsnyder.umafinidad.ui.theme.UmaAfinidadTheme
@@ -71,6 +72,9 @@ class BurbujaService : Service() {
     private val anfitrion = AnfitrionOverlay()
     private val alcance = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val prefs by lazy { PrefsRepository(this) }
+
+    /* Licencia Pro: habilita redimensionar la franja del panel. */
+    private val pro by lazy { ProRepository(this) }
 
     /* Estado de la calculadora, independiente de las ventanas. */
     private val estado by lazy { EstadoBurbuja(AffinityRepository(applicationContext), alcance) }
@@ -414,6 +418,7 @@ class BurbujaService : Service() {
 
         val japones = resources.configuration.locales[0].language == "ja"
         val translucido = prefs.panelTranslucido
+        val esPro = pro.esPro
 
         vista.setContent {
             val modeloActual by estado.modelo.collectAsState()
@@ -451,6 +456,11 @@ class BurbujaService : Service() {
                         onAutocompletar = estado::autocompletar,
                         onRedimensionar = ::redimensionarPanel,
                         onFinRedimension = ::guardarTamanoPanel,
+                        esPro = esPro,
+                        onIrAPro = {
+                            quitarPanel()
+                            abrirApp(Destino.PRO)
+                        },
                         onCerrar = { quitarPanel() },
                         onOcultar = ::ocultarBurbuja,
                         onAbrirDestino = { destino ->
@@ -483,12 +493,13 @@ class BurbujaService : Service() {
     /* Franja en el borde opuesto a la burbuja, centrada y con paso de toques
        hacia la app de fondo. Los toques de afuera no la cierran: solo se
        cierra de forma explícita (burbuja, X, Atrás, Ocultar o giro). Si el
-       usuario la redimensionó, manda el tamaño guardado en dp. */
+       usuario la redimensionó (función Pro), manda el tamaño guardado en dp. */
     private fun crearParametrosPanel(): WindowManager.LayoutParams {
         val pantalla = tamanoPantalla()
+        val esPro = pro.esPro
         val minAncho = dp(ANCHO_PANEL_MIN_DP)
         val maxAncho = PosicionPanel.maxAncho(pantalla.x, tamanoBurbuja, margen, minAncho)
-        val anchoPanel = prefs.panelAnchoDp.takeIf { it > 0 }?.coerceIn(minAncho, maxAncho)
+        val anchoPanel = prefs.panelAnchoDp.takeIf { esPro && it > 0 }?.coerceIn(minAncho, maxAncho)
             ?: PosicionPanel.ancho(
                 pantalla.x,
                 FRACCION_ANCHO_PANEL,
@@ -497,7 +508,7 @@ class BurbujaService : Service() {
             )
         val minAlto = dp(ALTO_PANEL_MIN_DP)
         val maxAlto = (pantalla.y - 2 * margen).coerceAtLeast(minAlto)
-        val altoPanel = prefs.panelAltoDp.takeIf { it > 0 }?.coerceIn(minAlto, maxAlto)
+        val altoPanel = prefs.panelAltoDp.takeIf { esPro && it > 0 }?.coerceIn(minAlto, maxAlto)
             ?: (pantalla.y * FRACCION_ALTO_PANEL).toInt()
         val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
             parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
@@ -526,8 +537,10 @@ class BurbujaService : Service() {
     }
 
     /* Arrastre de la manija del panel: cambia ancho y alto en vivo, con el
-       borde superior anclado (la franja no se recentra durante el gesto). */
+       borde superior anclado (la franja no se recentra durante el gesto).
+       Solo con licencia Pro. */
     private fun redimensionarPanel(dx: Float, dy: Float) {
+        if (!pro.esPro) return
         val vista = vistaPanel ?: return
         val parametros = parametrosPanel ?: return
         val pantalla = tamanoPantalla()
@@ -555,8 +568,10 @@ class BurbujaService : Service() {
         runCatching { ventanas.updateViewLayout(vista, parametros) }
     }
 
-    /* Al soltar la manija se recuerda el tamaño para las próximas aperturas. */
+    /* Al soltar la manija se recuerda el tamaño para las próximas aperturas
+       (solo Pro: sin licencia la franja vuelve a su tamaño automático). */
     private fun guardarTamanoPanel() {
+        if (!pro.esPro) return
         val parametros = parametrosPanel ?: return
         prefs.panelAnchoDp = pxADp(parametros.width)
         prefs.panelAltoDp = pxADp(parametros.height)

@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -44,6 +45,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
@@ -62,7 +64,9 @@ import kotlinx.coroutines.withContext
 
 /* Ranking con dos modos para probar: versátiles (total afinidad) y
    mejores padres (veces como padre óptimo + % + media). Se abre desde
-   Ajustes por la card clásica o por la card nueva de padres. */
+   Ajustes por la card clásica o por la card nueva de padres.
+   Mejores padres es función Pro: sin licencia el modo queda a la vista pero
+   bloqueado, con el botón que lleva a la pantalla Pro. */
 enum class ModoRanking { VERSATIL, PADRES }
 
 @Composable
@@ -72,16 +76,21 @@ fun RankingScreen(
     onVolver: () -> Unit,
     modoInicial: ModoRanking = ModoRanking.VERSATIL,
     claveOverlay: String = ClavesTransicion.OVERLAY_RANKING,
+    esPro: Boolean = true,
+    onIrAPro: () -> Unit = {},
 ) {
     var modo by rememberSaveable { mutableStateOf(modoInicial) }
     var mostrarAyuda by rememberSaveable { mutableStateOf(false) }
     var ranking by remember { mutableStateOf<List<AffinityModel.RankingAfinidad>?>(null) }
     var rankingPadres by remember { mutableStateOf<List<AffinityModel.RankingPadre>?>(null) }
 
-    LaunchedEffect(modelo) {
-        val (a, p) = withContext(Dispatchers.Default) { modelo.rankingAfinidad() to modelo.rankingPadres() }
-        ranking = a
-        rankingPadres = p
+    /* El ranking de padres es el cálculo más caro de la app: sin licencia ni
+       se calcula (el modo muestra el candado). */
+    LaunchedEffect(modelo, esPro) {
+        ranking = withContext(Dispatchers.Default) { modelo.rankingAfinidad() }
+        if (esPro) {
+            rankingPadres = withContext(Dispatchers.Default) { modelo.rankingPadres() }
+        }
     }
 
     Surface(
@@ -111,6 +120,17 @@ fun RankingScreen(
                     selected = modo == ModoRanking.PADRES,
                     onClick = { modo = ModoRanking.PADRES },
                     shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
+                    icon = {
+                        if (esPro) {
+                            SegmentedButtonDefaults.Icon(active = modo == ModoRanking.PADRES)
+                        } else {
+                            Icon(
+                                painterResource(R.drawable.ic_candado),
+                                contentDescription = stringResource(R.string.pro_bloqueada),
+                                modifier = Modifier.size(16.dp),
+                            )
+                        }
+                    },
                 ) {
                     Text(stringResource(R.string.ranking_modo_padres))
                 }
@@ -118,6 +138,8 @@ fun RankingScreen(
     
             if (modo == ModoRanking.VERSATIL) {
                 ContenidoVersatiles(ranking, modelo, japones)
+            } else if (!esPro) {
+                ContenidoBloqueado(onIrAPro)
             } else {
                 Row(
                     modifier = Modifier.fillMaxWidth()
@@ -159,6 +181,39 @@ fun RankingScreen(
                 }
             },
         )
+    }
+}
+
+@Composable
+private fun ContenidoBloqueado(onIrAPro: () -> Unit) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(
+            modifier = Modifier.padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Icon(
+                painterResource(R.drawable.ic_candado),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(40.dp),
+            )
+            Text(
+                stringResource(R.string.pro_func_padres),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+            )
+            Text(
+                stringResource(R.string.pro_func_padres_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+            Button(onClick = onIrAPro) {
+                Text(stringResource(R.string.pro_padres_cta), fontWeight = FontWeight.Bold)
+            }
+        }
     }
 }
 

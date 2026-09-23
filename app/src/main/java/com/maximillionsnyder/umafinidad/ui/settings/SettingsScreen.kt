@@ -26,6 +26,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -93,6 +94,8 @@ fun SettingsScreen(
     onAbrirRanking: () -> Unit,
     onAbrirRankingPadres: () -> Unit,
     onAbrirElenco: () -> Unit,
+    esPro: Boolean = false,
+    onAbrirPro: () -> Unit = {},
     tamanoTexto: TamanoTexto,
     onTamanoTexto: (TamanoTexto) -> Unit,
     textoNegrita: Boolean,
@@ -125,6 +128,70 @@ fun SettingsScreen(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
+        /* ===== Uma Afinidad Pro (licencia local) ===== */
+        Card(
+            modifier = Modifier.fillMaxWidth()
+                .compartidoBounds(ClavesTransicion.OVERLAY_PRO)
+                .clickable(
+                    role = Role.Button,
+                    onClickLabel = stringResource(R.string.pro_titulo),
+                    onClick = onAbrirPro,
+                ),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
+            ),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_pro),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.compartidoElemento(
+                        ClavesTransicion.icono(ClavesTransicion.OVERLAY_PRO),
+                    ),
+                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        Text(
+                            stringResource(R.string.pro_titulo),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.compartidoBounds(
+                                ClavesTransicion.titulo(ClavesTransicion.OVERLAY_PRO),
+                            ),
+                        )
+                        if (esPro) {
+                            Surface(
+                                shape = RoundedCornerShape(999.dp),
+                                color = MaterialTheme.colorScheme.primary,
+                            ) {
+                                Text(
+                                    stringResource(R.string.pro_badge),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                                )
+                            }
+                        }
+                    }
+                    Text(
+                        stringResource(if (esPro) R.string.pro_estado_activo else R.string.pro_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
         SeccionDesplegable(
             titulo = stringResource(R.string.burbuja_titulo),
             subtitulo = stringResource(R.string.burbuja_desc),
@@ -461,11 +528,14 @@ fun SettingsScreen(
             }
         }
 
-        /* ===== Mejores padres (variante a probar; se queda una de las dos) ===== */
+        /* ===== Mejores padres (función Pro) ===== */
         Card(
             modifier = Modifier.fillMaxWidth()
                 .compartidoBounds(ClavesTransicion.OVERLAY_RANKING_PADRES)
-                .clickable(role = Role.Button, onClick = onAbrirRankingPadres),
+                .clickable(
+                    role = Role.Button,
+                    onClick = { if (esPro) onAbrirRankingPadres() else onAbrirPro() },
+                ),
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
@@ -475,12 +545,12 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 Icon(
-                    painterResource(R.drawable.ic_tab_ranking),
-                    contentDescription = null,
+                    painterResource(if (esPro) R.drawable.ic_tab_ranking else R.drawable.ic_candado),
+                    contentDescription = if (esPro) null else stringResource(R.string.pro_bloqueada),
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_RANKING_PADRES)),
                 )
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         stringResource(R.string.ranking_padres_titulo),
                         style = MaterialTheme.typography.bodyMedium,
@@ -492,6 +562,20 @@ fun SettingsScreen(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                }
+                if (!esPro) {
+                    Surface(
+                        shape = RoundedCornerShape(999.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                    ) {
+                        Text(
+                            stringResource(R.string.pro_badge),
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                        )
+                    }
                 }
             }
         }

@@ -224,4 +224,39 @@
     <string name="burbuja_autocompletar">Autocompletar los huecos con la mayor afinidad</string>
     <string name="burbuja_abuelo_p1">Abuelo (1)</string>
     <string name="burbuja_abuelo_p2">Abuelo (2)</string>
+
+    <!-- Versión Pro -->
+    <string name="pro_titulo">Uma Afinidad Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pro_desc">Desbloqueá las herramientas avanzadas con una licencia de pago único.</string>
+    <string name="pro_estado_activo">Pro activo</string>
+    <string name="pro_estado_gratis">Versión gratis</string>
+    <string name="pro_funciones_titulo">Qué incluye Pro</string>
+    <string name="pro_func_burbuja">Redimensionar el panel flotante</string>
+    <string name="pro_func_burbuja_desc">Arrastrá la manija de la esquina para agrandar el panel rápido todo lo que necesites mientras jugás.</string>
+    <string name="pro_func_padres">Ranking de mejores padres</string>
+    <string name="pro_func_padres_desc">Mirá qué Umas ganan más veces como padre óptimo, con su promedio de puntos.</string>
+    <string name="pro_func_arboles">Guardar tus genealogías</string>
+    <string name="pro_func_arboles_desc">Guardá todas las configuraciones que armes y reabrilas después desde Ajustes o Mi corredora.</string>
+    <string name="pro_incluida">Incluida</string>
+    <string name="pro_bloqueada">Bloqueada</string>
+    <string name="pro_activar_titulo">Activar Pro</string>
+    <string name="pro_activar_desc">Ingresá el código de licencia que recibiste con tu compra. Se valida en el dispositivo: no hace falta cuenta ni conexión.</string>
+    <string name="pro_codigo_etiqueta">Código de licencia</string>
+    <string name="pro_codigo_ejemplo">UMA-XXXX-XXXX-XXXX</string>
+    <string name="pro_activar">Activar</string>
+    <string name="pro_activado_ok">Pro activado. ¡Gracias por el apoyo!</string>
+    <string name="pro_codigo_invalido">Ese código no es válido. Revisalo y probá de nuevo.</string>
+    <string name="pro_ya_activo">Pro ya está activo en este dispositivo.</string>
+    <string name="pro_desactivar">Desactivar Pro en este dispositivo</string>
+    <string name="pro_desactivar_titulo">¿Desactivar Pro?</string>
+    <string name="pro_desactivar_mensaje">Las herramientas Pro se vuelven a bloquear en este dispositivo. Podés reactivarlas después con el mismo código.</string>
+    <string name="pro_como_obtener">¿Cómo consigo un código?</string>
+    <string name="pro_como_obtener_desc">Los códigos se envían con cada aporte al proyecto. Abrí el repositorio para ver las opciones disponibles.</string>
+    <string name="pro_abrir_repo">Abrir repositorio</string>
+    <string name="pro_codigo_actual">Código: %1$s</string>
+    <string name="pro_activado_el">Activado el %1$s</string>
+    <string name="pro_burbuja_cta">Redimensionar (Pro)</string>
+    <string name="pro_padres_cta">Desbloquear con Pro</string>
+    <string name="pro_guardar_cta">Guardar genealogías es una función Pro</string>
 </resources>

@@ -224,4 +224,39 @@
     <string name="burbuja_autocompletar">Tự động điền ô trống với tương thích cao nhất</string>
     <string name="burbuja_abuelo_p1">Ông bà (1)</string>
     <string name="burbuja_abuelo_p2">Ông bà (2)</string>
+
+    <!-- Bản Pro -->
+    <string name="pro_titulo">Uma Afinidad Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pro_desc">Mở khóa các công cụ nâng cao bằng một giấy phép trả một lần.</string>
+    <string name="pro_estado_activo">Pro đang hoạt động</string>
+    <string name="pro_estado_gratis">Bản miễn phí</string>
+    <string name="pro_funciones_titulo">Bản Pro gồm những gì</string>
+    <string name="pro_func_burbuja">Đổi kích thước bảng nổi</string>
+    <string name="pro_func_burbuja_desc">Kéo tay nắm ở góc để chỉnh bảng tương thích nhanh to nhỏ tùy ý khi bạn chơi.</string>
+    <string name="pro_func_padres">Bảng xếp hạng bố mẹ tốt nhất</string>
+    <string name="pro_func_padres_desc">Xem uma nào thắng nhiều nhất với vai trò bố mẹ tối ưu, kèm điểm trung bình.</string>
+    <string name="pro_func_arboles">Lưu huyết thống của bạn</string>
+    <string name="pro_func_arboles_desc">Giữ lại mọi cấu hình bạn tạo và mở lại sau từ Cài đặt hoặc Uma của tôi.</string>
+    <string name="pro_incluida">Đã có</string>
+    <string name="pro_bloqueada">Đã khóa</string>
+    <string name="pro_activar_titulo">Kích hoạt Pro</string>
+    <string name="pro_activar_desc">Nhập mã giấy phép đi kèm khi bạn mua. Mã được kiểm tra ngay trên máy: không cần tài khoản hay kết nối mạng.</string>
+    <string name="pro_codigo_etiqueta">Mã giấy phép</string>
+    <string name="pro_codigo_ejemplo">UMA-XXXX-XXXX-XXXX</string>
+    <string name="pro_activar">Kích hoạt</string>
+    <string name="pro_activado_ok">Đã kích hoạt Pro. Cảm ơn bạn đã ủng hộ!</string>
+    <string name="pro_codigo_invalido">Mã không hợp lệ. Kiểm tra lại rồi thử lần nữa.</string>
+    <string name="pro_ya_activo">Pro đã được kích hoạt trên máy này.</string>
+    <string name="pro_desactivar">Tắt Pro trên máy này</string>
+    <string name="pro_desactivar_titulo">Tắt Pro?</string>
+    <string name="pro_desactivar_mensaje">Các công cụ Pro sẽ bị khóa lại trên máy này. Bạn có thể kích hoạt lại sau bằng chính mã đó.</string>
+    <string name="pro_como_obtener">Làm sao để có mã?</string>
+    <string name="pro_como_obtener_desc">Mã được gửi kèm mỗi lần đóng góp cho dự án. Mở kho mã nguồn để xem các lựa chọn hiện có.</string>
+    <string name="pro_abrir_repo">Mở kho mã nguồn</string>
+    <string name="pro_codigo_actual">Mã: %1$s</string>
+    <string name="pro_activado_el">Kích hoạt ngày %1$s</string>
+    <string name="pro_burbuja_cta">Đổi kích thước (Pro)</string>
+    <string name="pro_padres_cta">Mở khóa bằng Pro</string>
+    <string name="pro_guardar_cta">Lưu huyết thống là tính năng Pro</string>
 </resources>

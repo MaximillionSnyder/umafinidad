@@ -39,6 +39,9 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - name: Paridad de las traducciones
+        run: node scripts/verificar-strings.mjs
+
       - name: Compilar APK debug + tests unitarios
         run: ./gradlew :app:assembleDebug :app:testDebugUnitTest --stacktrace
 

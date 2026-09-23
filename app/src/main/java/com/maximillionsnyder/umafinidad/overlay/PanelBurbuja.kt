@@ -70,7 +70,9 @@ fun PanelBurbuja(
     aviso: Int?,
     sugerencias: List<Character>,
     autocompletando: Boolean,
-    ladoDerecho: Boolean,
+    /* La franja puede estar en cualquier lado: la manija y el degradado del
+       carrusel miran al centro según dónde la dejó el usuario. */
+    panelDerecha: Boolean,
     translucido: Boolean,
     slotDestino: Int?,
     onFiltro: (String) -> Unit,
@@ -80,7 +82,10 @@ fun PanelBurbuja(
     onAutocompletar: () -> Unit,
     onRedimensionar: (Float, Float) -> Unit,
     onFinRedimension: () -> Unit,
-    esPro: Boolean,
+    onMover: (Float, Float) -> Unit,
+    onFinMover: () -> Unit,
+    puedeRedimensionar: Boolean,
+    puedeMover: Boolean,
     onIrAPro: () -> Unit,
     onCerrar: () -> Unit,
     onOcultar: () -> Unit,
@@ -128,9 +133,35 @@ fun PanelBurbuja(
             ) {
                 /* ---- Cabecera ---- */
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        /* La cabecera arrastra la franja entera (función Pro). */
+                        .then(
+                            if (puedeMover) {
+                                Modifier.pointerInput(Unit) {
+                                    detectDragGestures(
+                                        onDragEnd = { onFinMover() },
+                                        onDragCancel = { onFinMover() },
+                                    ) { cambio, delta ->
+                                        cambio.consume()
+                                        onMover(delta.x, delta.y)
+                                    }
+                                }
+                            } else {
+                                Modifier
+                            },
+                        ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    if (puedeMover) {
+                        Icon(
+                            painterResource(R.drawable.ic_mover),
+                            contentDescription = stringResource(R.string.burbuja_mover),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Spacer(Modifier.size(6.dp))
+                    }
                     Text(
                         stringResource(R.string.burbuja_panel_titulo),
                         style = MaterialTheme.typography.titleMedium,
@@ -232,7 +263,7 @@ fun PanelBurbuja(
                 }
 
                 if (sugerencias.isNotEmpty()) {
-                    CarruselSugerencias(sugerencias, japones, ladoDerecho, onAlternar)
+                    CarruselSugerencias(sugerencias, japones, panelDerecha, onAlternar)
                 }
 
                 if (modelo == null || total == null) {
@@ -268,7 +299,7 @@ fun PanelBurbuja(
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
                 /* Sin licencia, el atajo a Pro ocupa el lugar de la manija. */
-                if (!esPro) {
+                if (!puedeMover || !puedeRedimensionar) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -300,12 +331,12 @@ fun PanelBurbuja(
 
         /* Redimensionar la franja es función Pro: sin licencia la manija no
            está y en su lugar queda el atajo a la pantalla Pro. */
-        if (esPro) {
+        if (puedeRedimensionar) {
             ManijaRedimension(
                 onRedimensionar = onRedimensionar,
                 onFinRedimension = onFinRedimension,
                 modifier = Modifier.align(
-                    if (ladoDerecho) Alignment.BottomEnd else Alignment.BottomStart,
+                    if (panelDerecha) Alignment.BottomStart else Alignment.BottomEnd,
                 ),
             )
         }
@@ -368,7 +399,7 @@ private fun ManijaRedimension(
 private fun CarruselSugerencias(
     sugerencias: List<Character>,
     japones: Boolean,
-    ladoDerecho: Boolean,
+    panelDerecha: Boolean,
     onAlternar: (Int) -> Unit,
 ) {
     val scroll = rememberScrollState()
@@ -380,12 +411,12 @@ private fun CarruselSugerencias(
         }
     }
     val fondo = MaterialTheme.colorScheme.surfaceContainerHigh
-    val degradado = remember(fondo, ladoDerecho) {
+    val degradado = remember(fondo, panelDerecha) {
         Brush.horizontalGradient(
-            if (ladoDerecho) {
-                listOf(fondo, fondo.copy(alpha = 0f))
-            } else {
+            if (panelDerecha) {
                 listOf(fondo.copy(alpha = 0f), fondo)
+            } else {
+                listOf(fondo, fondo.copy(alpha = 0f))
             },
         )
     }
@@ -415,7 +446,7 @@ private fun CarruselSugerencias(
         if (hayMas) {
             Box(
                 modifier = Modifier
-                    .align(if (ladoDerecho) Alignment.CenterEnd else Alignment.CenterStart)
+                    .align(if (panelDerecha) Alignment.CenterStart else Alignment.CenterEnd)
                     .size(width = 18.dp, height = FICHA_OPCION_DP.dp)
                     .background(degradado),
             )

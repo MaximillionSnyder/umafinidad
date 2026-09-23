@@ -110,6 +110,16 @@ class PrefsRepository(context: Context) {
         get() = prefs.getInt(KEY_PANEL_ALTO_DP, -1)
         set(valor) = prefs.edit().putInt(KEY_PANEL_ALTO_DP, valor).apply()
 
+    /* Posición de la franja movida a mano (px); -1 = automática (lado
+       opuesto a la burbuja, centrada verticalmente). */
+    var panelX: Int
+        get() = prefs.getInt(KEY_PANEL_X, -1)
+        set(valor) = prefs.edit().putInt(KEY_PANEL_X, valor).apply()
+
+    var panelY: Int
+        get() = prefs.getInt(KEY_PANEL_Y, -1)
+        set(valor) = prefs.edit().putInt(KEY_PANEL_Y, valor).apply()
+
     /* Avisa cuando cambia el tamaño de la burbuja, para aplicarlo en vivo
        (el servicio lo observa; la pref se cambia desde Ajustes). */
     fun observarTamanoBurbuja(
@@ -141,6 +151,8 @@ class PrefsRepository(context: Context) {
         const val KEY_TAMANO_BURBUJA = "burbuja_tamano"
         const val KEY_PANEL_ANCHO_DP = "panel_ancho_dp"
         const val KEY_PANEL_ALTO_DP = "panel_alto_dp"
+        const val KEY_PANEL_X = "panel_x"
+        const val KEY_PANEL_Y = "panel_y"
         // Solo lectura para migrar instalaciones con el interruptor viejo.
         const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }

@@ -163,10 +163,12 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _tamanoBurbuja.value = valor
     }
 
-    /* Restablece burbuja (56 dp) y panel (tamaño automático). */
+    /* Restablece burbuja (56 dp) y panel (tamaño y posición automáticos). */
     fun restablecerTamanos() {
         prefs.panelAnchoDp = -1
         prefs.panelAltoDp = -1
+        prefs.panelX = -1
+        prefs.panelY = -1
         setTamanoBurbuja(TamanoBurbuja.NORMAL)
     }
 

@@ -2,6 +2,8 @@ package com.maximillionsnyder.umafinidad
 
 import com.maximillionsnyder.umafinidad.overlay.PosicionPanel
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /* Tests de la posición de la franja del panel de la burbuja flotante. */
@@ -62,23 +64,25 @@ class PosicionPanelTest {
     /* ---- Redimensionado con la manija ---- */
 
     private fun redimensionar(
+        x: Int = margen,
+        y: Int = 100,
         anchoActual: Int = 300,
         altoActual: Int = 800,
         dx: Float = 0f,
         dy: Float = 0f,
-        y: Int = 100,
-        burbujaDerecha: Boolean = true,
+        panelDerecha: Boolean = false,
         tamanoBurbuja: Int = 168,
     ) = PosicionPanel.redimensionar(
+        x = x,
+        y = y,
         anchoActual = anchoActual,
         altoActual = altoActual,
         dx = dx,
         dy = dy,
         pantallaAncho = ancho,
         pantallaAlto = alto,
-        y = y,
         margen = margen,
-        burbujaDerecha = burbujaDerecha,
+        panelDerecha = panelDerecha,
         tamanoBurbuja = tamanoBurbuja,
         minAncho = 100,
         minAlto = 200,
@@ -86,35 +90,44 @@ class PosicionPanelTest {
 
     @Test
     fun elPanelDeLaIzquierdaCreceHaciaLaDerecha() {
-        val tamano = redimensionar(dx = 50f, dy = 30f, burbujaDerecha = true)
-        assertEquals(350, tamano.ancho)
-        assertEquals(830, tamano.alto)
+        val r = redimensionar(dx = 50f, dy = 30f, panelDerecha = false)
+        assertEquals(350, r.ancho)
+        assertEquals(830, r.alto)
+        /* El borde izquierdo (opuesto a la manija) queda fijo. */
+        assertEquals(margen, r.x)
     }
 
     @Test
     fun elPanelDeLaDerechaCreceHaciaLaIzquierda() {
-        val tamano = redimensionar(dx = -50f, dy = 30f, burbujaDerecha = false)
-        assertEquals(350, tamano.ancho)
-        assertEquals(830, tamano.alto)
+        val r = redimensionar(
+            x = ancho - 300 - margen,
+            dx = -50f,
+            dy = 30f,
+            panelDerecha = true,
+        )
+        assertEquals(350, r.ancho)
+        assertEquals(830, r.alto)
+        /* El borde derecho queda fijo: la X se corre lo que creció el ancho. */
+        assertEquals(ancho - 350 - margen, r.x)
     }
 
     @Test
     fun elAnchoNoLlegaHastaLaBurbuja() {
-        val tamano = redimensionar(dx = 9999f, burbujaDerecha = true)
-        assertEquals(ancho - 168 - 3 * margen, tamano.ancho)
+        val r = redimensionar(dx = 9999f, panelDerecha = false)
+        assertEquals(ancho - 168 - 3 * margen, r.ancho)
     }
 
     @Test
     fun elAltoNoSeSaleDeLaPantalla() {
-        val tamano = redimensionar(dy = 9999f, y = 100)
-        assertEquals(alto - 100 - margen, tamano.alto)
+        val r = redimensionar(dy = 9999f, y = 100)
+        assertEquals(alto - 100 - margen, r.alto)
     }
 
     @Test
     fun noBajaDeLosMinimos() {
-        val tamano = redimensionar(dx = -9999f, dy = -9999f)
-        assertEquals(100, tamano.ancho)
-        assertEquals(200, tamano.alto)
+        val r = redimensionar(dx = -9999f, dy = -9999f)
+        assertEquals(100, r.ancho)
+        assertEquals(200, r.alto)
     }
 
     @Test
@@ -124,5 +137,64 @@ class PosicionPanelTest {
             ancho - 300 - margen,
             PosicionPanel.x(ancho, 300, margen, burbujaDerecha = false),
         )
+    }
+
+    /* ---- Mover la franja entera (arrastre de la cabecera) ---- */
+
+    private fun mover(
+        x: Int = 100,
+        y: Int = 200,
+        dx: Float = 0f,
+        dy: Float = 0f,
+        anchoMovido: Int = 300,
+        altoMovido: Int = 800,
+    ) = PosicionPanel.mover(
+        x = x,
+        y = y,
+        dx = dx,
+        dy = dy,
+        anchoPanel = anchoMovido,
+        altoPanel = altoMovido,
+        pantallaAncho = ancho,
+        pantallaAlto = alto,
+        margen = margen,
+    )
+
+    @Test
+    fun moverCorreLaFranjaConElDedo() {
+        val p = mover(dx = 40f, dy = -30f)
+        assertEquals(140, p.x)
+        assertEquals(170, p.y)
+    }
+
+    @Test
+    fun moverNoDejaLaFranjaFueraDeLaPantalla() {
+        val abajoDerecha = mover(dx = 9999f, dy = 9999f)
+        assertEquals(ancho - 300 - margen, abajoDerecha.x)
+        assertEquals(alto - 800 - margen, abajoDerecha.y)
+
+        val arribaIzquierda = mover(dx = -9999f, dy = -9999f)
+        assertEquals(margen, arribaIzquierda.x)
+        assertEquals(margen, arribaIzquierda.y)
+    }
+
+    @Test
+    fun unaFranjaMasGrandeQueLaPantallaQuedaEnElMargen() {
+        val p = PosicionPanel.acotar(
+            x = 500, y = 500,
+            anchoPanel = 1200, altoPanel = 2000,
+            pantallaAncho = ancho, pantallaAlto = alto, margen = margen,
+        )
+        assertEquals(margen, p.x)
+        assertEquals(margen, p.y)
+    }
+
+    @Test
+    fun elLadoDependeDeDondeEstaLaFranja() {
+        assertFalse(PosicionPanel.enLadoDerecho(margen, 300, ancho))
+        assertTrue(PosicionPanel.enLadoDerecho(ancho - 300 - margen, 300, ancho))
+        /* Al cruzar la mitad cambia el lado (y con él, la manija). */
+        assertFalse(PosicionPanel.enLadoDerecho(ancho / 2 - 200, 300, ancho))
+        assertTrue(PosicionPanel.enLadoDerecho(ancho / 2 + 50, 300, ancho))
     }
 }

@@ -27,8 +27,10 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.maximillionsnyder.umafinidad.MainActivity
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
+import com.maximillionsnyder.umafinidad.data.FuncionPro
 import com.maximillionsnyder.umafinidad.data.PrefsRepository
 import com.maximillionsnyder.umafinidad.data.ProRepository
+import com.maximillionsnyder.umafinidad.data.funcionDisponible
 import com.maximillionsnyder.umafinidad.ui.Destino
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalEstiloAvatar
 import com.maximillionsnyder.umafinidad.ui.theme.UmaAfinidadTheme
@@ -93,6 +95,12 @@ class BurbujaService : Service() {
 
     /* Tamaño actual del círculo, en dp; la vista Compose lo observa. */
     private val tamanoBurbujaDp = MutableStateFlow(TAMANO_BURBUJA_DP)
+
+    /* ¿La franja quedó en la mitad derecha? Lo observa el panel para alinear
+       la manija y el degradado del carrusel. Se recalcula al abrir, al
+       terminar de mover y al terminar de redimensionar (nunca en cada frame
+       del gesto: la vista no tiene que recomponerse mientras se arrastra). */
+    private val panelDerecha = MutableStateFlow(false)
     private var escuchaTamano: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     private var tamanoBurbuja = 0
@@ -418,7 +426,11 @@ class BurbujaService : Service() {
 
         val japones = resources.configuration.locales[0].language == "ja"
         val translucido = prefs.panelTranslucido
-        val esPro = pro.esPro
+        val puedeMover = funcionDisponible(FuncionPro.BURBUJA_MOVER, pro.esPro)
+        val puedeRedimensionar = funcionDisponible(FuncionPro.BURBUJA_REDIMENSIONAR, pro.esPro)
+        panelDerecha.value = PosicionPanel.enLadoDerecho(
+            parametros.x, parametros.width, tamanoPantalla().x,
+        )
 
         vista.setContent {
             val modeloActual by estado.modelo.collectAsState()
@@ -428,10 +440,7 @@ class BurbujaService : Service() {
             val avisoActual by estado.aviso.collectAsState()
             val sugerenciasActuales by estado.sugerencias.collectAsState(initial = emptyList())
             val slotDestinoActual by estado.slotDestino.collectAsState()
-            val pantalla = tamanoPantalla()
-            val ladoDerecho = PosicionBurbuja.enLadoDerecho(
-                parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
-            )
+            val panelDerechaActual by panelDerecha.collectAsState()
             UmaAfinidadTheme(
                 tema = prefs.tema,
                 tamanoTexto = prefs.tamanoTexto,
@@ -446,7 +455,7 @@ class BurbujaService : Service() {
                         aviso = avisoActual,
                         sugerencias = sugerenciasActuales,
                         autocompletando = calculando,
-                        ladoDerecho = ladoDerecho,
+                        panelDerecha = panelDerechaActual,
                         translucido = translucido,
                         slotDestino = slotDestinoActual,
                         onFiltro = estado::buscar,
@@ -456,7 +465,10 @@ class BurbujaService : Service() {
                         onAutocompletar = estado::autocompletar,
                         onRedimensionar = ::redimensionarPanel,
                         onFinRedimension = ::guardarTamanoPanel,
-                        esPro = esPro,
+                        onMover = ::moverPanel,
+                        onFinMover = ::guardarPosicionPanel,
+                        puedeRedimensionar = puedeRedimensionar,
+                        puedeMover = puedeMover,
                         onIrAPro = {
                             quitarPanel()
                             abrirApp(Destino.PRO)
@@ -490,16 +502,19 @@ class BurbujaService : Service() {
         vista.requestFocus()
     }
 
-    /* Franja en el borde opuesto a la burbuja, centrada y con paso de toques
-       hacia la app de fondo. Los toques de afuera no la cierran: solo se
-       cierra de forma explícita (burbuja, X, Atrás, Ocultar o giro). Si el
-       usuario la redimensionó (función Pro), manda el tamaño guardado en dp. */
+    /* Franja del panel con paso de toques hacia la app de fondo. Los toques de
+       afuera no la cierran: solo se cierra de forma explícita (burbuja, X,
+       Atrás, Ocultar o giro). El tamaño guardado manda si el usuario la
+       redimensionó (función Pro) y la posición guardada si la movió (función
+       Pro); si no, va al lado opuesto a la burbuja, centrada. */
     private fun crearParametrosPanel(): WindowManager.LayoutParams {
         val pantalla = tamanoPantalla()
-        val esPro = pro.esPro
+        val puedeRedimensionar = funcionDisponible(FuncionPro.BURBUJA_REDIMENSIONAR, pro.esPro)
+        val puedeMover = funcionDisponible(FuncionPro.BURBUJA_MOVER, pro.esPro)
         val minAncho = dp(ANCHO_PANEL_MIN_DP)
         val maxAncho = PosicionPanel.maxAncho(pantalla.x, tamanoBurbuja, margen, minAncho)
-        val anchoPanel = prefs.panelAnchoDp.takeIf { esPro && it > 0 }?.coerceIn(minAncho, maxAncho)
+        val anchoPanel = prefs.panelAnchoDp.takeIf { puedeRedimensionar && it > 0 }
+            ?.coerceIn(minAncho, maxAncho)
             ?: PosicionPanel.ancho(
                 pantalla.x,
                 FRACCION_ANCHO_PANEL,
@@ -508,13 +523,20 @@ class BurbujaService : Service() {
             )
         val minAlto = dp(ALTO_PANEL_MIN_DP)
         val maxAlto = (pantalla.y - 2 * margen).coerceAtLeast(minAlto)
-        val altoPanel = prefs.panelAltoDp.takeIf { esPro && it > 0 }?.coerceIn(minAlto, maxAlto)
+        val altoPanel = prefs.panelAltoDp.takeIf { puedeRedimensionar && it > 0 }
+            ?.coerceIn(minAlto, maxAlto)
             ?: (pantalla.y * FRACCION_ALTO_PANEL).toInt()
-        val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
-            parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
-        )
-        val posicion = PosicionPanel.calcular(
-            pantalla.x, pantalla.y, anchoPanel, altoPanel, margen, burbujaDerecha,
+        val guardada = if (puedeMover && prefs.panelX >= 0 && prefs.panelY >= 0) {
+            PosicionPanel.acotar(
+                prefs.panelX, prefs.panelY, anchoPanel, altoPanel,
+                pantalla.x, pantalla.y, margen,
+            )
+        } else {
+            null
+        }
+        val posicion = guardada ?: PosicionPanel.calcular(
+            pantalla.x, pantalla.y, anchoPanel, altoPanel, margen,
+            PosicionBurbuja.enLadoDerecho(parametrosBurbuja.x, pantalla.x, tamanoBurbuja),
         )
 
         return WindowManager.LayoutParams(
@@ -536,45 +558,88 @@ class BurbujaService : Service() {
         }
     }
 
-    /* Arrastre de la manija del panel: cambia ancho y alto en vivo, con el
-       borde superior anclado (la franja no se recentra durante el gesto).
-       Solo con licencia Pro. */
+    /* Arrastre de la manija del panel: cambia ancho y alto en vivo. El borde
+       superior queda anclado y el borde opuesto a la manija tampoco se mueve
+       (la franja crece hacia el centro, no se recentra). Solo Pro. */
     private fun redimensionarPanel(dx: Float, dy: Float) {
-        if (!pro.esPro) return
+        if (!funcionDisponible(FuncionPro.BURBUJA_REDIMENSIONAR, pro.esPro)) return
         val vista = vistaPanel ?: return
         val parametros = parametrosPanel ?: return
         val pantalla = tamanoPantalla()
-        val burbujaDerecha = PosicionBurbuja.enLadoDerecho(
-            parametrosBurbuja.x, pantalla.x, tamanoBurbuja,
-        )
-        val tamano = PosicionPanel.redimensionar(
+        val nuevo = PosicionPanel.redimensionar(
+            x = parametros.x,
+            y = parametros.y,
             anchoActual = parametros.width,
             altoActual = parametros.height,
             dx = dx,
             dy = dy,
             pantallaAncho = pantalla.x,
             pantallaAlto = pantalla.y,
-            y = parametros.y,
             margen = margen,
-            burbujaDerecha = burbujaDerecha,
+            panelDerecha = PosicionPanel.enLadoDerecho(
+                parametros.x, parametros.width, pantalla.x,
+            ),
             tamanoBurbuja = tamanoBurbuja,
             minAncho = dp(ANCHO_PANEL_MIN_DP),
             minAlto = dp(ALTO_PANEL_MIN_DP),
         )
-        if (tamano.ancho == parametros.width && tamano.alto == parametros.height) return
-        parametros.width = tamano.ancho
-        parametros.height = tamano.alto
-        parametros.x = PosicionPanel.x(pantalla.x, tamano.ancho, margen, burbujaDerecha)
+        if (nuevo.ancho == parametros.width && nuevo.alto == parametros.height &&
+            nuevo.x == parametros.x
+        ) {
+            return
+        }
+        parametros.width = nuevo.ancho
+        parametros.height = nuevo.alto
+        parametros.x = nuevo.x
         runCatching { ventanas.updateViewLayout(vista, parametros) }
     }
 
     /* Al soltar la manija se recuerda el tamaño para las próximas aperturas
        (solo Pro: sin licencia la franja vuelve a su tamaño automático). */
     private fun guardarTamanoPanel() {
-        if (!pro.esPro) return
+        if (!funcionDisponible(FuncionPro.BURBUJA_REDIMENSIONAR, pro.esPro)) return
         val parametros = parametrosPanel ?: return
         prefs.panelAnchoDp = pxADp(parametros.width)
         prefs.panelAltoDp = pxADp(parametros.height)
+        panelDerecha.value = PosicionPanel.enLadoDerecho(
+            parametros.x, parametros.width, tamanoPantalla().x,
+        )
+    }
+
+    /* Arrastre de la franja entera desde su cabecera (función Pro): la mueve
+       en vivo, acotada a la pantalla. Al soltar se recuerda la posición. */
+    private fun moverPanel(dx: Float, dy: Float) {
+        if (!funcionDisponible(FuncionPro.BURBUJA_MOVER, pro.esPro)) return
+        val vista = vistaPanel ?: return
+        val parametros = parametrosPanel ?: return
+        val pantalla = tamanoPantalla()
+        val nueva = PosicionPanel.mover(
+            x = parametros.x,
+            y = parametros.y,
+            dx = dx,
+            dy = dy,
+            anchoPanel = parametros.width,
+            altoPanel = parametros.height,
+            pantallaAncho = pantalla.x,
+            pantallaAlto = pantalla.y,
+            margen = margen,
+        )
+        if (nueva.x == parametros.x && nueva.y == parametros.y) return
+        parametros.x = nueva.x
+        parametros.y = nueva.y
+        runCatching { ventanas.updateViewLayout(vista, parametros) }
+    }
+
+    /* Al soltar la cabecera se recuerda la posición (solo Pro: sin licencia la
+       franja vuelve a su lugar automático). */
+    private fun guardarPosicionPanel() {
+        if (!funcionDisponible(FuncionPro.BURBUJA_MOVER, pro.esPro)) return
+        val parametros = parametrosPanel ?: return
+        prefs.panelX = parametros.x
+        prefs.panelY = parametros.y
+        panelDerecha.value = PosicionPanel.enLadoDerecho(
+            parametros.x, parametros.width, tamanoPantalla().x,
+        )
     }
 
     private fun quitarPanel() {

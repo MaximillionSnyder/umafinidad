@@ -199,6 +199,7 @@
     <string name="burbuja_elegir_lugar">选择此处</string>
     <string name="burbuja_destino">将放入：%1$s</string>
     <string name="burbuja_redimensionar">调整面板大小</string>
+    <string name="burbuja_mover">移动面板</string>
     <string name="burbuja_tamano_titulo">悬浮球大小</string>
     <string name="burbuja_tamano_chico">小</string>
     <string name="burbuja_tamano_chico_desc">更小巧，占用更少屏幕</string>
@@ -232,6 +233,8 @@
     <string name="pro_estado_activo">Pro 已激活</string>
     <string name="pro_estado_gratis">免费版</string>
     <string name="pro_funciones_titulo">Pro 包含的功能</string>
+    <string name="pro_func_mover">移动悬浮面板</string>
+    <string name="pro_func_mover_desc">拖动面板标题栏，即可把快捷计算器放到屏幕上的任意位置。</string>
     <string name="pro_func_burbuja">调整悬浮面板大小</string>
     <string name="pro_func_burbuja_desc">拖动边角的把手，游戏时就能把快捷面板调到需要的大小。</string>
     <string name="pro_func_padres">最佳父母排行</string>

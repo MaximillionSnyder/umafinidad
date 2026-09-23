@@ -199,6 +199,7 @@
     <string name="burbuja_elegir_lugar">Elegir este lugar</string>
     <string name="burbuja_destino">Se va a colocar en: %1$s</string>
     <string name="burbuja_redimensionar">Redimensionar panel</string>
+    <string name="burbuja_mover">Mover panel</string>
     <string name="burbuja_tamano_titulo">Tamaño de la burbuja</string>
     <string name="burbuja_tamano_chico">Chico</string>
     <string name="burbuja_tamano_chico_desc">Más discreta, ocupa menos pantalla</string>
@@ -232,6 +233,8 @@
     <string name="pro_estado_activo">Pro activo</string>
     <string name="pro_estado_gratis">Versión gratis</string>
     <string name="pro_funciones_titulo">Qué incluye Pro</string>
+    <string name="pro_func_mover">Mover el panel flotante</string>
+    <string name="pro_func_mover_desc">Arrastrá la cabecera del panel para ubicar la calculadora rápida donde quieras de la pantalla.</string>
     <string name="pro_func_burbuja">Redimensionar el panel flotante</string>
     <string name="pro_func_burbuja_desc">Arrastrá la manija de la esquina para agrandar el panel rápido todo lo que necesites mientras jugás.</string>
     <string name="pro_func_padres">Ranking de mejores padres</string>

@@ -199,6 +199,7 @@
     <string name="burbuja_elegir_lugar">Chọn vị trí này</string>
     <string name="burbuja_destino">Sẽ đặt vào: %1$s</string>
     <string name="burbuja_redimensionar">Đổi kích thước bảng</string>
+    <string name="burbuja_mover">Di chuyển bảng</string>
     <string name="burbuja_tamano_titulo">Kích thước bong bóng</string>
     <string name="burbuja_tamano_chico">Nhỏ</string>
     <string name="burbuja_tamano_chico_desc">Gọn hơn, chiếm ít màn hình</string>
@@ -232,6 +233,8 @@
     <string name="pro_estado_activo">Pro đang hoạt động</string>
     <string name="pro_estado_gratis">Bản miễn phí</string>
     <string name="pro_funciones_titulo">Bản Pro gồm những gì</string>
+    <string name="pro_func_mover">Di chuyển bảng nổi</string>
+    <string name="pro_func_mover_desc">Kéo thanh tiêu đề của bảng để đặt bảng nhanh ở bất kỳ vị trí nào trên màn hình.</string>
     <string name="pro_func_burbuja">Đổi kích thước bảng nổi</string>
     <string name="pro_func_burbuja_desc">Kéo tay nắm ở góc để chỉnh bảng tương thích nhanh to nhỏ tùy ý khi bạn chơi.</string>
     <string name="pro_func_padres">Bảng xếp hạng bố mẹ tốt nhất</string>

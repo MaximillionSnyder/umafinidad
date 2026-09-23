@@ -199,6 +199,7 @@
     <string name="burbuja_elegir_lugar">この場所を選ぶ</string>
     <string name="burbuja_destino">配置先: %1$s</string>
     <string name="burbuja_redimensionar">パネルのサイズ変更</string>
+    <string name="burbuja_mover">パネルの移動</string>
     <string name="burbuja_tamano_titulo">バブルのサイズ</string>
     <string name="burbuja_tamano_chico">小</string>
     <string name="burbuja_tamano_chico_desc">より控えめで画面を取らない</string>
@@ -231,6 +232,8 @@
     <string name="pro_estado_activo">Pro有効</string>
     <string name="pro_estado_gratis">無料版</string>
     <string name="pro_funciones_titulo">Proで使える機能</string>
+    <string name="pro_func_mover">フローティングパネルの移動</string>
+    <string name="pro_func_mover_desc">パネルのヘッダーをドラッグすると、クイックパネルを画面上の好きな位置に配置できます。</string>
     <string name="pro_func_burbuja">フローティングパネルのサイズ変更</string>
     <string name="pro_func_burbuja_desc">角のハンドルをドラッグすると、プレイ中にクイックパネルを好きな大きさに変更できます。</string>
     <string name="pro_func_padres">最適な親ランキング</string>

@@ -199,6 +199,7 @@
     <string name="burbuja_elegir_lugar">Choose this slot</string>
     <string name="burbuja_destino">Will be placed in: %1$s</string>
     <string name="burbuja_redimensionar">Resize panel</string>
+    <string name="burbuja_mover">Move panel</string>
     <string name="burbuja_tamano_titulo">Bubble size</string>
     <string name="burbuja_tamano_chico">Small</string>
     <string name="burbuja_tamano_chico_desc">More discreet, takes less screen</string>
@@ -232,6 +233,8 @@
     <string name="pro_estado_activo">Pro active</string>
     <string name="pro_estado_gratis">Free version</string>
     <string name="pro_funciones_titulo">What Pro includes</string>
+    <string name="pro_func_mover">Move the floating panel</string>
+    <string name="pro_func_mover_desc">Drag the panel header to place the quick calculator wherever you want on screen.</string>
     <string name="pro_func_burbuja">Resize the floating panel</string>
     <string name="pro_func_burbuja_desc">Drag the corner handle to make the quick panel as big as you need while you play.</string>
     <string name="pro_func_padres">Best parents ranking</string>

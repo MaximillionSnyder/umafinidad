@@ -199,6 +199,7 @@
     <string name="burbuja_elegir_lugar">เลือกตำแหน่งนี้</string>
     <string name="burbuja_destino">จะวางใน: %1$s</string>
     <string name="burbuja_redimensionar">ปรับขนาดแผง</string>
+    <string name="burbuja_mover">ย้ายแผง</string>
     <string name="burbuja_tamano_titulo">ขนาดบับเบิ้ล</string>
     <string name="burbuja_tamano_chico">เล็ก</string>
     <string name="burbuja_tamano_chico_desc">กะทัดรัด ใช้พื้นที่น้อยลง</string>
@@ -232,6 +233,8 @@
     <string name="pro_estado_activo">Pro เปิดใช้งานอยู่</string>
     <string name="pro_estado_gratis">เวอร์ชันฟรี</string>
     <string name="pro_funciones_titulo">Pro มีอะไรบ้าง</string>
+    <string name="pro_func_mover">ย้ายแผงลอย</string>
+    <string name="pro_func_mover_desc">ลากหัวแผงเพื่อวางเครื่องคิดความเข้ากันแบบเร็วในตำแหน่งที่ต้องการบนหน้าจอ</string>
     <string name="pro_func_burbuja">ปรับขนาดแผงลอย</string>
     <string name="pro_func_burbuja_desc">ลากที่จับมุมเพื่อขยายแผงความเข้ากันแบบเร็วให้ใหญ่ได้ตามต้องการขณะเล่น</string>
     <string name="pro_func_padres">จัดอันดับพ่อแม่ที่ดีที่สุด</string>

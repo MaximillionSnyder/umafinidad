@@ -199,6 +199,7 @@
     <string name="burbuja_elegir_lugar">이 자리 선택</string>
     <string name="burbuja_destino">배치 위치: %1$s</string>
     <string name="burbuja_redimensionar">패널 크기 조정</string>
+    <string name="burbuja_mover">패널 이동</string>
     <string name="burbuja_tamano_titulo">버블 크기</string>
     <string name="burbuja_tamano_chico">작게</string>
     <string name="burbuja_tamano_chico_desc">더 작고 화면을 덜 차지함</string>
@@ -232,6 +233,8 @@
     <string name="pro_estado_activo">Pro 사용 중</string>
     <string name="pro_estado_gratis">무료 버전</string>
     <string name="pro_funciones_titulo">Pro에 포함된 기능</string>
+    <string name="pro_func_mover">플로팅 패널 이동</string>
+    <string name="pro_func_mover_desc">패널 헤더를 끌어 빠른 계산기를 화면에서 원하는 위치에 놓으세요.</string>
     <string name="pro_func_burbuja">플로팅 패널 크기 조정</string>
     <string name="pro_func_burbuja_desc">게임 중 모서리 핸들을 끌어 빠른 패널을 원하는 만큼 크게 조정하세요.</string>
     <string name="pro_func_padres">최적 부모 랭킹</string>

@@ -20,6 +20,7 @@ const val ALFABETO_PRO = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
    acá. Si algún día una función pasa a ser gratis, se marca acá. */
 enum class FuncionPro(val requierePro: Boolean = true) {
     BURBUJA_REDIMENSIONAR,
+    BURBUJA_MOVER,
     RANKING_PADRES,
     ARBOLES_GUARDADOS,
 }

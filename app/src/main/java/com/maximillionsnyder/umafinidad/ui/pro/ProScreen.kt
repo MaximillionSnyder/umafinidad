@@ -163,6 +163,12 @@ fun ProScreen(
                     color = MaterialTheme.colorScheme.primary,
                 )
                 FuncionProCard(
+                    iconoRes = R.drawable.ic_mover,
+                    tituloRes = R.string.pro_func_mover,
+                    descripcionRes = R.string.pro_func_mover_desc,
+                    incluida = esPro,
+                )
+                FuncionProCard(
                     iconoRes = R.drawable.ic_pro,
                     tituloRes = R.string.pro_func_burbuja,
                     descripcionRes = R.string.pro_func_burbuja_desc,

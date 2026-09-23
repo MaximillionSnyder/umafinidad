@@ -2,11 +2,15 @@ package com.maximillionsnyder.umafinidad.overlay
 
 import kotlin.math.roundToInt
 
-/* Posición de la franja lateral del panel de la burbuja.
+/* Posición de la franja del panel de la burbuja.
    Puro (sin Android) para poder testearlo en la JVM. */
 
 /* Tamaño de la franja (ancho x alto en píxeles). */
 data class TamanoPanel(val ancho: Int, val alto: Int)
+
+/* Rectángulo de la franja: posición y tamaño juntos. El redimensionado puede
+   correr la X (la franja crece hacia el centro desde el borde anclado). */
+data class RectanguloPanel(val x: Int, val y: Int, val ancho: Int, val alto: Int)
 
 object PosicionPanel {
 
@@ -15,8 +19,8 @@ object PosicionPanel {
     fun ancho(pantallaAncho: Int, fraccion: Float, minPx: Int, maxPx: Int): Int =
         (pantallaAncho * fraccion).toInt().coerceIn(minPx, maxPx)
 
-    /* La franja va al borde opuesto al de la burbuja (para no taparla),
-       centrada verticalmente y acotada a la pantalla. */
+    /* Posición automática: la franja va al borde opuesto al de la burbuja
+       (para no taparla), centrada verticalmente y acotada a la pantalla. */
     fun calcular(
         ancho: Int,
         alto: Int,
@@ -31,8 +35,8 @@ object PosicionPanel {
         return Posicion(x, y)
     }
 
-    /* Coordenada X de la franja: pegada al borde si la burbuja está a la
-       derecha, o al borde opuesto si no. */
+    /* Coordenada X de la franja automática: pegada al borde si la burbuja
+       está a la derecha, o al borde opuesto si no. */
     fun x(ancho: Int, anchoPanel: Int, margen: Int, burbujaDerecha: Boolean): Int =
         if (burbujaDerecha) {
             margen
@@ -40,30 +44,80 @@ object PosicionPanel {
             (ancho - anchoPanel - margen).coerceAtLeast(margen)
         }
 
-    /* Tamaño nuevo tras arrastrar la manija de la esquina inferior interna.
-       La manija mira al centro: el ancho crece al alejarse del borde donde
-       está anclado el panel (según el lado) y el alto crece hacia abajo.
-       La franja nunca llega a la burbuja (ni se sale de la pantalla). */
+    /* ¿La franja quedó en la mitad derecha de la pantalla? De eso dependen la
+       manija de redimensionar (mira al centro) y el degradado del carrusel.
+       Se mide la franja, no la burbuja: el usuario puede moverla. */
+    fun enLadoDerecho(x: Int, anchoPanel: Int, pantallaAncho: Int): Boolean =
+        x + anchoPanel / 2 >= pantallaAncho / 2
+
+    /* Deja la franja dentro de la pantalla, con margen en los bordes. */
+    fun acotar(
+        x: Int,
+        y: Int,
+        anchoPanel: Int,
+        altoPanel: Int,
+        pantallaAncho: Int,
+        pantallaAlto: Int,
+        margen: Int,
+    ): Posicion {
+        val maxX = (pantallaAncho - anchoPanel - margen).coerceAtLeast(margen)
+        val maxY = (pantallaAlto - altoPanel - margen).coerceAtLeast(margen)
+        return Posicion(x.coerceIn(margen, maxX), y.coerceIn(margen, maxY))
+    }
+
+    /* Posición nueva al arrastrar la franja entera desde su cabecera. */
+    fun mover(
+        x: Int,
+        y: Int,
+        dx: Float,
+        dy: Float,
+        anchoPanel: Int,
+        altoPanel: Int,
+        pantallaAncho: Int,
+        pantallaAlto: Int,
+        margen: Int,
+    ): Posicion = acotar(
+        x = x + dx.roundToInt(),
+        y = y + dy.roundToInt(),
+        anchoPanel = anchoPanel,
+        altoPanel = altoPanel,
+        pantallaAncho = pantallaAncho,
+        pantallaAlto = pantallaAlto,
+        margen = margen,
+    )
+
+    /* Rectángulo nuevo tras arrastrar la manija de la esquina inferior
+       interna. La manija mira al centro: el ancho crece al alejarse del borde
+       por el que está anclada la franja y el borde opuesto queda fijo (el
+       izquierdo si la franja está a la izquierda, el derecho si está a la
+       derecha). El alto crece hacia abajo y la franja nunca llega a la
+       burbuja ni se sale de la pantalla. */
     fun redimensionar(
+        x: Int,
+        y: Int,
         anchoActual: Int,
         altoActual: Int,
         dx: Float,
         dy: Float,
         pantallaAncho: Int,
         pantallaAlto: Int,
-        y: Int,
         margen: Int,
-        burbujaDerecha: Boolean,
+        panelDerecha: Boolean,
         tamanoBurbuja: Int,
         minAncho: Int,
         minAlto: Int,
-    ): TamanoPanel {
-        val deltaAncho = if (burbujaDerecha) dx else -dx
+    ): RectanguloPanel {
+        val deltaAncho = if (panelDerecha) -dx else dx
         val maxAncho = maxAncho(pantallaAncho, tamanoBurbuja, margen, minAncho)
         val maxAlto = (pantallaAlto - y - margen).coerceAtLeast(minAlto)
-        return TamanoPanel(
-            ancho = (anchoActual + deltaAncho.roundToInt()).coerceIn(minAncho, maxAncho),
-            alto = (altoActual + dy.roundToInt()).coerceIn(minAlto, maxAlto),
+        val ancho = (anchoActual + deltaAncho.roundToInt()).coerceIn(minAncho, maxAncho)
+        val alto = (altoActual + dy.roundToInt()).coerceIn(minAlto, maxAlto)
+        val nuevaX = if (panelDerecha) x + anchoActual - ancho else x
+        return RectanguloPanel(
+            x = nuevaX.coerceIn(margen, (pantallaAncho - ancho - margen).coerceAtLeast(margen)),
+            y = y,
+            ancho = ancho,
+            alto = alto,
         )
     }
 

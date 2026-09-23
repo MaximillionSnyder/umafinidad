@@ -67,10 +67,13 @@ se juega:
   el primer hueco válido como siempre;
 - el fondo del panel se puede dejar **translúcido** para ver el juego detrás
   (**Ajustes → Burbuja flotante → Panel translúcido**, activado por defecto);
-- el panel se puede **redimensionar** con la manija de su esquina inferior
-  interna (el tamaño se recuerda), y el círculo de la burbuja se elige en
+- el panel se puede **mover** arrastrando su cabecera y **redimensionar** con
+  la manija de su esquina inferior interna: se recuerdan la posición y el
+  tamaño, la franja nunca se sale de la pantalla y la manija mira siempre al
+  centro, esté donde esté el panel. El círculo de la burbuja se elige en
   **Ajustes → Burbuja flotante → Tamaño de la burbuja** (Chico 44, Normal 56,
-  Grande 72, Muy grande 88 dp; hay un botón para restablecer ambos tamaños);
+  Grande 72, Muy grande 88 dp; hay un botón para restablecer tamaño y
+  posición);
 - el panel **no se cierra al tocar afuera**: solo con la burbuja, la X, Atrás
   o el botón Ocultar, así podés seguir jugando con la franja abierta;
 - incluye atajos para abrir Compatibilidad, Mi corredora, Mis Umas y Ajustes;
@@ -96,10 +99,10 @@ Tres funciones se desbloquean con una **licencia Pro** de pago único,
 validada en el propio dispositivo (sin cuentas, sin servidor y sin permisos
 nuevos):
 
-- **Burbuja: redimensionar el panel** — la manija de la esquina solo existe
-  con licencia; sin ella el panel muestra un candado que abre la pantalla Pro
-  y vuelve al tamaño automático (el tamaño guardado no se borra: al activar
-  Pro vuelve).
+- **Burbuja: mover y redimensionar el panel** — arrastrar la cabecera y la
+  manija de la esquina solo funcionan con licencia; sin ella el panel muestra
+  un candado que abre la pantalla Pro y vuelve a la posición y el tamaño
+  automáticos (lo guardado no se borra: al activar Pro vuelve).
 - **Mejores padres** — el modo queda a la vista con un candado y, sin
   licencia, ni se calcula (es el cálculo más pesado de la app).
 - **Guardar genealogías** — el botón de guardar en Mi corredora lleva a la

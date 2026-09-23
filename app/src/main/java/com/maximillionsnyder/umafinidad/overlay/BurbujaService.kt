@@ -512,7 +512,7 @@ class BurbujaService : Service() {
         val puedeRedimensionar = funcionDisponible(FuncionPro.BURBUJA_REDIMENSIONAR, pro.esPro)
         val puedeMover = funcionDisponible(FuncionPro.BURBUJA_MOVER, pro.esPro)
         val minAncho = dp(ANCHO_PANEL_MIN_DP)
-        val maxAncho = PosicionPanel.maxAncho(pantalla.x, tamanoBurbuja, margen, minAncho)
+        val maxAncho = PosicionPanel.maxAncho(pantalla.x, margen, minAncho)
         val anchoPanel = prefs.panelAnchoDp.takeIf { puedeRedimensionar && it > 0 }
             ?.coerceIn(minAncho, maxAncho)
             ?: PosicionPanel.ancho(
@@ -579,7 +579,6 @@ class BurbujaService : Service() {
             panelDerecha = PosicionPanel.enLadoDerecho(
                 parametros.x, parametros.width, pantalla.x,
             ),
-            tamanoBurbuja = tamanoBurbuja,
             minAncho = dp(ANCHO_PANEL_MIN_DP),
             minAlto = dp(ALTO_PANEL_MIN_DP),
         )

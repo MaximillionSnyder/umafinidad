@@ -71,7 +71,6 @@ class PosicionPanelTest {
         dx: Float = 0f,
         dy: Float = 0f,
         panelDerecha: Boolean = false,
-        tamanoBurbuja: Int = 168,
     ) = PosicionPanel.redimensionar(
         x = x,
         y = y,
@@ -83,7 +82,6 @@ class PosicionPanelTest {
         pantallaAlto = alto,
         margen = margen,
         panelDerecha = panelDerecha,
-        tamanoBurbuja = tamanoBurbuja,
         minAncho = 100,
         minAlto = 200,
     )
@@ -112,9 +110,27 @@ class PosicionPanelTest {
     }
 
     @Test
-    fun elAnchoNoLlegaHastaLaBurbuja() {
-        val r = redimensionar(dx = 9999f, panelDerecha = false)
-        assertEquals(ancho - 168 - 3 * margen, r.ancho)
+    fun elAnchoLlegaATodoElAnchoDeLaPantalla() {
+        val izquierda = redimensionar(dx = 9999f, panelDerecha = false)
+        assertEquals(ancho - 2 * margen, izquierda.ancho)
+        assertEquals(margen, izquierda.x)
+
+        /* Desde la derecha el borde derecho queda fijo y la X se corre hasta
+           el margen izquierdo. */
+        val derecha = redimensionar(
+            x = ancho - 300 - margen,
+            dx = -9999f,
+            panelDerecha = true,
+        )
+        assertEquals(ancho - 2 * margen, derecha.ancho)
+        assertEquals(margen, derecha.x)
+    }
+
+    @Test
+    fun elAnchoMaximoEsLaPantallaMenosLosMargenes() {
+        assertEquals(ancho - 2 * margen, PosicionPanel.maxAncho(ancho, margen, minAncho = 100))
+        /* En pantallas muy chicas manda el mínimo. */
+        assertEquals(100, PosicionPanel.maxAncho(90, margen, minAncho = 100))
     }
 
     @Test

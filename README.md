@@ -68,9 +68,10 @@ se juega:
 - el fondo del panel se puede dejar **translúcido** para ver el juego detrás
   (**Ajustes → Burbuja flotante → Panel translúcido**, activado por defecto);
 - el panel se puede **mover** arrastrando su cabecera y **redimensionar** con
-  la manija de su esquina inferior interna: se recuerdan la posición y el
-  tamaño, la franja nunca se sale de la pantalla y la manija mira siempre al
-  centro, esté donde esté el panel. El círculo de la burbuja se elige en
+  la manija de su esquina inferior interna, hasta **todo el ancho de la
+  pantalla**: se recuerdan la posición y el tamaño, la franja nunca se sale de
+  la pantalla y la manija mira siempre al centro, esté donde esté el panel
+  (si queda encima de la burbuja, se cierra con la X, Ocultar o Atrás). El círculo de la burbuja se elige en
   **Ajustes → Burbuja flotante → Tamaño de la burbuja** (Chico 44, Normal 56,
   Grande 72, Muy grande 88 dp; hay un botón para restablecer tamaño y
   posición);

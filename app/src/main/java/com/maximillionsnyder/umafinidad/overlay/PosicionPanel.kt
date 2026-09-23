@@ -90,8 +90,8 @@ object PosicionPanel {
        interna. La manija mira al centro: el ancho crece al alejarse del borde
        por el que está anclada la franja y el borde opuesto queda fijo (el
        izquierdo si la franja está a la izquierda, el derecho si está a la
-       derecha). El alto crece hacia abajo y la franja nunca llega a la
-       burbuja ni se sale de la pantalla. */
+       derecha). El ancho puede llegar a toda la pantalla; el alto crece hacia
+       abajo y la franja nunca se sale de la pantalla. */
     fun redimensionar(
         x: Int,
         y: Int,
@@ -103,12 +103,11 @@ object PosicionPanel {
         pantallaAlto: Int,
         margen: Int,
         panelDerecha: Boolean,
-        tamanoBurbuja: Int,
         minAncho: Int,
         minAlto: Int,
     ): RectanguloPanel {
         val deltaAncho = if (panelDerecha) -dx else dx
-        val maxAncho = maxAncho(pantallaAncho, tamanoBurbuja, margen, minAncho)
+        val maxAncho = maxAncho(pantallaAncho, margen, minAncho)
         val maxAlto = (pantallaAlto - y - margen).coerceAtLeast(minAlto)
         val ancho = (anchoActual + deltaAncho.roundToInt()).coerceIn(minAncho, maxAncho)
         val alto = (altoActual + dy.roundToInt()).coerceIn(minAlto, maxAlto)
@@ -121,9 +120,9 @@ object PosicionPanel {
         )
     }
 
-    /* Ancho máximo: el espacio libre en el lado del panel sin llegar a la
-       burbuja (que está pegada al borde opuesto, con su margen y una
-       separación extra). */
-    fun maxAncho(pantallaAncho: Int, tamanoBurbuja: Int, margen: Int, minAncho: Int): Int =
-        (pantallaAncho - tamanoBurbuja - 3 * margen).coerceAtLeast(minAncho)
+    /* Ancho máximo: toda la pantalla menos los márgenes. La franja puede
+       quedar encima de la burbuja (el usuario la agranda a propósito): para
+       cerrarla siguen estando la X, Ocultar y Atrás. */
+    fun maxAncho(pantallaAncho: Int, margen: Int, minAncho: Int): Int =
+        (pantallaAncho - 2 * margen).coerceAtLeast(minAncho)
 }

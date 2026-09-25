@@ -6,8 +6,11 @@ import com.maximillionsnyder.umafinidad.domain.Member
 import com.maximillionsnyder.umafinidad.domain.Relation
 import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.puedeIrEn
+import com.maximillionsnyder.umafinidad.domain.sePuedeCompletar
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /* El autocompletar debe ser exacto y nunca proponer al hijo como abuelo
@@ -128,5 +131,19 @@ class CompletarSeleccionTest {
         assertEquals(3, resultado[3])
         assertEquals(4, resultado[4])
         assertEquals(0, resultado.count { it == null })
+    }
+
+    /* El autocompletar (burbuja y pantalla de Compatibilidad) necesita el hijo
+       elegido y al menos un hueco. */
+    @Test
+    fun sePuedeCompletarPideHijoYHueco() {
+        assertFalse("sin hijo no hay búsqueda", sePuedeCompletar(List(SLOTS) { null }))
+        assertFalse("selección vacía", sePuedeCompletar(emptyList()))
+        assertFalse(
+            "selección llena",
+            sePuedeCompletar(listOf<Int?>(1, 2, 3, 4, 5, 6, 7)),
+        )
+        assertTrue(sePuedeCompletar(listOf(1, null, null, null, null, null, null)))
+        assertTrue(sePuedeCompletar(listOf(1, 2, 3, null, null, null, null)))
     }
 }

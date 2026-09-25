@@ -31,6 +31,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -48,6 +49,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.maximillionsnyder.umafinidad.overlay.BotonCompacto
+import com.maximillionsnyder.umafinidad.ui.AutocompletarResultado
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
@@ -110,6 +113,10 @@ fun CompatScreen(
     onConfirmarQuitarSoloHijo: () -> Unit,
     onLimpiarTodo: () -> Unit,
     avisar: (String) -> Unit,
+    autocompletando: Boolean = false,
+    /* Mismo autocompletar que el panel de la burbuja: rellena los huecos con
+       la mejor afinidad. Devuelve por qué no se pudo, si no se pudo. */
+    onAutocompletar: () -> AutocompletarResultado = { AutocompletarResultado.CALCULANDO },
 ) {
     var filtro by rememberSaveable { mutableStateOf("") }
     var sheetAbierto by rememberSaveable { mutableStateOf(false) }
@@ -144,6 +151,16 @@ fun CompatScreen(
         if (onQuitarSlot(i) == QuitarResultado.NECESITA_CONFIRMACION) dialogoQuitar = true
     }
 
+    val msgFaltaHijo = stringResource(R.string.elegi_hijo_empezar)
+
+    fun manejarAutocompletar() {
+        when (onAutocompletar()) {
+            AutocompletarResultado.FALTA_HIJO -> avisar(msgFaltaHijo)
+            AutocompletarResultado.SELECCION_COMPLETA -> avisar(msgSeleccionCompleta)
+            AutocompletarResultado.CALCULANDO -> {}
+        }
+    }
+
     val seleccionSet = remember(seleccion) { seleccion.filterNotNull().toSet() }
     val filtrados = remember(modelo, filtro, seleccionSet) {
         modelo.personajes
@@ -158,7 +175,24 @@ fun CompatScreen(
             /* ---- Cabecera Herencia + slots SIEMPRE visibles ---- */
             HeaderBar(
                 titulo = stringResource(R.string.seccion_herencia),
-                pillTexto = stringResource(R.string.herencia_contador, seleccion.count { it != null })
+                pillTexto = stringResource(R.string.herencia_contador, seleccion.count { it != null }),
+                chip = {
+                    /* Mismo atajo que la cabecera del panel de la burbuja. */
+                    if (autocompletando) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(28.dp),
+                            strokeWidth = 3.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                    } else {
+                        BotonCompacto(
+                            iconoRes = R.drawable.ic_autocompletar,
+                            descripcionRes = R.string.burbuja_autocompletar,
+                            enabled = true,
+                            onClick = ::manejarAutocompletar,
+                        )
+                    }
+                },
             )
 
             Column(

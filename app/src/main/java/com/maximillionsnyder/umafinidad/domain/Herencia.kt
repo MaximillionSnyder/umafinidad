@@ -22,6 +22,12 @@ fun armarArbol(seleccion: Array<Int?>): Arbol = Arbol(
 
 enum class Rol { HIJO, PADRE, ABUELO }
 
+/* ¿Tiene sentido autocompletar esta selección? Hace falta el hijo (define la
+   búsqueda del mejor linaje) y al menos un slot vacío. Lo usan el panel de la
+   burbuja y la pantalla de Compatibilidad. */
+fun sePuedeCompletar(seleccion: List<Int?>): Boolean =
+    seleccion.isNotEmpty() && seleccion[0] != null && seleccion.any { it == null }
+
 fun rolDeSlot(i: Int): Rol = when {
     i == 0 -> Rol.HIJO
     i <= 2 -> Rol.PADRE

@@ -26,6 +26,7 @@ import com.maximillionsnyder.umafinidad.domain.SLOTS
 import com.maximillionsnyder.umafinidad.domain.TipoVinculo
 import com.maximillionsnyder.umafinidad.domain.armarArbol
 import com.maximillionsnyder.umafinidad.domain.puedeIrEn
+import com.maximillionsnyder.umafinidad.domain.sePuedeCompletar
 import com.maximillionsnyder.umafinidad.domain.slotPara
 import com.maximillionsnyder.umafinidad.domain.vinculos
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,9 @@ import kotlinx.coroutines.launch
    estos casos a mensajes localizados. */
 enum class ToggleResultado { COLOCADO, QUITADO, SELECCION_COMPLETA, REGLA }
 enum class QuitarResultado { OK, NECESITA_CONFIRMACION }
+
+/* Resultado de pedir el autocompletar de la genealogía. */
+enum class AutocompletarResultado { CALCULANDO, FALTA_HIJO, SELECCION_COMPLETA }
 
 /* Estado de cada sección del resultado (equivale a las notas de result.js). */
 enum class EstadoSeccion { CON_FILAS, FALTA_HIJO, ELIGE_PADRE, OTRO_PADRE, FALTAN_PADRES, SIN_ABUELOS }
@@ -345,6 +349,30 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun limpiarTodo() {
         _seleccion.value = List(SLOTS) { null }
+    }
+
+    /* ===== Autocompletar (misma lógica que el panel de la burbuja) ===== */
+
+    private val _autocompletando = MutableStateFlow(false)
+    val autocompletando: StateFlow<Boolean> = _autocompletando
+
+    /* Rellena los huecos con la mejor afinidad partiendo de lo ya elegido.
+       Corre fuera del hilo principal porque recorre todos los candidatos. */
+    fun autocompletar(): AutocompletarResultado {
+        val m = _modelo.value ?: return AutocompletarResultado.CALCULANDO
+        if (_autocompletando.value) return AutocompletarResultado.CALCULANDO
+        val actual = _seleccion.value
+        if (actual[0] == null) return AutocompletarResultado.FALTA_HIJO
+        if (!sePuedeCompletar(actual)) return AutocompletarResultado.SELECCION_COMPLETA
+        _autocompletando.value = true
+        viewModelScope.launch(Dispatchers.Default) {
+            try {
+                _seleccion.value = m.completarSeleccion(actual)
+            } finally {
+                _autocompletando.value = false
+            }
+        }
+        return AutocompletarResultado.CALCULANDO
     }
 
     /* Carga una selección arbitraria (Mi corredora con alternativas). */

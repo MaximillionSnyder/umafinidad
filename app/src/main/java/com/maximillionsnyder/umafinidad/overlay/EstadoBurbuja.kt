@@ -2,6 +2,7 @@ package com.maximillionsnyder.umafinidad.overlay
 
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
+import com.maximillionsnyder.umafinidad.domain.sePuedeCompletar
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.puedeIrEn
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
@@ -141,7 +142,7 @@ internal class EstadoBurbuja(
         val modeloActual = _modelo.value ?: return
         if (_autocompletando.value) return
         val actual = _seleccion.value
-        if (actual[0] == null || actual.none { it == null }) return
+        if (!sePuedeCompletar(actual)) return
 
         _slotDestino.value = null
         _autocompletando.value = true

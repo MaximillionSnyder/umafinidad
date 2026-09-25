@@ -216,6 +216,7 @@ private fun App(
     val panelDosColumnas by vm.panelDosColumnas.collectAsState()
     val tamanoBurbuja by vm.tamanoBurbuja.collectAsState()
     val esPro by vm.esPro.collectAsState()
+    val autocompletando by vm.autocompletando.collectAsState()
     val codigoPro by vm.codigoPro.collectAsState()
     val activadoEnPro by vm.activadoEnPro.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
@@ -481,6 +482,8 @@ private fun App(
                                                 onConfirmarQuitarSoloHijo = vm::confirmarQuitarSoloHijo,
                                                 onLimpiarTodo = vm::limpiarTodo,
                                                 avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
+                                                autocompletando = autocompletando,
+                                                onAutocompletar = vm::autocompletar,
                                             )
                                             1 -> TopLinajesScreen(
                                                 modelo = m,

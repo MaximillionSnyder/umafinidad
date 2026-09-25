@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -49,6 +50,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -265,33 +267,12 @@ fun CorredoraScreen(
                         onRestablecer = { seleccionActual = seleccionOptima },
                         onAbrirAlternativas = { sheetSlot = it },
                         onVerHerencia = { onVerHerencia(seleccionActual) },
+                        /* Guardar la configuración actual (aunque difiera del
+                           óptimo). Sin licencia Pro el botón lleva a la
+                           pantalla Pro. */
+                        esPro = esPro,
+                        onGuardar = { if (esPro) mostrarGuardar = true else onIrAPro() },
                     )
-
-                    /* Guardar la configuración actual (aunque difiera del óptimo).
-                       Sin licencia Pro el botón abre la pantalla Pro. */
-                    val totalActual = AppViewModel.calcular(modelo, seleccionActual).total ?: 0
-                    Button(
-                        onClick = { if (esPro) mostrarGuardar = true else onIrAPro() },
-                        modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
-                    ) {
-                        if (!esPro) {
-                            Icon(
-                                painterResource(R.drawable.ic_candado),
-                                contentDescription = stringResource(R.string.pro_bloqueada),
-                                modifier = Modifier.size(18.dp),
-                            )
-                            Spacer(Modifier.size(8.dp))
-                        }
-                        Text(stringResource(R.string.guardar_config), fontWeight = FontWeight.Bold)
-                    }
-                    if (!esPro) {
-                        Text(
-                            stringResource(R.string.pro_guardar_cta),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                        )
-                    }
 
                     /* Configuraciones guardadas de esta corredora. */
                     val guardadas = arboles.filter { it.hijoId == elegidaId }
@@ -408,6 +389,8 @@ private fun PanelMejorLinaje(
     onRestablecer: () -> Unit,
     onAbrirAlternativas: (Int) -> Unit,
     onVerHerencia: () -> Unit,
+    esPro: Boolean,
+    onGuardar: () -> Unit,
 ) {
     val res: ResultadoCompat = remember(seleccionActual) {
         AppViewModel.calcular(modelo, seleccionActual)
@@ -458,11 +441,50 @@ private fun PanelMejorLinaje(
                 )
             }
 
-            Button(
-                onClick = onVerHerencia,
+            /* Ver herencia y guardar comparten fila: la acción de guardar
+               estaba sola abajo y gastaba un renglón entero. */
+            Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(stringResource(R.string.ver_herencia), fontWeight = FontWeight.Bold)
+                Button(
+                    onClick = onVerHerencia,
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text(
+                        stringResource(R.string.ver_herencia),
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        autoSize = TextAutoSize.StepBased(minFontSize = 9.sp, maxFontSize = 14.sp),
+                    )
+                }
+                Button(
+                    onClick = onGuardar,
+                    modifier = Modifier.weight(1f),
+                ) {
+                    if (!esPro) {
+                        Icon(
+                            painterResource(R.drawable.ic_candado),
+                            contentDescription = stringResource(R.string.pro_bloqueada),
+                            modifier = Modifier.size(16.dp),
+                        )
+                        Spacer(Modifier.size(6.dp))
+                    }
+                    Text(
+                        stringResource(R.string.guardar_config),
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        autoSize = TextAutoSize.StepBased(minFontSize = 9.sp, maxFontSize = 14.sp),
+                    )
+                }
+            }
+            if (!esPro) {
+                Text(
+                    stringResource(R.string.pro_guardar_cta),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
     }
@@ -539,8 +561,10 @@ private fun HojaAlternativas(
     onElegir: (Int) -> Unit,
 ) {
     val ocupanteEtiqueta = etiquetaRolDe(slot)
+    /* Sin tope: se listan todas las que respetan las reglas del juego (la
+       lista es perezosa, así que el alto no depende de cuántas sean). */
     val alternativas = remember(seleccion, slot) {
-        modelo.alternativasParaSlot(seleccion, slot, limite = 20)
+        modelo.alternativasParaSlot(seleccion, slot, limite = Int.MAX_VALUE)
     }
 
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {

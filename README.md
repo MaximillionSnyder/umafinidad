@@ -58,9 +58,13 @@ se juega:
 
 - al tocarla se despliega un panel lateral con la **calculadora rápida**
   (genealogía completa de 7 posiciones, buscador difuso, autocompletar y
-  total de afinidad);
+  total de afinidad); las acciones rápidas —limpiar y autocompletar— y la
+  afinidad total viven en la **cabecera**, junto al título, para no gastar
+  alto en una fila aparte;
 - el buscador propone las caras que entran a lo ancho de la franja, en un
-  carrusel deslizable (el degradado del borde avisa que hay más);
+  carrusel deslizable (el degradado del borde avisa que hay más). Cada cara
+  ocupa el ancho que le toca, así que en una franja ancha las caras son más
+  grandes en vez de dejar huecos;
 - se puede **elegir el lugar**: tocar un slot vacío lo marca como destino y
   la próxima ficha va ahí, aunque no sea el próximo del orden; si el
   personaje ya estaba colocado, se mueve. Sin destino elegido, se coloca en

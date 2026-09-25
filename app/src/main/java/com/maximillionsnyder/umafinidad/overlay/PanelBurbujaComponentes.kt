@@ -36,6 +36,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.Character
@@ -161,6 +162,13 @@ internal fun SlotGenealogia(
     }
 }
 
+/* Lado de la cara dentro de una ficha: ocupa el ancho repartido (menos un
+   resto de aire) para que una franja ancha no deje huecos alrededor de la
+   cara. Se acota para que no se vuelva gigante en tablets ni ilegible en
+   franjas angostas. */
+internal fun ladoCaraFicha(anchoFicha: Dp): Dp =
+    (anchoFicha - 8.dp).coerceIn(24.dp, 96.dp)
+
 /* Ficha de una cara sugerida por el buscador. El ancho llega ya repartido en
    píxeles (ver RepartoPanel.kt); el nombre completo sigue disponible para
    TalkBack aunque en pantalla se recorte. */
@@ -172,9 +180,10 @@ internal fun FichaOpcion(
     onClick: () -> Unit,
 ) {
     val nombre = c.displayName(japones)
+    val anchoDp = with(LocalDensity.current) { ancho.toDp() }
     Column(
         modifier = Modifier
-            .width(with(LocalDensity.current) { ancho.toDp() })
+            .width(anchoDp)
             .clip(RoundedCornerShape(12.dp))
             .clickable(
                 role = Role.Button,
@@ -185,7 +194,7 @@ internal fun FichaOpcion(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
-        Avatar(c.charId, nombre, modifier = Modifier.size(32.dp))
+        Avatar(c.charId, nombre, modifier = Modifier.size(ladoCaraFicha(anchoDp)))
         Text(
             nombre,
             style = MaterialTheme.typography.labelSmall,

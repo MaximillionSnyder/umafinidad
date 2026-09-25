@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -47,6 +49,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
@@ -152,6 +155,7 @@ fun PanelBurbuja(
                             },
                         ),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     if (puedeMover) {
                         Icon(
@@ -160,31 +164,21 @@ fun PanelBurbuja(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(18.dp),
                         )
-                        Spacer(Modifier.size(6.dp))
                     }
                     Text(
                         stringResource(R.string.burbuja_panel_titulo),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .weight(1f)
                             .semantics { heading() },
                     )
-                    IconButton(onClick = onCerrar) {
-                        Icon(
-                            painterResource(R.drawable.ic_cerrar),
-                            contentDescription = stringResource(R.string.cerrar),
-                        )
-                    }
-                }
-
-                /* ---- Acciones rápidas y afinidad total ---- */
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+                    /* Limpiar y autocompletar viven en la cabecera, junto a la
+                       afinidad total: la franja es corta y no vale gastar una
+                       fila entera en ellas. */
                     BotonCompacto(
                         iconoRes = R.drawable.ic_limpiar,
                         descripcionRes = R.string.burbuja_limpiar,
@@ -198,9 +192,14 @@ fun PanelBurbuja(
                         enabled = !autocompletando && hayHuecos,
                         onClick = onAutocompletar,
                     )
-                    Spacer(Modifier.weight(1f))
                     if (rango != null && total != null) {
                         TotalCompacto(rango, total)
+                    }
+                    IconButton(onClick = onCerrar) {
+                        Icon(
+                            painterResource(R.drawable.ic_cerrar),
+                            contentDescription = stringResource(R.string.cerrar),
+                        )
                     }
                 }
                 if (autocompletando) {
@@ -444,10 +443,13 @@ private fun CarruselSugerencias(
             }
         }
         if (hayMas) {
+            /* El degradado acompaña el alto real de la fila, que ahora crece
+               con la cara. */
             Box(
                 modifier = Modifier
                     .align(if (panelDerecha) Alignment.CenterStart else Alignment.CenterEnd)
-                    .size(width = 18.dp, height = FICHA_OPCION_DP.dp)
+                    .fillMaxHeight()
+                    .width(18.dp)
                     .background(degradado),
             )
         }

@@ -535,7 +535,7 @@ class BurbujaService : Service() {
             null
         }
         val posicion = guardada ?: PosicionPanel.calcular(
-            pantalla.x, pantalla.y, anchoPanel, altoPanel, margen,
+            pantalla.x, anchoPanel, margen,
             PosicionBurbuja.enLadoDerecho(parametrosBurbuja.x, pantalla.x, tamanoBurbuja),
         )
 

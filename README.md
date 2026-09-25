@@ -67,11 +67,14 @@ se juega:
   el primer hueco válido como siempre;
 - el fondo del panel se puede dejar **translúcido** para ver el juego detrás
   (**Ajustes → Burbuja flotante → Panel translúcido**, activado por defecto);
-- el panel se puede **mover** arrastrando su cabecera y **redimensionar** con
-  la manija de su esquina inferior interna, hasta **todo el ancho de la
-  pantalla**: se recuerdan la posición y el tamaño, la franja nunca se sale de
-  la pantalla y la manija mira siempre al centro, esté donde esté el panel
-  (si queda encima de la burbuja, se cierra con la X, Ocultar o Atrás). El círculo de la burbuja se elige en
+- el panel **abre como una banda ancha pegada al borde superior** (93 % del
+  ancho y 38 % del alto de la pantalla, del lado opuesto a la burbuja), así el
+  centro y el fondo quedan libres para el juego;
+- se puede **mover** arrastrando su cabecera y **redimensionar** con la manija
+  de su esquina inferior interna, hasta **todo el ancho de la pantalla**: se
+  recuerdan la posición y el tamaño, la franja nunca se sale de la pantalla y
+  la manija mira siempre al centro, esté donde esté el panel (si queda encima
+  de la burbuja, se cierra con la X, Ocultar o Atrás); El círculo de la burbuja se elige en
   **Ajustes → Burbuja flotante → Tamaño de la burbuja** (Chico 44, Normal 56,
   Grande 72, Muy grande 88 dp; hay un botón para restablecer tamaño y
   posición);
@@ -90,9 +93,10 @@ La burbuja y la zona de descarte se crean una sola vez por servicio. El panel
 se monta en una ventana nueva en cada apertura (una ventana recién creada es
 la que engancha el teclado del buscador). El estado —selección, búsqueda,
 sugerencias y slot destino— vive en `EstadoBurbuja`, así que cerrar y reabrir
-el panel no lo pierde. El tamaño automático de la franja sigue saliendo de las
-fracciones de siempre (`FRACCION_ANCHO_PANEL`, `FRACCION_ALTO_PANEL`), salvo
-que el usuario la haya redimensionado a mano.
+el panel no lo pierde. La posición y el tamaño automáticos salen de
+`FRACCION_ANCHO_PANEL` (0.93) y `FRACCION_ALTO_PANEL` (0.38) con el borde
+superior como ancla, salvo que el usuario la haya movido o redimensionado a
+mano (ahí mandan la posición y el tamaño guardados).
 
 ## Versión Pro
 

@@ -19,21 +19,15 @@ object PosicionPanel {
     fun ancho(pantallaAncho: Int, fraccion: Float, minPx: Int, maxPx: Int): Int =
         (pantallaAncho * fraccion).toInt().coerceIn(minPx, maxPx)
 
-    /* Posición automática: la franja va al borde opuesto al de la burbuja
-       (para no taparla), centrada verticalmente y acotada a la pantalla. */
+    /* Posición automática: banda pegada al borde superior y al lado opuesto
+       al de la burbuja (para no taparla). Es la posición de referencia: deja
+       libre el centro y el fondo de la pantalla, que es donde se juega. */
     fun calcular(
         ancho: Int,
-        alto: Int,
         anchoPanel: Int,
-        altoPanel: Int,
         margen: Int,
         burbujaDerecha: Boolean,
-    ): Posicion {
-        val x = x(ancho, anchoPanel, margen, burbujaDerecha)
-        val maxY = (alto - altoPanel - margen).coerceAtLeast(margen)
-        val y = ((alto - altoPanel) / 2).coerceIn(margen, maxY)
-        return Posicion(x, y)
-    }
+    ): Posicion = Posicion(x(ancho, anchoPanel, margen, burbujaDerecha), margen)
 
     /* Coordenada X de la franja automática: pegada al borde si la burbuja
        está a la derecha, o al borde opuesto si no. */

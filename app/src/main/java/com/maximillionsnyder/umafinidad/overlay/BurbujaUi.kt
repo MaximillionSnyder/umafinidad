@@ -50,14 +50,16 @@ const val TAMANO_QUITAR_DP = 64
 const val MARGEN_QUITAR_DP = 64
 const val AGARRE_QUITAR_DP = 14
 
-/* Franja del panel: ancho proporcional a la pantalla (con topes para
-   teléfonos chicos y tablets) y alto como fracción de la pantalla.
+/* Franja del panel: por defecto es una banda ancha pegada al borde superior
+   (93% del ancho y 38% del alto, medido de la captura de referencia), con
+   topes para teléfonos chicos y tablets. El usuario puede moverla y
+   redimensionarla, y esos tamaños se recuerdan.
    El tamaño de la franja no se toca: lo que se reparte distinto adentro son
    las caras del buscador (ver RepartoPanel.kt). */
-const val FRACCION_ANCHO_PANEL = 0.50f
+const val FRACCION_ANCHO_PANEL = 0.93f
 const val ANCHO_PANEL_MIN_DP = 190
-const val ANCHO_PANEL_MAX_DP = 300
-const val FRACCION_ALTO_PANEL = 0.66f
+const val ANCHO_PANEL_MAX_DP = 420
+const val FRACCION_ALTO_PANEL = 0.38f
 const val ALTO_PANEL_MIN_DP = 240
 const val ALPHA_PANEL = 0.55f
 const val TAMANO_MANIJA_DP = 34

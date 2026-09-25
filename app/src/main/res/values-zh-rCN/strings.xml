@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">选择此处</string>
     <string name="burbuja_destino">将放入：%1$s</string>
     <string name="burbuja_redimensionar">调整面板大小</string>
+    <string name="burbuja_dos_columnas">两列血统面板</string>
+    <string name="burbuja_dos_columnas_desc">子代在上方，父母与祖父母每行两位，父母 1 一系位于左列</string>
     <string name="burbuja_mover">移动面板</string>
     <string name="burbuja_tamano_titulo">悬浮球大小</string>
     <string name="burbuja_tamano_chico">小</string>

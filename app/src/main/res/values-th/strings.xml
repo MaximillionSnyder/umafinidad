@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">เลือกตำแหน่งนี้</string>
     <string name="burbuja_destino">จะวางใน: %1$s</string>
     <string name="burbuja_redimensionar">ปรับขนาดแผง</string>
+    <string name="burbuja_dos_columnas">สายเลือดแบบสองคอลัมน์</string>
+    <string name="burbuja_dos_columnas_desc">ลูกอยู่ด้านบน พ่อแม่และปู่ย่าตายายเรียงแถวละสองคน โดยสายของพ่อแม่ 1 อยู่ด้านซ้าย</string>
     <string name="burbuja_mover">ย้ายแผง</string>
     <string name="burbuja_tamano_titulo">ขนาดบับเบิ้ล</string>
     <string name="burbuja_tamano_chico">เล็ก</string>

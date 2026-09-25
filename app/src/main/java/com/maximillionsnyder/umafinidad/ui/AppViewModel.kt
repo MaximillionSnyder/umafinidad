@@ -154,6 +154,16 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         _panelTranslucido.value = valor
     }
 
+    /* Genealogía del panel de la burbuja en dos columnas (el servicio la lee
+       al abrir el panel). */
+    private val _panelDosColumnas = MutableStateFlow(prefs.panelDosColumnas)
+    val panelDosColumnas: StateFlow<Boolean> = _panelDosColumnas
+
+    fun setPanelDosColumnas(valor: Boolean) {
+        prefs.panelDosColumnas = valor
+        _panelDosColumnas.value = valor
+    }
+
     /* Tamaño del círculo de la burbuja (el servicio lo aplica en vivo). */
     private val _tamanoBurbuja = MutableStateFlow(prefs.tamanoBurbuja)
     val tamanoBurbuja: StateFlow<TamanoBurbuja> = _tamanoBurbuja

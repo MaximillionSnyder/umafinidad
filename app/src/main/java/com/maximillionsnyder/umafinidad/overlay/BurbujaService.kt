@@ -456,6 +456,7 @@ class BurbujaService : Service() {
                         sugerencias = sugerenciasActuales,
                         autocompletando = calculando,
                         panelDerecha = panelDerechaActual,
+                        dosColumnas = prefs.panelDosColumnas,
                         translucido = translucido,
                         slotDestino = slotDestinoActual,
                         onFiltro = estado::buscar,

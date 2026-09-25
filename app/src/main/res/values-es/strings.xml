@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">Elegir este lugar</string>
     <string name="burbuja_destino">Se va a colocar en: %1$s</string>
     <string name="burbuja_redimensionar">Redimensionar panel</string>
+    <string name="burbuja_dos_columnas">Genealogía en dos columnas</string>
+    <string name="burbuja_dos_columnas_desc">El hijo arriba y después padres y abuelos de a dos por fila, con la línea del padre 1 a la izquierda</string>
     <string name="burbuja_mover">Mover panel</string>
     <string name="burbuja_tamano_titulo">Tamaño de la burbuja</string>
     <string name="burbuja_tamano_chico">Chico</string>

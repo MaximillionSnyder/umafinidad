@@ -2,6 +2,7 @@ package com.maximillionsnyder.umafinidad.overlay
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -92,6 +93,9 @@ internal fun SlotGenealogia(
     seleccionado: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    /* Card angosta (dos por fila): avatar un poco más chico y los textos
+       pasan a marquesina para que se lea el nombre completo. */
+    compacto: Boolean = false,
 ) {
     val nombre = personaje?.displayName(japones)
     Card(
@@ -119,14 +123,15 @@ internal fun SlotGenealogia(
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 5.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(if (compacto) 6.dp else 8.dp),
         ) {
+            val lado = if (compacto) 28.dp else 32.dp
             if (personaje != null && nombre != null) {
-                Avatar(personaje.charId, nombre, modifier = Modifier.size(32.dp))
+                Avatar(personaje.charId, nombre, modifier = Modifier.size(lado))
             } else {
                 Box(
                     modifier = Modifier
-                        .size(32.dp)
+                        .size(lado)
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -141,6 +146,7 @@ internal fun SlotGenealogia(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(1.dp),
             ) {
+                val marquesina = if (compacto) Modifier.basicMarquee() else Modifier
                 if (nombre != null) {
                     Text(
                         nombre,
@@ -148,6 +154,7 @@ internal fun SlotGenealogia(
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                        modifier = marquesina,
                     )
                 }
                 Text(
@@ -156,6 +163,7 @@ internal fun SlotGenealogia(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = marquesina,
                 )
             }
         }

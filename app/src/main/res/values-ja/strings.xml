@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">この場所を選ぶ</string>
     <string name="burbuja_destino">配置先: %1$s</string>
     <string name="burbuja_redimensionar">パネルのサイズ変更</string>
+    <string name="burbuja_dos_columnas">血統を2列表示</string>
+    <string name="burbuja_dos_columnas_desc">子は上部、親と祖父母は1行に2人ずつ、親1の系統は左側</string>
     <string name="burbuja_mover">パネルの移動</string>
     <string name="burbuja_tamano_titulo">バブルのサイズ</string>
     <string name="burbuja_tamano_chico">小</string>

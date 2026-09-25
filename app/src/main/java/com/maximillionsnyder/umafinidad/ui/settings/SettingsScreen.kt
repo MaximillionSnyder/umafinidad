@@ -82,6 +82,8 @@ fun SettingsScreen(
     onBurbuja: (Boolean) -> Unit,
     panelTranslucido: Boolean,
     onPanelTranslucido: (Boolean) -> Unit,
+    dosColumnas: Boolean = false,
+    onDosColumnas: (Boolean) -> Unit = {},
     tamanoBurbuja: TamanoBurbuja,
     onTamanoBurbuja: (TamanoBurbuja) -> Unit,
     onRestablecerTamanos: () -> Unit,
@@ -210,6 +212,12 @@ fun SettingsScreen(
                     descripcion = stringResource(R.string.burbuja_panel_translucido_desc),
                     activado = panelTranslucido,
                     onCambio = onPanelTranslucido,
+                )
+                FilaInterruptor(
+                    titulo = stringResource(R.string.burbuja_dos_columnas),
+                    descripcion = stringResource(R.string.burbuja_dos_columnas_desc),
+                    activado = dosColumnas,
+                    onCambio = onDosColumnas,
                 )
                 Text(
                     stringResource(R.string.burbuja_tamano_titulo),

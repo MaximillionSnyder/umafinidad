@@ -110,6 +110,12 @@ class PrefsRepository(context: Context) {
         get() = prefs.getInt(KEY_PANEL_ALTO_DP, -1)
         set(valor) = prefs.edit().putInt(KEY_PANEL_ALTO_DP, valor).apply()
 
+    /* Genealogía del panel en dos columnas: el hijo en una card grande y
+       padres/abuelos de a dos por fila, por rama. */
+    var panelDosColumnas: Boolean
+        get() = prefs.getBoolean(KEY_PANEL_DOS_COLUMNAS, false)
+        set(valor) = prefs.edit().putBoolean(KEY_PANEL_DOS_COLUMNAS, valor).apply()
+
     /* Posición de la franja movida a mano (px); -1 = automática (lado
        opuesto a la burbuja, centrada verticalmente). */
     var panelX: Int
@@ -151,6 +157,7 @@ class PrefsRepository(context: Context) {
         const val KEY_TAMANO_BURBUJA = "burbuja_tamano"
         const val KEY_PANEL_ANCHO_DP = "panel_ancho_dp"
         const val KEY_PANEL_ALTO_DP = "panel_alto_dp"
+        const val KEY_PANEL_DOS_COLUMNAS = "panel_dos_columnas"
         const val KEY_PANEL_X = "panel_x"
         const val KEY_PANEL_Y = "panel_y"
         // Solo lectura para migrar instalaciones con el interruptor viejo.

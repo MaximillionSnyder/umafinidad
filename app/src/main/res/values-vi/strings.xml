@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">Chọn vị trí này</string>
     <string name="burbuja_destino">Sẽ đặt vào: %1$s</string>
     <string name="burbuja_redimensionar">Đổi kích thước bảng</string>
+    <string name="burbuja_dos_columnas">Huyết thống hai cột</string>
+    <string name="burbuja_dos_columnas_desc">Con ở trên; bố mẹ và ông bà hai người mỗi hàng, nhánh của Bố mẹ 1 nằm bên trái</string>
     <string name="burbuja_mover">Di chuyển bảng</string>
     <string name="burbuja_tamano_titulo">Kích thước bong bóng</string>
     <string name="burbuja_tamano_chico">Nhỏ</string>

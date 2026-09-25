@@ -213,6 +213,7 @@ private fun App(
     val mostrarBienvenida by vm.mostrarBienvenida.collectAsState()
     val burbujaActiva by vm.burbujaActiva.collectAsState()
     val panelTranslucido by vm.panelTranslucido.collectAsState()
+    val panelDosColumnas by vm.panelDosColumnas.collectAsState()
     val tamanoBurbuja by vm.tamanoBurbuja.collectAsState()
     val esPro by vm.esPro.collectAsState()
     val codigoPro by vm.codigoPro.collectAsState()
@@ -541,6 +542,8 @@ private fun App(
                                                 },
                                                 panelTranslucido = panelTranslucido,
                                                 onPanelTranslucido = vm::setPanelTranslucido,
+                                                dosColumnas = panelDosColumnas,
+                                                onDosColumnas = vm::setPanelDosColumnas,
                                                 tamanoBurbuja = tamanoBurbuja,
                                                 onTamanoBurbuja = vm::setTamanoBurbuja,
                                                 onRestablecerTamanos = vm::restablecerTamanos,

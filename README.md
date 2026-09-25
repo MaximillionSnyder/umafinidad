@@ -71,6 +71,11 @@ se juega:
   el primer hueco válido como siempre;
 - el fondo del panel se puede dejar **translúcido** para ver el juego detrás
   (**Ajustes → Burbuja flotante → Panel translúcido**, activado por defecto);
+- la genealogía se puede ver en **una columna** (7 filas) o en **dos
+  columnas** (**Ajustes → Burbuja flotante → Genealogía en dos columnas**): el
+  hijo queda en una card grande y abajo van los padres y los abuelos de a dos
+  por fila, agrupados por rama (la columna izquierda es la línea del Padre 1).
+  En las cards angostas los nombres largos pasan a marquesina;
 - el panel **abre como una banda ancha pegada al borde superior** (93 % del
   ancho y 38 % del alto de la pantalla, del lado opuesto a la burbuja), así el
   centro y el fondo quedan libres para el juego;

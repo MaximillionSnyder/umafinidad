@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">Pilih tempat ini</string>
     <string name="burbuja_destino">Akan ditempatkan di: %1$s</string>
     <string name="burbuja_redimensionar">Ubah ukuran panel</string>
+    <string name="burbuja_dos_columnas">Silsilah dalam dua kolom</string>
+    <string name="burbuja_dos_columnas_desc">Anak di atas; orang tua dan kakek-nenek dua per baris, dengan cabang Orang tua 1 di sebelah kiri</string>
     <string name="burbuja_mover">Pindahkan panel</string>
     <string name="burbuja_tamano_titulo">Ukuran bola</string>
     <string name="burbuja_tamano_chico">Kecil</string>

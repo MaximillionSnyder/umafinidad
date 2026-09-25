@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">Choose this slot</string>
     <string name="burbuja_destino">Will be placed in: %1$s</string>
     <string name="burbuja_redimensionar">Resize panel</string>
+    <string name="burbuja_dos_columnas">Lineage in two columns</string>
+    <string name="burbuja_dos_columnas_desc">Child on top; parents and grandparents two per row, with parent 1\'s line on the left</string>
     <string name="burbuja_mover">Move panel</string>
     <string name="burbuja_tamano_titulo">Bubble size</string>
     <string name="burbuja_tamano_chico">Small</string>

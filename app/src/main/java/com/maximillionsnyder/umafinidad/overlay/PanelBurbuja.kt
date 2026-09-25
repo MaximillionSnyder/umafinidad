@@ -76,6 +76,9 @@ fun PanelBurbuja(
     /* La franja puede estar en cualquier lado: la manija y el degradado del
        carrusel miran al centro según dónde la dejó el usuario. */
     panelDerecha: Boolean,
+    /* Genealogía en dos columnas (hijo grande y el resto de a dos por fila,
+       por rama). Se elige en Ajustes → Burbuja flotante. */
+    dosColumnas: Boolean,
     translucido: Boolean,
     slotDestino: Int?,
     onFiltro: (String) -> Unit,
@@ -207,16 +210,20 @@ fun PanelBurbuja(
                 }
 
                 /* ---- Genealogía completa: hijo, dos padres y abuelos ---- */
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    for (i in 0 until SLOTS) {
-                        SlotGenealogia(
-                            etiqueta = stringResource(etiquetaDeSlot(i)),
-                            personaje = personajes[i],
-                            japones = japones,
-                            seleccionado = slotDestino == i,
-                            onClick = { onSlot(i) },
-                            modifier = Modifier.fillMaxWidth(),
-                        )
+                if (dosColumnas) {
+                    GrillaGenealogia(personajes, japones, slotDestino, onSlot)
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        for (i in 0 until SLOTS) {
+                            SlotGenealogia(
+                                etiqueta = stringResource(etiquetaDeSlot(i)),
+                                personaje = personajes[i],
+                                japones = japones,
+                                seleccionado = slotDestino == i,
+                                onClick = { onSlot(i) },
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
                     }
                 }
 
@@ -472,6 +479,51 @@ private fun etiquetaDeSlot(slot: Int): Int = when (slot) {
     0 -> R.string.rol_hijo
     1 -> R.string.rol_padre1
     2 -> R.string.rol_padre2
-    3, 4 -> R.string.burbuja_abuelo_p1
+    /* 3 y 5 son el primer abuelo de cada rama; 4 y 6 el segundo. */
+    3, 5 -> R.string.burbuja_abuelo_p1
     else -> R.string.burbuja_abuelo_p2
+}
+
+/* Genealogía en dos columnas: el hijo en una card grande y debajo las parejas
+   por rama (la columna izquierda es la línea del Padre 1 y la derecha la del
+   Padre 2). */
+@Composable
+private fun GrillaGenealogia(
+    personajes: List<Character?>,
+    japones: Boolean,
+    slotDestino: Int?,
+    onSlot: (Int) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        FILAS_GENEALOGIA_POR_RAMA.forEach { fila ->
+            if (fila.size == 1) {
+                val slot = fila.first()
+                SlotGenealogia(
+                    etiqueta = stringResource(etiquetaDeSlot(slot)),
+                    personaje = personajes[slot],
+                    japones = japones,
+                    seleccionado = slotDestino == slot,
+                    onClick = { onSlot(slot) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            } else {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    fila.forEach { slot ->
+                        SlotGenealogia(
+                            etiqueta = stringResource(etiquetaDeSlot(slot)),
+                            personaje = personajes[slot],
+                            japones = japones,
+                            seleccionado = slotDestino == slot,
+                            compacto = true,
+                            onClick = { onSlot(slot) },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                }
+            }
+        }
+    }
 }

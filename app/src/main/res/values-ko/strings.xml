@@ -199,6 +199,8 @@
     <string name="burbuja_elegir_lugar">이 자리 선택</string>
     <string name="burbuja_destino">배치 위치: %1$s</string>
     <string name="burbuja_redimensionar">패널 크기 조정</string>
+    <string name="burbuja_dos_columnas">혈통 2열 보기</string>
+    <string name="burbuja_dos_columnas_desc">자녀가 맨 위에, 부모와 조부모는 한 줄에 둘씩 표시되고 부모 1의 혈통은 왼쪽에 놓입니다</string>
     <string name="burbuja_mover">패널 이동</string>
     <string name="burbuja_tamano_titulo">버블 크기</string>
     <string name="burbuja_tamano_chico">작게</string>

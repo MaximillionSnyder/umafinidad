@@ -2,13 +2,13 @@ package com.maximillionsnyder.umafinidad
 
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
+import com.maximillionsnyder.umafinidad.domain.ColocacionResultado
 import com.maximillionsnyder.umafinidad.domain.Member
 import com.maximillionsnyder.umafinidad.domain.Relation
 import com.maximillionsnyder.umafinidad.domain.SLOTS
-import com.maximillionsnyder.umafinidad.overlay.ColocacionResultado
-import com.maximillionsnyder.umafinidad.overlay.alternar
-import com.maximillionsnyder.umafinidad.overlay.quitar
-import com.maximillionsnyder.umafinidad.overlay.seleccionVacia
+import com.maximillionsnyder.umafinidad.domain.alternar
+import com.maximillionsnyder.umafinidad.domain.quitar
+import com.maximillionsnyder.umafinidad.domain.seleccionVacia
 import com.maximillionsnyder.umafinidad.overlay.totalDe
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

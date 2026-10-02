@@ -134,6 +134,11 @@
     <string name="expandido">Đang mở</string>
     <string name="contraido">Đang thu gọn</string>
     <string name="quitar_personaje">Bỏ nhân vật</string>
+    <string name="elegir_slot_titulo">Đặt %1$s ở đâu?</string>
+    <string name="slot_agregar">Đặt vào vai trò này</string>
+    <string name="slot_quitar_aca">Bỏ khỏi vai trò này</string>
+    <string name="slot_aqui">Đã ở vai trò này</string>
+    <string name="slot_bloqueado">Luật không cho đặt ở đây</string>
     <string name="abrir_grupos">Mở nhóm</string>
     <string name="abrir_ranking">Mở xếp hạng</string>
     <string name="bienvenida_titulo">Thiết lập trợ năng</string>

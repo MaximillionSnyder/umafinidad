@@ -134,6 +134,11 @@
     <string name="expandido">Expanded</string>
     <string name="contraido">Collapsed</string>
     <string name="quitar_personaje">Remove character</string>
+    <string name="elegir_slot_titulo">Where do you want to place %1$s?</string>
+    <string name="slot_agregar">Place in this role</string>
+    <string name="slot_quitar_aca">Remove from this role</string>
+    <string name="slot_aqui">Already in this role</string>
+    <string name="slot_bloqueado">The rules do not allow it here</string>
     <string name="abrir_grupos">Open groups</string>
     <string name="abrir_ranking">Open ranking</string>
     <string name="bienvenida_titulo">Set up accessibility</string>

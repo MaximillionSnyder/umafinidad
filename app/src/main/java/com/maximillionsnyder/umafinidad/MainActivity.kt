@@ -217,6 +217,7 @@ private fun App(
     val tamanoBurbuja by vm.tamanoBurbuja.collectAsState()
     val esPro by vm.esPro.collectAsState()
     val autocompletando by vm.autocompletando.collectAsState()
+    val slotDestino by vm.slotDestino.collectAsState()
     val codigoPro by vm.codigoPro.collectAsState()
     val activadoEnPro by vm.activadoEnPro.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
@@ -484,6 +485,10 @@ private fun App(
                                                 avisar = { msg -> scope.launch { snackbarHostState.showSnackbar(msg) } },
                                                 autocompletando = autocompletando,
                                                 onAutocompletar = vm::autocompletar,
+                                                slotDestino = slotDestino,
+                                                onMarcarDestino = vm::marcarDestino,
+                                                slotsPara = vm::slotsPara,
+                                                onAgregar = vm::agregar,
                                             )
                                             1 -> TopLinajesScreen(
                                                 modelo = m,

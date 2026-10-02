@@ -134,6 +134,11 @@
     <string name="expandido">Diperluas</string>
     <string name="contraido">Dilipat</string>
     <string name="quitar_personaje">Hapus karakter</string>
+    <string name="elegir_slot_titulo">Di mana %1$s mau diletakkan?</string>
+    <string name="slot_agregar">Tempatkan di peran ini</string>
+    <string name="slot_quitar_aca">Hapus dari peran ini</string>
+    <string name="slot_aqui">Sudah di peran ini</string>
+    <string name="slot_bloqueado">Aturan tidak mengizinkan di sini</string>
     <string name="abrir_grupos">Buka grup</string>
     <string name="abrir_ranking">Buka peringkat</string>
     <string name="bienvenida_titulo">Atur aksesibilitas</string>

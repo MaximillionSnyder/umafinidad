@@ -134,6 +134,11 @@
     <string name="expandido">ขยายอยู่</string>
     <string name="contraido">ย่ออยู่</string>
     <string name="quitar_personaje">เอาตัวละครออก</string>
+    <string name="elegir_slot_titulo">จะวางตัวละคร %1$s ไว้ตำแหน่งไหน</string>
+    <string name="slot_agregar">วางในตำแหน่งนี้</string>
+    <string name="slot_quitar_aca">เอาออกจากตำแหน่งนี้</string>
+    <string name="slot_aqui">อยู่ในตำแหน่งนี้แล้ว</string>
+    <string name="slot_bloqueado">กฎไม่อนุญาตให้วางที่นี่</string>
     <string name="abrir_grupos">เปิดกลุ่ม</string>
     <string name="abrir_ranking">เปิดจัดอันดับ</string>
     <string name="bienvenida_titulo">ตั้งค่าการเข้าถึง</string>

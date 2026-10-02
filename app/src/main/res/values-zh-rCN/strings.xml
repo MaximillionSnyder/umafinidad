@@ -134,6 +134,11 @@
     <string name="expandido">已展开</string>
     <string name="contraido">已收起</string>
     <string name="quitar_personaje">移除角色</string>
+    <string name="elegir_slot_titulo">要把 %1$s 放在哪个位置？</string>
+    <string name="slot_agregar">放在这个身份</string>
+    <string name="slot_quitar_aca">从这个身份移除</string>
+    <string name="slot_aqui">已是这个身份</string>
+    <string name="slot_bloqueado">规则不允许放在这里</string>
     <string name="abrir_grupos">打开组合</string>
     <string name="abrir_ranking">打开排行</string>
     <string name="bienvenida_titulo">设置无障碍</string>

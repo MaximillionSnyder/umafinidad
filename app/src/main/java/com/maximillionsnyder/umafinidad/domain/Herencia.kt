@@ -73,6 +73,93 @@ fun slotPara(seleccion: Array<Int?>, id: Int): Int {
     return if (hayHueco) -2 else -1
 }
 
+/* Estado de un slot frente a un personaje, tal como está la selección. */
+enum class SlotEstado { ACTUAL, VALIDO, OCUPADO, BLOQUEADO }
+
+data class SlotOpcion(val slot: Int, val estado: SlotEstado)
+
+/* Los SLOTS slots con su estado para este personaje. Las reglas se evalúan
+   sobre la selección tal como está, sin sacarlo de donde lo ocupa: por eso el
+   hijo sale ACTUAL y además puede salir VALIDO en los slots de abuelo, que es
+   la corredora que vale 0. Los cruces entre ramas también salen VALIDO. */
+fun slotsPara(seleccion: Array<Int?>, id: Int): List<SlotOpcion> =
+    (0 until SLOTS).map { slot ->
+        val estado = when {
+            seleccion[slot] == id -> SlotEstado.ACTUAL
+            seleccion[slot] != null -> SlotEstado.OCUPADO
+            puedeIrEn(seleccion, slot, id) -> SlotEstado.VALIDO
+            else -> SlotEstado.BLOQUEADO
+        }
+        SlotOpcion(slot, estado)
+    }
+
+/* Coloca `id` en el slot indicado SIN sacarlo de donde ya esté: es la
+   segunda copia (el hijo de abuelo, un padre repetido en la otra rama).
+   null si el slot no está libre o las reglas no lo admiten. */
+fun agregarEn(seleccion: Array<Int?>, slot: Int, id: Int): Array<Int?>? {
+    if (slot !in 0 until SLOTS) return null
+    if (seleccion[slot] != null) return null
+    if (!puedeIrEn(seleccion, slot, id)) return null
+    return seleccion.copyOf().also { it[slot] = id }
+}
+
+/* Selección de 7 posiciones; null = slot vacío. */
+val seleccionVacia: List<Int?> = List(SLOTS) { null }
+
+enum class ColocacionResultado { COLOCADO, QUITADO, COMPLETA, REGLA }
+
+data class Colocacion(
+    val seleccion: List<Int?>,
+    val resultado: ColocacionResultado,
+)
+
+/* El gesto de elegir un personaje, con un slot destino opcional: si se
+   indicó, el personaje va ahí (movido desde su posición actual si ya
+   estaba); si no, va al primer hueco donde las reglas lo permitan, y si ya
+   estaba en la genealogía se quita. Lo usan la pantalla de compatibilidad y
+   el panel de la burbuja. */
+fun alternar(seleccion: List<Int?>, id: Int, destino: Int? = null): Colocacion {
+    if (destino != null) {
+        val colocado = colocarEn(seleccion, destino, id)
+            ?: return Colocacion(seleccion, ColocacionResultado.REGLA)
+        return Colocacion(colocado, ColocacionResultado.COLOCADO)
+    }
+
+    val actual = seleccion.toTypedArray()
+    val posiciones = actual.withIndex().filter { it.value == id }.map { it.index }
+    if (posiciones.isNotEmpty()) {
+        val quitado = actual.toMutableList().also { it[posiciones.last()] = null }
+        return Colocacion(quitado, ColocacionResultado.QUITADO)
+    }
+
+    val slot = slotPara(actual, id)
+    if (slot >= 0 && puedeIrEn(actual, slot, id)) {
+        val colocado = actual.toMutableList().also { it[slot] = id }
+        return Colocacion(colocado, ColocacionResultado.COLOCADO)
+    }
+    return Colocacion(seleccion, if (slot == -1) ColocacionResultado.COMPLETA else ColocacionResultado.REGLA)
+}
+
+/* Coloca `id` en el slot indicado. Si ya estaba en la selección, primero se
+   lo saca de su última posición (mover): así las reglas se evalúan sin el
+   ocupante viejo (p. ej. mover un padre al otro slot de padre). Devuelve
+   null cuando el destino no admite al personaje o ya tiene a otro. */
+fun colocarEn(seleccion: List<Int?>, slot: Int, id: Int): List<Int?>? {
+    if (slot !in seleccion.indices) return null
+    val base = seleccion.toMutableList()
+    val anterior = base.indexOfLast { it == id }
+    if (anterior >= 0) base[anterior] = null
+    if (base[slot] != null) return null
+    if (!puedeIrEn(base.toTypedArray(), slot, id)) return null
+    base[slot] = id
+    return base
+}
+
+fun quitar(seleccion: List<Int?>, slot: Int): List<Int?> {
+    if (slot !in seleccion.indices || seleccion[slot] == null) return seleccion
+    return seleccion.toMutableList().also { it[slot] = null }
+}
+
 enum class TipoVinculo { HIJO_PADRE, ENTRE_PADRES, HIJO_PADRE_ABUELO }
 
 data class Vinculo(

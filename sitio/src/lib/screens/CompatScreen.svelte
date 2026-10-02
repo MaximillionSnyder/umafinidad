@@ -4,10 +4,11 @@
 
 import type { Character } from '$lib/domain/models'
 import { displayName } from '$lib/domain/models'
+import { puedeIrEn, SlotEstado } from '$lib/domain/herencia'
 import { coincideDifuso, rankearSugerencias } from '$lib/domain/busqueda'
 import { ModoGrilla } from '$lib/data/prefs'
 import { store } from '$lib/state/store.svelte'
-import { QuitarResultado, ToggleResultado } from '$lib/state/resultado'
+import { AgregarResultado, QuitarResultado, ToggleResultado } from '$lib/state/resultado'
 import { crearI18n } from '$lib/i18n'
 import { enlaceSeleccion, PARAM_SELECCION } from '$lib/state/compartir'
 import { page } from '$app/state'
@@ -37,9 +38,21 @@ let filtro = $state('')
 let sheetAbierto = $state(false)
 let dialogoQuitar = $state(false)
 let sugerenciaActiva = $state(-1)
+/* Personaje al que se le está eligiendo lugar; null = hoja cerrada. */
+let idElegir = $state<number | null>(null)
 
+/* Con destino marcado solo se sugieren personajes que las reglas dejan poner
+   ahí (igual que en el panel de la burbuja). */
+const candidatos = $derived.by(() => {
+  if (!store.modelo) return []
+  const destino = store.slotDestino
+  if (destino === null) return store.modelo.personajes
+  return store.modelo.personajes.filter((c) =>
+    puedeIrEn(store.seleccion, destino, c.charId),
+  )
+})
 const sugerencias = $derived(
-  store.modelo && filtro.trim().length >= 2 ? rankearSugerencias(store.modelo.personajes, filtro) : [],
+  store.modelo && filtro.trim().length >= 2 ? rankearSugerencias(candidatos, filtro) : [],
 )
 const seleccionSet = $derived(new Set(store.seleccion.filter((v): v is number => v !== null)))
 const filtrados = $derived.by(() => {
@@ -102,23 +115,68 @@ function rolCorto(i: number): string {
   return 'rol_corto_abuelo'
 }
 
-function elegirSugerencia(id: number): void {
-  const r = store.toggle(id)
-  if (r === ToggleResultado.COLOCADO || r === ToggleResultado.QUITADO) {
-    filtro = ''
-    sugerenciaActiva = -1
+/* Elegir un personaje ya colocado abre el selector de lugar, para ponerlo
+   también en otro slot (el hijo puede ser abuelo) o para quitar una de sus
+   copias. Solo si hay algún slot libre donde las reglas lo dejan; si no, se
+   quita como antes. Con un destino marcado manda el destino. Devuelve true
+   si la genealogía llegó a cambiar. */
+function manejarToggle(id: number): boolean {
+  const yaElegido = store.seleccion.includes(id)
+  if (yaElegido && store.slotDestino === null) {
+    if (store.haySlotValido(id)) {
+      idElegir = id
+      return false
+    }
+    quitarUltima(id)
+    return true
   }
-}
-
-function manejarToggle(id: number): void {
   const r = store.toggle(id)
   if (r === ToggleResultado.SELECCION_COMPLETA) avisar(i18n.t('seleccion_completa'))
   else if (r === ToggleResultado.REGLA) avisar(i18n.t('regla_slots'))
+  return r === ToggleResultado.COLOCADO || r === ToggleResultado.QUITADO
+}
+
+function elegirSugerencia(id: number): void {
+  if (!manejarToggle(id)) return
+  filtro = ''
+  sugerenciaActiva = -1
+}
+
+function tocarSlot(i: number): void {
+  if (store.seleccion[i] !== null) manejarQuitar(i)
+  else store.marcarDestino(i)
 }
 
 function manejarQuitar(i: number): void {
   if (store.quitarSlot(i) === QuitarResultado.NECESITA_CONFIRMACION) {
     dialogoQuitar = true
+  }
+}
+
+/* Quita la última copia del personaje, pasando por la confirmación si es el
+   hijo (igual que tocar su chip en la genealogía). */
+function quitarUltima(id: number): void {
+  for (let i = store.seleccion.length - 1; i >= 0; i--) {
+    if (store.seleccion[i] === id) {
+      manejarQuitar(i)
+      return
+    }
+  }
+}
+
+/* Toca un slot del selector: si el personaje ya lo ocupa lo quita (con la
+   confirmación del hijo), si está libre y las reglas lo dejan lo agrega como
+   segunda copia. */
+function elegirSlot(slot: number, estado: SlotEstado): void {
+  const id = idElegir
+  if (id === null) return
+  if (estado === SlotEstado.ACTUAL) {
+    quitarUltima(id)
+    idElegir = null
+  } else if (store.agregar(id, slot) === AgregarResultado.AGREGADO) {
+    idElegir = null
+  } else {
+    avisar(i18n.t('regla_slots'))
   }
 }
 
@@ -163,6 +221,13 @@ function onBuscarKeyDown(evento: KeyboardEvent): void {
           {@render slotChip(slot)}
         {/each}
       </div>
+      <!-- Con destino marcado se dice a qué rol va el próximo personaje
+           (mismo texto que el panel de la burbuja). -->
+      {#if store.slotDestino !== null}
+        <p class="slots-destino" style="color:{colorDeGenealogia(store.slotDestino)}">
+          {i18n.t('burbuja_destino', i18n.t(ETIQUETAS_ROL[store.slotDestino]))}
+        </p>
+      {/if}
     </div>
 
     <div class="buscador">
@@ -258,6 +323,27 @@ function onBuscarKeyDown(evento: KeyboardEvent): void {
       {/if}
     </BottomSheet>
 
+    <!-- Elegir de nuevo un personaje ya colocado: hoja con los 7 slots. -->
+    <BottomSheet
+      open={idElegir !== null}
+      onClose={() => (idElegir = null)}
+      labelledBy="elegir-slot-titulo"
+    >
+      {@const personajeElegir = idElegir !== null && store.modelo ? store.modelo.porId(idElegir) : null}
+      {#if personajeElegir !== null}
+        <div class="slot-picker">
+          <h2 class="slot-picker-titulo" id="elegir-slot-titulo">
+            {i18n.t('elegir_slot_titulo', displayName(personajeElegir, i18n.japones))}
+          </h2>
+          <ul class="slot-picker-lista">
+            {#each store.slotsPara(idElegir!) as opcion (opcion.slot)}
+              {@render filaSlot(opcion.slot, opcion.estado)}
+            {/each}
+          </ul>
+        </div>
+      {/if}
+    </BottomSheet>
+
     <Dialogo
       open={dialogoQuitar}
       titulo={i18n.t('quitar_hijo_titulo')}
@@ -291,29 +377,66 @@ function onBuscarKeyDown(evento: KeyboardEvent): void {
   {@const id = store.seleccion[slot]}
   {@const personaje = id !== null && store.modelo ? store.modelo.porId(id) : null}
   {@const rolColor = colorDeGenealogia(slot)}
-  {@const borde = personaje
-    ? `color-mix(in srgb, ${rolColor} 70%, transparent)`
-    : 'var(--contorno-variante)'}
-  {#if personaje && id !== null}
+  {@const destino = store.slotDestino === slot}
+  {@const borde = destino
+    ? 'var(--primario)'
+    : personaje
+      ? `color-mix(in srgb, ${rolColor} 70%, transparent)`
+      : 'var(--contorno-variante)'}
+  <!-- Ocupado = quitar; libre = marcar como destino de la próxima
+       colocación (mismo gesto que el panel de la burbuja). -->
+  <button
+    type="button"
+    class={destino ? 'slot-chip destino' : personaje ? 'slot-chip' : 'slot-chip vacio'}
+    style="border-color:{borde}"
+    aria-pressed={destino}
+    onclick={() => tocarSlot(slot)}
+    aria-label={personaje
+      ? `${i18n.t(ETIQUETAS_ROL[slot])}: ${displayName(personaje, i18n.japones)}. ${i18n.t(
+          'quitar_personaje',
+        )}`
+      : `${i18n.t(ETIQUETAS_ROL[slot])}. ${i18n.t('burbuja_elegir_lugar')}`}
+  >
+    <span class="slot-etiqueta" style="color:{rolColor}">{i18n.t(ETIQUETAS_ROL[slot])}</span>
+    <span class="slot-nombre">{personaje ? displayName(personaje, i18n.japones) : '—'}</span>
+  </button>
+{/snippet}
+
+{#snippet filaSlot(slot: number, estado: SlotEstado)}
+  {@const rolColor = colorDeGenealogia(slot)}
+  {@const id = store.seleccion[slot]}
+  {@const ocupante = id !== null && store.modelo ? store.modelo.porId(id) : null}
+  {@const detalle =
+    estado === SlotEstado.ACTUAL
+      ? i18n.t('slot_aqui')
+      : estado === SlotEstado.BLOQUEADO
+        ? i18n.t('slot_bloqueado')
+        : ocupante
+          ? displayName(ocupante, i18n.japones)
+          : '—'}
+  <!-- Solo se pueden tocar los slots donde el personaje se agrega o se quita;
+       los que tienen a otro o que las reglas vetan se anuncian igual. -->
+  {@const accionable = estado === SlotEstado.ACTUAL || estado === SlotEstado.VALIDO}
+  <li>
     <button
       type="button"
-      class="slot-chip"
-      style="border-color:{borde}"
-      onclick={() => manejarQuitar(slot)}
-      aria-label={`${i18n.t(ETIQUETAS_ROL[slot])}: ${displayName(
-        personaje,
-        i18n.japones,
-      )}. ${i18n.t('quitar_personaje')}`}
+      class={accionable ? 'slot-fila' : 'slot-fila bloqueada'}
+      style="border-color:{accionable ? `color-mix(in srgb, ${rolColor} 70%, transparent)` : undefined}"
+      disabled={!accionable}
+      onclick={() => elegirSlot(slot, estado)}
+      aria-label={`${i18n.t(ETIQUETAS_ROL[slot])}. ${detalle}. ${
+        estado === SlotEstado.ACTUAL
+          ? i18n.t('slot_quitar_aca')
+          : estado === SlotEstado.VALIDO
+            ? i18n.t('slot_agregar')
+            : ''
+      }`}
     >
       <span class="slot-etiqueta" style="color:{rolColor}">{i18n.t(ETIQUETAS_ROL[slot])}</span>
-      <span class="slot-nombre seleccionado">{displayName(personaje, i18n.japones)}</span>
+      <span class="slot-fila-detalle">{detalle}</span>
+      {#if estado === SlotEstado.ACTUAL}<span class="check-texto" aria-hidden="true">✓</span>{/if}
     </button>
-  {:else}
-    <div class="slot-chip vacio" style="border-color:{borde}">
-      <span class="slot-etiqueta" style="color:{rolColor}">{i18n.t(ETIQUETAS_ROL[slot])}</span>
-      <span class="slot-nombre">—</span>
-    </div>
-  {/if}
+  </li>
 {/snippet}
 
 {#snippet tarjeta(personaje: Character)}

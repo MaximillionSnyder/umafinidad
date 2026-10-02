@@ -134,6 +134,11 @@
     <string name="expandido">展開済み</string>
     <string name="contraido">折りたたみ済み</string>
     <string name="quitar_personaje">キャラを外す</string>
+    <string name="elegir_slot_titulo">%1$s はどの役職に配置しますか？</string>
+    <string name="slot_agregar">この役職に配置する</string>
+    <string name="slot_quitar_aca">この役職から外す</string>
+    <string name="slot_aqui">すでにこの役職</string>
+    <string name="slot_bloqueado">ルール上ここには置けません</string>
     <string name="abrir_grupos">グループを開く</string>
     <string name="abrir_ranking">ランキングを開く</string>
     <string name="bienvenida_titulo">アクセシビリティ設定</string>

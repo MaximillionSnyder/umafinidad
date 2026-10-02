@@ -2,10 +2,14 @@ package com.maximillionsnyder.umafinidad.overlay
 
 import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
+import com.maximillionsnyder.umafinidad.domain.ColocacionResultado
 import com.maximillionsnyder.umafinidad.domain.sePuedeCompletar
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
+import com.maximillionsnyder.umafinidad.domain.alternar
 import com.maximillionsnyder.umafinidad.domain.puedeIrEn
+import com.maximillionsnyder.umafinidad.domain.quitar
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
+import com.maximillionsnyder.umafinidad.domain.seleccionVacia
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

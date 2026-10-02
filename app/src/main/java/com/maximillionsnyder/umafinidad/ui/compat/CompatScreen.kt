@@ -50,6 +50,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.maximillionsnyder.umafinidad.overlay.BotonCompacto
+import com.maximillionsnyder.umafinidad.ui.AgregarResultado
 import com.maximillionsnyder.umafinidad.ui.AutocompletarResultado
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
@@ -72,8 +73,11 @@ import com.maximillionsnyder.umafinidad.data.ModoGrilla
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.coincideDifuso
+import com.maximillionsnyder.umafinidad.domain.puedeIrEn
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
 import com.maximillionsnyder.umafinidad.domain.SLOTS
+import com.maximillionsnyder.umafinidad.domain.SlotEstado
+import com.maximillionsnyder.umafinidad.domain.SlotOpcion
 import com.maximillionsnyder.umafinidad.ui.theme.colorDeGenealogia
 import com.maximillionsnyder.umafinidad.ui.EstadoSeccion
 import com.maximillionsnyder.umafinidad.ui.FilaVinculoUi
@@ -117,41 +121,102 @@ fun CompatScreen(
     /* Mismo autocompletar que el panel de la burbuja: rellena los huecos con
        la mejor afinidad. Devuelve por qué no se pudo, si no se pudo. */
     onAutocompletar: () -> AutocompletarResultado = { AutocompletarResultado.CALCULANDO },
+    /* Slot marcado como destino de la próxima colocación (tocar un chip
+       vacío). null = se coloca en el primer hueco válido. */
+    slotDestino: Int? = null,
+    onMarcarDestino: (Int) -> Unit = {},
+    /* Estado de los 7 slots para un personaje ya colocado, y la colocación
+       de una segunda copia (el hijo también puede ser abuelo). */
+    slotsPara: (Int) -> List<SlotOpcion> = { emptyList() },
+    onAgregar: (Int, Int) -> AgregarResultado = { _, _ -> AgregarResultado.NO_PUDO },
 ) {
     var filtro by rememberSaveable { mutableStateOf("") }
     var sheetAbierto by rememberSaveable { mutableStateOf(false) }
     var dialogoQuitar by rememberSaveable { mutableStateOf(false) }
+    /* Personaje al que se le está eligiendo lugar; -1 = hoja cerrada. */
+    var idElegir by rememberSaveable { mutableStateOf(-1) }
 
-    val sugerencias = remember(filtro, modelo) {
-        if (filtro.trim().length >= 2) rankearSugerencias(modelo.personajes, filtro)
-        else emptyList()
-    }
-
-    /* Opción A: al elegir una sugerencia se coloca el personaje y se limpia
-       el buscador; si no pudo colocarse, el texto queda para corregir. */
-    fun elegirSugerencia(id: Int) {
-        when (onToggle(id)) {
-            ToggleResultado.COLOCADO, ToggleResultado.QUITADO -> filtro = ""
-            else -> {}
+    val sugerencias = remember(filtro, modelo, slotDestino, seleccion) {
+        if (filtro.trim().length < 2) emptyList()
+        else {
+            val base = if (slotDestino == null) {
+                modelo.personajes
+            } else {
+                /* Con destino marcado solo lo que las reglas dejan poner ahí. */
+                val actual = seleccion.toTypedArray()
+                modelo.personajes.filter { puedeIrEn(actual, slotDestino, it.charId) }
+            }
+            rankearSugerencias(base, filtro)
         }
     }
 
     val msgSeleccionCompleta = stringResource(R.string.seleccion_completa)
     val msgRegla = stringResource(R.string.regla_slots)
-
-    fun manejarToggle(id: Int) {
-        when (onToggle(id)) {
-            ToggleResultado.SELECCION_COMPLETA -> avisar(msgSeleccionCompleta)
-            ToggleResultado.REGLA -> avisar(msgRegla)
-            else -> {}
-        }
-    }
+    val msgFaltaHijo = stringResource(R.string.elegi_hijo_empezar)
 
     fun manejarQuitar(i: Int) {
         if (onQuitarSlot(i) == QuitarResultado.NECESITA_CONFIRMACION) dialogoQuitar = true
     }
 
-    val msgFaltaHijo = stringResource(R.string.elegi_hijo_empezar)
+    /* Tocar un chip de la genealogía: si está ocupado lo quita; si está libre
+       lo marca como destino de la próxima colocación, como en la burbuja. */
+    fun tocarSlot(i: Int) {
+        if (seleccion[i] != null) manejarQuitar(i) else onMarcarDestino(i)
+    }
+
+    /* Quita la última copia del personaje, pasando por la confirmación si es
+       el hijo (igual que tocar su chip en la genealogía). */
+    fun quitarUltima(id: Int) {
+        val pos = seleccion.indexOfLast { it == id }
+        if (pos >= 0) manejarQuitar(pos)
+    }
+
+    /* Elegir un personaje ya colocado abre el selector de lugar, para ponerlo
+       también en otro slot (el hijo puede ser abuelo) o para quitar una de
+       sus copias. Solo si hay algún slot libre donde las reglas lo dejan;
+       si no, se quita como antes. Con un destino marcado manda el destino.
+       Devuelve true si la genealogía llegó a cambiar. */
+    fun manejarToggle(id: Int): Boolean {
+        val yaElegido = seleccion.any { it == id }
+        if (yaElegido && slotDestino == null) {
+            if (slotsPara(id).any { it.estado == SlotEstado.VALIDO }) {
+                idElegir = id
+                return false
+            }
+            quitarUltima(id)
+            return true
+        }
+        val r = onToggle(id)
+        when (r) {
+            ToggleResultado.SELECCION_COMPLETA -> avisar(msgSeleccionCompleta)
+            ToggleResultado.REGLA -> avisar(msgRegla)
+            else -> {}
+        }
+        return r == ToggleResultado.COLOCADO || r == ToggleResultado.QUITADO
+    }
+
+    /* Opción A: al elegir una sugerencia se coloca el personaje y se limpia
+       el buscador; si no pudo colocarse, el texto queda para corregir. Con el
+       selector de lugar abierto el texto se conserva. */
+    fun elegirSugerencia(id: Int) {
+        if (manejarToggle(id)) filtro = ""
+    }
+
+    /* Toca un slot del selector: si el personaje ya lo ocupa lo quita (con la
+       confirmación del hijo), si está libre y las reglas lo dejan lo agrega
+       como segunda copia. */
+    fun elegirSlot(slot: Int, estado: SlotEstado) {
+        val id = idElegir
+        if (id < 0) return
+        if (estado == SlotEstado.ACTUAL) {
+            quitarUltima(id)
+            idElegir = -1
+        } else if (onAgregar(id, slot) == AgregarResultado.AGREGADO) {
+            idElegir = -1
+        } else {
+            avisar(msgRegla)
+        }
+    }
 
     fun manejarAutocompletar() {
         when (onAutocompletar()) {
@@ -207,7 +272,8 @@ fun CompatScreen(
                             personaje = seleccion[i]?.let { modelo.porId(it) },
                             slot = i,
                             japones = japones,
-                            onClick = { manejarQuitar(i) },
+                            destino = slotDestino == i,
+                            onClick = { tocarSlot(i) },
                             modifier = Modifier.weight(1f),
                         )
                     }
@@ -220,10 +286,21 @@ fun CompatScreen(
                             personaje = seleccion[i]?.let { modelo.porId(it) },
                             slot = i,
                             japones = japones,
-                            onClick = { manejarQuitar(i) },
+                            destino = slotDestino == i,
+                            onClick = { tocarSlot(i) },
                             modifier = Modifier.weight(1f),
                         )
                     }
+                }
+                /* Con destino marcado se dice a qué rol va el próximo
+                   personaje (mismo texto que el panel de la burbuja). */
+                slotDestino?.let { destino ->
+                    Text(
+                        stringResource(R.string.burbuja_destino, etiquetaRol(destino)),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold,
+                    )
                 }
             }
 
@@ -297,8 +374,8 @@ fun CompatScreen(
                 // Al venir de ver herencia, los seleccionados se acomodan primero para no tener que scrollear
                 androidx.compose.runtime.key(seleccion) {
                     when (modoGrilla) {
-                        ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
-                        ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, ::manejarToggle, Modifier.weight(1f))
+                        ModoGrilla.TARJETAS -> GrillaTarjetas(filtrados, seleccion, japones, { manejarToggle(it) }, Modifier.weight(1f))
+                        ModoGrilla.LISTA -> GrillaLista(filtrados, seleccion, japones, { manejarToggle(it) }, Modifier.weight(1f))
                     }
                 }
             }
@@ -333,6 +410,21 @@ fun CompatScreen(
         }
     }
 
+    /* Elegir de nuevo un personaje ya colocado: hoja con los 7 slots. */
+    val personajeElegir = if (idElegir >= 0) modelo.porId(idElegir) else null
+    if (personajeElegir != null) {
+        ModalBottomSheet(onDismissRequest = { idElegir = -1 }) {
+            SelectorSlots(
+                modelo = modelo,
+                personaje = personajeElegir,
+                opciones = slotsPara(idElegir),
+                seleccion = seleccion,
+                japones = japones,
+                onSlot = ::elegirSlot,
+            )
+        }
+    }
+
     if (dialogoQuitar) {
         AlertDialog(
             onDismissRequest = { dialogoQuitar = false },
@@ -354,20 +446,43 @@ fun CompatScreen(
 /* ---------- Slots coloreados por genealogía ---------- */
 
 @Composable
-private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun SlotChip(
+    etiqueta: String,
+    personaje: Character?,
+    slot: Int,
+    japones: Boolean,
+    destino: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val rolColor = colorDeGenealogia(slot)
-    val etiquetaQuitar = if (personaje != null) stringResource(R.string.quitar_personaje) else null
+    /* Ocupado = quitar; libre = marcar como destino (mismo texto que la
+       burbuja, así el lector de pantalla no lo anuncia como un botón vacío). */
+    val etiquetaAccion = if (personaje != null) {
+        stringResource(R.string.quitar_personaje)
+    } else {
+        stringResource(R.string.burbuja_elegir_lugar)
+    }
     Card(
         modifier = modifier.clickable(
-            role = if (personaje != null) Role.Button else null,
-            onClickLabel = etiquetaQuitar,
+            role = Role.Button,
+            onClickLabel = etiquetaAccion,
             onClick = onClick,
         ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        colors = CardDefaults.cardColors(
+            containerColor = when {
+                destino -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                else -> MaterialTheme.colorScheme.surfaceContainerLow
+            },
+        ),
         border = androidx.compose.foundation.BorderStroke(
-            1.dp,
-            if (personaje != null) rolColor.copy(alpha = 0.7f) else MaterialTheme.colorScheme.outlineVariant,
+            if (destino) 2.dp else 1.dp,
+            when {
+                destino -> MaterialTheme.colorScheme.primary
+                personaje != null -> rolColor.copy(alpha = 0.7f)
+                else -> MaterialTheme.colorScheme.outlineVariant
+            },
         ),
     ) {
         Column(
@@ -388,6 +503,115 @@ private fun SlotChip(etiqueta: String, personaje: Character?, slot: Int, japones
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
+        }
+    }
+}
+
+/* ---------- Selector de lugar (elegir un personaje ya colocado) ---------- */
+
+/* Un personaje puede estar en más de un slot (el hijo también de abuelo: es
+   la corredora que vale 0). Esta hoja deja elegir cuál se agrega y cuál se
+   quita, con las reglas mandando: los slots que no admiten al personaje salen
+   deshabilitados y los que tiene otro también. */
+@Composable
+private fun SelectorSlots(
+    modelo: AffinityModel,
+    personaje: Character,
+    opciones: List<SlotOpcion>,
+    seleccion: List<Int?>,
+    japones: Boolean,
+    onSlot: (Int, SlotEstado) -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(
+            stringResource(R.string.elegir_slot_titulo, personaje.displayName(japones)),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.headingSemantica(),
+        )
+        opciones.forEach { opcion ->
+            FilaSlot(opcion, modelo, seleccion, japones, onSlot)
+        }
+        Spacer(Modifier.height(24.dp))
+    }
+}
+
+@Composable
+private fun FilaSlot(
+    opcion: SlotOpcion,
+    modelo: AffinityModel,
+    seleccion: List<Int?>,
+    japones: Boolean,
+    onSlot: (Int, SlotEstado) -> Unit,
+) {
+    val rolColor = colorDeGenealogia(opcion.slot)
+    val ocupante = seleccion[opcion.slot]?.let { modelo.porId(it) }
+    val detalle = when (opcion.estado) {
+        SlotEstado.ACTUAL -> stringResource(R.string.slot_aqui)
+        SlotEstado.VALIDO -> "—"
+        SlotEstado.OCUPADO -> ocupante?.displayName(japones) ?: "—"
+        SlotEstado.BLOQUEADO -> stringResource(R.string.slot_bloqueado)
+    }
+    /* Solo dos estados se pueden tocar: agregar una copia o quitar la que ya
+       está. Los otros dos se anuncian pero no hacen nada. */
+    val accion = when (opcion.estado) {
+        SlotEstado.ACTUAL -> stringResource(R.string.slot_quitar_aca)
+        SlotEstado.VALIDO -> stringResource(R.string.slot_agregar)
+        SlotEstado.OCUPADO, SlotEstado.BLOQUEADO -> null
+    }
+    val habilitado = accion != null
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                enabled = habilitado,
+                role = if (habilitado) Role.Button else null,
+                onClickLabel = accion,
+                onClick = { onSlot(opcion.slot, opcion.estado) },
+            )
+            .semantics { stateDescription = detalle },
+        shape = RoundedCornerShape(14.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (habilitado) {
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+            } else {
+                MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.55f)
+            },
+        ),
+        border = if (habilitado) androidx.compose.foundation.BorderStroke(1.5.dp, rolColor) else null,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(1.dp),
+            ) {
+                Text(
+                    etiquetaRol(opcion.slot),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = rolColor,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    detalle,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (habilitado) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            if (opcion.estado == SlotEstado.ACTUAL) {
+                Text("✓", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            }
         }
     }
 }

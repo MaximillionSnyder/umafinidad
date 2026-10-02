@@ -76,6 +76,114 @@ export function slotPara(seleccion: Seleccion, id: number): number {
   return hayHueco ? -2 : -1
 }
 
+/* Estado de un slot frente a un personaje, tal como está la selección. */
+export enum SlotEstado {
+  ACTUAL = 'ACTUAL',
+  VALIDO = 'VALIDO',
+  OCUPADO = 'OCUPADO',
+  BLOQUEADO = 'BLOQUEADO',
+}
+
+export interface SlotOpcion {
+  slot: number
+  estado: SlotEstado
+}
+
+/* Los SLOTS slots con su estado para este personaje. Las reglas se evalúan
+   sobre la selección tal como está, sin sacarlo de donde lo ocupa: por eso el
+   hijo sale ACTUAL y además puede salir VALIDO en los slots de abuelo, que es
+   la corredora que vale 0. Los cruces entre ramas también salen VALIDO. */
+export function slotsPara(seleccion: Seleccion, id: number): SlotOpcion[] {
+  return Array.from({ length: SLOTS }, (_, slot) => {
+    let estado: SlotEstado
+    if (seleccion[slot] === id) estado = SlotEstado.ACTUAL
+    else if (seleccion[slot] !== null) estado = SlotEstado.OCUPADO
+    else if (puedeIrEn(seleccion, slot, id)) estado = SlotEstado.VALIDO
+    else estado = SlotEstado.BLOQUEADO
+    return { slot, estado }
+  })
+}
+
+/* Coloca `id` en el slot indicado SIN sacarlo de donde ya esté: es la
+   segunda copia (el hijo de abuelo, un padre repetido en la otra rama).
+   null si el slot no está libre o las reglas no lo admiten. */
+export function agregarEn(seleccion: Seleccion, slot: number, id: number): Seleccion | null {
+  if (slot < 0 || slot >= SLOTS) return null
+  if (seleccion[slot] !== null) return null
+  if (!puedeIrEn(seleccion, slot, id)) return null
+  const copia = [...seleccion]
+  copia[slot] = id
+  return copia
+}
+
+/* Selección de 7 posiciones; null = slot vacío. */
+export const seleccionVacia = (): Seleccion => Array(SLOTS).fill(null)
+
+export enum ColocacionResultado {
+  COLOCADO = 'COLOCADO',
+  QUITADO = 'QUITADO',
+  COMPLETA = 'COMPLETA',
+  REGLA = 'REGLA',
+}
+
+export interface Colocacion {
+  seleccion: Seleccion
+  resultado: ColocacionResultado
+}
+
+/* El gesto de elegir un personaje, con un slot destino opcional: si se
+   indicó, el personaje va ahí (movido desde su posición actual si ya
+   estaba); si no, va al primer hueco donde las reglas lo permitan, y si ya
+   estaba en la genealogía se quita. Lo usan la pantalla de compatibilidad y
+   el panel de la burbuja. */
+export function alternar(seleccion: Seleccion, id: number, destino: number | null = null): Colocacion {
+  if (destino !== null) {
+    const colocado = colocarEn(seleccion, destino, id)
+    if (colocado === null) return { seleccion, resultado: ColocacionResultado.REGLA }
+    return { seleccion: colocado, resultado: ColocacionResultado.COLOCADO }
+  }
+
+  const posiciones = posicionesDe(seleccion, id)
+  if (posiciones.length > 0) {
+    const quitado = [...seleccion]
+    quitado[posiciones[posiciones.length - 1]] = null
+    return { seleccion: quitado, resultado: ColocacionResultado.QUITADO }
+  }
+
+  const slot = slotPara(seleccion, id)
+  if (slot >= 0) {
+    const colocado = [...seleccion]
+    colocado[slot] = id
+    return { seleccion: colocado, resultado: ColocacionResultado.COLOCADO }
+  }
+  return {
+    seleccion,
+    resultado: slot === -1 ? ColocacionResultado.COMPLETA : ColocacionResultado.REGLA,
+  }
+}
+
+/* Coloca `id` en el slot indicado. Si ya estaba en la selección, primero se
+   lo saca de su última posición (mover): así las reglas se evalúan sin el
+   ocupante viejo (p. ej. mover un padre al otro slot de padre). Devuelve
+   null cuando el destino no admite al personaje o ya tiene a otro. */
+export function colocarEn(seleccion: Seleccion, slot: number, id: number): Seleccion | null {
+  if (slot < 0 || slot >= SLOTS) return null
+  const base = [...seleccion]
+  const anterior = base.lastIndexOf(id)
+  if (anterior >= 0) base[anterior] = null
+  if (base[slot] !== null) return null
+  if (!puedeIrEn(base, slot, id)) return null
+  base[slot] = id
+  return base
+}
+
+export function quitar(seleccion: Seleccion, slot: number): Seleccion {
+  if (slot < 0 || slot >= SLOTS || seleccion[slot] === null) return seleccion
+  const copia = [...seleccion]
+  copia[slot] = null
+  return copia
+}
+
 export enum TipoVinculo {
   HIJO_PADRE = 'hijo-padre',
   ENTRE_PADRES = 'entre-padres',

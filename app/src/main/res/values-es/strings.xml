@@ -134,6 +134,11 @@
     <string name="expandido">Expandido</string>
     <string name="contraido">Contraído</string>
     <string name="quitar_personaje">Quitar personaje</string>
+    <string name="elegir_slot_titulo">¿Dónde querés colocar a %1$s?</string>
+    <string name="slot_agregar">Colocarlo en este rol</string>
+    <string name="slot_quitar_aca">Quitarlo de este rol</string>
+    <string name="slot_aqui">Ya está en este rol</string>
+    <string name="slot_bloqueado">Las reglas no lo permiten acá</string>
     <string name="abrir_grupos">Abrir grupos</string>
     <string name="abrir_ranking">Abrir ranking</string>
     <string name="bienvenida_titulo">Configurá la accesibilidad</string>

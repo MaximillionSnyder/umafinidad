@@ -18,6 +18,12 @@ export enum QuitarResultado {
   NECESITA_CONFIRMACION = 'NECESITA_CONFIRMACION',
 }
 
+/* Resultado de volver a elegir un personaje ya colocado (elegir otro slot). */
+export enum AgregarResultado {
+  AGREGADO = 'AGREGADO',
+  NO_PUDO = 'NO_PUDO',
+}
+
 /* Estado de cada sección del resultado (equivale a las notas de result.js). */
 export enum EstadoSeccion {
   CON_FILAS = 'CON_FILAS',

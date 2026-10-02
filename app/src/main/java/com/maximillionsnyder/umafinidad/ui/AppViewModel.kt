@@ -23,11 +23,14 @@ import com.maximillionsnyder.umafinidad.domain.GrupoCompartido
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.Rango
 import com.maximillionsnyder.umafinidad.domain.SLOTS
+import com.maximillionsnyder.umafinidad.domain.SlotOpcion
 import com.maximillionsnyder.umafinidad.domain.TipoVinculo
+import com.maximillionsnyder.umafinidad.domain.agregarEn
+import com.maximillionsnyder.umafinidad.domain.alternar
 import com.maximillionsnyder.umafinidad.domain.armarArbol
-import com.maximillionsnyder.umafinidad.domain.puedeIrEn
+import com.maximillionsnyder.umafinidad.domain.ColocacionResultado
 import com.maximillionsnyder.umafinidad.domain.sePuedeCompletar
-import com.maximillionsnyder.umafinidad.domain.slotPara
+import com.maximillionsnyder.umafinidad.domain.slotsPara
 import com.maximillionsnyder.umafinidad.domain.vinculos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,6 +44,9 @@ import kotlinx.coroutines.launch
    estos casos a mensajes localizados. */
 enum class ToggleResultado { COLOCADO, QUITADO, SELECCION_COMPLETA, REGLA }
 enum class QuitarResultado { OK, NECESITA_CONFIRMACION }
+
+/* Resultado de volver a elegir un personaje ya colocado (elegir otro slot). */
+enum class AgregarResultado { AGREGADO, NO_PUDO }
 
 /* Resultado de pedir el autocompletar de la genealogía. */
 enum class AutocompletarResultado { CALCULANDO, FALTA_HIJO, SELECCION_COMPLETA }
@@ -316,19 +322,51 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /* ===== Selección / herencia ===== */
+
+    /* Slot marcado como destino de la próxima colocación; null = automático
+       (el primer hueco válido). Lo usan la pantalla de compatibilidad y el
+       panel de la burbuja. */
+    private val _slotDestino = MutableStateFlow<Int?>(null)
+    val slotDestino: StateFlow<Int?> = _slotDestino.asStateFlow()
+
+    /* Tocar un chip vacío lo marca como destino (o lo desmarca). Un chip
+       ocupado lo quita la pantalla, que además pide confirmación. */
+    fun marcarDestino(slot: Int) {
+        if (_seleccion.value.getOrNull(slot) != null) return
+        _slotDestino.value = if (_slotDestino.value == slot) null else slot
+    }
+
+    /* Los 7 slots con su estado para este personaje: los vacíos donde las
+       reglas lo dejan sirven para elegirlo de nuevo (el hijo también puede
+       ser abuelo) y los que ya ocupa se pueden quitar. */
+    fun slotsPara(id: Int): List<SlotOpcion> = slotsPara(_seleccion.value.toTypedArray(), id)
+
+    /* Segunda copia: el personaje queda además en ese slot, sin salir del
+       que ya tenía. */
+    fun agregar(id: Int, slot: Int): AgregarResultado {
+        val nuevo = agregarEn(_seleccion.value.toTypedArray(), slot, id)
+            ?: return AgregarResultado.NO_PUDO
+        _seleccion.value = nuevo.toMutableList()
+        return AgregarResultado.AGREGADO
+    }
+
     fun toggle(id: Int): ToggleResultado {
-        val sel = _seleccion.value.toTypedArray()
-        val posiciones = sel.withIndex().filter { it.value == id }.map { it.index }
-        if (posiciones.isNotEmpty()) {
-            quitarSlot(posiciones.last())
-            return ToggleResultado.QUITADO
+        val destino = _slotDestino.value?.takeIf { _seleccion.value.getOrNull(it) == null }
+        val colocacion = alternar(_seleccion.value, id, destino)
+        return when (colocacion.resultado) {
+            ColocacionResultado.COLOCADO -> {
+                _seleccion.value = colocacion.seleccion
+                if (destino != null) _slotDestino.value = null
+                ToggleResultado.COLOCADO
+            }
+            ColocacionResultado.QUITADO -> {
+                _seleccion.value = colocacion.seleccion
+                ToggleResultado.QUITADO
+            }
+            ColocacionResultado.COMPLETA -> ToggleResultado.SELECCION_COMPLETA
+            ColocacionResultado.REGLA -> ToggleResultado.REGLA
         }
-        val slot = slotPara(sel, id)
-        if (slot >= 0 && puedeIrEn(sel, slot, id)) {
-            _seleccion.value = sel.toMutableList().also { it[slot] = id }
-            return ToggleResultado.COLOCADO
-        }
-        return if (slot == -1) ToggleResultado.SELECCION_COMPLETA else ToggleResultado.REGLA
     }
 
     fun quitarSlot(i: Int): QuitarResultado {
@@ -349,6 +387,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun limpiarTodo() {
         _seleccion.value = List(SLOTS) { null }
+        _slotDestino.value = null
     }
 
     /* ===== Autocompletar (misma lógica que el panel de la burbuja) ===== */
@@ -364,6 +403,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         val actual = _seleccion.value
         if (actual[0] == null) return AutocompletarResultado.FALTA_HIJO
         if (!sePuedeCompletar(actual)) return AutocompletarResultado.SELECCION_COMPLETA
+        _slotDestino.value = null
         _autocompletando.value = true
         viewModelScope.launch(Dispatchers.Default) {
             try {
@@ -378,11 +418,13 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     /* Carga una selección arbitraria (Mi corredora con alternativas). */
     fun cargarSeleccion(sel: List<Int?>) {
         _seleccion.value = sel
+        _slotDestino.value = null
     }
 
     /* Botón "Ver herencia" del top: carga el linaje completo y muestra la
        pestaña de compatibilidad. */
     fun cargarLinaje(l: Linaje) {
+        _slotDestino.value = null
         _seleccion.value = listOf(
             l.hijo.charId,
             l.padre.charId,

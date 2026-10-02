@@ -134,6 +134,11 @@
     <string name="expandido">펼침</string>
     <string name="contraido">접힘</string>
     <string name="quitar_personaje">캐릭터 제거</string>
+    <string name="elegir_slot_titulo">%1$s을(를) 어느 자리에 배치할까요?</string>
+    <string name="slot_agregar">이 역할에 배치</string>
+    <string name="slot_quitar_aca">이 역할에서 빼기</string>
+    <string name="slot_aqui">이미 이 역할</string>
+    <string name="slot_bloqueado">규칙상 여기에 둘 수 없음</string>
     <string name="abrir_grupos">조합 열기</string>
     <string name="abrir_ranking">랭킹 열기</string>
     <string name="bienvenida_titulo">접근성 설정</string>

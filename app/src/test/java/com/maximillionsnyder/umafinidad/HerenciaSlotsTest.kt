@@ -21,6 +21,8 @@ class HerenciaSlotsTest {
 
     private fun sel(vararg ids: Int?): Array<Int?> = Array(SLOTS) { i -> ids.getOrNull(i) }
 
+    private fun vacia(): Array<Int?> = seleccionVacia.toTypedArray()
+
     private fun estados(seleccion: Array<Int?>, id: Int): List<SlotEstado> =
         slotsPara(seleccion, id).map { it.estado }
 
@@ -82,27 +84,27 @@ class HerenciaSlotsTest {
 
     @Test
     fun agregarRespetaElRangoDelSlot() {
-        assertNull(agregarEn(seleccionVacia().toTypedArray(), -1, 1))
-        assertNull(agregarEn(seleccionVacia().toTypedArray(), SLOTS, 1))
+        assertNull(agregarEn(vacia(), -1, 1))
+        assertNull(agregarEn(vacia(), SLOTS, 1))
     }
 
     @Test
     fun sinDestinoAlternarQuitaYConDestinoMueve() {
-        val colocado = alternar(seleccionVacia(), 1).seleccion
+        val colocado = alternar(seleccionVacia, 1).seleccion
         assertEquals(ColocacionResultado.QUITADO, alternar(colocado, 1).resultado)
 
         val movido = alternar(colocado, 1, 5)
         assertEquals(ColocacionResultado.COLOCADO, movido.resultado)
         /* Mover: se libera el slot viejo (la segunda copia la agrega agregarEn). */
-        assertEquals(sel(null, null, null, null, null, 1), movido.seleccion)
+        assertEquals(sel(null, null, null, null, null, 1).toList(), movido.seleccion)
     }
 
     @Test
     fun conDestinoUnaSeleccionLlenaNoRompe() {
         val llena = sel(1, 2, 3, 4, 5, 6, 7)
-        val r = alternar(llena, 8, 5)
+        val r = alternar(llena.toList(), 8, 5)
         assertEquals(ColocacionResultado.REGLA, r.resultado)
-        assertEquals(llena, r.seleccion)
+        assertEquals(llena.toList(), r.seleccion)
     }
 
     @Test

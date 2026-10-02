@@ -598,6 +598,55 @@ export class AffinityModel {
     }, 0)
   }
 
+  /* Aporte directo de un candidato en un slot a SUS vínculos con el resto
+     del árbol: para el hijo, pares con ambos padres y tríos de las dos
+     ramas; para un padre, par con el hijo y con el otro padre más los
+     tríos de su rama; para un abuelo, su trío. El abuelo que es la propia
+     corredora vale 0 (regla del juego) y los slots vacíos se saltean. */
+  aporteDirectoDeCandidato(seleccion: Seleccion, slot: number, candidatoId: number): number {
+    const hId = seleccion[0]
+    if (hId === null || hId === undefined) return 0
+    const rol = rolDeSlot(slot)
+    if (rol === Rol.HIJO) {
+      let d = 0
+      for (const p of [seleccion[1], seleccion[2]]) {
+        if (p !== null && p !== undefined) d += this.puntajePar(hId, p)
+      }
+      for (let s = 3; s <= 6; s++) {
+        const g = seleccion[s]
+        if (g === null || g === undefined || g === hId) continue
+        const padre = seleccion[1 + Math.floor((s - 3) / 2)]
+        if (padre === null || padre === undefined) continue
+        d += this.puntajeTrioRapido(hId, padre, g)
+      }
+      return d
+    }
+    if (rol === Rol.PADRE) {
+      const rama = slot - 1
+      const otroPadre = slot === 1 ? seleccion[2] : seleccion[1]
+      let d = this.puntajePar(hId, candidatoId)
+      if (otroPadre !== null && otroPadre !== undefined) {
+        d += this.puntajePar(candidatoId, otroPadre)
+      }
+      for (const g of [seleccion[3 + rama * 2], seleccion[4 + rama * 2]]) {
+        if (g !== null && g !== undefined && g !== candidatoId && g !== hId) {
+          d += this.puntajeTrioRapido(hId, candidatoId, g)
+        }
+      }
+      return d
+    }
+    const padreId = seleccion[1 + Math.floor((slot - 3) / 2)]
+    if (padreId === null || padreId === undefined) return 0
+    return candidatoId === hId ? 0 : this.puntajeTrioRapido(hId, padreId, candidatoId)
+  }
+
+  /* Aporte directo de cada slot de la selección (0 si el slot está vacío). */
+  aportesDirectos(seleccion: Seleccion): number[] {
+    return seleccion.map((id, slot) =>
+      id === null || id === undefined ? 0 : this.aporteDirectoDeCandidato(seleccion, slot, id),
+    )
+  }
+
   /* Candidatos para reemplazar el ocupante de un slot (1..6), ordenados
      por total resultante descendente. Respeta todas las reglas del juego
      vía puedeIrEn. El slot del hijo no es intercambiable. */
@@ -605,8 +654,7 @@ export class AffinityModel {
     if (slot <= 0 || slot >= seleccion.length) return []
     const ocupante = seleccion[slot]
     if (ocupante === null) return []
-    const hId = seleccion[0]
-    if (hId === null) return []
+    if (seleccion[0] === null) return []
     const selArr = seleccion.slice()
 
     const resultados: AlternativaSlot[] = []
@@ -617,27 +665,8 @@ export class AffinityModel {
       if (candidato.charId === ocupante) continue
       if (!puedeIrEn(selArr, slot, candidato.charId)) continue
 
-      /* Aporte directo según el rol del slot. */
-      let directos: number
-      const rol = rolDeSlot(slot)
-      if (rol === Rol.PADRE) {
-        const rama = slot - 1
-        const otroPadre = slot === 1 ? seleccion[2]! : seleccion[1]!
-        let d =
-          this.puntajePar(hId, candidato.charId) +
-          this.puntajePar(candidato.charId, otroPadre)
-        for (const g of [seleccion[3 + rama * 2], seleccion[4 + rama * 2]]) {
-          if (g !== null && g !== candidato.charId && g !== hId) {
-            d += this.puntajeTrioRapido(hId, candidato.charId, g)
-          }
-        }
-        directos = d
-      } else if (rol === Rol.ABUELO) {
-        const padreId = seleccion[1 + Math.floor((slot - 3) / 2)]!
-        directos = candidato.charId === hId ? 0 : this.puntajeTrioRapido(hId, padreId, candidato.charId)
-      } else {
-        continue
-      }
+      /* Aporte directo del candidato a sus vínculos con el resto. */
+      const directos = this.aporteDirectoDeCandidato(seleccion, slot, candidato.charId)
 
       const nuevo = selArr.slice()
       nuevo[slot] = candidato.charId

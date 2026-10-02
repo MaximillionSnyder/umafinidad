@@ -446,6 +446,52 @@ class AffinityModel private constructor(
             else puntajePar(v.ids[0], v.ids[1])
         }
 
+    /* Aporte directo de un candidato en un slot a SUS vínculos con el resto
+       del árbol: para el hijo, pares con ambos padres y tríos de las dos
+       ramas; para un padre, par con el hijo y con el otro padre más los
+       tríos de su rama; para un abuelo, su trío. El abuelo que es la propia
+       corredora vale 0 (regla del juego) y los slots vacíos se saltean. */
+    fun aporteDirectoDeCandidato(seleccion: List<Int?>, slot: Int, candidatoId: Int): Int {
+        val hId = seleccion.getOrNull(0) ?: return 0
+        return when (rolDeSlot(slot)) {
+            Rol.HIJO -> {
+                var d = 0
+                for (p in 1..2) {
+                    seleccion.getOrNull(p)?.let { d += puntajePar(hId, it) }
+                }
+                for (s in 3..6) {
+                    val g = seleccion.getOrNull(s) ?: continue
+                    if (g == hId) continue
+                    val padre = seleccion.getOrNull(1 + (s - 3) / 2) ?: continue
+                    d += puntajeTrioRapido(hId, padre, g)
+                }
+                d
+            }
+            Rol.PADRE -> {
+                val rama = slot - 1
+                val otroPadre = seleccion.getOrNull(if (slot == 1) 2 else 1)
+                var d = puntajePar(hId, candidatoId)
+                if (otroPadre != null) d += puntajePar(candidatoId, otroPadre)
+                for (g in listOf(seleccion.getOrNull(3 + rama * 2), seleccion.getOrNull(4 + rama * 2))) {
+                    if (g != null && g != candidatoId && g != hId) {
+                        d += puntajeTrioRapido(hId, candidatoId, g)
+                    }
+                }
+                d
+            }
+            Rol.ABUELO -> {
+                val padreId = seleccion.getOrNull(1 + (slot - 3) / 2) ?: return 0
+                if (candidatoId == hId) 0 else puntajeTrioRapido(hId, padreId, candidatoId)
+            }
+        }
+    }
+
+    /* Aporte directo de cada slot de la selección (0 si el slot está vacío). */
+    fun aportesDirectos(seleccion: List<Int?>): List<Int> =
+        List(SLOTS) { slot ->
+            seleccion.getOrNull(slot)?.let { aporteDirectoDeCandidato(seleccion, slot, it) } ?: 0
+        }
+
     /* Candidatos para reemplazar el ocupante de un slot (1..6), ordenados
        por total resultante descendente. Respeta todas las reglas del juego
        vía puedeIrEn. El slot del hijo no es intercambiable. */
@@ -456,7 +502,7 @@ class AffinityModel private constructor(
     ): List<AlternativaSlot> {
         if (slot <= 0 || slot >= seleccion.size) return emptyList()
         val ocupante = seleccion[slot] ?: return emptyList()
-        val hId = seleccion[0] ?: return emptyList()
+        if (seleccion[0] == null) return emptyList()
         val selArr = seleccion.toTypedArray()
 
         val resultados = mutableListOf<AlternativaSlot>()
@@ -467,26 +513,8 @@ class AffinityModel private constructor(
             if (candidato.charId == ocupante) continue
             if (!puedeIrEn(selArr, slot, candidato.charId)) continue
 
-            /* Aporte directo según el rol del slot. */
-            val directos = when (rolDeSlot(slot)) {
-                Rol.PADRE -> {
-                    val rama = slot - 1
-                    val otroPadre = if (slot == 1) seleccion[2]!! else seleccion[1]!!
-                    var d = puntajePar(hId, candidato.charId) +
-                        puntajePar(candidato.charId, otroPadre)
-                    for (g in listOf(seleccion[3 + rama * 2], seleccion[4 + rama * 2])) {
-                        if (g != null && g != candidato.charId && g != hId) {
-                            d += puntajeTrioRapido(hId, candidato.charId, g)
-                        }
-                    }
-                    d
-                }
-                Rol.ABUELO -> {
-                    val padreId = seleccion[1 + (slot - 3) / 2]!!
-                    if (candidato.charId == hId) 0 else puntajeTrioRapido(hId, padreId, candidato.charId)
-                }
-                else -> continue
-            }
+            /* Aporte directo del candidato a sus vínculos con el resto. */
+            val directos = aporteDirectoDeCandidato(seleccion, slot, candidato.charId)
 
             val nuevo = selArr.copyOf().also { it[slot] = candidato.charId }
             resultados += AlternativaSlot(candidato, directos, totalDeSeleccion(nuevo.toList()))

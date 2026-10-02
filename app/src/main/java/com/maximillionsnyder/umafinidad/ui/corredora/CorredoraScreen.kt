@@ -395,6 +395,11 @@ private fun PanelMejorLinaje(
     val res: ResultadoCompat = remember(seleccionActual) {
         AppViewModel.calcular(modelo, seleccionActual)
     }
+    /* Aporte directo de cada personaje a SUS vínculos del árbol: se muestra
+       a la derecha de cada fila, como en la hoja de alternativas. */
+    val aportes = remember(seleccionActual, modelo) {
+        modelo.aportesDirectos(seleccionActual)
+    }
     val nombreHijo = modelo.porId(nombreHijoId)?.displayName(japones) ?: ""
 
     Card(
@@ -428,6 +433,7 @@ private fun PanelMejorLinaje(
                 slot = 0,
                 japones = japones,
                 onClick = null,
+                puntos = aportes.getOrNull(0),
             )
             /* Los otros seis: tocar abre las alternativas del slot. El color
                marca la genealogía (rama del padre 1 azul, rama del padre 2 verde). */
@@ -438,6 +444,7 @@ private fun PanelMejorLinaje(
                     slot = slot,
                     japones = japones,
                     onClick = { onAbrirAlternativas(slot) },
+                    puntos = aportes.getOrNull(slot),
                 )
             }
 
@@ -517,7 +524,14 @@ internal fun etiquetaRolDe(i: Int): String = stringResource(
 )
 
 @Composable
-private fun ChipRol(etiqueta: String, personaje: Character?, slot: Int, japones: Boolean, onClick: (() -> Unit)?) {
+private fun ChipRol(
+    etiqueta: String,
+    personaje: Character?,
+    slot: Int,
+    japones: Boolean,
+    onClick: (() -> Unit)?,
+    puntos: Int? = null,
+) {
     val colorRol = com.maximillionsnyder.umafinidad.ui.theme.colorDeGenealogia(slot)
     Surface(
         modifier = Modifier
@@ -541,6 +555,14 @@ private fun ChipRol(etiqueta: String, personaje: Character?, slot: Int, japones:
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                )
+            }
+            if (personaje != null && puntos != null) {
+                Text(
+                    "${puntos}pt",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Black,
+                    color = colorClase(claseDePuntos(puntos)),
                 )
             }
             if (onClick != null) {

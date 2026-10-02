@@ -88,6 +88,9 @@ $effect(() => {
 
 const nombreHijo = $derived(displayName(modelo.porId(hijoId)!, i18n.japones))
 const res = $derived(seleccionActual.length === 7 ? calcularResultado(modelo, seleccionActual) : null)
+/* Aporte directo de cada personaje a SUS vínculos del árbol: se muestra a
+   la derecha de cada fila, como en la hoja de alternativas. */
+const aportes = $derived(seleccionActual.length === 7 ? modelo.aportesDirectos(seleccionActual) : [])
 const totalActual = $derived(res?.total ?? 0)
 const esOptimo = $derived(
   seleccionActual.length === 7 &&
@@ -126,6 +129,7 @@ function elegirAlternativa(nuevoId: number): void {
           {slot}
           etiqueta={i18n.t(ETIQUETAS_ROL[slot])}
           id={seleccionActual[slot]}
+          puntos={aportes[slot] ?? null}
           onAbrir={slot === 0 ? undefined : () => (sheetSlot = slot)}
         />
       {/each}

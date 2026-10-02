@@ -29,7 +29,7 @@
 
 ## 6. Verification
 
-- [ ] 6.1 `./gradlew :app:testDebugUnitTest` — no JDK in this environment; runs in CI
+- [x] 6.1 `./gradlew :app:testDebugUnitTest` + `:app:assembleDebug` — BUILD SUCCESSFUL en CI (Android #37015782894)
 - [x] 6.2 `npm run sitio:test` (97 pass), `npm run sitio:check` (only the pre-existing `aporteDirecto.test.ts` errors), `npm run sitio:lint`
 - [x] 6.3 `node scripts/verificar-strings.mjs`
 - [ ] 6.4 Manual pass: pick a child, pick it again and add it as a grandparent (7/7 counter and the "corredora" row worth 0); mark a destination and move a character there

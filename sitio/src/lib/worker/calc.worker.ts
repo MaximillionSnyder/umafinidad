@@ -10,9 +10,9 @@ import type { PeticionCalculo } from './mensajes'
 
 let modeloPromesa: Promise<AffinityModel> | null = null
 
-function obtenerModelo(): Promise<AffinityModel> {
+function obtenerModelo(base: string): Promise<AffinityModel> {
   if (modeloPromesa === null) {
-    modeloPromesa = cargarDatos().then(crearModelo)
+    modeloPromesa = cargarDatos(base).then(crearModelo)
   }
   return modeloPromesa
 }
@@ -20,7 +20,7 @@ function obtenerModelo(): Promise<AffinityModel> {
 self.onmessage = async (evento: MessageEvent<PeticionCalculo>) => {
   const peticion = evento.data
   try {
-    const modelo = await obtenerModelo()
+    const modelo = await obtenerModelo(peticion.base)
     let resultado: unknown
     switch (peticion.tipo) {
       case 'topLinajes':

@@ -2,13 +2,19 @@
 
 import type { AlternativaSlot, Linaje, RankingAfinidad, RankingPadre } from '../domain/affinity'
 
-export type PeticionCalculo =
+/* Base de los JSON que envía el hilo principal: el Worker no puede
+   importar `$app/paths` (arrastra el runtime cliente y `window`). */
+export type ConBase = { base: string }
+
+export type ComandoCalculo =
   | { id: number; tipo: 'topLinajes'; n: number }
   | { id: number; tipo: 'topLinajesDeElenco'; ids: number[]; n: number }
   | { id: number; tipo: 'rankingAfinidad' }
   | { id: number; tipo: 'rankingPadres' }
   | { id: number; tipo: 'mejorLinajeDe'; hijoId: number }
   | { id: number; tipo: 'alternativasParaSlot'; seleccion: (number | null)[]; slot: number; limite: number }
+
+export type PeticionCalculo = ComandoCalculo & ConBase
 
 export type RespuestaCalculo =
   | { id: number; resultado: Linaje[] }

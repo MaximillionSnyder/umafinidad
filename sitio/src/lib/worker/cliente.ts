@@ -2,11 +2,16 @@
    soporta Workers (tests), cae a cálculo síncrono con un modelo local. */
 
 import type { AlternativaSlot, AffinityModel, Linaje, RankingAfinidad, RankingPadre } from '../domain/affinity'
+import { asset } from '$app/paths'
 import { cargarDatos, crearModelo } from '../data/loadData'
-import type { PeticionCalculo, RespuestaCalculo } from './mensajes'
+import type { ComandoCalculo, RespuestaCalculo } from './mensajes'
 
 type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never
-type SinId = DistributiveOmit<PeticionCalculo, 'id'>
+type SinId = DistributiveOmit<ComandoCalculo, 'id'>
+
+/* Base de los JSON: se resuelve en el hilo principal (el Worker no puede
+   importar `$app/paths` sin arrastrar el runtime cliente de SvelteKit). */
+const BASE_DATOS = asset('/data/')
 
 let worker: Worker | null = null
 let contador = 0
@@ -36,7 +41,7 @@ function hayWorker(): boolean {
 
 let modeloSync: AffinityModel | null = null
 async function obtenerModeloSync(): Promise<AffinityModel> {
-  if (modeloSync === null) modeloSync = crearModelo(await cargarDatos())
+  if (modeloSync === null) modeloSync = crearModelo(await cargarDatos(BASE_DATOS))
   return modeloSync
 }
 
@@ -63,7 +68,7 @@ async function pedir<T>(peticion: SinId): Promise<T> {
   const w = obtenerWorker()
   return new Promise<T>((resolver, rechazar) => {
     pendientes.set(id, { resolver: resolver as (valor: never) => void, rechazar })
-    w.postMessage({ ...peticion, id })
+    w.postMessage({ ...peticion, id, base: BASE_DATOS })
   })
 }
 

@@ -3,6 +3,7 @@
    siempre se reemplazan por copias nuevas. */
 
 import { AffinityModel } from '../domain/affinity'
+import { asset } from '$app/paths'
 import {
   ColocacionResultado,
   SlotEstado,
@@ -69,7 +70,7 @@ export class AppStore {
 
   async init(): Promise<void> {
     try {
-      const datos = await cargarDatos()
+      const datos = await cargarDatos(asset('/data/'))
       const modelo = crearModelo(datos)
       this.modelo = modelo
     } catch (error) {

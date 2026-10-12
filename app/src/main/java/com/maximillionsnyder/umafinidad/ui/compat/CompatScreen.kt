@@ -136,15 +136,20 @@ fun CompatScreen(
     /* Personaje al que se le está eligiendo lugar; -1 = hoja cerrada. */
     var idElegir by rememberSaveable { mutableStateOf(-1) }
 
-    val sugerencias = remember(filtro, modelo, slotDestino, seleccion) {
+    /* Solo el pool jugable/activo entra a la genealogía: el resto no tiene
+       datos de relación (igual que la grilla y el panel de la burbuja). */
+    val jugables = remember(modelo) {
+        modelo.personajes.filter { it.playable == true && it.active == true }
+    }
+    val sugerencias = remember(filtro, jugables, slotDestino, seleccion) {
         if (filtro.trim().length < 2) emptyList()
         else {
             val base = if (slotDestino == null) {
-                modelo.personajes
+                jugables
             } else {
                 /* Con destino marcado solo lo que las reglas dejan poner ahí. */
                 val actual = seleccion.toTypedArray()
-                modelo.personajes.filter { puedeIrEn(actual, slotDestino, it.charId) }
+                jugables.filter { puedeIrEn(actual, slotDestino, it.charId) }
             }
             rankearSugerencias(base, filtro)
         }

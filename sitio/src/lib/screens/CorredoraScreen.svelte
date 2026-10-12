@@ -22,8 +22,14 @@ let conteoSeleccion = $state(0)
 let override = $state.raw<Seleccion | null>(null)
 let pendienteProcesado = $state.raw<ArbolGuardado | null>(null)
 
+/* Solo el pool jugable/activo tiene linaje calculable (igual que la
+   grilla de Herencia, Mi elenco y el panel de la burbuja). */
+const jugables = $derived.by(() => {
+  if (store.modelo === null) return []
+  return store.modelo.personajes.filter((c) => c.playable === true && c.active === true)
+})
 const sugerencias = $derived(
-  store.modelo && filtro.trim().length >= 2 ? rankearSugerencias(store.modelo.personajes, filtro) : [],
+  filtro.trim().length >= 2 ? rankearSugerencias(jugables, filtro) : [],
 )
 const elegida = $derived(elegidaId > 0 && store.modelo ? store.modelo.porId(elegidaId) : null)
 

@@ -122,8 +122,13 @@ fun CorredoraScreen(
         l.abuelos[1][1].charId,
     )
 
-    val sugerencias = remember(filtro, modelo) {
-        if (filtro.trim().length >= 2) rankearSugerencias(modelo.personajes, filtro)
+    /* Solo el pool jugable/activo tiene linaje calculable (igual que la
+       grilla de Herencia, Mi elenco y el panel de la burbuja). */
+    val jugables = remember(modelo) {
+        modelo.personajes.filter { it.playable == true && it.active == true }
+    }
+    val sugerencias = remember(filtro, jugables) {
+        if (filtro.trim().length >= 2) rankearSugerencias(jugables, filtro)
         else emptyList()
     }
 

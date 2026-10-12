@@ -41,24 +41,25 @@ let sugerenciaActiva = $state(-1)
 /* Personaje al que se le está eligiendo lugar; null = hoja cerrada. */
 let idElegir = $state<number | null>(null)
 
+/* Solo el pool jugable/activo entra a la genealogía: el resto no tiene
+   datos de relación (igual que la grilla y el panel de la burbuja). */
+const jugables = $derived.by(() => {
+  if (!store.modelo) return []
+  return store.modelo.personajes.filter((c) => c.playable === true && c.active === true)
+})
 /* Con destino marcado solo se sugieren personajes que las reglas dejan poner
    ahí (igual que en el panel de la burbuja). */
 const candidatos = $derived.by(() => {
-  if (!store.modelo) return []
   const destino = store.slotDestino
-  if (destino === null) return store.modelo.personajes
-  return store.modelo.personajes.filter((c) =>
-    puedeIrEn(store.seleccion, destino, c.charId),
-  )
+  if (destino === null) return jugables
+  return jugables.filter((c) => puedeIrEn(store.seleccion, destino, c.charId))
 })
 const sugerencias = $derived(
   store.modelo && filtro.trim().length >= 2 ? rankearSugerencias(candidatos, filtro) : [],
 )
 const seleccionSet = $derived(new Set(store.seleccion.filter((v): v is number => v !== null)))
 const filtrados = $derived.by(() => {
-  if (!store.modelo) return []
-  return store.modelo.personajes
-    .filter((c) => c.playable === true && c.active === true)
+  return jugables
     .filter((c) => coincideDifuso(c, filtro))
     .map((c, i) => ({ c, i }))
     .sort((a, b) => {

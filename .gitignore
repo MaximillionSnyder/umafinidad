@@ -11,6 +11,9 @@ local.properties
 # Node (solo scripts de datos, sin deps)
 node_modules/
 
+# Salidas de los scripts de datos (padres buscados en uma.moe + catálogos cacheados)
+scripts/out/
+
 # Firmas y secretos locales
 *.keystore
 *.jks

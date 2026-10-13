@@ -269,4 +269,53 @@
     <string name="pro_burbuja_cta">Đổi kích thước (Pro)</string>
     <string name="pro_padres_cta">Mở khóa bằng Pro</string>
     <string name="pro_guardar_cta">Lưu huyết thống là tính năng Pro</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">Speed</string>
+    <string name="factor_stamina">Stamina</string>
+    <string name="factor_power">Power</string>
+    <string name="factor_guts">Guts</string>
+    <string name="factor_wit">Wit</string>
+
+    <string name="buscar_padres">Tìm bố mẹ</string>
+    <string name="buscar_padres_sub">Tìm những uma mà cộng đồng chia sẻ trên uma.moe.</string>
+    <string name="buscar_personaje">Nhân vật bố mẹ</string>
+    <string name="buscar_solo_original">Chỉ tìm trang phục Original</string>
+    <string name="buscar_rama">Nhánh</string>
+    <string name="buscar_rama_padre">Bố mẹ</string>
+    <string name="buscar_rama_linea">Toàn bộ huyết thống</string>
+    <string name="buscar_stats">Stats</string>
+    <string name="buscar_aptitudes">Aptitude</string>
+    <string name="buscar_desde">Từ</string>
+    <string name="buscar_hasta">Đến</string>
+    <string name="buscar_boton">Tìm</string>
+    <string name="buscar_buscando">Đang tìm…</string>
+    <string name="buscar_sin_key">Chưa có API key của uma.moe</string>
+    <string name="buscar_sin_key_detalle">Thêm trong Cài đặt để tìm kiếm. Được lưu trên máy và không nằm trong bản sao lưu.</string>
+    <string name="buscar_ir_ajustes">Tới Cài đặt</string>
+    <string name="buscar_resultados">%1$d bố mẹ</string>
+    <string name="buscar_revisados">Đã xem %1$d bản ghi</string>
+    <string name="buscar_no_hay">Không có bố mẹ nào khớp điều kiện này</string>
+    <string name="buscar_no_hay_detalle">Đã xem hết %1$d kết quả hiện có và không có kết quả nào khớp.</string>
+    <string name="buscar_no_se_encontro">Không tìm thấy trong phần đã xem</string>
+    <string name="buscar_no_se_encontro_detalle">Đã xem %1$d trong %2$s kết quả. Thu hẹp điều kiện để có câu trả lời chắc chắn.</string>
+    <string name="buscar_mas_de">hơn %1$d</string>
+    <string name="buscar_sin_criterios">Chọn một nhân vật hoặc một nhân tố để bắt đầu</string>
+    <string name="buscar_sin_entrenador">Huấn luyện viên không tên</string>
+    <string name="buscar_afinidad">Tương thích %1$d</string>
+    <string name="buscar_error_sin_key">Chưa có API key</string>
+    <string name="buscar_error_key">API key bị từ chối</string>
+    <string name="buscar_error_sin_red">Không có kết nối</string>
+    <string name="buscar_error_servidor">uma.moe không phản hồi</string>
+    <string name="buscar_error_respuesta">Phản hồi từ máy chủ không như mong đợi</string>
+
+    <string name="ajustes_buscar_padres">Tìm bố mẹ</string>
+    <string name="ajustes_buscar_padres_desc">Tìm trên uma.moe những uma khớp điều kiện của bạn</string>
+    <string name="ajustes_key_titulo">API key của uma.moe</string>
+    <string name="ajustes_key_detalle">Cần cho việc tìm bố mẹ. Tạo tại uma.moe → Cài đặt → API keys. Không nằm trong bản sao lưu.</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">Lưu</string>
+    <string name="ajustes_key_borrar">Xóa</string>
+    <string name="ajustes_key_guardada">Đã lưu key</string>
+    <string name="ajustes_key_formato">Trông không giống key của uma.moe (bắt đầu bằng uma_)</string>
 </resources>

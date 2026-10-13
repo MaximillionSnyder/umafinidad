@@ -269,4 +269,53 @@
     <string name="pro_burbuja_cta">크기 조정 (Pro)</string>
     <string name="pro_padres_cta">Pro로 잠금 해제</string>
     <string name="pro_guardar_cta">혈통 저장은 Pro 기능입니다</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">스피드</string>
+    <string name="factor_stamina">스태미나</string>
+    <string name="factor_power">파워</string>
+    <string name="factor_guts">근성</string>
+    <string name="factor_wit">지능</string>
+
+    <string name="buscar_padres">부모 찾기</string>
+    <string name="buscar_padres_sub">uma.moe 에서 커뮤니티가 공유한 육성 우마를 검색합니다.</string>
+    <string name="buscar_personaje">부모 캐릭터</string>
+    <string name="buscar_solo_original">오리지널만 검색합니다</string>
+    <string name="buscar_rama">계통</string>
+    <string name="buscar_rama_padre">부모</string>
+    <string name="buscar_rama_linea">전체 혈통</string>
+    <string name="buscar_stats">스테이터스</string>
+    <string name="buscar_aptitudes">적성</string>
+    <string name="buscar_desde">최소</string>
+    <string name="buscar_hasta">최대</string>
+    <string name="buscar_boton">검색</string>
+    <string name="buscar_buscando">검색 중…</string>
+    <string name="buscar_sin_key">uma.moe API 키가 없습니다</string>
+    <string name="buscar_sin_key_detalle">설정에서 등록하면 검색할 수 있습니다. 기기에 저장되며 백업에 포함되지 않습니다.</string>
+    <string name="buscar_ir_ajustes">설정으로</string>
+    <string name="buscar_resultados">%1$d명</string>
+    <string name="buscar_revisados">%1$d건 확인</string>
+    <string name="buscar_no_hay">조건에 맞는 부모가 없습니다</string>
+    <string name="buscar_no_hay_detalle">존재하는 %1$d건을 모두 확인했지만 조건에 맞는 결과가 없습니다.</string>
+    <string name="buscar_no_se_encontro">확인한 범위에서는 찾지 못했습니다</string>
+    <string name="buscar_no_se_encontro_detalle">%2$s건 중 %1$d건을 확인했습니다. 조건을 좁히면 확실한 결과를 얻습니다.</string>
+    <string name="buscar_mas_de">%1$d건 이상</string>
+    <string name="buscar_sin_criterios">캐릭터나 인자를 먼저 선택하세요</string>
+    <string name="buscar_sin_entrenador">이름 없는 트레이너</string>
+    <string name="buscar_afinidad">인연 %1$d</string>
+    <string name="buscar_error_sin_key">API 키가 없습니다</string>
+    <string name="buscar_error_key">API 키가 거부되었습니다</string>
+    <string name="buscar_error_sin_red">연결이 없습니다</string>
+    <string name="buscar_error_servidor">uma.moe 가 응답하지 않습니다</string>
+    <string name="buscar_error_respuesta">서버 응답이 올바르지 않습니다</string>
+
+    <string name="ajustes_buscar_padres">부모 찾기</string>
+    <string name="ajustes_buscar_padres_desc">조건에 맞는 육성 우마를 uma.moe 에서 검색합니다</string>
+    <string name="ajustes_key_titulo">uma.moe API 키</string>
+    <string name="ajustes_key_detalle">부모 검색에 필요합니다. uma.moe → 설정 → API keys 에서 만드세요. 백업에 포함되지 않습니다.</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">저장</string>
+    <string name="ajustes_key_borrar">삭제</string>
+    <string name="ajustes_key_guardada">저장했습니다</string>
+    <string name="ajustes_key_formato">uma.moe 키 형식이 아닙니다 (uma_ 로 시작합니다)</string>
 </resources>

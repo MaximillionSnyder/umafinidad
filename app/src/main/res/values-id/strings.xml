@@ -269,4 +269,53 @@
     <string name="pro_burbuja_cta">Ubah ukuran (Pro)</string>
     <string name="pro_padres_cta">Buka dengan Pro</string>
     <string name="pro_guardar_cta">Menyimpan silsilah adalah fitur Pro</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">Speed</string>
+    <string name="factor_stamina">Stamina</string>
+    <string name="factor_power">Power</string>
+    <string name="factor_guts">Guts</string>
+    <string name="factor_wit">Wit</string>
+
+    <string name="buscar_padres">Cari orang tua</string>
+    <string name="buscar_padres_sub">Cari uma yang dibagikan komunitas di uma.moe.</string>
+    <string name="buscar_personaje">Karakter orang tua</string>
+    <string name="buscar_solo_original">Hanya kostum Original yang dicari</string>
+    <string name="buscar_rama">Cabang</string>
+    <string name="buscar_rama_padre">Orang tua</string>
+    <string name="buscar_rama_linea">Seluruh silsilah</string>
+    <string name="buscar_stats">Stats</string>
+    <string name="buscar_aptitudes">Aptitude</string>
+    <string name="buscar_desde">Dari</string>
+    <string name="buscar_hasta">Sampai</string>
+    <string name="buscar_boton">Cari</string>
+    <string name="buscar_buscando">Mencari…</string>
+    <string name="buscar_sin_key">API key uma.moe belum ada</string>
+    <string name="buscar_sin_key_detalle">Tambahkan di Pengaturan untuk bisa mencari. Disimpan di perangkat dan tidak ikut cadangan.</string>
+    <string name="buscar_ir_ajustes">Ke Pengaturan</string>
+    <string name="buscar_resultados">%1$d orang tua</string>
+    <string name="buscar_revisados">%1$d data diperiksa</string>
+    <string name="buscar_no_hay">Tidak ada orang tua yang cocok dengan kriteria ini</string>
+    <string name="buscar_no_hay_detalle">Semua %1$d hasil yang ada sudah diperiksa dan tidak ada yang cocok.</string>
+    <string name="buscar_no_se_encontro">Tidak ditemukan pada yang diperiksa</string>
+    <string name="buscar_no_se_encontro_detalle">Diperiksa %1$d dari %2$s hasil. Persempit kriteria untuk jawaban yang pasti.</string>
+    <string name="buscar_mas_de">lebih dari %1$d</string>
+    <string name="buscar_sin_criterios">Pilih karakter atau faktor untuk mulai</string>
+    <string name="buscar_sin_entrenador">Pelatih tanpa nama</string>
+    <string name="buscar_afinidad">Afinitas %1$d</string>
+    <string name="buscar_error_sin_key">API key belum ada</string>
+    <string name="buscar_error_key">API key ditolak</string>
+    <string name="buscar_error_sin_red">Tidak ada koneksi</string>
+    <string name="buscar_error_servidor">uma.moe tidak merespons</string>
+    <string name="buscar_error_respuesta">Respons server tidak terduga</string>
+
+    <string name="ajustes_buscar_padres">Cari orang tua</string>
+    <string name="ajustes_buscar_padres_desc">Cari di uma.moe uma yang sesuai kriteria kamu</string>
+    <string name="ajustes_key_titulo">API key uma.moe</string>
+    <string name="ajustes_key_detalle">Diperlukan untuk pencarian orang tua. Buat di uma.moe → Pengaturan → API keys. Tidak ikut cadangan.</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">Simpan</string>
+    <string name="ajustes_key_borrar">Hapus</string>
+    <string name="ajustes_key_guardada">Key disimpan</string>
+    <string name="ajustes_key_formato">Sepertinya bukan key uma.moe (awalannya uma_)</string>
 </resources>

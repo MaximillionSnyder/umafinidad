@@ -269,4 +269,53 @@
     <string name="pro_burbuja_cta">调整大小（Pro）</string>
     <string name="pro_padres_cta">用 Pro 解锁</string>
     <string name="pro_guardar_cta">保存血统是 Pro 功能</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">速度</string>
+    <string name="factor_stamina">持久力</string>
+    <string name="factor_power">力量</string>
+    <string name="factor_guts">毅力</string>
+    <string name="factor_wit">智力</string>
+
+    <string name="buscar_padres">查找父母</string>
+    <string name="buscar_padres_sub">在 uma.moe 上搜索社区分享的赛马娘。</string>
+    <string name="buscar_personaje">父母角色</string>
+    <string name="buscar_solo_original">只搜索 Original 服装</string>
+    <string name="buscar_rama">分支</string>
+    <string name="buscar_rama_padre">父母</string>
+    <string name="buscar_rama_linea">整个血统</string>
+    <string name="buscar_stats">属性</string>
+    <string name="buscar_aptitudes">适性</string>
+    <string name="buscar_desde">从</string>
+    <string name="buscar_hasta">到</string>
+    <string name="buscar_boton">搜索</string>
+    <string name="buscar_buscando">搜索中…</string>
+    <string name="buscar_sin_key">缺少 uma.moe 的 API key</string>
+    <string name="buscar_sin_key_detalle">在设置中添加后即可搜索。它保存在本机，不包含在备份中。</string>
+    <string name="buscar_ir_ajustes">前往设置</string>
+    <string name="buscar_resultados">%1$d 个父母</string>
+    <string name="buscar_revisados">已检查 %1$d 条记录</string>
+    <string name="buscar_no_hay">没有符合这些条件的父母</string>
+    <string name="buscar_no_hay_detalle">已检查全部 %1$d 条现有结果，没有一条符合。</string>
+    <string name="buscar_no_se_encontro">在已检查的范围内未找到</string>
+    <string name="buscar_no_se_encontro_detalle">已检查 %1$d / %2$s 条结果。缩小条件可获得确定的答案。</string>
+    <string name="buscar_mas_de">超过 %1$d</string>
+    <string name="buscar_sin_criterios">先选择角色或因子</string>
+    <string name="buscar_sin_entrenador">未署名训练师</string>
+    <string name="buscar_afinidad">相性 %1$d</string>
+    <string name="buscar_error_sin_key">缺少 API key</string>
+    <string name="buscar_error_key">API key 被拒绝</string>
+    <string name="buscar_error_sin_red">没有网络连接</string>
+    <string name="buscar_error_servidor">uma.moe 没有响应</string>
+    <string name="buscar_error_respuesta">服务器返回了意外响应</string>
+
+    <string name="ajustes_buscar_padres">查找父母</string>
+    <string name="ajustes_buscar_padres_desc">在 uma.moe 上搜索符合你条件的赛马娘</string>
+    <string name="ajustes_key_titulo">uma.moe 的 API key</string>
+    <string name="ajustes_key_detalle">查找父母需要它。在 uma.moe → 设置 → API keys 创建。不包含在备份中。</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">保存</string>
+    <string name="ajustes_key_borrar">删除</string>
+    <string name="ajustes_key_guardada">已保存</string>
+    <string name="ajustes_key_formato">这不像 uma.moe 的 key（以 uma_ 开头）</string>
 </resources>

@@ -269,4 +269,53 @@
     <string name="pro_burbuja_cta">ปรับขนาด (Pro)</string>
     <string name="pro_padres_cta">ปลดล็อกด้วย Pro</string>
     <string name="pro_guardar_cta">การบันทึกสายเลือดเป็นฟีเจอร์ของ Pro</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">Speed</string>
+    <string name="factor_stamina">Stamina</string>
+    <string name="factor_power">Power</string>
+    <string name="factor_guts">Guts</string>
+    <string name="factor_wit">Wit</string>
+
+    <string name="buscar_padres">ค้นหาพ่อแม่</string>
+    <string name="buscar_padres_sub">ค้นหาอุมะที่ชุมชนแชร์ไว้บน uma.moe</string>
+    <string name="buscar_personaje">ตัวละครพ่อแม่</string>
+    <string name="buscar_solo_original">ค้นหาเฉพาะชุด Original</string>
+    <string name="buscar_rama">สายเลือด</string>
+    <string name="buscar_rama_padre">พ่อแม่</string>
+    <string name="buscar_rama_linea">สายเลือดทั้งหมด</string>
+    <string name="buscar_stats">Stats</string>
+    <string name="buscar_aptitudes">Aptitude</string>
+    <string name="buscar_desde">จาก</string>
+    <string name="buscar_hasta">ถึง</string>
+    <string name="buscar_boton">ค้นหา</string>
+    <string name="buscar_buscando">กำลังค้นหา…</string>
+    <string name="buscar_sin_key">ยังไม่มี API key ของ uma.moe</string>
+    <string name="buscar_sin_key_detalle">เพิ่มในตั้งค่าเพื่อค้นหาได้ เก็บไว้ในเครื่องและไม่รวมอยู่ในการสำรองข้อมูล</string>
+    <string name="buscar_ir_ajustes">ไปที่ตั้งค่า</string>
+    <string name="buscar_resultados">%1$d รายการ</string>
+    <string name="buscar_revisados">ตรวจแล้ว %1$d รายการ</string>
+    <string name="buscar_no_hay">ไม่มีพ่อแม่ที่ตรงกับเงื่อนไขนี้</string>
+    <string name="buscar_no_hay_detalle">ตรวจสอบทั้ง %1$d รายการที่มีอยู่แล้ว ไม่มีรายการใดตรงเงื่อนไข</string>
+    <string name="buscar_no_se_encontro">ไม่พบในช่วงที่ตรวจสอบ</string>
+    <string name="buscar_no_se_encontro_detalle">ตรวจแล้ว %1$d จาก %2$s รายการ ลดเงื่อนไขลงเพื่อผลลัพธ์ที่ชัดเจน</string>
+    <string name="buscar_mas_de">มากกว่า %1$d</string>
+    <string name="buscar_sin_criterios">เลือกตัวละครหรือปัจจัยก่อน</string>
+    <string name="buscar_sin_entrenador">ไม่ระบุชื่อเทรนเนอร์</string>
+    <string name="buscar_afinidad">ความเข้ากัน %1$d</string>
+    <string name="buscar_error_sin_key">ไม่มี API key</string>
+    <string name="buscar_error_key">API key ถูกปฏิเสธ</string>
+    <string name="buscar_error_sin_red">ไม่มีการเชื่อมต่อ</string>
+    <string name="buscar_error_servidor">uma.moe ไม่ตอบสนอง</string>
+    <string name="buscar_error_respuesta">การตอบกลับจากเซิร์ฟเวอร์ผิดปกติ</string>
+
+    <string name="ajustes_buscar_padres">ค้นหาพ่อแม่</string>
+    <string name="ajustes_buscar_padres_desc">ค้นหาอุมะบน uma.moe ที่ตรงกับเงื่อนไขของคุณ</string>
+    <string name="ajustes_key_titulo">API key ของ uma.moe</string>
+    <string name="ajustes_key_detalle">จำเป็นสำหรับการค้นหาพ่อแม่ สร้างได้ที่ uma.moe → ตั้งค่า → API keys และจะไม่รวมอยู่ในการสำรองข้อมูล</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">บันทึก</string>
+    <string name="ajustes_key_borrar">ลบ</string>
+    <string name="ajustes_key_guardada">บันทึกแล้ว</string>
+    <string name="ajustes_key_formato">ดูเหมือนไม่ใช่ key ของ uma.moe (ขึ้นต้นด้วย uma_)</string>
 </resources>

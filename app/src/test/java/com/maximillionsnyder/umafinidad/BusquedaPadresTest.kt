@@ -199,7 +199,7 @@ class BusquedaPadresTest {
     @Test
     fun `el personaje del padre viaja como main_parent_id`() {
         val params = parametrosDeConsulta(Criterios(MAYANO_ORIGINAL, emptyList()))
-        assertEquals(listOf("main_parent_id" to "106801"), params)
+        assertEquals(listOf("main_parent_id" to MAYANO_ORIGINAL.toString()), params)
     }
 
     @Test
@@ -208,7 +208,10 @@ class BusquedaPadresTest {
             Criterios(MAYANO_ORIGINAL, listOf(req(Rama.PADRE, speed, 3))),
         )
         assertEquals(
-            listOf("main_parent_id" to "106801", "main_parent_blue_sparks" to "103"),
+            listOf(
+                "main_parent_id" to MAYANO_ORIGINAL.toString(),
+                "main_parent_blue_sparks" to "103",
+            ),
             params,
         )
     }
@@ -246,7 +249,7 @@ class BusquedaPadresTest {
                 listOf(req(Rama.PADRE, speed, 3), req(Rama.PADRE, stamina, 3)),
             ),
         )
-        assertEquals(listOf("main_parent_id" to "106801"), params)
+        assertEquals(listOf("main_parent_id" to MAYANO_ORIGINAL.toString()), params)
     }
 
     @Test

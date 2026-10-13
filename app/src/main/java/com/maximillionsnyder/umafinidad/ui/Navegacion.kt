@@ -15,6 +15,9 @@ object Destino {
        desde los candados de la app y desde el panel de la burbuja. */
     const val PRO = "pro"
 
+    /* Buscador de padres en uma.moe: se abre desde Ajustes. */
+    const val BUSCAR_PADRES = "buscar-padres"
+
     /* Página del pager para un destino "tab:N"; null para los demás. */
     fun pagina(destino: String): Int? = destino.removePrefix("tab:").toIntOrNull()
 }

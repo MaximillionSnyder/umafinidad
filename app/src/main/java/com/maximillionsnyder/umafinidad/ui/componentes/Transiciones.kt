@@ -14,6 +14,7 @@ object ClavesTransicion {
     const val OVERLAY_RANKING = "overlay-ranking"
     const val OVERLAY_RANKING_PADRES = "overlay-ranking-padres"
     const val OVERLAY_PRO = "overlay-pro"
+    const val OVERLAY_BUSCAR = "overlay-buscar"
 
     fun titulo(claveOverlay: String): String = "$claveOverlay-titulo"
 

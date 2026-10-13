@@ -3,6 +3,9 @@ package com.maximillionsnyder.umafinidad.ui
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.maximillionsnyder.umafinidad.data.BuscadorPadres
+import com.maximillionsnyder.umafinidad.data.UmamoeApi
+import com.maximillionsnyder.umafinidad.data.UmamoeApiKey
 import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.ArbolesRepository
@@ -29,6 +32,8 @@ import com.maximillionsnyder.umafinidad.domain.agregarEn
 import com.maximillionsnyder.umafinidad.domain.alternar
 import com.maximillionsnyder.umafinidad.domain.armarArbol
 import com.maximillionsnyder.umafinidad.domain.ColocacionResultado
+import com.maximillionsnyder.umafinidad.domain.Criterios
+import com.maximillionsnyder.umafinidad.domain.SalidaPadres
 import com.maximillionsnyder.umafinidad.domain.sePuedeCompletar
 import com.maximillionsnyder.umafinidad.domain.slotsPara
 import com.maximillionsnyder.umafinidad.domain.vinculos
@@ -173,6 +178,44 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun setPanelDosColumnas(valor: Boolean) {
         prefs.panelDosColumnas = valor
         _panelDosColumnas.value = valor
+    }
+
+    /* ---- Buscador de padres en uma.moe: la única función con red ---- */
+
+    private val apiKey = UmamoeApiKey(application)
+
+    private val _hayKey = MutableStateFlow(apiKey.hay())
+    val hayKey: StateFlow<Boolean> = _hayKey
+
+    private val _salidaPadres = MutableStateFlow<SalidaPadres?>(null)
+    val salidaPadres: StateFlow<SalidaPadres?> = _salidaPadres
+
+    private val _buscandoPadres = MutableStateFlow(false)
+    val buscandoPadres: StateFlow<Boolean> = _buscandoPadres
+
+    fun guardarKey(valor: String) {
+        apiKey.guardar(valor)
+        _hayKey.value = apiKey.hay()
+    }
+
+    fun borrarKey() {
+        apiKey.borrar()
+        _hayKey.value = false
+    }
+
+    fun keyPareceValida(): Boolean = apiKey.pareceValida()
+
+    /* La búsqueda decide su propio estado y la pantalla solo dibuja lo que
+       vuelve. En particular la pantalla no reinterpreta un vacío: si el
+       buscador dice NO_HAY, se muestra que no hay. */
+    fun buscarPadres(criterios: Criterios) {
+        if (_buscandoPadres.value) return
+        _buscandoPadres.value = true
+        _salidaPadres.value = null
+        viewModelScope.launch {
+            _salidaPadres.value = BuscadorPadres(UmamoeApi(apiKey.get())).buscar(criterios)
+            _buscandoPadres.value = false
+        }
     }
 
     /* Tamaño del círculo de la burbuja (el servicio lo aplica en vivo). */

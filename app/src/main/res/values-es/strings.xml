@@ -269,4 +269,53 @@
     <string name="pro_burbuja_cta">Redimensionar (Pro)</string>
     <string name="pro_padres_cta">Desbloquear con Pro</string>
     <string name="pro_guardar_cta">Guardar genealogías es una función Pro</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">Velocidad</string>
+    <string name="factor_stamina">Aguante</string>
+    <string name="factor_power">Potencia</string>
+    <string name="factor_guts">Guts</string>
+    <string name="factor_wit">Astucia</string>
+
+    <string name="buscar_padres">Buscar padres</string>
+    <string name="buscar_padres_sub">Busca veteranos que la comunidad comparte en uma.moe.</string>
+    <string name="buscar_personaje">Personaje del padre</string>
+    <string name="buscar_solo_original">Solo se busca la skin Original</string>
+    <string name="buscar_rama">Rama</string>
+    <string name="buscar_rama_padre">El padre</string>
+    <string name="buscar_rama_linea">El linaje</string>
+    <string name="buscar_stats">Stats</string>
+    <string name="buscar_aptitudes">Aptitudes</string>
+    <string name="buscar_desde">Desde</string>
+    <string name="buscar_hasta">Hasta</string>
+    <string name="buscar_boton">Buscar</string>
+    <string name="buscar_buscando">Buscando…</string>
+    <string name="buscar_sin_key">Falta la API key de uma.moe</string>
+    <string name="buscar_sin_key_detalle">Cargala en Ajustes para poder buscar. Se guarda en el dispositivo y no se incluye en los backups.</string>
+    <string name="buscar_ir_ajustes">Ir a Ajustes</string>
+    <string name="buscar_resultados">%1$d padres</string>
+    <string name="buscar_revisados">%1$d registros revisados</string>
+    <string name="buscar_no_hay">No hay padres que cumplan estos criterios</string>
+    <string name="buscar_no_hay_detalle">Se revisaron los %1$d resultados existentes y ninguno cumple.</string>
+    <string name="buscar_no_se_encontro">No se encontró en lo revisado</string>
+    <string name="buscar_no_se_encontro_detalle">Se revisaron %1$d de %2$s resultados. Acotá los criterios para una respuesta definitiva.</string>
+    <string name="buscar_mas_de">más de %1$d</string>
+    <string name="buscar_sin_criterios">Elegí un personaje o una chispa para empezar</string>
+    <string name="buscar_sin_entrenador">Entrenador sin nombre</string>
+    <string name="buscar_afinidad">Afinidad %1$d</string>
+    <string name="buscar_error_sin_key">Falta la API key</string>
+    <string name="buscar_error_key">La API key fue rechazada</string>
+    <string name="buscar_error_sin_red">Sin conexión</string>
+    <string name="buscar_error_servidor">uma.moe no respondió</string>
+    <string name="buscar_error_respuesta">Respuesta inesperada del servidor</string>
+
+    <string name="ajustes_buscar_padres">Buscar padres</string>
+    <string name="ajustes_buscar_padres_desc">Busca en uma.moe veteranos que cumplan tus criterios</string>
+    <string name="ajustes_key_titulo">API key de uma.moe</string>
+    <string name="ajustes_key_detalle">Hace falta para el buscador de padres. Creala en uma.moe → Ajustes → API keys. No se incluye en los backups.</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">Guardar</string>
+    <string name="ajustes_key_borrar">Borrar</string>
+    <string name="ajustes_key_guardada">Key guardada</string>
+    <string name="ajustes_key_formato">Eso no parece una key de uma.moe (empiezan con uma_)</string>
 </resources>

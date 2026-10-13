@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup y transferencia entre dispositivos en Android 12+. Misma exclusion
+     que backup_rules.xml: la API key no sale del dispositivo. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude
+            domain="sharedpref"
+            path="umamoe_api.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude
+            domain="sharedpref"
+            path="umamoe_api.xml" />
+    </device-transfer>
+</data-extraction-rules>

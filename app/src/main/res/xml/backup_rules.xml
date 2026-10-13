@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup en Android 11 y anteriores. La API key de uma.moe vive en su
+     propio archivo de SharedPreferences (data/UmamoeApiKey.kt) justamente
+     para poder excluirla sin arrastrar el resto de las preferencias. -->
+<full-backup-content>
+    <exclude
+        domain="sharedpref"
+        path="umamoe_api.xml" />
+</full-backup-content>

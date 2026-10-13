@@ -269,4 +269,53 @@
     <string name="pro_burbuja_cta">Resize (Pro)</string>
     <string name="pro_padres_cta">Unlock with Pro</string>
     <string name="pro_guardar_cta">Saving lineages is a Pro feature</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">Speed</string>
+    <string name="factor_stamina">Stamina</string>
+    <string name="factor_power">Power</string>
+    <string name="factor_guts">Guts</string>
+    <string name="factor_wit">Wit</string>
+
+    <string name="buscar_padres">Find parents</string>
+    <string name="buscar_padres_sub">Search veterans shared by the community on uma.moe.</string>
+    <string name="buscar_personaje">Parent character</string>
+    <string name="buscar_solo_original">Only the Original outfit is searched</string>
+    <string name="buscar_rama">Branch</string>
+    <string name="buscar_rama_padre">The parent</string>
+    <string name="buscar_rama_linea">The lineage</string>
+    <string name="buscar_stats">Stats</string>
+    <string name="buscar_aptitudes">Aptitudes</string>
+    <string name="buscar_desde">From</string>
+    <string name="buscar_hasta">To</string>
+    <string name="buscar_boton">Search</string>
+    <string name="buscar_buscando">Searching…</string>
+    <string name="buscar_sin_key">Missing the uma.moe API key</string>
+    <string name="buscar_sin_key_detalle">Add it in Settings to search. It is stored on the device and left out of backups.</string>
+    <string name="buscar_ir_ajustes">Go to Settings</string>
+    <string name="buscar_resultados">%1$d parents</string>
+    <string name="buscar_revisados">%1$d records reviewed</string>
+    <string name="buscar_no_hay">No parents match these criteria</string>
+    <string name="buscar_no_hay_detalle">All %1$d existing results were reviewed and none match.</string>
+    <string name="buscar_no_se_encontro">Not found in what was reviewed</string>
+    <string name="buscar_no_se_encontro_detalle">Reviewed %1$d of %2$s results. Narrow the criteria for a definitive answer.</string>
+    <string name="buscar_mas_de">over %1$d</string>
+    <string name="buscar_sin_criterios">Pick a character or a spark to start</string>
+    <string name="buscar_sin_entrenador">Unnamed trainer</string>
+    <string name="buscar_afinidad">Affinity %1$d</string>
+    <string name="buscar_error_sin_key">Missing API key</string>
+    <string name="buscar_error_key">The API key was rejected</string>
+    <string name="buscar_error_sin_red">No connection</string>
+    <string name="buscar_error_servidor">uma.moe did not respond</string>
+    <string name="buscar_error_respuesta">Unexpected response from the server</string>
+
+    <string name="ajustes_buscar_padres">Find parents</string>
+    <string name="ajustes_buscar_padres_desc">Search uma.moe for veterans that match your criteria</string>
+    <string name="ajustes_key_titulo">uma.moe API key</string>
+    <string name="ajustes_key_detalle">Needed for the parent search. Create it at uma.moe → Settings → API keys. It is not included in backups.</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">Save</string>
+    <string name="ajustes_key_borrar">Delete</string>
+    <string name="ajustes_key_guardada">Key saved</string>
+    <string name="ajustes_key_formato">That does not look like an uma.moe key (they start with uma_)</string>
 </resources>

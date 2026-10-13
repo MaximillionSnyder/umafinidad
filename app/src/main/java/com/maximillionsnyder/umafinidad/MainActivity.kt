@@ -81,6 +81,7 @@ import com.maximillionsnyder.umafinidad.data.aplicarIdioma
 import com.maximillionsnyder.umafinidad.overlay.BurbujaService
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
 import com.maximillionsnyder.umafinidad.ui.Destino
+import com.maximillionsnyder.umafinidad.ui.buscar.BuscarPadresScreen
 import com.maximillionsnyder.umafinidad.ui.componentes.BienvenidaAccesibilidad
 import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalAnimatedVisibilityScope
@@ -220,6 +221,9 @@ private fun App(
     val slotDestino by vm.slotDestino.collectAsState()
     val codigoPro by vm.codigoPro.collectAsState()
     val activadoEnPro by vm.activadoEnPro.collectAsState()
+    val hayKey by vm.hayKey.collectAsState()
+    val salidaPadres by vm.salidaPadres.collectAsState()
+    val buscandoPadres by vm.buscandoPadres.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
 
     val pagerState = rememberPagerState(initialPage = 0) { 5 }
@@ -251,6 +255,7 @@ private fun App(
     var verRanking by rememberSaveable { mutableStateOf(false) }
     var verRankingPadres by rememberSaveable { mutableStateOf(false) }
     var verPro by rememberSaveable { mutableStateOf(false) }
+    var verBuscar by rememberSaveable { mutableStateOf(false) }
 
     /* Pila de navegación ("tab:N", "grupos", "ranking", "ranking-padres", "pro"):
        atrás desapila hasta volver al inicio y recién ahí pregunta si salir. */
@@ -262,6 +267,7 @@ private fun App(
         verRanking = destino == "ranking"
         verRankingPadres = destino == "ranking-padres"
         verPro = destino == Destino.PRO
+        verBuscar = destino == Destino.BUSCAR_PADRES
         Destino.pagina(destino)?.let { pagina ->
             if (pagerState.currentPage != pagina) scope.launch { pagerState.animateScrollToPage(pagina) }
         }
@@ -296,7 +302,7 @@ private fun App(
        settledPage (y no currentPage) para no apilar intermedias de la animación. */
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { pagina ->
-            if (!verGrupos && !verRanking && !verRankingPadres && !verPro) {
+            if (!verGrupos && !verRanking && !verRankingPadres && !verPro && !verBuscar) {
                 val destino = "tab:$pagina"
                 if (historial.last() != destino) historial.add(destino)
             }
@@ -332,6 +338,7 @@ private fun App(
             verRanking -> ClavesTransicion.OVERLAY_RANKING
             verRankingPadres -> ClavesTransicion.OVERLAY_RANKING_PADRES
             verPro -> ClavesTransicion.OVERLAY_PRO
+            verBuscar -> ClavesTransicion.OVERLAY_BUSCAR
             else -> null
         }
 
@@ -396,6 +403,27 @@ private fun App(
                                 claveOverlay = ClavesTransicion.OVERLAY_RANKING_PADRES,
                                 esPro = esPro,
                                 onIrAPro = { irA(Destino.PRO) },
+                            )
+                        }
+                    } else if (destino == ClavesTransicion.OVERLAY_BUSCAR) {
+                        val m = modelo
+                        if (m == null) {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
+                            BuscarPadresScreen(
+                                modelo = m,
+                                japones = japones,
+                                hayKey = hayKey,
+                                buscando = buscandoPadres,
+                                salida = salidaPadres,
+                                onBuscar = vm::buscarPadres,
+                                onVolver = { volver() },
+                                onIrAAjustes = {
+                                    volver()
+                                    scope.launch { pagerState.animateScrollToPage(4) }
+                                },
                             )
                         }
                     } else {
@@ -566,6 +594,10 @@ private fun App(
                                                 onAbrirGrupos = { irA("grupos") },
                                                 onAbrirRanking = { irA("ranking") },
                                                 onAbrirRankingPadres = { irA("ranking-padres") },
+                                                onAbrirBuscarPadres = { irA(Destino.BUSCAR_PADRES) },
+                                                hayKey = hayKey,
+                                                onGuardarKey = vm::guardarKey,
+                                                onBorrarKey = vm::borrarKey,
                                                 esPro = esPro,
                                                 onAbrirPro = { irA(Destino.PRO) },
                                                 tamanoTexto = tamanoTexto,

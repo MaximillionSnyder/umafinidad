@@ -268,4 +268,53 @@
     <string name="pro_burbuja_cta">サイズ変更（Pro）</string>
     <string name="pro_padres_cta">Proで解放</string>
     <string name="pro_guardar_cta">血統の保存はProの機能です</string>
+
+    <!-- Buscador de padres en uma.moe -->
+    <string name="factor_speed">スピード</string>
+    <string name="factor_stamina">スタミナ</string>
+    <string name="factor_power">パワー</string>
+    <string name="factor_guts">根性</string>
+    <string name="factor_wit">賢さ</string>
+
+    <string name="buscar_padres">親を探す</string>
+    <string name="buscar_padres_sub">uma.moe でコミュニティが公開している育成ウマを検索します。</string>
+    <string name="buscar_personaje">親のキャラクター</string>
+    <string name="buscar_solo_original">オリジナルのみ検索します</string>
+    <string name="buscar_rama">系統</string>
+    <string name="buscar_rama_padre">親</string>
+    <string name="buscar_rama_linea">血統全体</string>
+    <string name="buscar_stats">ステータス</string>
+    <string name="buscar_aptitudes">適性</string>
+    <string name="buscar_desde">最小</string>
+    <string name="buscar_hasta">最大</string>
+    <string name="buscar_boton">検索</string>
+    <string name="buscar_buscando">検索中…</string>
+    <string name="buscar_sin_key">uma.moe のAPIキーがありません</string>
+    <string name="buscar_sin_key_detalle">設定で登録すると検索できます。端末内に保存され、バックアップには含まれません。</string>
+    <string name="buscar_ir_ajustes">設定へ</string>
+    <string name="buscar_resultados">%1$d 件</string>
+    <string name="buscar_revisados">%1$d 件を確認</string>
+    <string name="buscar_no_hay">条件に合う親はありません</string>
+    <string name="buscar_no_hay_detalle">存在する %1$d 件をすべて確認しましたが、条件に合うものはありませんでした。</string>
+    <string name="buscar_no_se_encontro">確認した範囲では見つかりません</string>
+    <string name="buscar_no_se_encontro_detalle">%2$s 件のうち %1$d 件を確認しました。条件を絞ると確実な結果になります。</string>
+    <string name="buscar_mas_de">%1$d 件以上</string>
+    <string name="buscar_sin_criterios">キャラクターか因子を選んでください</string>
+    <string name="buscar_sin_entrenador">名前なし</string>
+    <string name="buscar_afinidad">相性 %1$d</string>
+    <string name="buscar_error_sin_key">APIキーがありません</string>
+    <string name="buscar_error_key">APIキーが拒否されました</string>
+    <string name="buscar_error_sin_red">接続がありません</string>
+    <string name="buscar_error_servidor">uma.moe が応答しません</string>
+    <string name="buscar_error_respuesta">サーバーの応答が不正です</string>
+
+    <string name="ajustes_buscar_padres">親を探す</string>
+    <string name="ajustes_buscar_padres_desc">条件に合う育成ウマを uma.moe で検索します</string>
+    <string name="ajustes_key_titulo">uma.moe のAPIキー</string>
+    <string name="ajustes_key_detalle">親の検索に必要です。uma.moe → 設定 → API keys で作成してください。バックアップには含まれません。</string>
+    <string name="ajustes_key_hint">uma_…</string>
+    <string name="ajustes_key_guardar">保存</string>
+    <string name="ajustes_key_borrar">削除</string>
+    <string name="ajustes_key_guardada">保存しました</string>
+    <string name="ajustes_key_formato">uma.moe のキーの形式ではありません（uma_ で始まります）</string>
 </resources>

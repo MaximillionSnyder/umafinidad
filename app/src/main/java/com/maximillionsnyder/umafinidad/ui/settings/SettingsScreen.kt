@@ -21,10 +21,13 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -98,6 +101,10 @@ fun SettingsScreen(
     onAbrirElenco: () -> Unit,
     esPro: Boolean = false,
     onAbrirPro: () -> Unit = {},
+    onAbrirBuscarPadres: () -> Unit = {},
+    hayKey: Boolean = false,
+    onGuardarKey: (String) -> Unit = {},
+    onBorrarKey: () -> Unit = {},
     tamanoTexto: TamanoTexto,
     onTamanoTexto: (TamanoTexto) -> Unit,
     textoNegrita: Boolean,
@@ -111,6 +118,10 @@ fun SettingsScreen(
     fun alternar(clave: String) {
         seccionAbierta = if (seccionAbierta == clave) null else clave
     }
+
+    /* API key de uma.moe, para el buscador de padres. */
+    var key by rememberSaveable { mutableStateOf("") }
+    var avisoFormato by rememberSaveable { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderBar(titulo = stringResource(R.string.tab_mas))
@@ -533,6 +544,108 @@ fun SettingsScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+            }
+        }
+
+        /* ===== Buscar padres en uma.moe: la única función con red ===== */
+        Card(
+            modifier = Modifier.fillMaxWidth()
+                .compartidoBounds(ClavesTransicion.OVERLAY_BUSCAR)
+                .clickable(role = Role.Button, onClick = onAbrirBuscarPadres),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_tab_top),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_BUSCAR)),
+                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        stringResource(R.string.ajustes_buscar_padres),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.compartidoBounds(ClavesTransicion.titulo(ClavesTransicion.OVERLAY_BUSCAR)),
+                    )
+                    Text(
+                        stringResource(R.string.ajustes_buscar_padres_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
+        /* Sin key el buscador no consulta nada, así que el campo vive acá. */
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Column(
+                modifier = Modifier.padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    stringResource(R.string.ajustes_key_titulo),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    stringResource(R.string.ajustes_key_detalle),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OutlinedTextField(
+                    value = key,
+                    onValueChange = {
+                        key = it
+                        avisoFormato = false
+                    },
+                    label = { Text(stringResource(R.string.ajustes_key_hint)) },
+                    singleLine = true,
+                    isError = avisoFormato,
+                    supportingText = { if (avisoFormato) Text(stringResource(R.string.ajustes_key_formato)) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(
+                        onClick = {
+                            if (key.trim().startsWith("uma_")) {
+                                onGuardarKey(key)
+                                key = ""
+                                avisoFormato = false
+                            } else {
+                                avisoFormato = true
+                            }
+                        },
+                    ) {
+                        Text(stringResource(R.string.ajustes_key_guardar))
+                    }
+                    if (hayKey) {
+                        OutlinedButton(
+                            onClick = {
+                                onBorrarKey()
+                                key = ""
+                            },
+                        ) {
+                            Text(stringResource(R.string.ajustes_key_borrar))
+                        }
+                    }
+                }
+                Text(
+                    text = if (hayKey) stringResource(R.string.ajustes_key_guardada)
+                    else stringResource(R.string.buscar_sin_key),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = if (hayKey) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
 

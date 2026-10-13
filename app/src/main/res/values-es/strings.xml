@@ -73,16 +73,16 @@
     <string name="apt_pista">Pista</string>
     <string name="apt_distancia">Distancia</string>
     <string name="apt_estilo">Estilo</string>
-    <string name="apt_turf">Césped</string>
-    <string name="apt_dirt">Tierra</string>
-    <string name="apt_corta">Corta</string>
-    <string name="apt_milla">Milla</string>
-    <string name="apt_media">Media</string>
-    <string name="apt_larga">Larga</string>
-    <string name="apt_fuga">Fuga</string>
-    <string name="apt_vanguardia">Vanguardia</string>
-    <string name="apt_remate">Remate</string>
-    <string name="apt_retraso">Retraso</string>
+    <string name="apt_turf">Turf</string>
+    <string name="apt_dirt">Dirt</string>
+    <string name="apt_corta">Sprint</string>
+    <string name="apt_milla">Mile</string>
+    <string name="apt_media">Medium</string>
+    <string name="apt_larga">Long</string>
+    <string name="apt_fuga">Front</string>
+    <string name="apt_vanguardia">Pace</string>
+    <string name="apt_remate">Late</string>
+    <string name="apt_retraso">End</string>
 
     <!-- Ajustes -->
     <string name="tab_ajustes">Ajustes</string>
@@ -271,11 +271,11 @@
     <string name="pro_guardar_cta">Guardar genealogías es una función Pro</string>
 
     <!-- Buscador de padres en uma.moe -->
-    <string name="factor_speed">Velocidad</string>
-    <string name="factor_stamina">Aguante</string>
-    <string name="factor_power">Potencia</string>
+    <string name="factor_speed">Speed</string>
+    <string name="factor_stamina">Stamina</string>
+    <string name="factor_power">Power</string>
     <string name="factor_guts">Guts</string>
-    <string name="factor_wit">Astucia</string>
+    <string name="factor_wit">Wit</string>
 
     <string name="buscar_padres">Buscar padres</string>
     <string name="buscar_padres_sub">Busca veteranos que la comunidad comparte en uma.moe.</string>

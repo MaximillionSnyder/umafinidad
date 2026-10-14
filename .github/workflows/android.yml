@@ -173,9 +173,9 @@ jobs:
             -keystore "$KEYSTORE_PATH" \
             -alias "$KEY_ALIAS" \
             -storepass "$KS_PASS" \
-            | awk '/SHA256:/ {print $2; exit}' | tr -d ':')
+            | awk '/SHA256:/ {print $2; exit}' | tr -d ':' | tr '[:upper:]' '[:lower:]')
           FP_APK=$("$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk \
-            | awk '/SHA-256 digest/ {print $NF; exit}' | tr -d ':')
+            | awk '/SHA-256 digest/ {print $NF; exit}' | tr -d ':' | tr '[:upper:]' '[:lower:]')
           echo "keystore: $FP_KS"
           echo "apk:      $FP_APK"
           if [ "$FP_KS" != "$FP_APK" ]; then

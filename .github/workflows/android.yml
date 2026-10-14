@@ -139,6 +139,9 @@ jobs:
           {
             echo "KS_PASS=$PASS"
             echo "KS_KEY_PASS=$KEY_PASS"
+            # Nombres que lee app/build.gradle.kts para firmar la release.
+            echo "ANDROID_KEYSTORE_PASSWORD=$PASS"
+            echo "ANDROID_KEY_PASSWORD=$KEY_PASS"
             echo "BOOTSTRAP_ZIP_PASS=$BOOTSTRAP_PASS"
           } >> "$GITHUB_ENV"
 
@@ -156,6 +159,30 @@ jobs:
 
       - name: Compilar AAB y APK firmados
         run: ./gradlew :app:bundleRelease :app:assembleRelease --stacktrace
+
+      - name: Verificar que el APK salió firmado con el keystore de CI
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          APKSIGNER=$(find "$SDK/build-tools" -name apksigner -type f 2>/dev/null | sort -V | tail -1)
+          if [ -z "$APKSIGNER" ]; then
+            echo "::error::No encontré apksigner en $SDK/build-tools"
+            exit 1
+          fi
+          FP_KS=$(keytool -list -v \
+            -keystore "$KEYSTORE_PATH" \
+            -alias "$KEY_ALIAS" \
+            -storepass "$KS_PASS" \
+            | awk '/SHA256:/ {print $2; exit}' | tr -d ':')
+          FP_APK=$("$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk \
+            | awk '/SHA-256 digest/ {print $NF; exit}' | tr -d ':')
+          echo "keystore: $FP_KS"
+          echo "apk:      $FP_APK"
+          if [ "$FP_KS" != "$FP_APK" ]; then
+            echo "::error::El APK no está firmado con el keystore de CI (¿volvió a firmarse con el debug del runner?)"
+            exit 1
+          fi
+          echo "✓ El APK está firmado con el keystore de CI" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Huella SHA256 del certificado
         run: |

@@ -21,13 +21,19 @@ android {
 
     /* Firma de release: el workflow decodifica el keystore desde los secrets
        a la raíz del repo. Sin keystore (dev local), se firma con debug para
-       que assembleRelease nunca falle. */
-    val hayKeystoreCi = !System.getenv("ANDROID_KEYSTORE_BASE64").isNullOrEmpty()
+       que assembleRelease nunca falle.
+       La señal es el ARCHIVO + la contraseña, no una variable del workflow:
+       antes se miraba ANDROID_KEYSTORE_BASE64, que Gradle no recibe en CI, y
+       cada release salía firmada con el debug.keystore aleatorio del runner
+       (imposible de instalar encima de la anterior). */
+    val archivoKeystore = File(rootProject.projectDir, "android.keystore")
+    val hayKeystoreCi = archivoKeystore.exists() &&
+        !System.getenv("ANDROID_KEYSTORE_PASSWORD").isNullOrEmpty()
 
     signingConfigs {
         if (hayKeystoreCi) {
             create("ci") {
-                storeFile = File(rootProject.projectDir, "android.keystore")
+                storeFile = archivoKeystore
                 storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
                 keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "umafinidad"
                 keyPassword = System.getenv("ANDROID_KEY_PASSWORD")

@@ -124,7 +124,10 @@ fun SettingsScreen(
     var avisoFormato by rememberSaveable { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        HeaderBar(titulo = stringResource(R.string.tab_mas))
+        HeaderBar(
+            titulo = stringResource(R.string.tab_mas),
+            iconoRes = R.drawable.ic_tab_ajustes,
+        )
 
         Text(
             stringResource(R.string.tab_ajustes),

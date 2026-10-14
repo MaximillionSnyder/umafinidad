@@ -162,6 +162,7 @@ fun CorredoraScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         HeaderBar(
             titulo = stringResource(R.string.tab_corredora),
+            iconoRes = R.drawable.ic_tab_corredora,
             pillTexto = stringResource(R.string.herencia_contador, seleccionActual.count { it != null }),
             chip = {
                 if (elegidaId > 0) {

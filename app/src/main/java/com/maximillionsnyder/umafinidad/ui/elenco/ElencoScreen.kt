@@ -69,6 +69,7 @@ import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
 import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
+import com.maximillionsnyder.umafinidad.ui.componentes.PillCabecera
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalAnimatedVisibilityScope
 import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
 import kotlinx.coroutines.Dispatchers
@@ -114,12 +115,14 @@ fun ElencoScreen(
                             HeaderBarConVolver(
                                 titulo = stringResource(R.string.tab_elenco),
                                 onVolver = onVolver,
+                                iconoRes = R.drawable.ic_tab_elenco,
                                 pillTexto = contador,
                                 modifierPill = Modifier.compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
                             )
                         } else {
                             HeaderBar(
                                 titulo = stringResource(R.string.tab_elenco),
+                                iconoRes = R.drawable.ic_tab_elenco,
                                 pillTexto = contador,
                                 modifierPill = Modifier.compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
                             )
@@ -153,9 +156,13 @@ fun ElencoScreen(
                             HeaderBarConVolver(
                                 titulo = stringResource(R.string.tab_elenco),
                                 onVolver = onVolver,
+                                iconoRes = R.drawable.ic_tab_elenco,
                             )
                         } else {
-                            HeaderBar(titulo = stringResource(R.string.tab_elenco))
+                            HeaderBar(
+                                titulo = stringResource(R.string.tab_elenco),
+                                iconoRes = R.drawable.ic_tab_elenco,
+                            )
                         }
 
                         TabRow(selectedTabIndex = destino) {
@@ -348,21 +355,14 @@ private fun LinajesElenco(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Surface(
-            shape = RoundedCornerShape(999.dp),
-            color = MaterialTheme.colorScheme.primary,
+        /* Misma pastilla que la cabecera: el contador viaja entre las dos
+           solapas como elemento compartido. */
+        PillCabecera(
+            texto = contador,
             modifier = Modifier
                 .padding(start = 12.dp, top = 8.dp)
                 .compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
-        ) {
-            Text(
-                text = contador,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-            )
-        }
+        )
 
         val lista = linajes
         when {

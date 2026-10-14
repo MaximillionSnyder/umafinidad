@@ -245,6 +245,7 @@ fun CompatScreen(
             /* ---- Cabecera Herencia + slots SIEMPRE visibles ---- */
             HeaderBar(
                 titulo = stringResource(R.string.seccion_herencia),
+                iconoRes = R.drawable.ic_tab_compat,
                 pillTexto = stringResource(R.string.herencia_contador, seleccion.count { it != null }),
                 chip = {
                     /* Mismo atajo que la cabecera del panel de la burbuja. */

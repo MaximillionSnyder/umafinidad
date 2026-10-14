@@ -122,6 +122,7 @@ fun BuscarPadresScreen(
         HeaderBarConVolver(
             titulo = stringResource(R.string.buscar_padres),
             onVolver = onVolver,
+            iconoRes = R.drawable.ic_buscar,
         )
 
         if (!hayKey) {

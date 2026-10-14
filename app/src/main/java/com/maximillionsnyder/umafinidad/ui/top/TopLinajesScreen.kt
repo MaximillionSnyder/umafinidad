@@ -27,6 +27,7 @@ import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
+import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -60,9 +61,13 @@ fun TopLinajesScreen(modelo: AffinityModel, japones: Boolean, onVerHerencia: (Li
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
+        val mejor = lista.first()
         HeaderBar(
             titulo = stringResource(R.string.tab_top),
-            pillTexto = "${lista.size} ${stringResource(R.string.tab_top).lowercase()}"
+            iconoRes = R.drawable.ic_tab_top,
+            /* El chip de la cabecera muestra el puntaje del nº1: resume el
+               ranking mejor que el contador de filas. */
+            chip = { RankPill(modelo.rangoTotal(mejor.puntos), mejor.puntos) },
         )
         LazyColumn(
             modifier = Modifier.fillMaxSize(),

@@ -86,6 +86,23 @@ fun colorDeGenealogia(slot: Int): Color = when {
     else -> GenealogiaRama2
 }
 
+/* Degradado del "chrome" naranja (badge de icono y pastilla de la
+   cabecera). En tema oscuro el texto va en SobrePrimario (marrón oscuro),
+   así que el degradado aclara; en claro el texto es blanco, así que
+   oscurece. Los dos extremos mantienen el contraste por encima de 4.5:1
+   con su color de texto. */
+val PrimarioGradInicio = Color(0xFFFF9E52)
+val PrimarioGradFin = Color(0xFFFF8C42)
+val PrimarioGradInicioClaro = Color(0xFFC2410C)
+val PrimarioGradFinClaro = Color(0xFFA53A0B)
+
+@Composable
+fun brushPrimario(): Brush =
+    Brush.linearGradient(
+        if (LocalIsDark.current) listOf(PrimarioGradInicio, PrimarioGradFin)
+        else listOf(PrimarioGradInicioClaro, PrimarioGradFinClaro),
+    )
+
 /* Medallas del top de linajes. */
 val MedalOro = Color(0xFFFFD54F)
 val MedalPlata = Color(0xFFCFD8DC)

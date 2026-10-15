@@ -97,6 +97,7 @@ fun SettingsScreen(
     onEliminarArbol: (Long) -> Unit,
     onAbrirGrupos: () -> Unit,
     onAbrirRanking: () -> Unit,
+    onAbrirTopLinajes: () -> Unit = {},
     onAbrirRankingPadres: () -> Unit,
     onAbrirElenco: () -> Unit,
     esPro: Boolean = false,
@@ -550,6 +551,45 @@ fun SettingsScreen(
             }
         }
 
+        /* ===== Mejores linajes (referencia, archivada de la barra inferior) ===== */
+        Card(
+            modifier = Modifier.fillMaxWidth()
+                .compartidoBounds(ClavesTransicion.OVERLAY_TOP)
+                .clickable(
+                    role = Role.Button,
+                    onClickLabel = stringResource(R.string.tab_top),
+                    onClick = onAbrirTopLinajes,
+                ),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_tab_top),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_TOP)),
+                )
+                Column {
+                    Text(
+                        stringResource(R.string.tab_top),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.compartidoBounds(ClavesTransicion.titulo(ClavesTransicion.OVERLAY_TOP)),
+                    )
+                    Text(
+                        stringResource(R.string.linajes_ajustes_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
         /* ===== Buscar padres en uma.moe: la única función con red ===== */
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -564,7 +604,7 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 Icon(
-                    painterResource(R.drawable.ic_tab_top),
+                    painterResource(R.drawable.ic_buscar),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_BUSCAR)),

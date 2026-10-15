@@ -179,6 +179,7 @@
     <string name="arboles_ajustes">已保存的血统</string>
     <string name="grupos_ajustes_desc">相性组合及其成员</string>
     <string name="ranking_ajustes_desc">按相性总和排出的最百搭马娘</string>
+    <string name="linajes_ajustes_desc">按相性总和的完整血统前 20 名</string>
     <string name="ranking_modo_versatil">百搭</string>
     <string name="ranking_modo_padres">最佳父母</string>
     <string name="ranking_padres_titulo">最佳父母</string>

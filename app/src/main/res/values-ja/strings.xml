@@ -179,6 +179,7 @@
     <string name="arboles_ajustes">保存した血統</string>
     <string name="grupos_ajustes_desc">相性グループとメンバー一覧</string>
     <string name="ranking_ajustes_desc">総合相性で最も汎用性の高いウマ娘</string>
+    <string name="linajes_ajustes_desc">総合相性による完全血統トップ20</string>
     <string name="ranking_modo_versatil">汎用</string>
     <string name="ranking_modo_padres">最適な親</string>
     <string name="ranking_padres_titulo">最適な親</string>

@@ -226,7 +226,7 @@ private fun App(
     val buscandoPadres by vm.buscandoPadres.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
 
-    val pagerState = rememberPagerState(initialPage = 0) { 5 }
+    val pagerState = rememberPagerState(initialPage = 0) { 4 }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -249,22 +249,24 @@ private fun App(
         onDispose { (context as? LifecycleOwner)?.lifecycle?.removeObserver(observador) }
     }
 
-    /* Grupos y Ranking son referencias archivadas: se abren a
-       pantalla completa desde Ajustes y el botón atrás las cierra. Mis Umas ya es tab. */
+    /* Grupos, Ranking y Mejores linajes son referencias archivadas: se abren a
+       pantalla completa desde Más y el botón atrás las cierra. Mis Umas ya es tab. */
     var verGrupos by rememberSaveable { mutableStateOf(false) }
     var verRanking by rememberSaveable { mutableStateOf(false) }
+    var verTop by rememberSaveable { mutableStateOf(false) }
     var verRankingPadres by rememberSaveable { mutableStateOf(false) }
     var verPro by rememberSaveable { mutableStateOf(false) }
     var verBuscar by rememberSaveable { mutableStateOf(false) }
 
-    /* Pila de navegación ("tab:N", "grupos", "ranking", "ranking-padres", "pro"):
-       atrás desapila hasta volver al inicio y recién ahí pregunta si salir. */
+    /* Pila de navegación ("tab:N", "grupos", "ranking", "top", "ranking-padres",
+       "pro"): atrás desapila hasta volver al inicio y recién ahí pregunta si salir. */
     val historial = rememberSaveable { mutableStateListOf("tab:0") }
 
     /* Aplica un destino de la pila (flags de overlay + página del pager). */
     fun aplicarDestino(destino: String) {
         verGrupos = destino == "grupos"
         verRanking = destino == "ranking"
+        verTop = destino == Destino.TOP
         verRankingPadres = destino == "ranking-padres"
         verPro = destino == Destino.PRO
         verBuscar = destino == Destino.BUSCAR_PADRES
@@ -302,7 +304,7 @@ private fun App(
        settledPage (y no currentPage) para no apilar intermedias de la animación. */
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { pagina ->
-            if (!verGrupos && !verRanking && !verRankingPadres && !verPro && !verBuscar) {
+            if (!verGrupos && !verRanking && !verTop && !verRankingPadres && !verPro && !verBuscar) {
                 val destino = "tab:$pagina"
                 if (historial.last() != destino) historial.add(destino)
             }
@@ -325,7 +327,7 @@ private fun App(
 
     /* Una config pedida desde Ajustes abre Mi corredora. */
     LaunchedEffect(arbolPendiente) {
-        if (arbolPendiente != null) pagerState.animateScrollToPage(2)
+        if (arbolPendiente != null) pagerState.animateScrollToPage(1)
     }
 
     /* Fondo con gradiente en toda la app. */
@@ -336,6 +338,7 @@ private fun App(
         val destinoActivo = when {
             verGrupos -> ClavesTransicion.OVERLAY_GRUPOS
             verRanking -> ClavesTransicion.OVERLAY_RANKING
+            verTop -> ClavesTransicion.OVERLAY_TOP
             verRankingPadres -> ClavesTransicion.OVERLAY_RANKING_PADRES
             verPro -> ClavesTransicion.OVERLAY_PRO
             verBuscar -> ClavesTransicion.OVERLAY_BUSCAR
@@ -388,6 +391,24 @@ private fun App(
                                 onIrAPro = { irA(Destino.PRO) },
                             )
                         }
+                    } else if (destino == ClavesTransicion.OVERLAY_TOP) {
+                        val m = modelo
+                        if (m == null) {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
+                            TopLinajesScreen(
+                                modelo = m,
+                                japones = japones,
+                                onVerHerencia = { linaje ->
+                                    vm.cargarLinaje(linaje)
+                                    volver()
+                                    scope.launch { pagerState.animateScrollToPage(0) }
+                                },
+                                onVolver = { volver() },
+                            )
+                        }
                     } else if (destino == ClavesTransicion.OVERLAY_RANKING_PADRES) {
                         val m = modelo
                         if (m == null) {
@@ -422,7 +443,7 @@ private fun App(
                                 onVolver = { volver() },
                                 onIrAAjustes = {
                                     volver()
-                                    scope.launch { pagerState.animateScrollToPage(4) }
+                                    scope.launch { pagerState.animateScrollToPage(3) }
                                 },
                             )
                         }
@@ -459,28 +480,21 @@ private fun App(
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 1,
                                             onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
-                                            icon = { TabIcon(R.drawable.ic_tab_top, pagerState.currentPage == 1) },
-                                            label = { TabLabel(stringResource(R.string.tab_top)) },
+                                            icon = { TabIcon(R.drawable.ic_tab_corredora, pagerState.currentPage == 1) },
+                                            label = { TabLabel(stringResource(R.string.tab_corredora)) },
                                             alwaysShowLabel = true,
                                         )
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 2,
                                             onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
-                                            icon = { TabIcon(R.drawable.ic_tab_corredora, pagerState.currentPage == 2) },
-                                            label = { TabLabel(stringResource(R.string.tab_corredora)) },
+                                            icon = { TabIcon(R.drawable.ic_tab_elenco, pagerState.currentPage == 2) },
+                                            label = { TabLabel(stringResource(R.string.tab_elenco)) },
                                             alwaysShowLabel = true,
                                         )
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 3,
                                             onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
-                                            icon = { TabIcon(R.drawable.ic_tab_elenco, pagerState.currentPage == 3) },
-                                            label = { TabLabel(stringResource(R.string.tab_elenco)) },
-                                            alwaysShowLabel = true,
-                                        )
-                                        NavigationBarItem(
-                                            selected = pagerState.currentPage == 4,
-                                            onClick = { scope.launch { pagerState.animateScrollToPage(4) } },
-                                            icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 4) },
+                                            icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 3) },
                                             label = { TabLabel(stringResource(R.string.tab_mas)) },
                                             alwaysShowLabel = true,
                                         )
@@ -518,15 +532,7 @@ private fun App(
                                                 slotsPara = vm::slotsPara,
                                                 onAgregar = vm::agregar,
                                             )
-                                            1 -> TopLinajesScreen(
-                                                modelo = m,
-                                                japones = japones,
-                                                onVerHerencia = { linaje ->
-                                                    vm.cargarLinaje(linaje)
-                                                    scope.launch { pagerState.animateScrollToPage(0) }
-                                                },
-                                            )
-                                            2 -> CorredoraScreen(
+                                            1 -> CorredoraScreen(
                                                 modelo = m,
                                                 japones = japones,
                                                 arboles = arboles,
@@ -544,7 +550,7 @@ private fun App(
                                                 esPro = esPro,
                                                 onIrAPro = { irA(Destino.PRO) },
                                             )
-                                            3 -> ElencoScreen(
+                                            2 -> ElencoScreen(
                                                 modelo = m,
                                                 japones = japones,
                                                 elenco = elenco,
@@ -588,11 +594,12 @@ private fun App(
                                                 arboles = arboles,
                                                 onAbrirArbol = { a ->
                                                     vm.abrirArbol(a)
-                                                    scope.launch { pagerState.animateScrollToPage(2) }
+                                                    scope.launch { pagerState.animateScrollToPage(1) }
                                                 },
                                                 onEliminarArbol = vm::eliminarArbol,
                                                 onAbrirGrupos = { irA("grupos") },
                                                 onAbrirRanking = { irA("ranking") },
+                                                onAbrirTopLinajes = { irA(Destino.TOP) },
                                                 onAbrirRankingPadres = { irA("ranking-padres") },
                                                 onAbrirBuscarPadres = { irA(Destino.BUSCAR_PADRES) },
                                                 hayKey = hayKey,
@@ -605,7 +612,7 @@ private fun App(
                                                 textoNegrita = textoNegrita,
                                                 onTextoNegrita = vm::setTextoNegrita,
                                                 onAbrirBienvenida = vm::abrirBienvenida,
-                                                onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(3) } },
+                                                onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(2) } },
                                             )
                                         }
                                     }

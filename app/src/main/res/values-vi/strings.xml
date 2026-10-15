@@ -179,6 +179,7 @@
     <string name="arboles_ajustes">Huyết thống đã lưu</string>
     <string name="grupos_ajustes_desc">Các nhóm tương thích và thành viên</string>
     <string name="ranking_ajustes_desc">Uma linh hoạt nhất theo tổng tương thích</string>
+    <string name="linajes_ajustes_desc">Top 20 huyết thống hoàn chỉnh theo tổng tương thích</string>
     <string name="ranking_modo_versatil">Linh hoạt</string>
     <string name="ranking_modo_padres">Bố mẹ tốt nhất</string>
     <string name="ranking_padres_titulo">Bố mẹ tốt nhất</string>

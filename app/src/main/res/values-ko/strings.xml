@@ -179,6 +179,7 @@
     <string name="arboles_ajustes">저장된 혈통</string>
     <string name="grupos_ajustes_desc">인연 조합과 구성원</string>
     <string name="ranking_ajustes_desc">총 인연이 높은 다재다능한 우마무스메</string>
+    <string name="linajes_ajustes_desc">총 인연 기준 완전 혈통 상위 20</string>
     <string name="ranking_modo_versatil">다재다능</string>
     <string name="ranking_modo_padres">최적 부모</string>
     <string name="ranking_padres_titulo">최적 부모</string>

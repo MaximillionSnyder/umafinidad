@@ -179,6 +179,7 @@
     <string name="arboles_ajustes">Silsilah tersimpan</string>
     <string name="grupos_ajustes_desc">Grup afinitas dan anggotanya</string>
     <string name="ranking_ajustes_desc">Uma paling serbaguna berdasarkan total afinitas</string>
+    <string name="linajes_ajustes_desc">20 silsilah lengkap terbaik menurut total afinitas</string>
     <string name="ranking_modo_versatil">Serbaguna</string>
     <string name="ranking_modo_padres">Orang tua terbaik</string>
     <string name="ranking_padres_titulo">Orang tua terbaik</string>

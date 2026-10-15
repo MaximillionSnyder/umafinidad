@@ -7,9 +7,12 @@ object Destino {
 
     const val EXTRA = "destino"
     const val TAB_COMPAT = "tab:0"
-    const val TAB_CORREDORA = "tab:2"
-    const val TAB_ELENCO = "tab:3"
-    const val TAB_AJUSTES = "tab:4"
+    const val TAB_CORREDORA = "tab:1"
+    const val TAB_ELENCO = "tab:2"
+    const val TAB_AJUSTES = "tab:3"
+
+    /* Mejores linajes: archivada de la barra inferior, se abre desde Más. */
+    const val TOP = "top"
 
     /* Pantalla Pro (activación + lista de funciones): se abre desde Ajustes,
        desde los candados de la app y desde el panel de la burbuja. */

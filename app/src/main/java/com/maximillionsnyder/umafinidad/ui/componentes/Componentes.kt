@@ -270,6 +270,7 @@ fun HeaderBarConVolver(
     pillTexto: String? = null,
     modifier: Modifier = Modifier,
     iconoRes: Int? = null,
+    chip: (@Composable () -> Unit)? = null,
     modifierTitulo: Modifier = Modifier,
     modifierIcono: Modifier = Modifier,
     modifierPill: Modifier = Modifier,
@@ -294,6 +295,9 @@ fun HeaderBarConVolver(
                 )
             }
             TituloCabecera(titulo, Modifier.weight(1f).then(modifierTitulo))
+            chip?.let { contenido ->
+                Box(modifier = Modifier.padding(start = 10.dp)) { contenido() }
+            }
             pillTexto?.let { texto ->
                 PillCabecera(texto, Modifier.padding(start = 12.dp).then(modifierPill))
             }

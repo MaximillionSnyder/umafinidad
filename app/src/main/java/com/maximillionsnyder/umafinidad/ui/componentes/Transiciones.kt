@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 object ClavesTransicion {
 
     const val OVERLAY_GRUPOS = "overlay-grupos"
+    const val OVERLAY_TOP = "overlay-top"
     const val OVERLAY_RANKING = "overlay-ranking"
     const val OVERLAY_RANKING_PADRES = "overlay-ranking-padres"
     const val OVERLAY_PRO = "overlay-pro"

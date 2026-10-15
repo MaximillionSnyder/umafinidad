@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,56 +26,93 @@ import com.maximillionsnyder.umafinidad.R
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
-import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
+import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
+import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
 import com.maximillionsnyder.umafinidad.ui.componentes.RankPill
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoElemento
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /* Porte de montarTop(): top 20 de linajes completos con cálculo diferido.
    Tocar la card carga la herencia. La fila vive en CardFilaTop
-   (compartida con "Mis Umas"). */
+   (compartida con "Mis Umas").
+   Referencia archivada de la barra inferior: se abre a pantalla completa
+   desde Más, y el botón atrás la cierra. */
 @Composable
-fun TopLinajesScreen(modelo: AffinityModel, japones: Boolean, onVerHerencia: (Linaje) -> Unit) {
+fun TopLinajesScreen(
+    modelo: AffinityModel,
+    japones: Boolean,
+    onVerHerencia: (Linaje) -> Unit,
+    onVolver: () -> Unit,
+) {
     var top by remember { mutableStateOf<List<Linaje>?>(null) }
 
     LaunchedEffect(modelo) {
         top = withContext(Dispatchers.Default) { modelo.topLinajes(20) }
     }
 
-    val lista = top
-    if (lista == null) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                CircularProgressIndicator()
-                Text(stringResource(R.string.calculando), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        }
-        return
-    }
+    Surface(
+        modifier = Modifier.fillMaxSize().compartidoBounds(ClavesTransicion.OVERLAY_TOP),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+    ) {
+        Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+            val lista = top
+            val mejor = lista?.firstOrNull()
+            HeaderBarConVolver(
+                titulo = stringResource(R.string.tab_top),
+                onVolver = onVolver,
+                iconoRes = R.drawable.ic_tab_top,
+                /* El chip de la cabecera muestra el puntaje del nº1 (nada
+                   mientras se calcula): resume el ranking mejor que el
+                   contador de filas. */
+                chip = {
+                    if (mejor != null) RankPill(modelo.rangoTotal(mejor.puntos), mejor.puntos)
+                },
+                modifierTitulo = Modifier.compartidoBounds(
+                    ClavesTransicion.titulo(ClavesTransicion.OVERLAY_TOP),
+                ),
+                modifierIcono = Modifier.compartidoElemento(
+                    ClavesTransicion.icono(ClavesTransicion.OVERLAY_TOP),
+                ),
+            )
 
-    if (lista.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(stringResource(R.string.sin_datos), color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        return
-    }
+            when {
+                lista == null -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
+                        CircularProgressIndicator()
+                        Text(
+                            stringResource(R.string.calculando),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        val mejor = lista.first()
-        HeaderBar(
-            titulo = stringResource(R.string.tab_top),
-            iconoRes = R.drawable.ic_tab_top,
-            /* El chip de la cabecera muestra el puntaje del nº1: resume el
-               ranking mejor que el contador de filas. */
-            chip = { RankPill(modelo.rangoTotal(mejor.puntos), mejor.puntos) },
-        )
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            itemsIndexed(lista) { i, combo ->
-                CardFilaTop(i, combo, modelo, japones) { onVerHerencia(combo) }
+                lista.isEmpty() -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        stringResource(R.string.sin_datos),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+
+                else -> LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    itemsIndexed(lista) { i, combo ->
+                        CardFilaTop(i, combo, modelo, japones) { onVerHerencia(combo) }
+                    }
+                }
             }
         }
     }

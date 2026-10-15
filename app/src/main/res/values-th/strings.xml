@@ -179,6 +179,7 @@
     <string name="arboles_ajustes">สายเลือดที่บันทึก</string>
     <string name="grupos_ajustes_desc">กลุ่มความเข้ากันและสมาชิก</string>
     <string name="ranking_ajustes_desc">อุมะที่ปรับตัวได้ดีที่สุดตามความเข้ากันรวม</string>
+    <string name="linajes_ajustes_desc">20 สายเลือดสมบูรณ์ที่ดีที่สุดตามความเข้ากันรวม</string>
     <string name="ranking_modo_versatil">อเนกประสงค์</string>
     <string name="ranking_modo_padres">พ่อแม่ที่ดีที่สุด</string>
     <string name="ranking_padres_titulo">พ่อแม่ที่ดีที่สุด</string>

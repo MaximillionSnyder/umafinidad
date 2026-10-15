@@ -26,15 +26,16 @@ const i18n = $derived(crearI18n(store.idioma))
 let sistemaOscuro = $state(false)
 const tema = $derived(resolverTema(store.tema, sistemaOscuro))
 
+/* Barra principal. Mejores linajes (/top) ya no está acá: se abre desde Más,
+   igual que Grupos y Rankings. */
 const NAV = [
   { ruta: '/compat', icono: 'corazon', clave: 'tab_compat' },
-  { ruta: '/top', icono: 'top', clave: 'tab_top' },
   { ruta: '/corredora', icono: 'corredora', clave: 'tab_corredora' },
   { ruta: '/elenco', icono: 'elenco', clave: 'tab_elenco' },
   { ruta: '/ajustes', icono: 'ajustes', clave: 'tab_mas' },
 ] as const
 
-type RutaNav = '/compat' | '/top' | '/corredora' | '/elenco' | '/ajustes'
+type RutaNav = '/compat' | '/corredora' | '/elenco' | '/ajustes'
 
 function activa(ruta: RutaNav): boolean {
   const actual = page.url.pathname
@@ -95,6 +96,8 @@ $effect(() => {
         <a href={resolve('/grupos')}>{i18n.t('tab_groups')}</a>
         ·
         <a href={resolve('/ranking')}>{i18n.t('tab_ranking')}</a>
+        ·
+        <a href={resolve('/top')}>{i18n.t('tab_top')}</a>
         ·
         <a href={resolve('/ranking-padres')}>{i18n.t('ranking_padres_titulo')}</a>
       </p>

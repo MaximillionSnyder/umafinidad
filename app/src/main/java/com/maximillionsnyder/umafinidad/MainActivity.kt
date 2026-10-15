@@ -52,7 +52,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -258,11 +257,14 @@ private fun App(
     var verPro by rememberSaveable { mutableStateOf(false) }
     var verBuscar by rememberSaveable { mutableStateOf(false) }
 
-    /* Pila de navegación ("tab:N", "grupos", "ranking", "top", "ranking-padres",
-       "pro"): atrás desapila hasta volver al inicio y recién ahí pregunta si salir. */
-    val historial = rememberSaveable { mutableStateListOf("tab:0") }
+    /* Memoria de navegación de un solo paso ("tab:N", "grupos", "ranking",
+       "top", "ranking-padres", "pro", "buscar-padres"): se recuerda nada más
+       la pantalla anterior. Atrás vuelve al lugar del que viniste y desde ahí
+       pregunta si salir, en vez de recorrer toda la cadena de pantallas. */
+    var destinoActual by rememberSaveable { mutableStateOf(Destino.TAB_COMPAT) }
+    var destinoAnterior by rememberSaveable { mutableStateOf<String?>(null) }
 
-    /* Aplica un destino de la pila (flags de overlay + página del pager). */
+    /* Aplica un destino (flags de overlay + página del pager). */
     fun aplicarDestino(destino: String) {
         verGrupos = destino == "grupos"
         verRanking = destino == "ranking"
@@ -275,18 +277,31 @@ private fun App(
         }
     }
 
-    /* Abrir un overlay apilándolo (si no es el tope actual). */
+    /* Abre un destino recordando de dónde venimos (un solo paso atrás). */
     fun irA(destino: String) {
-        if (historial.last() == destino) return
-        historial.add(destino)
+        if (destinoActual == destino) return
+        destinoAnterior = destinoActual
+        destinoActual = destino
         aplicarDestino(destino)
     }
 
-    /* Retrocede una pantalla; false si ya estamos al inicio. */
+    /* Vuelve a la pantalla anterior. Una pantalla que se abrió a pantalla
+       completa siempre se puede cerrar: si ya no hay anterior recordado, deja
+       a la vista la pestaña que quedó debajo. Devuelve false solo cuando
+       estamos en una pestaña sin anterior, que es cuando toca preguntar si
+       salir. */
     fun volver(): Boolean {
-        if (historial.size <= 1) return false
-        historial.removeLast()
-        aplicarDestino(historial.last())
+        val anterior = destinoAnterior
+        if (anterior != null) {
+            destinoAnterior = null
+            destinoActual = anterior
+            aplicarDestino(anterior)
+            return true
+        }
+        if (Destino.pagina(destinoActual) != null) return false
+        val tab = "tab:${pagerState.currentPage}"
+        destinoActual = tab
+        aplicarDestino(tab)
         return true
     }
 
@@ -299,20 +314,24 @@ private fun App(
     }
 
     /* Registra taps, swipes y saltos (herencias, árbol pendiente): toda
-       página donde el pager se asienta suma historial, salvo que un overlay
-       esté abierto o que ya sea el tope (evita duplicados y loops al volver).
-       settledPage (y no currentPage) para no apilar intermedias de la animación. */
+       página donde el pager se asienta pasa a ser la actual y deja como
+       anterior la que estaba, salvo que un overlay esté abierto.
+       settledPage (y no currentPage) para no registrar intermedias de la
+       animación. */
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { pagina ->
             if (!verGrupos && !verRanking && !verTop && !verRankingPadres && !verPro && !verBuscar) {
                 val destino = "tab:$pagina"
-                if (historial.last() != destino) historial.add(destino)
+                if (destinoActual != destino) {
+                    destinoAnterior = destinoActual
+                    destinoActual = destino
+                }
             }
         }
     }
 
-    /* Aviso antes de salir: solo cuando la pila está en su inicio; antes
-       de eso, atrás siempre vuelve a la pantalla anterior. */
+    /* Aviso antes de salir: atrás vuelve una vez a la pantalla anterior y,
+       cuando ya no hay ninguna recordada, pregunta si salir. */
     var confirmarSalida by rememberSaveable { mutableStateOf(false) }
     BackHandler {
         if (!volver()) confirmarSalida = true

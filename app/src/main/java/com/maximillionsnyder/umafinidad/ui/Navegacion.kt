@@ -1,8 +1,9 @@
 package com.maximillionsnyder.umafinidad.ui
 
 /* Destinos de navegación compartidos entre la app y la burbuja flotante.
-   Formato de la pila: "tab:N" para las pestañas, u otros literales
-   ("grupos", "ranking", "ranking-padres") para los overlays. */
+   "tab:N" para las pestañas; otros literales ("grupos", "ranking", "top",
+   "ranking-padres", "pro", "buscar-padres") para las pantallas que se abren
+   a pantalla completa desde Más. */
 object Destino {
 
     const val EXTRA = "destino"

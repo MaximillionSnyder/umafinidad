@@ -42,6 +42,12 @@ android {
     }
 
     buildTypes {
+        /* SOLO EVIDENCIA (no mergear): instala el APK debug al lado de la app
+           real (misma firma debug) para capturar el antes/después sin tocar
+           los datos del usuario. */
+        debug {
+            applicationIdSuffix = ".review"
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true

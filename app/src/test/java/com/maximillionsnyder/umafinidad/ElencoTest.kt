@@ -3,6 +3,7 @@ package com.maximillionsnyder.umafinidad
 import com.maximillionsnyder.umafinidad.data.CharacterDto
 import com.maximillionsnyder.umafinidad.data.MemberDto
 import com.maximillionsnyder.umafinidad.data.RelationDto
+import com.maximillionsnyder.umafinidad.data.decodificarElenco
 import com.maximillionsnyder.umafinidad.data.deserializarElenco
 import com.maximillionsnyder.umafinidad.data.jsonParser
 import com.maximillionsnyder.umafinidad.data.serializarElenco
@@ -11,6 +12,7 @@ import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import kotlinx.serialization.decodeFromString
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -55,6 +57,22 @@ class ElencoTest {
     @Test
     fun deserializacionIgnoraElOrdenDeInsercion() {
         assertEquals(setOf(1, 2, 3), deserializarElenco(serializarElenco(linkedSetOf(3, 1, 2))))
+    }
+
+    /* Las prefs pueden quedar corruptas (migración fallida, datos de otra
+       versión): el arranque debe seguir aunque el JSON no sea válido. */
+    @Test
+    fun jsonInvalidoDevuelveElencoVacio() {
+        assertEquals(emptySet<Int>(), deserializarElenco("{esto no es json"))
+        assertEquals(emptySet<Int>(), deserializarElenco(""))
+        assertEquals(emptySet<Int>(), deserializarElenco("""{"ids":[1, 2]}"""))
+        assertEquals(emptySet<Int>(), deserializarElenco("""[1, "dos"]"""))
+    }
+
+    @Test
+    fun decodificarDistingueCorruptoDeConjuntoVacio() {
+        assertNull(decodificarElenco("no-es-json"))
+        assertEquals(emptySet<Int>(), decodificarElenco("[]"))
     }
 
     /* ===== topLinajesDeElenco ===== */

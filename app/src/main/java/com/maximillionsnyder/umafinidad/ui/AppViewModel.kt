@@ -19,6 +19,7 @@ import com.maximillionsnyder.umafinidad.data.ResultadoActivacion
 import com.maximillionsnyder.umafinidad.data.TamanoBurbuja
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
+import com.maximillionsnyder.umafinidad.data.crearArbolGuardado
 import com.maximillionsnyder.umafinidad.data.fusionarArbol
 import com.maximillionsnyder.umafinidad.data.puedeGuardarArboles
 import com.maximillionsnyder.umafinidad.domain.AffinityModel
@@ -88,6 +89,12 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _modelo = MutableStateFlow<AffinityModel?>(null)
     val modelo: StateFlow<AffinityModel?> = _modelo
+
+    /* true si los assets no se pudieron cargar (archivo ausente o corrupto).
+       La app no crashea, pero todavía no hay pantalla de error: MainActivity
+       solo distingue modelo == null y muestra un spinner. */
+    private val _falloCargaModelo = MutableStateFlow(false)
+    val falloCargaModelo: StateFlow<Boolean> = _falloCargaModelo
 
     private val _seleccion = MutableStateFlow<List<Int?>>(List(SLOTS) { null })
     val seleccion: StateFlow<List<Int?>> = _seleccion
@@ -305,14 +312,10 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
        cambió con la pantalla abierta. Devuelve false si no se guardó. */
     fun guardarArbol(hijoId: Int, nombre: String, seleccion: List<Int?>, total: Int): Boolean {
         if (!puedeGuardarArboles(_esPro.value)) return false
-        val nuevo = ArbolGuardado(
-            id = System.currentTimeMillis(),
-            hijoId = hijoId,
-            nombre = nombre.trim(),
-            seleccion = seleccion,
-            total = total,
-            creadoEn = System.currentTimeMillis(),
-        )
+        /* id y creadoEn se calculan juntos pero son conceptos distintos: el
+           id debe ser único aunque dos guardados caigan en el mismo
+           milisegundo; creadoEn es solo la fecha que se muestra. */
+        val nuevo = crearArbolGuardado(_arboles.value, hijoId, nombre, seleccion, total)
         val fusion = fusionarArbol(_arboles.value, nuevo)
         arbolesRepo.reemplazarTodos(fusion)
         _arboles.value = fusion
@@ -360,9 +363,14 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun consumirArbolPendiente() { _arbolPendiente.value = null }
 
     init {
-        /* Carga de datos fuera del hilo principal (~800 KB de JSON). */
-        viewModelScope.launch(Dispatchers.Default) {
-            _modelo.value = repo.modelo
+        /* Carga de datos fuera del hilo principal (~800 KB de JSON). La
+           lectura de assets es I/O bloqueante, así que va a Dispatchers.IO.
+           Si un asset falta o está corrupto se registra falloCargaModelo y la
+           app sigue viva en vez de cerrarse sin explicación. */
+        viewModelScope.launch(Dispatchers.IO) {
+            val cargado = runCatching { repo.modelo }.getOrNull()
+            _modelo.value = cargado
+            _falloCargaModelo.value = cargado == null
         }
     }
 

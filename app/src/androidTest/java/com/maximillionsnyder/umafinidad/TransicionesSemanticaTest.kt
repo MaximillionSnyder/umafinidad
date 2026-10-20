@@ -30,6 +30,7 @@ import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
+import com.maximillionsnyder.umafinidad.data.TamanoBurbuja
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
@@ -77,6 +78,14 @@ class TransicionesSemanticaTest {
                                 onTema = {},
                                 idioma = Idioma.SISTEMA,
                                 onIdioma = {},
+                                burbujaActiva = false,
+                                burbujaPermiso = false,
+                                onBurbuja = {},
+                                panelTranslucido = false,
+                                onPanelTranslucido = {},
+                                tamanoBurbuja = TamanoBurbuja.NORMAL,
+                                onTamanoBurbuja = {},
+                                onRestablecerTamanos = {},
                                 modelo = modelo,
                                 japones = false,
                                 arboles = emptyList(),

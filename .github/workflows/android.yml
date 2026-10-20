@@ -42,8 +42,8 @@ jobs:
       - name: Paridad de las traducciones
         run: node scripts/verificar-strings.mjs
 
-      - name: Compilar APK debug + tests unitarios
-        run: ./gradlew :app:assembleDebug :app:testDebugUnitTest --stacktrace
+      - name: Compilar APK debug + tests unitarios + androidTest
+        run: ./gradlew :app:assembleDebug :app:assembleDebugAndroidTest :app:testDebugUnitTest --stacktrace
 
       - name: Subir APK
         uses: actions/upload-artifact@v4
@@ -52,9 +52,14 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
           retention-days: 30
 
-  # ---- Tests de accesibilidad instrumentados (solo PR, emulador API 34) ----
+      # Lint informativo: no bloquea el build (hay hallazgos históricos).
+      - name: Lint (no bloqueante)
+        continue-on-error: true
+        run: ./gradlew :app:lintDebug --stacktrace
+
+  # ---- Tests de accesibilidad instrumentados (PR, push a dev y manual) ----
   androidtest:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/dev')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

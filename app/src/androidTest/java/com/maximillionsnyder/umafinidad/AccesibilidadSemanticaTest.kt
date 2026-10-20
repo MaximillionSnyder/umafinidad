@@ -5,10 +5,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.hasToggleableState
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.accessibility.enableAccessibilityChecks
-import androidx.compose.ui.test.onAllNodes
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.tryPerformAccessibilityChecks
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -56,7 +54,7 @@ class AccesibilidadSemanticaTest {
 
         composeRule.onAllNodes(
             SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Checkbox) and
-                hasToggleableState(ToggleableState.On),
+                SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.On),
         ).onFirst().assertExists()
 
         composeRule.onAllNodes(
@@ -65,7 +63,7 @@ class AccesibilidadSemanticaTest {
 
         composeRule.onAllNodes(
             SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Checkbox) and
-                hasToggleableState(ToggleableState.On),
+                SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.On),
         ).onFirst().tryPerformAccessibilityChecks()
     }
 
@@ -76,12 +74,12 @@ class AccesibilidadSemanticaTest {
 
         composeRule.onAllNodes(
             SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Checkbox) and
-                hasToggleableState(ToggleableState.Off),
+                SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.Off),
         ).onFirst().assertExists()
 
         composeRule.onAllNodes(
             SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Checkbox) and
-                hasToggleableState(ToggleableState.Off),
+                SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.Off),
         ).onFirst().tryPerformAccessibilityChecks()
     }
 }

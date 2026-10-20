@@ -40,6 +40,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -68,6 +69,12 @@ import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
 import com.maximillionsnyder.umafinidad.ui.componentes.compartidoElemento
 import com.maximillionsnyder.umafinidad.ui.componentes.headingSemantica
+
+/* Nombre visible del hijo de un árbol guardado. Si el id ya no está en el
+   modelo (config guardada con un dataset viejo), cae al id crudo:
+   "#12345". Función pura para poder verificar el fallback sin recomponer. */
+fun nombreHijoGuardado(modelo: AffinityModel, hijoId: Int, japones: Boolean): String =
+    modelo.porId(hijoId)?.displayName(japones) ?: "#${hijoId}"
 
 /* Apartado de ajustes: por ahora, el modo de grilla de personajes. */
 @Composable
@@ -211,6 +218,7 @@ fun SettingsScreen(
 
         SeccionDesplegable(
             titulo = stringResource(R.string.burbuja_titulo),
+            etiqueta = "seccion_burbuja",
             subtitulo = stringResource(R.string.burbuja_desc),
             abierto = estaAbierta("burbuja"),
             onToggle = { alternar("burbuja") },
@@ -279,6 +287,7 @@ fun SettingsScreen(
 
         SeccionDesplegable(
             titulo = stringResource(R.string.ajustes_apariencia),
+            etiqueta = "seccion_apariencia",
             abierto = estaAbierta("apariencia"),
             onToggle = { alternar("apariencia") },
         ) {
@@ -328,6 +337,7 @@ fun SettingsScreen(
 
         SeccionDesplegable(
             titulo = stringResource(R.string.accesibilidad_titulo),
+            etiqueta = "seccion_accesibilidad",
             subtitulo = stringResource(R.string.accesibilidad_desc),
             abierto = estaAbierta("accesibilidad"),
             onToggle = { alternar("accesibilidad") },
@@ -367,6 +377,7 @@ fun SettingsScreen(
 
         SeccionDesplegable(
             titulo = stringResource(R.string.tema_titulo),
+            etiqueta = "seccion_tema",
             subtitulo = stringResource(R.string.tema_desc),
             abierto = estaAbierta("tema"),
             onToggle = { alternar("tema") },
@@ -401,6 +412,7 @@ fun SettingsScreen(
 
         SeccionDesplegable(
             titulo = stringResource(R.string.idioma_titulo),
+            etiqueta = "seccion_idioma",
             subtitulo = stringResource(R.string.idioma_desc),
             abierto = estaAbierta("idioma"),
             onToggle = { alternar("idioma") },
@@ -784,7 +796,7 @@ fun SettingsScreen(
                 color = MaterialTheme.colorScheme.primary,
             )
             arboles.forEach { a ->
-                val nombreHijo = modelo.porId(a.hijoId)?.displayName(japones) ?: "#${'$'}{a.hijoId}"
+                val nombreHijo = nombreHijoGuardado(modelo, a.hijoId, japones)
                 Card(
                     modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = { onAbrirArbol(a) }),
                     shape = RoundedCornerShape(12.dp),
@@ -900,6 +912,7 @@ private fun OpcionGrilla(titulo: String, descripcion: String, seleccionado: Bool
 @Composable
 private fun SeccionDesplegable(
     titulo: String,
+    etiqueta: String,
     abierto: Boolean,
     onToggle: () -> Unit,
     subtitulo: String? = null,
@@ -917,6 +930,7 @@ private fun SeccionDesplegable(
                     .fillMaxWidth()
                     .toggleable(value = abierto, role = Role.Button, onValueChange = { onToggle() })
                     .semantics { stateDescription = estadoTxt }
+                    .testTag(etiqueta)
                     .padding(horizontal = 12.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,

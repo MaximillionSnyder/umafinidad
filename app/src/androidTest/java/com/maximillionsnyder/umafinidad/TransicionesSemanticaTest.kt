@@ -18,7 +18,6 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onAllNodes
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -30,6 +29,7 @@ import com.maximillionsnyder.umafinidad.data.AffinityRepository
 import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
 import com.maximillionsnyder.umafinidad.data.ModoGrilla
+import com.maximillionsnyder.umafinidad.data.TamanoBurbuja
 import com.maximillionsnyder.umafinidad.data.TamanoTexto
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
@@ -77,6 +77,14 @@ class TransicionesSemanticaTest {
                                 onTema = {},
                                 idioma = Idioma.SISTEMA,
                                 onIdioma = {},
+                                burbujaActiva = false,
+                                burbujaPermiso = false,
+                                onBurbuja = {},
+                                panelTranslucido = false,
+                                onPanelTranslucido = {},
+                                tamanoBurbuja = TamanoBurbuja.NORMAL,
+                                onTamanoBurbuja = {},
+                                onRestablecerTamanos = {},
                                 modelo = modelo,
                                 japones = false,
                                 arboles = emptyList(),

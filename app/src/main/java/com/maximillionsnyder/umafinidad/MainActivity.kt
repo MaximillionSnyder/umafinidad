@@ -517,21 +517,21 @@ private fun App(
                                     ) {
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 0,
-                                            onClick = { scope.launch { pagerState.animateScrollToPage(0) } },
+                                            onClick = { scope.launch { pagerState.scrollToPage(0) } },
                                             icon = { TabIcon(R.drawable.ic_tab_compat, pagerState.currentPage == 0) },
                                             label = { TabLabel(stringResource(R.string.tab_compat)) },
                                             alwaysShowLabel = true,
                                         )
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 1,
-                                            onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
+                                            onClick = { scope.launch { pagerState.scrollToPage(1) } },
                                             icon = { TabIcon(R.drawable.ic_tab_corredora, pagerState.currentPage == 1) },
                                             label = { TabLabel(stringResource(R.string.tab_corredora)) },
                                             alwaysShowLabel = true,
                                         )
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 2,
-                                            onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
+                                            onClick = { scope.launch { pagerState.scrollToPage(2) } },
                                             icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 2) },
                                             label = { TabLabel(stringResource(R.string.tab_mas)) },
                                             alwaysShowLabel = true,
@@ -550,6 +550,10 @@ private fun App(
                                     HorizontalPager(
                                         state = pagerState,
                                         modifier = Modifier.fillMaxSize(),
+                                        /* Con 3 pestañas se precomponen todas: cambiar de
+                                           tab queda instantáneo en vez de componer la
+                                           pantalla destino durante la animación. */
+                                        beyondViewportPageCount = 2,
                                     ) { page ->
                                         when (page) {
                                             0 -> CompatScreen(

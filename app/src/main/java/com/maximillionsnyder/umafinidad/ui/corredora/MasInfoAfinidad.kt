@@ -21,7 +21,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +50,8 @@ import com.maximillionsnyder.umafinidad.ui.theme.VinculoEntrePadres
 import com.maximillionsnyder.umafinidad.ui.theme.VinculoHijoPadres
 import com.maximillionsnyder.umafinidad.ui.theme.VinculoTrios
 import com.maximillionsnyder.umafinidad.ui.theme.colorDeGenealogia
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /* Panel "Más info" de Mi corredora: complementa la pantalla con el desglose
    del total por vínculos, la explicación del reparto de las filas y las
@@ -79,7 +85,12 @@ internal fun HojaMasInfo(
     val subtotalHijoPadres = res.hijoPadres.sumOf { it.puntos }
     val subtotalEntrePadres = res.entrePadres?.puntos ?: 0
     val subtotalTrios = res.hijoPadreAbuelos.sumOf { it.puntos }
-    val cambios = remember(seleccion, modelo) { mejoresCambios(modelo, seleccion) }
+    /* Las 6 búsquedas de mejor alternativa son pesadas: van en background
+       para que la hoja abra fluida. */
+    var cambios by remember(seleccion, modelo) { mutableStateOf<List<CambioSlot>?>(null) }
+    LaunchedEffect(seleccion, modelo) {
+        cambios = withContext(Dispatchers.Default) { mejoresCambios(modelo, seleccion) }
+    }
 
     Column(
         modifier = Modifier
@@ -173,7 +184,14 @@ internal fun HojaMasInfo(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        if (cambios.isNotEmpty()) {
+        val listaCambios = cambios
+        if (listaCambios == null) {
+            Text(
+                stringResource(R.string.calculando),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        } else if (listaCambios.isNotEmpty()) {
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             Text(
                 stringResource(R.string.afinidad_info_cambios),
@@ -185,7 +203,7 @@ internal fun HojaMasInfo(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            cambios.forEach { cambio ->
+            listaCambios.forEach { cambio ->
                 FilaCambio(cambio = cambio, japones = japones, totalActual = total)
             }
         }

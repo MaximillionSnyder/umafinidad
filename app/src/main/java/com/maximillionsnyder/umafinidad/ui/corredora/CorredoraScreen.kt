@@ -626,10 +626,17 @@ private fun HojaAlternativas(
     onElegir: (Int) -> Unit,
 ) {
     val ocupanteEtiqueta = etiquetaRolDe(slot)
-    /* Sin tope: se listan todas las que respetan las reglas del juego (la
-       lista es perezosa, así que el alto no depende de cuántas sean). */
-    val alternativas = remember(seleccion, slot) {
-        modelo.alternativasParaSlot(seleccion, slot, limite = Int.MAX_VALUE)
+    /* El barrido de candidatos es pesado: va en background para no bloquear
+       la animación de la hoja. Sin tope: se listan todas las que respetan las
+       reglas del juego (la lista es perezosa, así que el alto no depende de
+       cuántas sean). */
+    var alternativas by remember(seleccion, slot) {
+        mutableStateOf<List<AlternativaSlot>?>(null)
+    }
+    LaunchedEffect(seleccion, slot, modelo) {
+        alternativas = withContext(Dispatchers.Default) {
+            modelo.alternativasParaSlot(seleccion, slot, limite = Int.MAX_VALUE)
+        }
     }
 
     Column(modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)) {
@@ -640,7 +647,18 @@ private fun HojaAlternativas(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
         )
 
-        if (alternativas.isEmpty()) {
+        val lista = alternativas
+        if (lista == null) {
+            Box(
+                modifier = Modifier.fillMaxWidth().height(120.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+            }
+            return@Column
+        }
+
+        if (lista.isEmpty()) {
             Text(
                 stringResource(R.string.sin_alternativas),
                 style = MaterialTheme.typography.bodyMedium,
@@ -651,7 +669,7 @@ private fun HojaAlternativas(
         }
 
         LazyColumn(modifier = Modifier.fillMaxWidth().height(420.dp)) {
-            itemsIndexedAlt(alternativas) { alt, esUltima ->
+            itemsIndexedAlt(lista) { alt, esUltima ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

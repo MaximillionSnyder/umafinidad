@@ -204,6 +204,12 @@ workflow manualmente con una contraseña, descargar el zip con la clave y
 cargar los secrets `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD` y
 `ANDROID_KEY_PASSWORD`.
 
+> **Rendimiento**: el APK **debug** (artifact `umafinidad-debug-…`) es
+> sensiblemente más lento que el release: va sin R8, con Compose en modo
+> depurable y con las herramientas de inspección. Para juzgar fluidez conviene
+> usar el **APK release firmado** (workflow **Android** manual →
+> artifact `umafinidad-release-…`).
+
 ## Web
 
 `sitio/` es la web publicada en GitHub Pages

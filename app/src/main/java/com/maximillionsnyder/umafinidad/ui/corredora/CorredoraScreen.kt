@@ -28,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -44,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -51,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -61,6 +64,7 @@ import com.maximillionsnyder.umafinidad.domain.AffinityModel
 import com.maximillionsnyder.umafinidad.domain.Character
 import com.maximillionsnyder.umafinidad.domain.Linaje
 import com.maximillionsnyder.umafinidad.domain.SLOTS
+import com.maximillionsnyder.umafinidad.domain.puntosFilaPresentacion
 import com.maximillionsnyder.umafinidad.domain.rankearSugerencias
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.AppViewModel
@@ -107,6 +111,7 @@ fun CorredoraScreen(
 
     var mostrarGuardar by rememberSaveable { mutableStateOf(false) }
     var textoNombre by rememberSaveable { mutableStateOf("") }
+    var mostrarMasInfo by rememberSaveable { mutableStateOf(false) }
 
     /* Mensajes resueltos en composición para usarlos desde callbacks. */
     val msgEliminado = stringResource(R.string.eliminado_snack)
@@ -273,6 +278,7 @@ fun CorredoraScreen(
                         onRestablecer = { seleccionActual = seleccionOptima },
                         onAbrirAlternativas = { sheetSlot = it },
                         onVerHerencia = { onVerHerencia(seleccionActual) },
+                        onAbrirMasInfo = { mostrarMasInfo = true },
                         /* Guardar la configuración actual (aunque difiera del
                            óptimo). Sin licencia Pro el botón lleva a la
                            pantalla Pro. */
@@ -361,6 +367,22 @@ fun CorredoraScreen(
             )
         }
     }
+
+    /* "Más info": desglose del total, reparto de las filas y mejores
+       cambios por slot (complemento de la pantalla, no cambia cálculos). */
+    if (mostrarMasInfo) {
+        ModalBottomSheet(
+            onDismissRequest = { mostrarMasInfo = false },
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        ) {
+            HojaMasInfo(
+                modelo = modelo,
+                seleccion = seleccionActual,
+                japones = japones,
+                onCerrar = { mostrarMasInfo = false },
+            )
+        }
+    }
 }
 
 @Composable
@@ -395,16 +417,18 @@ private fun PanelMejorLinaje(
     onRestablecer: () -> Unit,
     onAbrirAlternativas: (Int) -> Unit,
     onVerHerencia: () -> Unit,
+    onAbrirMasInfo: () -> Unit,
     esPro: Boolean,
     onGuardar: () -> Unit,
 ) {
     val res: ResultadoCompat = remember(seleccionActual) {
         AppViewModel.calcular(modelo, seleccionActual)
     }
-    /* Aporte directo de cada personaje a SUS vínculos del árbol: se muestra
-       a la derecha de cada fila, como en la hoja de alternativas. */
-    val aportes = remember(seleccionActual, modelo) {
-        modelo.aportesDirectos(seleccionActual)
+    /* Reparto SOLO visual del total entre las filas: hijo sin puntaje,
+       padre = hijo-padre + mitad de padre-padre, abuelo = su trío. La suma
+       de las filas es el total (ver HojaMasInfo). */
+    val puntosFilas = remember(seleccionActual, modelo) {
+        modelo.puntosFilaPresentacion(seleccionActual)
     }
     val nombreHijo = modelo.porId(nombreHijoId)?.displayName(japones) ?: ""
 
@@ -428,6 +452,13 @@ private fun PanelMejorLinaje(
                     res.total ?: 0,
                     grande = true,
                 )
+                IconButton(onClick = onAbrirMasInfo) {
+                    Icon(
+                        painterResource(R.drawable.ic_info),
+                        contentDescription = stringResource(R.string.afinidad_mas_info),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -439,7 +470,7 @@ private fun PanelMejorLinaje(
                 slot = 0,
                 japones = japones,
                 onClick = null,
-                puntos = aportes.getOrNull(0),
+                puntos = puntosFilas.getOrNull(0),
             )
             /* Los otros seis: tocar abre las alternativas del slot. El color
                marca la genealogía (rama del padre 1 azul, rama del padre 2 verde). */
@@ -450,7 +481,7 @@ private fun PanelMejorLinaje(
                     slot = slot,
                     japones = japones,
                     onClick = { onAbrirAlternativas(slot) },
-                    puntos = aportes.getOrNull(slot),
+                    puntos = puntosFilas.getOrNull(slot),
                 )
             }
 
@@ -536,9 +567,15 @@ private fun ChipRol(
     slot: Int,
     japones: Boolean,
     onClick: (() -> Unit)?,
-    puntos: Int? = null,
+    puntos: Double? = null,
 ) {
     val colorRol = com.maximillionsnyder.umafinidad.ui.theme.colorDeGenealogia(slot)
+    /* Puntos de presentación: pueden llevar medio punto (mitad del par
+       padre-padre); se formatean con el separador decimal del idioma. */
+    val locale = LocalConfiguration.current.locales[0]
+    val formatoPuntos = remember(locale) {
+        NumberFormat.getNumberInstance(locale).apply { maximumFractionDigits = 1 }
+    }
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -565,7 +602,7 @@ private fun ChipRol(
             }
             if (personaje != null && puntos != null) {
                 Text(
-                    "${puntos}pt",
+                    "${formatoPuntos.format(puntos)}pt",
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Black,
                     color = colorClase(claseDePuntos(puntos)),
@@ -652,10 +689,10 @@ private fun HojaAlternativas(
 }
 
 /* Mismos umbrales que GruposScreen (par): ◎ ≥20, ○ ≥10, △ ≥4. */
-private fun claseDePuntos(puntos: Int): String? = when {
-    puntos >= 20 -> "rank-great"
-    puntos >= 10 -> "rank-good"
-    puntos >= 4 -> "rank-fair"
+private fun claseDePuntos(puntos: Double): String? = when {
+    puntos >= 20.0 -> "rank-great"
+    puntos >= 10.0 -> "rank-good"
+    puntos >= 4.0 -> "rank-fair"
     else -> null
 }
 

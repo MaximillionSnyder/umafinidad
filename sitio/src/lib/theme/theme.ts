@@ -32,6 +32,12 @@ export function colorDeGenealogia(slot: number): string {
   return GenealogiaRama2
 }
 
+/* Colores por tipo de vínculo (panel "Más info" de Mi corredora):
+   hijo × padres, entre padres y tríos con abuelos. */
+export const VinculoHijoPadres = '#3b6ea5'
+export const VinculoEntrePadres = '#b8860b'
+export const VinculoTrios = '#7d5ba6'
+
 /* Medallas del top de linajes. */
 export const MedalOro = '#e0a800'
 export const MedalPlata = '#a8b0b5'

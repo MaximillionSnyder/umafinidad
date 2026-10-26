@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">Hijo × Padres</string>
     <string name="sec_entre_padres">Entre padres</string>
     <string name="sec_hijo_padres_abuelos">Hijo × Padres × Abuelos</string>
+    <string name="afinidad_mas_info">Más info</string>
+    <string name="afinidad_info_titulo">Cómo se calcula la afinidad</string>
+    <string name="afinidad_info_intro">El total suma 7 vínculos: hijo × padres, entre padres e hijo × padre × abuelo.</string>
+    <string name="afinidad_info_filas">Cada fila reparte el total: padres = hijo-padre + la mitad de padre-padre; abuelos = su trío; el hijo no suma aparte.</string>
+    <string name="afinidad_info_medio_punto">Si el puntaje padre-padre es impar, la mitad lleva 0,5.</string>
+    <string name="afinidad_info_cambios">Si cambiás un personaje</string>
+    <string name="afinidad_info_cambios_desc">Mejor opción por slot y el total resultante.</string>
     <string name="falta_hijo">Falta elegir al hijo.</string>
     <string name="elige_un_padre">Elegí al menos un padre.</string>
     <string name="elegi_otro_padre">Elegí el otro padre.</string>

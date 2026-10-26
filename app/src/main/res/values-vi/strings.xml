@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">Con × Bố mẹ</string>
     <string name="sec_entre_padres">Giữa bố mẹ</string>
     <string name="sec_hijo_padres_abuelos">Con × Bố mẹ × Ông bà</string>
+    <string name="afinidad_mas_info">Thông tin thêm</string>
+    <string name="afinidad_info_titulo">Cách tính độ tương thích</string>
+    <string name="afinidad_info_intro">Tổng là tổng của 7 liên kết: uma × bố mẹ, giữa bố mẹ, và uma × bố mẹ × ông bà.</string>
+    <string name="afinidad_info_filas">Mỗi dòng chia tổng: bố mẹ = uma-bố mẹ + một nửa giữa bố mẹ; ông bà = bộ ba của họ; bản thân uma không cộng riêng.</string>
+    <string name="afinidad_info_medio_punto">Nếu điểm giữa bố mẹ là số lẻ, một nửa sẽ có 0,5.</string>
+    <string name="afinidad_info_cambios">Nếu đổi nhân vật</string>
+    <string name="afinidad_info_cambios_desc">Lựa chọn tốt nhất cho từng ô và tổng kết quả.</string>
     <string name="falta_hijo">Chưa chọn con.</string>
     <string name="elige_un_padre">Chọn ít nhất một bố/mẹ.</string>
     <string name="elegi_otro_padre">Chọn bố/mẹ còn lại.</string>

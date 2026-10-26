@@ -77,6 +77,12 @@ val RolHijo = Color(0xFFF08C3A)
 val GenealogiaRama1 = Color(0xFF82AADD)
 val GenealogiaRama2 = Color(0xFF7ED07E)
 
+/* Colores por tipo de vínculo del panel "Más info" de Mi corredora:
+   hijo × padres, entre padres y tríos con abuelos. */
+val VinculoHijoPadres = Color(0xFF82AADD)
+val VinculoEntrePadres = Color(0xFFE7C86A)
+val VinculoTrios = Color(0xFFB48CE0)
+
 /* Fondo de cards: sutil elevación sobre el fondo puro (negro/blanco). */
 val CardFondo = Color(0xFF1A1A1A)
 

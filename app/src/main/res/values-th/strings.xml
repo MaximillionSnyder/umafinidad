@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">ลูก × พ่อแม่</string>
     <string name="sec_entre_padres">ระหว่างพ่อแม่</string>
     <string name="sec_hijo_padres_abuelos">ลูก × พ่อแม่ × ปู่ย่าตายาย</string>
+    <string name="afinidad_mas_info">ข้อมูลเพิ่มเติม</string>
+    <string name="afinidad_info_titulo">วิธีคำนวณความเข้ากัน</string>
+    <string name="afinidad_info_intro">ยอดรวมคือผลรวมของ 7 ความสัมพันธ์: อุมะ × พ่อแม่, ระหว่างพ่อแม่ และอุมะ × พ่อแม่ × ปู่ย่าตายาย</string>
+    <string name="afinidad_info_filas">แต่ละแถวแบ่งยอดรวม: พ่อแม่ = อุมะ-พ่อแม่ + ครึ่งหนึ่งของระหว่างพ่อแม่; ปู่ย่าตายาย = ทรีโอของตน; ตัวอุมะไม่บวกแยก</string>
+    <string name="afinidad_info_medio_punto">หากคะแนนระหว่างพ่อแม่เป็นเลขคี่ ครึ่งหนึ่งจะมี 0.5</string>
+    <string name="afinidad_info_cambios">หากเปลี่ยนตัวละคร</string>
+    <string name="afinidad_info_cambios_desc">ตัวเลือกที่ดีที่สุดต่อช่องและยอดรวมที่ได้</string>
     <string name="falta_hijo">ยังไม่ได้เลือกลูก</string>
     <string name="elige_un_padre">เลือกพ่อแม่อย่างน้อยหนึ่งคน</string>
     <string name="elegi_otro_padre">เลือกพ่อแม่อีกคน</string>

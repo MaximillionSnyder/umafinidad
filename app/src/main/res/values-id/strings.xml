@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">Anak × Orang tua</string>
     <string name="sec_entre_padres">Antar orang tua</string>
     <string name="sec_hijo_padres_abuelos">Anak × Orang tua × Kakek-nenek</string>
+    <string name="afinidad_mas_info">Info lainnya</string>
+    <string name="afinidad_info_titulo">Cara menghitung afinitas</string>
+    <string name="afinidad_info_intro">Totalnya adalah jumlah dari 7 hubungan: uma × orang tua, antar orang tua, dan uma × orang tua × kakek-nenek.</string>
+    <string name="afinidad_info_filas">Setiap baris membagi total: orang tua = uma-orang tua + setengah antar orang tua; kakek-nenek = trio mereka; uma tidak menambah sendiri.</string>
+    <string name="afinidad_info_medio_punto">Jika skor antar orang tua ganjil, setengahnya menyertakan 0,5.</string>
+    <string name="afinidad_info_cambios">Jika mengganti karakter</string>
+    <string name="afinidad_info_cambios_desc">Pilihan terbaik per slot dan total hasilnya.</string>
     <string name="falta_hijo">Anak belum dipilih.</string>
     <string name="elige_un_padre">Pilih minimal satu orang tua.</string>
     <string name="elegi_otro_padre">Pilih orang tua lainnya.</string>

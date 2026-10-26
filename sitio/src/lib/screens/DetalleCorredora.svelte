@@ -9,6 +9,7 @@ import type { ArbolGuardado } from '$lib/data/arboles'
 import type { CodigoIdioma } from '$lib/i18n'
 import type { Seleccion } from '$lib/domain/herencia'
 import { displayName } from '$lib/domain/models'
+import { puntosFilaPresentacion } from '$lib/domain/presentacion'
 import { store } from '$lib/state/store.svelte'
 import { calcularResultado } from '$lib/state/resultado'
 import { crearI18n } from '$lib/i18n'
@@ -22,6 +23,7 @@ import Dialogo from '$lib/components/Dialogo.svelte'
 import { useSnackbar } from '$lib/components/snackbar'
 import Icono from '$lib/components/Icono.svelte'
 import HojaAlternativas from './HojaAlternativas.svelte'
+import MasInfoAfinidad from './MasInfoAfinidad.svelte'
 import ChipRol from './ChipRol.svelte'
 
 const ETIQUETAS_ROL = [
@@ -61,6 +63,7 @@ const { avisar } = useSnackbar()
 let seleccionActual = $state.raw<Seleccion>([])
 let seleccionOptima = $state.raw<Seleccion>([])
 let sheetSlot = $state<number | null>(null)
+let mostrarInfo = $state(false)
 let mostrarGuardar = $state(false)
 let textoNombre = $state('')
 let linajeAplicado = $state.raw<Linaje | null>(null)
@@ -88,9 +91,12 @@ $effect(() => {
 
 const nombreHijo = $derived(displayName(modelo.porId(hijoId)!, i18n.japones))
 const res = $derived(seleccionActual.length === 7 ? calcularResultado(modelo, seleccionActual) : null)
-/* Aporte directo de cada personaje a SUS vínculos del árbol: se muestra a
-   la derecha de cada fila, como en la hoja de alternativas. */
-const aportes = $derived(seleccionActual.length === 7 ? modelo.aportesDirectos(seleccionActual) : [])
+/* Reparto SOLO visual del total entre las filas: hijo sin puntaje,
+   padre = hijo-padre + mitad de padre-padre, abuelo = su trío. La suma de
+   las filas es el total (ver Más info). */
+const puntosFilas = $derived(
+  seleccionActual.length === 7 ? puntosFilaPresentacion(modelo, seleccionActual) : [],
+)
 const totalActual = $derived(res?.total ?? 0)
 const esOptimo = $derived(
   seleccionActual.length === 7 &&
@@ -120,6 +126,15 @@ function elegirAlternativa(nuevoId: number): void {
         <Avatar id={hijoId} nombre={nombreHijo} tamano={48} />
         <h2>{i18n.t('mejor_de', nombreHijo)}</h2>
         <RankPill rango={modelo.rangoTotal(totalActual)} puntos={totalActual} grande />
+        <button
+          type="button"
+          class="icon-button"
+          aria-label={i18n.t('afinidad_mas_info')}
+          title={i18n.t('afinidad_mas_info')}
+          onclick={() => (mostrarInfo = true)}
+        >
+          <Icono nombre="info" />
+        </button>
       </div>
 
       <hr class="separador" />
@@ -129,7 +144,7 @@ function elegirAlternativa(nuevoId: number): void {
           {slot}
           etiqueta={i18n.t(ETIQUETAS_ROL[slot])}
           id={seleccionActual[slot]}
-          puntos={aportes[slot] ?? null}
+          puntos={puntosFilas[slot] ?? null}
           onAbrir={slot === 0 ? undefined : () => (sheetSlot = slot)}
         />
       {/each}
@@ -222,6 +237,16 @@ function elegirAlternativa(nuevoId: number): void {
           />
         {/key}
       {/if}
+    </BottomSheet>
+
+    <BottomSheet open={mostrarInfo} onClose={() => (mostrarInfo = false)} labelledBy="mas-info-titulo">
+      <MasInfoAfinidad
+        {modelo}
+        seleccion={seleccionActual}
+        japones={i18n.japones}
+        {res}
+        onCerrar={() => (mostrarInfo = false)}
+      />
     </BottomSheet>
   </div>
 {/if}

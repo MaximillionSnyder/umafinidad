@@ -4,6 +4,7 @@
 import { displayName } from '$lib/domain/models'
 import { store } from '$lib/state/store.svelte'
 import { crearI18n } from '$lib/i18n'
+import { formatearPuntos } from '$lib/domain/presentacion'
 import { colorDeGenealogia, colorDeRango } from '$lib/theme/theme'
 import Avatar from '$lib/components/Avatar.svelte'
 
@@ -20,6 +21,10 @@ const i18n = $derived(crearI18n(store.idioma))
 const personaje = $derived(id !== null && store.modelo !== null ? store.modelo.porId(id) : undefined)
 const colorRol = $derived(colorDeGenealogia(slot))
 const nombre = $derived(personaje ? displayName(personaje, i18n.japones) : '—')
+/* Puntos de presentación: pueden llevar medio punto (mitad del par
+   padre-padre); se formatean con el separador decimal del idioma. */
+const textoPuntos = $derived(puntos === null ? null : formatearPuntos(puntos, i18n.codigo))
+const clasePuntos = $derived(puntos === null ? null : claseDePuntos(puntos))
 
 /* Mismos umbrales que GruposScreen (par): ◎ ≥20, ○ ≥10, △ ≥4. */
 function claseDePuntos(valor: number): string | null {
@@ -39,12 +44,12 @@ function claseDePuntos(valor: number): string | null {
       <span class="chip-rol-etiqueta" style="color:{colorRol}">{etiqueta}</span>
       <span class="chip-rol-nombre">{nombre}</span>
     </span>
-    {#if personaje && puntos !== null}
+    {#if personaje && textoPuntos !== null}
       <span
         class="chip-rol-puntos"
-        style="color:{colorDeRango(claseDePuntos(puntos)) ?? 'var(--texto)'}"
+        style="color:{colorDeRango(clasePuntos) ?? 'var(--texto)'}"
       >
-        {puntos}pt
+        {textoPuntos}pt
       </span>
     {/if}
   </div>
@@ -56,7 +61,7 @@ function claseDePuntos(valor: number): string | null {
       ? `border-color:color-mix(in srgb, ${colorRol} 45%, transparent)`
       : undefined}
     onclick={onAbrir}
-    aria-label={`${etiqueta}: ${nombre}${puntos !== null ? `, ${puntos} pt` : ''}`}
+    aria-label={`${etiqueta}: ${nombre}${textoPuntos !== null ? `, ${textoPuntos} pt` : ''}`}
   >
     {#if personaje}
       <Avatar id={personaje.charId} nombre={nombre} tamano={28} />
@@ -65,12 +70,12 @@ function claseDePuntos(valor: number): string | null {
       <span class="chip-rol-etiqueta" style="color:{colorRol}">{etiqueta}</span>
       <span class="chip-rol-nombre">{nombre}</span>
     </span>
-    {#if personaje && puntos !== null}
+    {#if personaje && textoPuntos !== null}
       <span
         class="chip-rol-puntos"
-        style="color:{colorDeRango(claseDePuntos(puntos)) ?? 'var(--texto)'}"
+        style="color:{colorDeRango(clasePuntos) ?? 'var(--texto)'}"
       >
-        {puntos}pt
+        {textoPuntos}pt
       </span>
     {/if}
     <span class="chip-rol-flecha" aria-hidden="true">⌄</span>

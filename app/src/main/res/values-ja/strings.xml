@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">子 × 親</string>
     <string name="sec_entre_padres">親同士</string>
     <string name="sec_hijo_padres_abuelos">子 × 親 × 祖父母</string>
+    <string name="afinidad_mas_info">詳細</string>
+    <string name="afinidad_info_titulo">相性の計算方法</string>
+    <string name="afinidad_info_intro">合計は7つのつながりの合計です：育成ウマ×親、親同士、育成ウマ×親×祖父母。</string>
+    <string name="afinidad_info_filas">各行は合計を分け合います：親 = 育成ウマ-親 + 親同士の半分、祖父母 = そのトリオ、育成ウマ単体は加算されません。</string>
+    <string name="afinidad_info_medio_punto">親同士の相性が奇数の場合、半分に0.5が付きます。</string>
+    <string name="afinidad_info_cambios">ウマを変更した場合</string>
+    <string name="afinidad_info_cambios_desc">枠ごとの最良候補と結果の合計。</string>
     <string name="falta_hijo">子が未選択です。</string>
     <string name="elige_un_padre">親を少なくとも1人選んでください。</string>
     <string name="elegi_otro_padre">もう1人の親を選んでください。</string>

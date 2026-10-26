@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">子代 × 父母</string>
     <string name="sec_entre_padres">父母之間</string>
     <string name="sec_hijo_padres_abuelos">子代 × 父母 × 祖父母</string>
+    <string name="afinidad_mas_info">更多資訊</string>
+    <string name="afinidad_info_titulo">相性如何計算</string>
+    <string name="afinidad_info_intro">總計為7個關係的總和：賽馬娘×父母、父母之間、賽馬娘×父母×祖父母。</string>
+    <string name="afinidad_info_filas">每一列分攤總計：父母 = 賽馬娘-父母 + 父母之間的一半；祖父母 = 三人的組合；賽馬娘本身不單獨累加。</string>
+    <string name="afinidad_info_medio_punto">若父母之間的相性為奇數，一半會包含0.5。</string>
+    <string name="afinidad_info_cambios">如果更換一匹賽馬娘</string>
+    <string name="afinidad_info_cambios_desc">每個位置的最佳選項及結果總計。</string>
     <string name="falta_hijo">還沒有選擇子代。</string>
     <string name="elige_un_padre">至少選擇一位父母。</string>
     <string name="elegi_otro_padre">選擇另一位父母。</string>

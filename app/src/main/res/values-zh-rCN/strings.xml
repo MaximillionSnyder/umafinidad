@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">子代 × 父母</string>
     <string name="sec_entre_padres">父母之间</string>
     <string name="sec_hijo_padres_abuelos">子代 × 父母 × 祖父母</string>
+    <string name="afinidad_mas_info">更多信息</string>
+    <string name="afinidad_info_titulo">相性如何计算</string>
+    <string name="afinidad_info_intro">总计为7个关系的总和：马娘×父母、父母之间、马娘×父母×祖父母。</string>
+    <string name="afinidad_info_filas">每行分摊总计：父母 = 马娘-父母 + 父母之间的一半；祖父母 = 三人的组合；马娘本身不单独累加。</string>
+    <string name="afinidad_info_medio_punto">如果父母之间的相性为奇数，一半会包含0.5。</string>
+    <string name="afinidad_info_cambios">如果更换一匹马娘</string>
+    <string name="afinidad_info_cambios_desc">每个位置的最佳选项及结果总计。</string>
     <string name="falta_hijo">还没有选择子代。</string>
     <string name="elige_un_padre">至少选择一位父母。</string>
     <string name="elegi_otro_padre">选择另一位父母。</string>

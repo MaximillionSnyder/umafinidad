@@ -20,6 +20,13 @@
     <string name="sec_hijo_padres">Child × Parents</string>
     <string name="sec_entre_padres">Between parents</string>
     <string name="sec_hijo_padres_abuelos">Child × Parents × Grandparents</string>
+    <string name="afinidad_mas_info">More info</string>
+    <string name="afinidad_info_titulo">How affinity is calculated</string>
+    <string name="afinidad_info_intro">The total is the sum of 7 links: child × parents, between parents, and child × parent × grandparent.</string>
+    <string name="afinidad_info_filas">Each row shares out the total: parents = child-parent + half of parent-parent; grandparents = their trio; the child does not add on its own.</string>
+    <string name="afinidad_info_medio_punto">If the parent-parent score is odd, the half includes 0.5.</string>
+    <string name="afinidad_info_cambios">If you change a character</string>
+    <string name="afinidad_info_cambios_desc">Best option per slot and the resulting total.</string>
     <string name="falta_hijo">The child has not been chosen yet.</string>
     <string name="elige_un_padre">Choose at least one parent.</string>
     <string name="elegi_otro_padre">Choose the other parent.</string>

@@ -50,6 +50,17 @@ Para reportar problemas de accesibilidad, abrí un issue en
 [GitHub](https://github.com/MaximillionSnyder/umafinidad/issues).
 Alineado con EN 301 549 capítulo 12 (documentación de accesibilidad).
 
+## Mi corredora y afinidad
+
+En **Mi corredora** el total de herencia se reparte entre las filas del árbol
+para que se puedan sumar: cada padre muestra la afinidad hijo-padre + la
+mitad de la afinidad padre-padre, y cada abuelo su trío (aparece medio punto
+cuando el par padre-padre es impar); el hijo no lleva puntaje propio. El botón
+**Más info** abre el desglose por vínculos (2 pares hijo-padre + 1 par entre
+padres + 4 tríos), la explicación del reparto y la mejor alternativa de cada
+slot con su total resultante. Es solo presentación: el cálculo de afinidad,
+rankings y alternativas no cambia.
+
 ## Burbuja flotante (acceso rápido)
 
 Desde **Ajustes → Burbuja flotante** se puede activar una burbuja sobre

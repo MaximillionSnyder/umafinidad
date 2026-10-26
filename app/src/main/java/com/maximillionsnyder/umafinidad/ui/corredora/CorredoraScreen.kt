@@ -696,6 +696,9 @@ private fun claseDePuntos(puntos: Double): String? = when {
     else -> null
 }
 
+/* La hoja de alternativas sigue mostrando puntos enteros. */
+private fun claseDePuntos(puntos: Int): String? = claseDePuntos(puntos.toDouble())
+
 @Composable
 private fun colorClase(clase: String?): Color = when (clase) {
     "rank-great" -> com.maximillionsnyder.umafinidad.ui.theme.RankGreat

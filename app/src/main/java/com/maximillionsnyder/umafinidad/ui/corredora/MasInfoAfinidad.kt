@@ -93,6 +93,7 @@ internal fun HojaMasInfo(
             stringResource(R.string.afinidad_info_titulo),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
+            modifier = Modifier.headingSemantica(),
         )
         Text(
             stringResource(R.string.afinidad_info_intro),

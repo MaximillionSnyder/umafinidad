@@ -1,5 +1,6 @@
 <script lang="ts">
-/* "Mis Umas": elenco propio. Solapa 1: editar roster. Solapa 2: mejores
+/* "Mis Umas": elenco propio. Referencia archivada de la barra: se abre desde
+   Más y el botón atrás vuelve. Solapa 1: editar roster. Solapa 2: mejores
    linajes dentro del elenco. */
 
 import { goto } from '$app/navigation'
@@ -15,6 +16,12 @@ import HeaderBar from '$lib/components/HeaderBar.svelte'
 import CardFilaTop from '$lib/components/CardFilaTop.svelte'
 import Dialogo from '$lib/components/Dialogo.svelte'
 import Icono from '$lib/components/Icono.svelte'
+
+interface Props {
+  onVolver: () => void
+}
+
+let { onVolver }: Props = $props()
 
 const i18n = $derived(crearI18n(store.idioma))
 let tab = $state(0)
@@ -47,12 +54,16 @@ $effect(() => {
 </svelte:head>
 
 {#if store.modelo === null}
-  <div class="centrado">{i18n.t('calculando')}</div>
+  <div class="pantalla">
+    <HeaderBar titulo={i18n.t('tab_elenco')} {onVolver} />
+    <div class="centrado">{i18n.t('calculando')}</div>
+  </div>
 {:else}
   <div class="pantalla">
     <HeaderBar
       titulo={i18n.t('tab_elenco')}
       pillTexto={i18n.t('elenco_contador', store.elenco.size, totalJugables)}
+      {onVolver}
     />
 
     <div class="tab-row" role="tablist" aria-label={i18n.t('tab_elenco')}>

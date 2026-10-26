@@ -341,13 +341,13 @@ function onArchivo(evento: Event): void {
     {@render acceso('grupos', i18n.t('tab_groups'), i18n.t('grupos_ajustes_desc'), () => goto(resolve('/grupos')))}
     {@render acceso('ranking', i18n.t('tab_ranking'), i18n.t('ranking_ajustes_desc'), () => goto(resolve('/ranking')))}
     {@render acceso('top', i18n.t('tab_top'), i18n.t('linajes_ajustes_desc'), () => goto(resolve('/top')))}
+    {@render acceso('elenco', i18n.t('tab_elenco'), i18n.t('elenco_ajustes_desc'), () => goto(resolve('/elenco')))}
     {@render acceso(
       'ranking',
       i18n.t('ranking_padres_titulo'),
       i18n.t('ranking_padres_ajustes_desc'),
       () => goto(resolve('/ranking-padres')),
     )}
-    {@render acceso('elenco', i18n.t('tab_elenco'), i18n.t('elenco_ajustes_desc'), () => goto(resolve('/elenco')))}
 
     {#if store.arboles.length > 0}
       <hr class="separador" />

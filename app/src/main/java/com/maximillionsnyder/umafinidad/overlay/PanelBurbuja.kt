@@ -296,7 +296,7 @@ fun PanelBurbuja(
                     onAbrirDestino(Destino.TAB_CORREDORA)
                 }
                 BotonDestino(R.string.tab_elenco, R.drawable.ic_tab_elenco) {
-                    onAbrirDestino(Destino.TAB_ELENCO)
+                    onAbrirDestino(Destino.ELENCO)
                 }
                 BotonDestino(R.string.tab_ajustes, R.drawable.ic_tab_ajustes) {
                     onAbrirDestino(Destino.TAB_AJUSTES)

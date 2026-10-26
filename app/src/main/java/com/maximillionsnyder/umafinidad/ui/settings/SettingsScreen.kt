@@ -602,6 +602,45 @@ fun SettingsScreen(
             }
         }
 
+        /* ===== Mis Umas (referencia, archivada de la barra inferior) ===== */
+        Card(
+            modifier = Modifier.fillMaxWidth()
+                .compartidoBounds(ClavesTransicion.OVERLAY_ELENCO)
+                .clickable(
+                    role = Role.Button,
+                    onClickLabel = stringResource(R.string.tab_elenco),
+                    onClick = onAbrirElenco,
+                ),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Icon(
+                    painterResource(R.drawable.ic_tab_elenco),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.compartidoElemento(ClavesTransicion.icono(ClavesTransicion.OVERLAY_ELENCO)),
+                )
+                Column {
+                    Text(
+                        stringResource(R.string.tab_elenco),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.compartidoBounds(ClavesTransicion.titulo(ClavesTransicion.OVERLAY_ELENCO)),
+                    )
+                    Text(
+                        stringResource(R.string.elenco_ajustes_desc),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+
         /* ===== Buscar padres en uma.moe: la única función con red ===== */
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -752,33 +791,6 @@ fun SettingsScreen(
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
                         )
                     }
-                }
-            }
-        }
-
-        /* ===== Mis Umas (referencia, archivado de la barra inferior) ===== */
-        Card(
-            modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = onAbrirElenco),
-            shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-        ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                Icon(
-                    painterResource(R.drawable.ic_tab_elenco),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-                Column {
-                    Text(stringResource(R.string.tab_elenco), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
-                    Text(
-                        stringResource(R.string.elenco_ajustes_desc),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
                 }
             }
         }

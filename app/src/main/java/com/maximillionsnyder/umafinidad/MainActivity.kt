@@ -225,7 +225,7 @@ private fun App(
     val buscandoPadres by vm.buscandoPadres.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
 
-    val pagerState = rememberPagerState(initialPage = 0) { 4 }
+    val pagerState = rememberPagerState(initialPage = 0) { 3 }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -248,19 +248,21 @@ private fun App(
         onDispose { (context as? LifecycleOwner)?.lifecycle?.removeObserver(observador) }
     }
 
-    /* Grupos, Ranking y Mejores linajes son referencias archivadas: se abren a
-       pantalla completa desde Más y el botón atrás las cierra. Mis Umas ya es tab. */
+    /* Grupos, Ranking, Mejores linajes y Mis Umas son referencias archivadas:
+       se abren a pantalla completa desde Más y el botón atrás las cierra. */
     var verGrupos by rememberSaveable { mutableStateOf(false) }
     var verRanking by rememberSaveable { mutableStateOf(false) }
     var verTop by rememberSaveable { mutableStateOf(false) }
+    var verElenco by rememberSaveable { mutableStateOf(false) }
     var verRankingPadres by rememberSaveable { mutableStateOf(false) }
     var verPro by rememberSaveable { mutableStateOf(false) }
     var verBuscar by rememberSaveable { mutableStateOf(false) }
 
     /* Memoria de navegación de un solo paso ("tab:N", "grupos", "ranking",
-       "top", "ranking-padres", "pro", "buscar-padres"): se recuerda nada más
-       la pantalla anterior. Atrás vuelve al lugar del que viniste y desde ahí
-       pregunta si salir, en vez de recorrer toda la cadena de pantallas. */
+       "top", "elenco", "ranking-padres", "pro", "buscar-padres"): se recuerda
+       nada más la pantalla anterior. Atrás vuelve al lugar del que viniste y
+       desde ahí pregunta si salir, en vez de recorrer toda la cadena de
+       pantallas. */
     var destinoActual by rememberSaveable { mutableStateOf(Destino.TAB_COMPAT) }
     var destinoAnterior by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -269,6 +271,7 @@ private fun App(
         verGrupos = destino == "grupos"
         verRanking = destino == "ranking"
         verTop = destino == Destino.TOP
+        verElenco = destino == Destino.ELENCO
         verRankingPadres = destino == "ranking-padres"
         verPro = destino == Destino.PRO
         verBuscar = destino == Destino.BUSCAR_PADRES
@@ -320,7 +323,7 @@ private fun App(
        animación. */
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { pagina ->
-            if (!verGrupos && !verRanking && !verTop && !verRankingPadres && !verPro && !verBuscar) {
+            if (!verGrupos && !verRanking && !verTop && !verElenco && !verRankingPadres && !verPro && !verBuscar) {
                 val destino = "tab:$pagina"
                 if (destinoActual != destino) {
                     destinoAnterior = destinoActual
@@ -358,6 +361,7 @@ private fun App(
             verGrupos -> ClavesTransicion.OVERLAY_GRUPOS
             verRanking -> ClavesTransicion.OVERLAY_RANKING
             verTop -> ClavesTransicion.OVERLAY_TOP
+            verElenco -> ClavesTransicion.OVERLAY_ELENCO
             verRankingPadres -> ClavesTransicion.OVERLAY_RANKING_PADRES
             verPro -> ClavesTransicion.OVERLAY_PRO
             verBuscar -> ClavesTransicion.OVERLAY_BUSCAR
@@ -428,6 +432,28 @@ private fun App(
                                 onVolver = { volver() },
                             )
                         }
+                    } else if (destino == ClavesTransicion.OVERLAY_ELENCO) {
+                        val m = modelo
+                        if (m == null) {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
+                            ElencoScreen(
+                                modelo = m,
+                                japones = japones,
+                                elenco = elenco,
+                                onToggle = vm::toggleElenco,
+                                onMarcar = vm::marcarElenco,
+                                onLimpiar = vm::limpiarElenco,
+                                onVerHerencia = { linaje ->
+                                    vm.cargarLinaje(linaje)
+                                    volver()
+                                    scope.launch { pagerState.animateScrollToPage(0) }
+                                },
+                                onVolver = { volver() },
+                            )
+                        }
                     } else if (destino == ClavesTransicion.OVERLAY_RANKING_PADRES) {
                         val m = modelo
                         if (m == null) {
@@ -462,7 +488,7 @@ private fun App(
                                 onVolver = { volver() },
                                 onIrAAjustes = {
                                     volver()
-                                    scope.launch { pagerState.animateScrollToPage(3) }
+                                    scope.launch { pagerState.animateScrollToPage(2) }
                                 },
                             )
                         }
@@ -506,14 +532,7 @@ private fun App(
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 2,
                                             onClick = { scope.launch { pagerState.animateScrollToPage(2) } },
-                                            icon = { TabIcon(R.drawable.ic_tab_elenco, pagerState.currentPage == 2) },
-                                            label = { TabLabel(stringResource(R.string.tab_elenco)) },
-                                            alwaysShowLabel = true,
-                                        )
-                                        NavigationBarItem(
-                                            selected = pagerState.currentPage == 3,
-                                            onClick = { scope.launch { pagerState.animateScrollToPage(3) } },
-                                            icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 3) },
+                                            icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 2) },
                                             label = { TabLabel(stringResource(R.string.tab_mas)) },
                                             alwaysShowLabel = true,
                                         )
@@ -569,19 +588,6 @@ private fun App(
                                                 esPro = esPro,
                                                 onIrAPro = { irA(Destino.PRO) },
                                             )
-                                            2 -> ElencoScreen(
-                                                modelo = m,
-                                                japones = japones,
-                                                elenco = elenco,
-                                                onToggle = vm::toggleElenco,
-                                                onMarcar = vm::marcarElenco,
-                                                onLimpiar = vm::limpiarElenco,
-                                                onVerHerencia = { linaje ->
-                                                    vm.cargarLinaje(linaje)
-                                                    scope.launch { pagerState.animateScrollToPage(0) }
-                                                },
-                                                onVolver = null,
-                                            )
                                             else -> SettingsScreen(
                                                 modoGrilla = modoGrilla,
                                                 onModoGrilla = vm::setModoGrilla,
@@ -631,7 +637,7 @@ private fun App(
                                                 textoNegrita = textoNegrita,
                                                 onTextoNegrita = vm::setTextoNegrita,
                                                 onAbrirBienvenida = vm::abrirBienvenida,
-                                                onAbrirElenco = { scope.launch { pagerState.animateScrollToPage(2) } },
+                                                onAbrirElenco = { irA(Destino.ELENCO) },
                                             )
                                         }
                                     }

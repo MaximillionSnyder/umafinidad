@@ -67,16 +67,17 @@ import com.maximillionsnyder.umafinidad.domain.coincideDifuso
 import com.maximillionsnyder.umafinidad.ui.componentes.Avatar
 import com.maximillionsnyder.umafinidad.ui.componentes.CardFilaTop
 import com.maximillionsnyder.umafinidad.ui.componentes.ClavesTransicion
-import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBar
 import com.maximillionsnyder.umafinidad.ui.componentes.HeaderBarConVolver
 import com.maximillionsnyder.umafinidad.ui.componentes.PillCabecera
 import com.maximillionsnyder.umafinidad.ui.componentes.LocalAnimatedVisibilityScope
 import com.maximillionsnyder.umafinidad.ui.componentes.compartidoBounds
+import com.maximillionsnyder.umafinidad.ui.componentes.compartidoElemento
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/* "Mis Umas": elenco propio. Como tab individual al lado de Mi corredora
-   (también accesible desde Más). Solapa 1: editar roster. Solapa 2: mejores linajes del elenco. */
+/* "Mis Umas": elenco propio. Referencia archivada de la barra inferior: se
+   abre a pantalla completa desde Más y el botón atrás la cierra.
+   Solapa 1: editar roster. Solapa 2: mejores linajes del elenco. */
 @Composable
 fun ElencoScreen(
     modelo: AffinityModel,
@@ -86,7 +87,7 @@ fun ElencoScreen(
     onMarcar: (List<Int>) -> Unit,
     onLimpiar: () -> Unit,
     onVerHerencia: (Linaje) -> Unit,
-    onVolver: (() -> Unit)? = null,
+    onVolver: () -> Unit,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val totalJugables = remember(modelo) {
@@ -94,100 +95,99 @@ fun ElencoScreen(
     }
     val contador = stringResource(R.string.elenco_contador, elenco.size, totalJugables)
 
-    Column(
-        modifier = Modifier.fillMaxSize().then(
-            if (onVolver != null) Modifier.navigationBarsPadding() else Modifier
-        )
+    /* La tarjeta de Más y esta pantalla comparten el contenedor, el título y
+       el icono para que la transición conecte el origen con el destino. */
+    Surface(
+        modifier = Modifier.fillMaxSize().compartidoBounds(ClavesTransicion.OVERLAY_ELENCO),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
-        /* Header y contenido van juntos en el AnimatedContent para que la
-           pastilla del contador viaje del header a la lista de linajes
-           como elemento compartido (misma clave en ambos destinos). */
-        AnimatedContent(
-            targetState = tab,
-            transitionSpec = { fadeIn(tween(220)) togetherWith fadeOut(tween(180)) },
-            label = "tabElenco",
-            modifier = Modifier.fillMaxSize(),
-        ) { destino ->
-            CompositionLocalProvider(LocalAnimatedVisibilityScope provides this) {
-                if (destino == 0) {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        if (onVolver != null) {
+        Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+            /* Header y contenido van juntos en el AnimatedContent para que la
+               pastilla del contador viaje del header a la lista de linajes
+               como elemento compartido (misma clave en ambos destinos). */
+            AnimatedContent(
+                targetState = tab,
+                transitionSpec = { fadeIn(tween(220)) togetherWith fadeOut(tween(180)) },
+                label = "tabElenco",
+                modifier = Modifier.fillMaxSize(),
+            ) { destino ->
+                CompositionLocalProvider(LocalAnimatedVisibilityScope provides this) {
+                    if (destino == 0) {
+                        Column(modifier = Modifier.fillMaxSize()) {
                             HeaderBarConVolver(
                                 titulo = stringResource(R.string.tab_elenco),
                                 onVolver = onVolver,
                                 iconoRes = R.drawable.ic_tab_elenco,
                                 pillTexto = contador,
+                                modifierTitulo = Modifier.compartidoBounds(
+                                    ClavesTransicion.titulo(ClavesTransicion.OVERLAY_ELENCO),
+                                ),
+                                modifierIcono = Modifier.compartidoElemento(
+                                    ClavesTransicion.icono(ClavesTransicion.OVERLAY_ELENCO),
+                                ),
                                 modifierPill = Modifier.compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
                             )
-                        } else {
-                            HeaderBar(
-                                titulo = stringResource(R.string.tab_elenco),
-                                iconoRes = R.drawable.ic_tab_elenco,
-                                pillTexto = contador,
-                                modifierPill = Modifier.compartidoBounds(ClavesTransicion.ELENCO_CONTADOR),
-                            )
-                        }
 
-                        TabRow(selectedTabIndex = destino) {
-                            Tab(
-                                selected = true,
-                                onClick = { tab = 0 },
-                                text = { Text(stringResource(R.string.elenco_tab_editar)) },
-                            )
-                            Tab(
-                                selected = false,
-                                onClick = { tab = 1 },
-                                text = { Text(stringResource(R.string.elenco_tab_linajes)) },
-                            )
-                        }
+                            TabRow(selectedTabIndex = destino) {
+                                Tab(
+                                    selected = true,
+                                    onClick = { tab = 0 },
+                                    text = { Text(stringResource(R.string.elenco_tab_editar)) },
+                                )
+                                Tab(
+                                    selected = false,
+                                    onClick = { tab = 1 },
+                                    text = { Text(stringResource(R.string.elenco_tab_linajes)) },
+                                )
+                            }
 
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .compartidoBounds(ClavesTransicion.ELENCO_PANEL)
-                        ) {
-                            EditorElenco(modelo, japones, elenco, onToggle, onMarcar, onLimpiar)
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth()
+                                    .compartidoBounds(ClavesTransicion.ELENCO_PANEL)
+                            ) {
+                                EditorElenco(modelo, japones, elenco, onToggle, onMarcar, onLimpiar)
+                            }
                         }
-                    }
-                } else {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        if (onVolver != null) {
+                    } else {
+                        Column(modifier = Modifier.fillMaxSize()) {
                             HeaderBarConVolver(
                                 titulo = stringResource(R.string.tab_elenco),
                                 onVolver = onVolver,
                                 iconoRes = R.drawable.ic_tab_elenco,
+                                modifierTitulo = Modifier.compartidoBounds(
+                                    ClavesTransicion.titulo(ClavesTransicion.OVERLAY_ELENCO),
+                                ),
+                                modifierIcono = Modifier.compartidoElemento(
+                                    ClavesTransicion.icono(ClavesTransicion.OVERLAY_ELENCO),
+                                ),
                             )
-                        } else {
-                            HeaderBar(
-                                titulo = stringResource(R.string.tab_elenco),
-                                iconoRes = R.drawable.ic_tab_elenco,
-                            )
-                        }
 
-                        TabRow(selectedTabIndex = destino) {
-                            Tab(
-                                selected = false,
-                                onClick = { tab = 0 },
-                                text = { Text(stringResource(R.string.elenco_tab_editar)) },
-                            )
-                            Tab(
-                                selected = true,
-                                onClick = { tab = 1 },
-                                text = { Text(stringResource(R.string.elenco_tab_linajes)) },
-                            )
-                        }
+                            TabRow(selectedTabIndex = destino) {
+                                Tab(
+                                    selected = false,
+                                    onClick = { tab = 0 },
+                                    text = { Text(stringResource(R.string.elenco_tab_editar)) },
+                                )
+                                Tab(
+                                    selected = true,
+                                    onClick = { tab = 1 },
+                                    text = { Text(stringResource(R.string.elenco_tab_linajes)) },
+                                )
+                            }
 
-                        Surface(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(12.dp)
-                                .compartidoBounds(ClavesTransicion.ELENCO_PANEL),
-                            shape = RoundedCornerShape(16.dp),
-                            color = MaterialTheme.colorScheme.surfaceContainerLow,
-                        ) {
-                            LinajesElenco(modelo, japones, elenco, contador, onVerHerencia)
+                            Surface(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth()
+                                    .padding(12.dp)
+                                    .compartidoBounds(ClavesTransicion.ELENCO_PANEL),
+                                shape = RoundedCornerShape(16.dp),
+                                color = MaterialTheme.colorScheme.surfaceContainerLow,
+                            ) {
+                                LinajesElenco(modelo, japones, elenco, contador, onVerHerencia)
+                            }
                         }
                     }
                 }

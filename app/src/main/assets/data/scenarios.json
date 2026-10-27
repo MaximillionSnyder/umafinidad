@@ -1,0 +1,142 @@
+{
+  "1": {
+    "id": 1,
+    "name": {
+      "en": "Ura Finale",
+      "ja": "新設！URAファイナルズ",
+      "ko": "신설! URA 파이널스!!",
+      "tw": "新設立！URA決勝系列賽"
+    },
+    "urlName": "ura-finals"
+  },
+  "2": {
+    "id": 2,
+    "name": {
+      "en": "Unity Cup",
+      "ja": "アオハル杯～輝け、チームの絆～",
+      "ko": "아오하루배 ~빛나라 팀의 인연~",
+      "tw": "青春盃～閃耀吧，隊伍情誼～"
+    },
+    "urlName": "unity-cup"
+  },
+  "3": {
+    "id": 3,
+    "name": {
+      "en": "Brighter Together Our Grand Concert",
+      "ja": "つなげ、照らせ、ひかれ。私たちのグランドライブ",
+      "ko": "이어라, 비춰라, 빛나라. 우리의 그랜드 라이브",
+      "tw": "連接、照亮、閃耀。我們的繁星演唱會"
+    },
+    "urlName": "our-grand-concert"
+  },
+  "4": {
+    "id": 4,
+    "name": {
+      "en": "Trackblazer",
+      "ja": "Make a new track!!～クライマックス開幕～",
+      "ko": "Make a new track!! ~클라이맥스 개막~",
+      "tw": "Make a new track!!～巔峰賽開幕～"
+    },
+    "urlName": "trackblazer"
+  },
+  "5": {
+    "id": 5,
+    "name": {
+      "en": "Grandmasters Legacies Immortal",
+      "ja": "グランドマスターズ-継ぐ者達へ-",
+      "ko": "그랜드 마스터즈 -이어가는 자들에게-",
+      "tw": "頂尖大師賽—致繼承者們—"
+    },
+    "urlName": "grand-masters"
+  },
+  "6": {
+    "id": 6,
+    "name": {
+      "en": "Project L'Arc",
+      "ja": "Reach for the starsプロジェクトL'Arc",
+      "ko": "Reach for the stars Project L'Arc",
+      "tw": "Reach for the starsL'Arc計畫"
+    },
+    "urlName": "project-larc"
+  },
+  "7": {
+    "id": 7,
+    "name": {
+      "en": "U.A.F. Ready GO!",
+      "ja": "U.A.F. Ready GO! ～アスリートのキラメキ～",
+      "ko": "U.A.F. Ready GO!  ~애슬리트의 반짝임~",
+      "tw": "U.A.F. Ready GO! ～運動員的閃耀時刻～"
+    },
+    "urlName": "uaf"
+  },
+  "8": {
+    "id": 8,
+    "name": {
+      "en": "Great Food Festival",
+      "ja": "収穫ッ！満腹ッ！大豊食祭",
+      "ko": "수확! 만복! 대풍식제",
+      "tw": "收穫！飽足！大豐食祭"
+    },
+    "urlName": "great-food-festival"
+  },
+  "9": {
+    "id": 9,
+    "name": {
+      "en": "Run, Mecha Umamusume!",
+      "ja": "走れ！メカウマ娘-夢繋ぐ発明-",
+      "ko": "달려라! 메카 우마무스메 -꿈을 잇는 발명-",
+      "tw": "奔跑吧！機械賽馬娘—連結夢想的發明—"
+    },
+    "urlName": "run-mecha-umamusume"
+  },
+  "10": {
+    "id": 10,
+    "name": {
+      "en": "The Twinkle Legends",
+      "ja": "The Twinkle Legends",
+      "ko": "The Twinkle Legends",
+      "tw": "The Twinkle Legends"
+    },
+    "urlName": "the-twinkle-legends"
+  },
+  "11": {
+    "id": 11,
+    "name": {
+      "en": "Design Your Island",
+      "ja": "無人島へようこそ-DESIGN YOUR ISLAND-",
+      "ko": "무인도에 어서 오세요 -DESIGN YOUR ISLAND-",
+      "tw": "歡迎來到無人島—DESIGN YOUR ISLAND—"
+    },
+    "urlName": "design-your-island"
+  },
+  "12": {
+    "id": 12,
+    "name": {
+      "en": "Yukoma Hot Springs",
+      "ja": "ごくらく♪ゆこま温泉郷",
+      "ko": "ごくらく♪ゆこま温泉郷",
+      "tw": null
+    },
+    "urlName": "yukoma-hot-springs"
+  },
+  "13": {
+    "id": 13,
+    "name": {
+      "en": "Beyond Dreams",
+      "ja": "Beyond Dreams共に前へ、共に光を",
+      "ko": "Beyond Dreams 共に前へ、共に光を",
+      "tw": null
+    },
+    "urlName": "beyond-dreams"
+  },
+  "14": {
+    "id": 14,
+    "name": {
+      "en": "Tracen-ken",
+      "ja": "らっしゃい！トレセン軒！～恩返し、始めました～",
+      "ko": null,
+      "tw": null
+    },
+    "urlName": "tracen-ken"
+  }
+}

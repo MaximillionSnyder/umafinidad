@@ -326,4 +326,15 @@
     <string name="ajustes_key_borrar">Xóa</string>
     <string name="ajustes_key_guardada">Đã lưu key</string>
     <string name="ajustes_key_formato">Trông không giống key của uma.moe (bắt đầu bằng uma_)</string>
+
+    <!-- Sección Cartas (skills y cartas de personaje/apoyo). -->
+    <string name="tab_cartas">Thẻ</string>
+    <string name="ajustes_cartas">Thẻ</string>
+    <string name="cartas_vista_listas">Danh sách kỹ năng và thẻ</string>
+    <string name="cartas_vista_comoda">Thoải mái</string>
+    <string name="cartas_vista_compacta">Gọn gàng</string>
+    <string name="cartas_favoritas_borrar">Xóa kỹ năng yêu thích (%1$s)</string>
+    <string name="cartas_cargando">Đang đọc dữ liệu kỹ năng và thẻ…</string>
+    <string name="cartas_error">Không thể đọc dữ liệu thẻ.</string>
+    <string name="cartas_reintentar">Thử lại</string>
 </resources>

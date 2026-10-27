@@ -326,4 +326,15 @@
     <string name="ajustes_key_borrar">ลบ</string>
     <string name="ajustes_key_guardada">บันทึกแล้ว</string>
     <string name="ajustes_key_formato">ดูเหมือนไม่ใช่ key ของ uma.moe (ขึ้นต้นด้วย uma_)</string>
+
+    <!-- Sección Cartas (skills y cartas de personaje/apoyo). -->
+    <string name="tab_cartas">การ์ด</string>
+    <string name="ajustes_cartas">การ์ด</string>
+    <string name="cartas_vista_listas">รายการสกิลและการ์ด</string>
+    <string name="cartas_vista_comoda">สบายตา</string>
+    <string name="cartas_vista_compacta">กะทัดรัด</string>
+    <string name="cartas_favoritas_borrar">ลบสกิลโปรด (%1$s)</string>
+    <string name="cartas_cargando">กำลังอ่านข้อมูลสกิลและการ์ด…</string>
+    <string name="cartas_error">ไม่สามารถอ่านข้อมูลการ์ดได้</string>
+    <string name="cartas_reintentar">ลองอีกครั้ง</string>
 </resources>

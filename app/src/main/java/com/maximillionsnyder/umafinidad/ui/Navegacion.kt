@@ -1,15 +1,17 @@
 package com.maximillionsnyder.umafinidad.ui
 
 /* Destinos de navegación compartidos entre la app y la burbuja flotante.
-   "tab:N" para las pestañas; otros literales ("grupos", "ranking", "top",
-   "elenco", "ranking-padres", "pro", "buscar-padres") para las pantallas que
-   se abren a pantalla completa desde Más. */
+   "tab:N" para las cuatro pestañas de la barra inferior (0 = Compatibilidad,
+   1 = Mi corredora, 2 = Cartas, 3 = Más); otros literales ("grupos",
+   "ranking", "top", "elenco", "ranking-padres", "pro", "buscar-padres") para
+   las pantallas que se abren a pantalla completa desde Más. */
 object Destino {
 
     const val EXTRA = "destino"
     const val TAB_COMPAT = "tab:0"
     const val TAB_CORREDORA = "tab:1"
-    const val TAB_AJUSTES = "tab:2"
+    const val TAB_CARTAS = "tab:2"
+    const val TAB_AJUSTES = "tab:3"
 
     /* Mejores linajes: archivada de la barra inferior, se abre desde Más. */
     const val TOP = "top"

@@ -326,4 +326,15 @@
     <string name="ajustes_key_borrar">刪除</string>
     <string name="ajustes_key_guardada">已儲存</string>
     <string name="ajustes_key_formato">這不像 uma.moe 的 key（以 uma_ 開頭）</string>
+
+    <!-- Sección Cartas (skills y cartas de personaje/apoyo). -->
+    <string name="tab_cartas">卡片</string>
+    <string name="ajustes_cartas">卡片</string>
+    <string name="cartas_vista_listas">技能與卡片清單</string>
+    <string name="cartas_vista_comoda">舒適</string>
+    <string name="cartas_vista_compacta">緊湊</string>
+    <string name="cartas_favoritas_borrar">刪除收藏的技能 (%1$s)</string>
+    <string name="cartas_cargando">正在讀取技能與卡片資料…</string>
+    <string name="cartas_error">無法讀取卡片資料。</string>
+    <string name="cartas_reintentar">重試</string>
 </resources>

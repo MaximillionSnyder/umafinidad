@@ -5,6 +5,7 @@
   "scripts": {
     "fetch": "node scripts/fetch-gametora.mjs",
     "fetch:aptitudes": "node scripts/fetch-gametora.mjs --solo-aptitudes",
+    "fetch:cartas": "node scripts/fetch-cartas.mjs",
     "fetch:padres": "node scripts/fetch-umamoe-search.mjs",
     "icons": "node scripts/generate-launcher-icons.mjs",
     "sitio:dev": "npm --prefix sitio run dev",

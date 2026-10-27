@@ -75,6 +75,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import com.maximillionsnyder.umafinidad.cartas.ui.CartasScreen
+import com.maximillionsnyder.umafinidad.cartas.ui.i18n.idiomaUiDe
 import com.maximillionsnyder.umafinidad.data.ThemeMode
 import com.maximillionsnyder.umafinidad.data.aplicarIdioma
 import com.maximillionsnyder.umafinidad.overlay.BurbujaService
@@ -103,7 +105,7 @@ class MainActivity : ComponentActivity() {
 
     private val vm by viewModels<AppViewModel>()
 
-    /* Destino pedido por la burbuja flotante (p. ej. "tab:2"). */
+    /* Destino pedido por la burbuja flotante (p. ej. "tab:3"). */
     private val destinoPendiente = mutableStateOf<String?>(null)
 
     /* Se pidió "Mostrar sobre otras apps" y se espera el regreso de Ajustes. */
@@ -223,9 +225,15 @@ private fun App(
     val hayKey by vm.hayKey.collectAsState()
     val salidaPadres by vm.salidaPadres.collectAsState()
     val buscandoPadres by vm.buscandoPadres.collectAsState()
+    /* Sección Cartas: el modelo se pide recién al abrir su pestaña. */
+    val cartasModelo by vm.cartasModelo.collectAsState()
+    val cartasCargando by vm.cartasCargando.collectAsState()
+    val cartasFallo by vm.cartasFallo.collectAsState()
+    val cartasVista by vm.cartasVista.collectAsState()
+    val cartasFavoritos by vm.cartasFavoritos.collectAsState()
     val estiloAvatar = LocalEstiloAvatar.current
 
-    val pagerState = rememberPagerState(initialPage = 0) { 3 }
+    val pagerState = rememberPagerState(initialPage = 0) { 4 }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -275,7 +283,11 @@ private fun App(
         verRankingPadres = destino == "ranking-padres"
         verPro = destino == Destino.PRO
         verBuscar = destino == Destino.BUSCAR_PADRES
-        Destino.pagina(destino)?.let { pagina ->
+        Destino.pagina(destino)?.takeIf { it in 0 until pagerState.pageCount }?.let { pagina ->
+            /* La sección Cartas se lee solo cuando alguien la abre: skills.json
+               pesa 3,7 MB y la pestaña es opcional. cargarCartas() es
+               idempotente, así que pasar por acá de nuevo no cuesta nada. */
+            if (pagina == 2) vm.cargarCartas()
             if (pagerState.currentPage != pagina) scope.launch { pagerState.animateScrollToPage(pagina) }
         }
     }
@@ -323,6 +335,9 @@ private fun App(
        animación. */
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.settledPage }.collect { pagina ->
+            /* Cartas carga al asentarse su página, nunca al arrancar: es la
+               única sección que lee varios MB de assets. */
+            if (pagina == 2) vm.cargarCartas()
             if (!verGrupos && !verRanking && !verTop && !verElenco && !verRankingPadres && !verPro && !verBuscar) {
                 val destino = "tab:$pagina"
                 if (destinoActual != destino) {
@@ -340,7 +355,11 @@ private fun App(
         if (!volver()) confirmarSalida = true
     }
 
-    val japones = LocalConfiguration.current.locales[0].language == "ja"
+    /* Locale ya resuelto de la app: sirve para el japonés de los datos y para
+       el idioma único de la sección Cartas (UI y datos). */
+    val localeApp = LocalConfiguration.current.locales[0]
+    val japones = localeApp.language == "ja"
+    val idiomaCartas = idiomaUiDe(localeApp)
     val esOscuro = when (tema) {
         ThemeMode.CLARO, ThemeMode.ALTO_CONTRASTE -> false
         ThemeMode.OSCURO -> true
@@ -488,7 +507,7 @@ private fun App(
                                 onVolver = { volver() },
                                 onIrAAjustes = {
                                     volver()
-                                    scope.launch { pagerState.animateScrollToPage(2) }
+                                    scope.launch { pagerState.animateScrollToPage(3) }
                                 },
                             )
                         }
@@ -532,7 +551,14 @@ private fun App(
                                         NavigationBarItem(
                                             selected = pagerState.currentPage == 2,
                                             onClick = { scope.launch { pagerState.scrollToPage(2) } },
-                                            icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 2) },
+                                            icon = { TabIcon(R.drawable.ic_tab_cartas, pagerState.currentPage == 2) },
+                                            label = { TabLabel(stringResource(R.string.tab_cartas)) },
+                                            alwaysShowLabel = true,
+                                        )
+                                        NavigationBarItem(
+                                            selected = pagerState.currentPage == 3,
+                                            onClick = { scope.launch { pagerState.scrollToPage(3) } },
+                                            icon = { TabIcon(R.drawable.ic_tab_ajustes, pagerState.currentPage == 3) },
                                             label = { TabLabel(stringResource(R.string.tab_mas)) },
                                             alwaysShowLabel = true,
                                         )
@@ -550,10 +576,10 @@ private fun App(
                                     HorizontalPager(
                                         state = pagerState,
                                         modifier = Modifier.fillMaxSize(),
-                                        /* Con 3 pestañas se precomponen todas: cambiar de
+                                        /* Con 4 pestañas se precomponen todas: cambiar de
                                            tab queda instantáneo en vez de componer la
                                            pantalla destino durante la animación. */
-                                        beyondViewportPageCount = 2,
+                                        beyondViewportPageCount = 3,
                                     ) { page ->
                                         when (page) {
                                             0 -> CompatScreen(
@@ -592,7 +618,18 @@ private fun App(
                                                 esPro = esPro,
                                                 onIrAPro = { irA(Destino.PRO) },
                                             )
-                                            else -> SettingsScreen(
+                                            2 -> CartasScreen(
+                                                modelo = cartasModelo,
+                                                cargando = cartasCargando,
+                                                fallo = cartasFallo,
+                                                activo = pagerState.currentPage == 2,
+                                                idiomaUi = idiomaCartas,
+                                                vista = cartasVista,
+                                                favoritos = cartasFavoritos,
+                                                onAlternarFavorito = vm::alternarCartasFavorito,
+                                                onReintentar = vm::cargarCartas,
+                                            )
+                                            3 -> SettingsScreen(
                                                 modoGrilla = modoGrilla,
                                                 onModoGrilla = vm::setModoGrilla,
                                                 estiloAvatar = estiloAvatar,
@@ -642,6 +679,10 @@ private fun App(
                                                 onTextoNegrita = vm::setTextoNegrita,
                                                 onAbrirBienvenida = vm::abrirBienvenida,
                                                 onAbrirElenco = { irA(Destino.ELENCO) },
+                                                cartasVista = cartasVista,
+                                                onCartasVista = vm::setCartasVista,
+                                                cartasFavoritosCount = cartasFavoritos.size,
+                                                onBorrarCartasFavoritos = vm::borrarCartasFavoritos,
                                             )
                                         }
                                     }

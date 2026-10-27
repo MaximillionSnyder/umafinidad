@@ -325,4 +325,15 @@
     <string name="ajustes_key_borrar">削除</string>
     <string name="ajustes_key_guardada">保存しました</string>
     <string name="ajustes_key_formato">uma.moe のキーの形式ではありません（uma_ で始まります）</string>
+
+    <!-- Sección Cartas (skills y cartas de personaje/apoyo). -->
+    <string name="tab_cartas">カード</string>
+    <string name="ajustes_cartas">カード</string>
+    <string name="cartas_vista_listas">スキルとカードの一覧</string>
+    <string name="cartas_vista_comoda">快適</string>
+    <string name="cartas_vista_compacta">コンパクト</string>
+    <string name="cartas_favoritas_borrar">お気に入りスキルを削除 (%1$s)</string>
+    <string name="cartas_cargando">スキルとカードのデータを読み込み中…</string>
+    <string name="cartas_error">カードデータを読み込めませんでした。</string>
+    <string name="cartas_reintentar">再試行</string>
 </resources>

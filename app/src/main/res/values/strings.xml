@@ -326,4 +326,15 @@
     <string name="ajustes_key_borrar">Delete</string>
     <string name="ajustes_key_guardada">Key saved</string>
     <string name="ajustes_key_formato">That does not look like an uma.moe key (they start with uma_)</string>
+
+    <!-- Sección Cartas (skills y cartas de personaje/apoyo). -->
+    <string name="tab_cartas">Cards</string>
+    <string name="ajustes_cartas">Cards</string>
+    <string name="cartas_vista_listas">Skill and card lists</string>
+    <string name="cartas_vista_comoda">Comfortable</string>
+    <string name="cartas_vista_compacta">Compact</string>
+    <string name="cartas_favoritas_borrar">Delete favorite skills (%1$s)</string>
+    <string name="cartas_cargando">Reading the skill and card tables…</string>
+    <string name="cartas_error">Could not read the card data.</string>
+    <string name="cartas_reintentar">Retry</string>
 </resources>

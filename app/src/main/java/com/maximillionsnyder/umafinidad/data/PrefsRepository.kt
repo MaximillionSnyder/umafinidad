@@ -2,6 +2,8 @@ package com.maximillionsnyder.umafinidad.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.maximillionsnyder.umafinidad.cartas.domain.VISTA_COMODA
+import com.maximillionsnyder.umafinidad.cartas.domain.VISTAS
 
 /* Modo de visualización de la grilla de personajes. */
 enum class ModoGrilla { TARJETAS, LISTA }
@@ -126,6 +128,18 @@ class PrefsRepository(context: Context) {
         get() = prefs.getInt(KEY_PANEL_Y, -1)
         set(valor) = prefs.edit().putInt(KEY_PANEL_Y, valor).apply()
 
+    /* ---- Sección Cartas (skills y cartas) ---- */
+    /* Densidad de las listas de skills/cartas: cómoda (por defecto) o compacta. */
+    var cartasVista: String
+        get() = prefs.getString(KEY_CARTAS_VISTA, null)?.takeIf { it in VISTAS } ?: VISTA_COMODA
+        set(valor) = prefs.edit().putString(KEY_CARTAS_VISTA, valor).apply()
+
+    /* Skills marcadas como favoritas en la sección Cartas. Se guardan como texto
+       porque SharedPreferences no admite conjuntos de enteros. */
+    var cartasFavoritos: Set<String>
+        get() = prefs.getStringSet(KEY_CARTAS_FAVORITOS, emptySet()) ?: emptySet()
+        set(valor) = prefs.edit().putStringSet(KEY_CARTAS_FAVORITOS, valor).apply()
+
     /* Avisa cuando cambia el tamaño de la burbuja, para aplicarlo en vivo
        (el servicio lo observa; la pref se cambia desde Ajustes). */
     fun observarTamanoBurbuja(
@@ -160,6 +174,8 @@ class PrefsRepository(context: Context) {
         const val KEY_PANEL_DOS_COLUMNAS = "panel_dos_columnas"
         const val KEY_PANEL_X = "panel_x"
         const val KEY_PANEL_Y = "panel_y"
+        const val KEY_CARTAS_VISTA = "cartas_vista"
+        const val KEY_CARTAS_FAVORITOS = "cartas_favoritos"
         // Solo lectura para migrar instalaciones con el interruptor viejo.
         const val KEY_ALTO_CONTRASTE = "alto_contraste"
     }

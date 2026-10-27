@@ -326,4 +326,15 @@
     <string name="ajustes_key_borrar">삭제</string>
     <string name="ajustes_key_guardada">저장했습니다</string>
     <string name="ajustes_key_formato">uma.moe 키 형식이 아닙니다 (uma_ 로 시작합니다)</string>
+
+    <!-- Sección Cartas (skills y cartas de personaje/apoyo). -->
+    <string name="tab_cartas">카드</string>
+    <string name="ajustes_cartas">카드</string>
+    <string name="cartas_vista_listas">스킬 및 카드 목록</string>
+    <string name="cartas_vista_comoda">편안함</string>
+    <string name="cartas_vista_compacta">컴팩트</string>
+    <string name="cartas_favoritas_borrar">즐겨찾기 스킬 삭제 (%1$s)</string>
+    <string name="cartas_cargando">스킬과 카드 데이터를 불러오는 중…</string>
+    <string name="cartas_error">카드 데이터를 읽을 수 없습니다.</string>
+    <string name="cartas_reintentar">다시 시도</string>
 </resources>

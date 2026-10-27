@@ -124,6 +124,10 @@ class TransicionesSemanticaTest {
         composeRule.onNodeWithContentDescription(contexto.getString(R.string.volver)).performClick()
         composeRule.waitForIdle()
 
-        composeRule.onAllNodesWithText(tituloGrupos).onFirst().assertIsDisplayed()
+        /* Al volver, Ajustes se recompone desde arriba: la tarjeta de Grupos
+           puede quedar fuera del hueco visible según cuántas secciones tenga
+           arriba. Lo que importa es que siga estando, así que se baja hasta
+           ella antes de comprobar que se ve. */
+        composeRule.onAllNodesWithText(tituloGrupos).onFirst().performScrollTo().assertIsDisplayed()
     }
 }

@@ -3,6 +3,8 @@ package com.maximillionsnyder.umafinidad.ui
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.maximillionsnyder.umafinidad.cartas.data.CartasRepository
+import com.maximillionsnyder.umafinidad.cartas.domain.CartasModelo
 import com.maximillionsnyder.umafinidad.data.BuscadorPadres
 import com.maximillionsnyder.umafinidad.data.UmamoeApi
 import com.maximillionsnyder.umafinidad.data.UmamoeApiKey
@@ -46,6 +48,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /* Resultado de intentar colocar/quitar un personaje. La pantalla traduce
    estos casos a mensajes localizados. */
@@ -95,6 +98,62 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
        solo distingue modelo == null y muestra un spinner. */
     private val _falloCargaModelo = MutableStateFlow(false)
     val falloCargaModelo: StateFlow<Boolean> = _falloCargaModelo
+
+    /* ---- Sección Cartas (skills, cartas de personaje y de apoyo) ----
+       El modelo va aparte y en diferido: skills.json pesa varios MB y quien no
+       abre la pestaña no tiene por qué pagarlo al arrancar. La pestaña pide la
+       carga al mostrarse por primera vez y muestra su propio estado de carga. */
+    private val cartasRepo = CartasRepository(application)
+
+    private val _cartasModelo = MutableStateFlow<CartasModelo?>(null)
+    val cartasModelo: StateFlow<CartasModelo?> = _cartasModelo
+
+    private val _cartasCargando = MutableStateFlow(false)
+    val cartasCargando: StateFlow<Boolean> = _cartasCargando
+
+    private val _cartasFallo = MutableStateFlow(false)
+    val cartasFallo: StateFlow<Boolean> = _cartasFallo
+
+    /* Carga (una sola vez) las tablas de Cartas; reintentable si falló. */
+    fun cargarCartas() {
+        if (_cartasModelo.value != null || _cartasCargando.value) return
+        _cartasCargando.value = true
+        _cartasFallo.value = false
+        viewModelScope.launch {
+            val cargado = withContext(Dispatchers.Default) {
+                runCatching { cartasRepo.modelo }.getOrNull()
+            }
+            _cartasModelo.value = cargado
+            _cartasFallo.value = cargado == null
+            _cartasCargando.value = false
+        }
+    }
+
+    /* Densidad de las listas de Cartas (cómoda / compacta), persistida. */
+    private val _cartasVista = MutableStateFlow(prefs.cartasVista)
+    val cartasVista: StateFlow<String> = _cartasVista
+
+    fun setCartasVista(valor: String) {
+        prefs.cartasVista = valor
+        _cartasVista.value = valor
+    }
+
+    /* Skills favoritas de Cartas: los ids se guardan como texto. */
+    private val _cartasFavoritos = MutableStateFlow(prefs.cartasFavoritos)
+    val cartasFavoritos: StateFlow<Set<String>> = _cartasFavoritos
+
+    fun alternarCartasFavorito(id: Int) {
+        val clave = id.toString()
+        val actuales = _cartasFavoritos.value
+        val nuevos = if (clave in actuales) actuales - clave else actuales + clave
+        prefs.cartasFavoritos = nuevos
+        _cartasFavoritos.value = nuevos
+    }
+
+    fun borrarCartasFavoritos() {
+        prefs.cartasFavoritos = emptySet()
+        _cartasFavoritos.value = emptySet()
+    }
 
     private val _seleccion = MutableStateFlow<List<Int?>>(List(SLOTS) { null })
     val seleccion: StateFlow<List<Int?>> = _seleccion

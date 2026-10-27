@@ -5,6 +5,10 @@ la herencia de Uma Musume con los datos datamined de GameTora. Es la versión
 nativa del visor web publicado en
 [MaximillionSnyder.github.io](https://github.com/MaximillionSnyder/MaximillionSnyder.github.io).
 
+La pestaña **Cartas** suma, portado de
+[cartasdebuff](https://github.com/MaximillionSnyder/cartasdebuff), el catálogo
+completo de skills y de cartas de personaje y de apoyo de GameTora.
+
 Además, el repo incluye **`sitio/`**, la versión web nueva derivada de la app
 (SvelteKit + Svelte 5, 100% estática/offline):
 
@@ -61,6 +65,31 @@ padres + 4 tríos), la explicación del reparto y la mejor alternativa de cada
 slot con su total resultante. Es solo presentación: el cálculo de afinidad,
 rankings y alternativas no cambia.
 
+## Cartas: skills, personajes y apoyos
+
+La pestaña **Cartas** trae el catálogo de GameTora a la app, con el mismo
+criterio offline que el resto: los datos van embebidos en los assets y solo las
+caras/íconos se descargan de GameTora.
+
+- **Skills** (1921): buscador por nombre o id, filtros por rareza,
+  debuff/velocidad/aceleración, fuentes (cartas de personaje, eventos, hints y
+  eventos de apoyo, eventos de escenario), "ocultar sin EN" y favoritas.
+- **Personajes** (270 cartas): título, estrellas, obtención y las skills que da
+  cada carta (por carta y por evento).
+- **Apoyos** (563 cartas): tipo, estrellas, obtención y las skills de sus
+  hints/eventos, con filtro "sin gacha".
+- Las fichas de skill muestran la condición **en crudo** de GameTora y su
+  lectura, los efectos, la versión genética, la evolución y las cartas que la
+  dan; desde la ficha se salta a la carta correspondiente y viceversa.
+- **Ajustes → Cartas**: densidad de las listas (cómoda/compacta) y borrado de
+  favoritas (las favoritas se guardan en el dispositivo).
+- Los textos de la sección se traducen a los **9 idiomas** de la app, pero los
+  nombres y descripciones de las skills vienen de GameTora solo en
+  EN/JA/KO/ZH: en español caen a inglés (las etiquetas de tipos y condiciones
+  sí están en español).
+- La carga de estos datos es **diferida**: la primera vez que se abre la
+  pestaña se leen los ~4 MB de tablas en segundo plano, sin frenar el arranque.
+
 ## Burbuja flotante (acceso rápido)
 
 Desde **Ajustes → Burbuja flotante** se puede activar una burbuja sobre
@@ -100,7 +129,7 @@ se juega:
   posición);
 - el panel **no se cierra al tocar afuera**: solo con la burbuja, la X, Atrás
   o el botón Ocultar, así podés seguir jugando con la franja abierta;
-- incluye atajos para abrir Compatibilidad, Mi corredora, Mis Umas y Ajustes;
+- incluye atajos para abrir Compatibilidad, Mi corredora, Cartas, Mis Umas y Ajustes;
 - se arrastra y se pega al borde más cercano con una animación corta,
   recordando su posición, y se oculta desde el propio panel o desde la
   notificación.
@@ -155,9 +184,13 @@ comunes para que no se separen.
 ## Estructura
 
 ```
-├── app/src/main/assets/data/     # JSON datamined (committeados)
+├── app/src/main/assets/data/     # JSON datamined (committeados): afinidad + skills/cartas
 ├── app/src/main/java/            # Kotlin (Compose + lógica porteada)
 │   └── .../umafinidad/
+│       ├── cartas/                # pestaña Cartas (porte de cartasdebuff)
+│       │   ├── data/              # DTOs + repositorio de skills/cartas (assets)
+│       │   ├── domain/            # modelos, etiquetas, condiciones y textos (i18n)
+│       │   └── ui/                # host de la pestaña, skills, cartas y componentes
 │       ├── data/                 # DTOs + repositorio (lee assets) + licencia Pro
 │       ├── domain/               # AffinityModel + Herencia (porte 1:1)
 │       ├── overlay/              # burbuja flotante + panel de acceso rápido
@@ -169,6 +202,7 @@ comunes para que no se separen.
 │   └── static/                   # datos y avatares generados (no versionados)
 ├── scripts/
 │   ├── fetch-gametora.mjs        # actualiza assets/data desde GameTora
+│   ├── fetch-cartas.mjs          # actualiza skills + cartas de personaje/apoyo
 │   └── generate-launcher-icons.mjs
 └── .github/workflows/            # android.yml (APK) + sitio.yml (web)
 ```
@@ -178,6 +212,7 @@ comunes para que no se separen.
 ```bash
 npm run fetch              # actualizar datos datamined (incluye aptitudes) → app/src/main/assets/data/
 npm run fetch:aptitudes    # solo aptitudes (track/distancia/estilo) por personaje
+npm run fetch:cartas       # solo skills + cartas de personaje/apoyo/escenarios
 npm run icons              # regenerar íconos launcher legacy
 node scripts/generar-codigos-pro.mjs   # emitir códigos de licencia Pro
 node scripts/verificar-strings.mjs     # paridad de claves/marcadores i18n

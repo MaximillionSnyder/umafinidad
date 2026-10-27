@@ -12,7 +12,8 @@ class DestinoTest {
     fun extraeLaPaginaDelTab() {
         assertEquals(0, Destino.pagina(Destino.TAB_COMPAT))
         assertEquals(1, Destino.pagina(Destino.TAB_CORREDORA))
-        assertEquals(2, Destino.pagina(Destino.TAB_AJUSTES))
+        assertEquals(2, Destino.pagina(Destino.TAB_CARTAS))
+        assertEquals(3, Destino.pagina(Destino.TAB_AJUSTES))
     }
 
     @Test

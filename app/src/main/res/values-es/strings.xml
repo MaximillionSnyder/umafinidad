@@ -326,4 +326,15 @@
     <string name="ajustes_key_borrar">Borrar</string>
     <string name="ajustes_key_guardada">Key guardada</string>
     <string name="ajustes_key_formato">Eso no parece una key de uma.moe (empiezan con uma_)</string>
+
+    <!-- Sección Cartas (skills y cartas de personaje/apoyo). -->
+    <string name="tab_cartas">Cartas</string>
+    <string name="ajustes_cartas">Cartas</string>
+    <string name="cartas_vista_listas">Listas de skills y cartas</string>
+    <string name="cartas_vista_comoda">Cómoda</string>
+    <string name="cartas_vista_compacta">Compacta</string>
+    <string name="cartas_favoritas_borrar">Borrar skills favoritas (%1$s)</string>
+    <string name="cartas_cargando">Leyendo las tablas de skills y cartas…</string>
+    <string name="cartas_error">No se pudieron leer los datos de cartas.</string>
+    <string name="cartas_reintentar">Reintentar</string>
 </resources>

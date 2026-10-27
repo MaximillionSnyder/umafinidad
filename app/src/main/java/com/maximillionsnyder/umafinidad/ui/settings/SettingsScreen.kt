@@ -54,6 +54,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.ui.res.painterResource
 import com.maximillionsnyder.umafinidad.BuildConfig
 import com.maximillionsnyder.umafinidad.R
+import com.maximillionsnyder.umafinidad.cartas.domain.VISTA_COMODA
+import com.maximillionsnyder.umafinidad.cartas.domain.VISTA_COMPACTA
 import com.maximillionsnyder.umafinidad.data.ArbolGuardado
 import com.maximillionsnyder.umafinidad.data.EstiloAvatar
 import com.maximillionsnyder.umafinidad.data.Idioma
@@ -118,6 +120,13 @@ fun SettingsScreen(
     textoNegrita: Boolean,
     onTextoNegrita: (Boolean) -> Unit,
     onAbrirBienvenida: () -> Unit,
+    /* Sección Cartas: densidad de sus listas y limpieza de skills favoritas
+       (las guarda AppViewModel en preferencias). Con valores por defecto para
+       que los androidTests que componen la pantalla sigan compilando. */
+    cartasVista: String = VISTA_COMODA,
+    onCartasVista: (String) -> Unit = {},
+    cartasFavoritosCount: Int = 0,
+    onBorrarCartasFavoritos: () -> Unit = {},
 ) {
     var seccionAbierta by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -372,6 +381,49 @@ fun SettingsScreen(
                     activado = textoNegrita,
                     onCambio = onTextoNegrita,
                 )
+            }
+        }
+
+        /* ===== Cartas =====
+           Queda justo después de Accesibilidad y antes de Tema e Idioma: la
+           densidad de las listas es una preferencia de lectura, hermana del
+           tamaño de texto, y Tema/Idioma (que valen para toda la app) siguen
+           cerrando el grupo de secciones desplegables. */
+        SeccionDesplegable(
+            titulo = stringResource(R.string.ajustes_cartas),
+            etiqueta = "seccion_cartas",
+            abierto = estaAbierta("cartas"),
+            onToggle = { alternar("cartas") },
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    stringResource(R.string.cartas_vista_listas),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.cartas_vista_comoda),
+                    seleccionado = cartasVista == VISTA_COMODA,
+                    onClick = { onCartasVista(VISTA_COMODA) },
+                )
+                OpcionGrilla(
+                    titulo = stringResource(R.string.cartas_vista_compacta),
+                    seleccionado = cartasVista == VISTA_COMPACTA,
+                    onClick = { onCartasVista(VISTA_COMPACTA) },
+                )
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                /* Sin favoritas no hay nada que borrar: el botón se apaga. */
+                TextButton(
+                    onClick = onBorrarCartasFavoritos,
+                    enabled = cartasFavoritosCount > 0,
+                ) {
+                    Text(
+                        stringResource(
+                            R.string.cartas_favoritas_borrar,
+                            cartasFavoritosCount.toString(),
+                        ),
+                    )
+                }
             }
         }
 
@@ -897,8 +949,15 @@ private fun FilaInterruptor(titulo: String, descripcion: String, activado: Boole
     }
 }
 
+/* Opción de una sección: tarjeta con radio. La descripción es opcional para
+   las listas cortas (vista de Cartas), donde el título ya dice todo. */
 @Composable
-private fun OpcionGrilla(titulo: String, descripcion: String, seleccionado: Boolean, onClick: () -> Unit) {
+private fun OpcionGrilla(
+    titulo: String,
+    descripcion: String? = null,
+    seleccionado: Boolean,
+    onClick: () -> Unit,
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -915,7 +974,9 @@ private fun OpcionGrilla(titulo: String, descripcion: String, seleccionado: Bool
             RadioButton(selected = seleccionado, onClick = null)
             Column(modifier = Modifier.weight(1f)) {
                 Text(titulo, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
-                Text(descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (descripcion != null) {
+                    Text(descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
             }
         }
     }

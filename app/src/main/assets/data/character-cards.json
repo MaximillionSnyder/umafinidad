@@ -1,0 +1,5402 @@
+{
+  "100101": {
+    "cardId": 100101,
+    "charId": 1001,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100101-special-week",
+    "name": {
+      "en": "Special Week",
+      "ja": "スペシャルウィーク",
+      "ko": "스페셜 위크",
+      "tw": "特別週"
+    },
+    "title": {
+      "en": "[Special Dreamer]",
+      "ja": "[スペシャルドリーマー]",
+      "ko": "[스페셜 드리머]",
+      "tw": "[特別夢想家]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1001_100101.png"
+  },
+  "100102": {
+    "cardId": 100102,
+    "charId": 1001,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100102-special-week",
+    "name": {
+      "en": "Special Week",
+      "ja": "スペシャルウィーク",
+      "ko": "스페셜 위크",
+      "tw": "特別週"
+    },
+    "title": {
+      "en": "[Hopp'n♪Happy Heart]",
+      "ja": "[ほっぴん♪ビタミンハート]",
+      "ko": "[호핑♪비타민 하트]",
+      "tw": "[跳躍♪富含維他命的心]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1001_100102.png"
+  },
+  "100103": {
+    "cardId": 100103,
+    "charId": 1001,
+    "rarity": 3,
+    "obtained": "main_story",
+    "urlName": "100103-special-week",
+    "name": {
+      "en": "Special Week",
+      "ja": "スペシャルウィーク",
+      "ko": "스페셜 위크",
+      "tw": "特別週"
+    },
+    "title": {
+      "en": "[Ruler of Japan]",
+      "ja": "[日之本一の総大将]",
+      "ko": "[일본 최고의 총대장]",
+      "tw": "[日之本第一總大將]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1001_100103.png"
+  },
+  "100201": {
+    "cardId": 100201,
+    "charId": 1002,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100201-silence-suzuka",
+    "name": {
+      "en": "Silence Suzuka",
+      "ja": "サイレンススズカ",
+      "ko": "사일런스 스즈카",
+      "tw": "無聲鈴鹿"
+    },
+    "title": {
+      "en": "[Innocent Silence]",
+      "ja": "[サイレントイノセンス]",
+      "ko": "[사일런트 이노센스]",
+      "tw": "[無聲純真]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1002_100201.png"
+  },
+  "100202": {
+    "cardId": 100202,
+    "charId": 1002,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100202-silence-suzuka",
+    "name": {
+      "en": "Silence Suzuka",
+      "ja": "サイレンススズカ",
+      "ko": "사일런스 스즈카",
+      "tw": "無聲鈴鹿"
+    },
+    "title": {
+      "en": "[Emerald Tidings]",
+      "ja": "[波間のエメラルド]",
+      "ko": "[물결 사이의 에메랄드]",
+      "tw": "[波浪間的綠寶石]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1002_100202.png"
+  },
+  "100301": {
+    "cardId": 100301,
+    "charId": 1003,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100301-tokai-teio",
+    "name": {
+      "en": "Tokai Teio",
+      "ja": "トウカイテイオー",
+      "ko": "토카이 테이오",
+      "tw": "東海帝皇"
+    },
+    "title": {
+      "en": "[Peak Joy]",
+      "ja": "[トップ・オブ・ジョイフル]",
+      "ko": "[톱・오브・조이풀]",
+      "tw": "[歡樂巔峰]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1003_100301.png"
+  },
+  "100302": {
+    "cardId": 100302,
+    "charId": 1003,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100302-tokai-teio",
+    "name": {
+      "en": "Tokai Teio",
+      "ja": "トウカイテイオー",
+      "ko": "토카이 테이오",
+      "tw": "東海帝皇"
+    },
+    "title": {
+      "en": "[Beyond the Horizon]",
+      "ja": "[ビヨンド・ザ・ホライズン]",
+      "ko": "[비욘드・더・호라이즌]",
+      "tw": "[超越地平線]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1003_100302.png"
+  },
+  "100303": {
+    "cardId": 100303,
+    "charId": 1003,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100303-tokai-teio",
+    "name": {
+      "en": "Tokai Teio",
+      "ja": "トウカイテイオー",
+      "ko": "토카이 테이오",
+      "tw": "東海帝皇"
+    },
+    "title": {
+      "en": "Dream Butterfly of Purple Clouds",
+      "ja": "[紫雲の夢見取り]",
+      "ko": "[자색 구름의 나비]",
+      "tw": "[紫雲下的追夢蝶]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1003_100303.png"
+  },
+  "100401": {
+    "cardId": 100401,
+    "charId": 1004,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100401-maruzensky",
+    "name": {
+      "en": "Maruzensky",
+      "ja": "マルゼンスキー",
+      "ko": "마루젠스키",
+      "tw": "丸善斯基"
+    },
+    "title": {
+      "en": "[Formula R]",
+      "ja": "[フォーミュラオブルージュ]",
+      "ko": "[포뮬러 오브 루주]",
+      "tw": "[嫣紅方程式]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1004_100401.png"
+  },
+  "100402": {
+    "cardId": 100402,
+    "charId": 1004,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100402-maruzensky",
+    "name": {
+      "en": "Maruzensky",
+      "ja": "マルゼンスキー",
+      "ko": "마루젠스키",
+      "tw": "丸善斯基"
+    },
+    "title": {
+      "en": "[Hot☆Summer Night]",
+      "ja": "[ぶっとび☆さまーナイト]",
+      "ko": "[날아라☆서머 나이트]",
+      "tw": "[飛越☆盛夏騎士]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1004_100402.png"
+  },
+  "100403": {
+    "cardId": 100403,
+    "charId": 1004,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100403-maruzensky",
+    "name": {
+      "en": "Maruzensky",
+      "ja": "マルゼンスキー",
+      "ko": "마루젠스키",
+      "tw": "丸善斯基"
+    },
+    "title": {
+      "en": "Auspicious Maiden of Divine Speed",
+      "ja": "[祝ひ寿ぐ神速天女]",
+      "ko": "[축복을 전하는 신속 선녀]",
+      "tw": "[祈福祝賀的神速天女]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1004_100403.png"
+  },
+  "100501": {
+    "cardId": 100501,
+    "charId": 1005,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100501-fuji-kiseki",
+    "name": {
+      "en": "Fuji Kiseki",
+      "ja": "フジキセキ",
+      "ko": "후지 키세키",
+      "tw": "富士奇石"
+    },
+    "title": {
+      "en": "[Shooting Star Revue]",
+      "ja": "[シューティンスタァ・ルヴュ]",
+      "ko": "[슈팅 스타・레뷔]",
+      "tw": "[流星歌舞劇]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1005_100501.png"
+  },
+  "100502": {
+    "cardId": 100502,
+    "charId": 1005,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100502-fuji-kiseki",
+    "name": {
+      "en": "Fuji Kiseki",
+      "ja": "フジキセキ",
+      "ko": "후지 키세키",
+      "tw": "富士奇石"
+    },
+    "title": {
+      "en": "[Succès Étoilé]",
+      "ja": "[シュクセ・エトワーレ]",
+      "ko": "[쉭세・에투알]",
+      "tw": "[勝利明星]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1005_100502.png"
+  },
+  "100503": {
+    "cardId": 100503,
+    "charId": 1005,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100503-fuji-kiseki",
+    "name": {
+      "en": "Fuji Kiseki",
+      "ja": "フジキセキ",
+      "ko": "후지 키세키",
+      "tw": "富士奇石"
+    },
+    "title": {
+      "en": "Blanche Étoile",
+      "ja": "[ブランシュ・エトワール]",
+      "ko": "[ブランシュ・エトワール]",
+      "tw": "[ブランシュ・エトワール]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1005_100503.png"
+  },
+  "100601": {
+    "cardId": 100601,
+    "charId": 1006,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100601-oguri-cap",
+    "name": {
+      "en": "Oguri Cap",
+      "ja": "オグリキャップ",
+      "ko": "오구리 캡",
+      "tw": "小栗帽"
+    },
+    "title": {
+      "en": "[Starlight Beat]",
+      "ja": "[スターライトビート]",
+      "ko": "[스타라이트 비트]",
+      "tw": "[星光躍動]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1006_100601.png"
+  },
+  "100602": {
+    "cardId": 100602,
+    "charId": 1006,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100602-oguri-cap",
+    "name": {
+      "en": "Oguri Cap",
+      "ja": "オグリキャップ",
+      "ko": "오구리 캡",
+      "tw": "小栗帽"
+    },
+    "title": {
+      "en": "[Ashen Miracle]",
+      "ja": "[キセキの白星]",
+      "ko": "[기적의 하얀 별]",
+      "tw": "[奇蹟白星]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1006_100602.png"
+  },
+  "100603": {
+    "cardId": 100603,
+    "charId": 1006,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100603-oguri-cap",
+    "name": {
+      "en": "Oguri Cap",
+      "ja": "オグリキャップ",
+      "ko": "오구리 캡",
+      "tw": "小栗帽"
+    },
+    "title": {
+      "en": "Cinderella Gray",
+      "ja": "[シンデレラグレイ]",
+      "ko": "[シンデレラグレイ]",
+      "tw": "[シンデレラグレイ]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1006_100603.png"
+  },
+  "100701": {
+    "cardId": 100701,
+    "charId": 1007,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "100701-gold-ship",
+    "name": {
+      "en": "Gold Ship",
+      "ja": "ゴールドシップ",
+      "ko": "골드 쉽",
+      "tw": "黃金船"
+    },
+    "title": {
+      "en": "[Red Strife]",
+      "ja": "[レッドストライフ]",
+      "ko": "[레드 스트라이프]",
+      "tw": "[火紅鬥爭]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1007_100701.png"
+  },
+  "100702": {
+    "cardId": 100702,
+    "charId": 1007,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100702-gold-ship",
+    "name": {
+      "en": "Gold Ship",
+      "ja": "ゴールドシップ",
+      "ko": "골드 쉽",
+      "tw": "黃金船"
+    },
+    "title": {
+      "en": "[RUN! RUIN! LAUNCHER!]",
+      "ja": "[RUN！乱！ランチャー！！]",
+      "ko": "[RUN! 럼블! 런처!!]",
+      "tw": "[RUN！亂！亂槍射手！！]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1007_100702.png"
+  },
+  "100703": {
+    "cardId": 100703,
+    "charId": 1007,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100703-gold-ship",
+    "name": {
+      "en": "Gold Ship",
+      "ja": "ゴールドシップ",
+      "ko": "골드 쉽",
+      "tw": "黃金船"
+    },
+    "title": {
+      "en": "La Mode 564",
+      "ja": "[La mode 564]",
+      "ko": "[La mode 564]",
+      "tw": "[La mode 564]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1007_100703.png"
+  },
+  "100801": {
+    "cardId": 100801,
+    "charId": 1008,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "100801-vodka",
+    "name": {
+      "en": "Vodka",
+      "ja": "ウオッカ",
+      "ko": "보드카",
+      "tw": "伏特加"
+    },
+    "title": {
+      "en": "[Wild Top Gear]",
+      "ja": "[ワイルドトップギア]",
+      "ko": "[와일드 톱기어]",
+      "tw": "[狂野極速]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1008_100801.png"
+  },
+  "100802": {
+    "cardId": 100802,
+    "charId": 1008,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100802-vodka",
+    "name": {
+      "en": "Vodka",
+      "ja": "ウオッカ",
+      "ko": "보드카",
+      "tw": "伏特加"
+    },
+    "title": {
+      "en": "[Fiery Aqua Vitae]",
+      "ja": "[不凍のアクア・ウィタエ]",
+      "ko": "[얼지 않는 아쿠아・비타이]",
+      "tw": "[不凍的生命之水]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1008_100802.png"
+  },
+  "100901": {
+    "cardId": 100901,
+    "charId": 1009,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "100901-daiwa-scarlet",
+    "name": {
+      "en": "Daiwa Scarlet",
+      "ja": "ダイワスカーレット",
+      "ko": "다이와 스칼렛",
+      "tw": "大和赤驥"
+    },
+    "title": {
+      "en": "[Peak Blue]",
+      "ja": "[トップ・オブ・ブルー]",
+      "ko": "[톱・오브・블루]",
+      "tw": "[蒼藍巔峰]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1009_100901.png"
+  },
+  "100902": {
+    "cardId": 100902,
+    "charId": 1009,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "100902-daiwa-scarlet",
+    "name": {
+      "en": "Daiwa Scarlet",
+      "ja": "ダイワスカーレット",
+      "ko": "다이와 스칼렛",
+      "tw": "大和赤驥"
+    },
+    "title": {
+      "en": "[Nuit Étoilée de Scarlet]",
+      "ja": "[緋色のニュイ・エトワレ]",
+      "ko": "[다홍색 뉘・에투알레]",
+      "tw": "[緋紅的星落之夜]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1009_100902.png"
+  },
+  "101001": {
+    "cardId": 101001,
+    "charId": 1010,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101001-taiki-shuttle",
+    "name": {
+      "en": "Taiki Shuttle",
+      "ja": "タイキシャトル",
+      "ko": "타이키 셔틀",
+      "tw": "大樹快車"
+    },
+    "title": {
+      "en": "[Wild Frontier]",
+      "ja": "[ワイルド・フロンティア]",
+      "ko": "[와일드・프론티어]",
+      "tw": "[野性邊境]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1010_101001.png"
+  },
+  "101002": {
+    "cardId": 101002,
+    "charId": 1010,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101002-taiki-shuttle",
+    "name": {
+      "en": "Taiki Shuttle",
+      "ja": "タイキシャトル",
+      "ko": "타이키 셔틀",
+      "tw": "大樹快車"
+    },
+    "title": {
+      "en": "[Bubblegum☆Memories]",
+      "ja": "[Bubblegum☆Memories]",
+      "ko": "[Bubblegum☆Memories]",
+      "tw": "[Bubblegum☆Memories]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1010_101002.png"
+  },
+  "101003": {
+    "cardId": 101003,
+    "charId": 1010,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101003-taiki-shuttle",
+    "name": {
+      "en": "Taiki Shuttle",
+      "ja": "タイキシャトル",
+      "ko": "타이키 셔틀",
+      "tw": "大樹快車"
+    },
+    "title": {
+      "en": "Baa Baa Patisserie",
+      "ja": "[Baa Baa Patisserie]",
+      "ko": "[Baa Baa Patisserie]",
+      "tw": "[Baa Baa Patisserie]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1010_101003.png"
+  },
+  "101101": {
+    "cardId": 101101,
+    "charId": 1011,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "101101-grass-wonder",
+    "name": {
+      "en": "Grass Wonder",
+      "ja": "グラスワンダー",
+      "ko": "그래스 원더",
+      "tw": "草上飛"
+    },
+    "title": {
+      "en": "[Stone-Piercing Blue]",
+      "ja": "[岩穿つ青]",
+      "ko": "[바위 뚫는 파랑]",
+      "tw": "[穿岩之青]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1011_101101.png"
+  },
+  "101102": {
+    "cardId": 101102,
+    "charId": 1011,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101102-grass-wonder",
+    "name": {
+      "en": "Grass Wonder",
+      "ja": "グラスワンダー",
+      "ko": "그래스 원더",
+      "tw": "草上飛"
+    },
+    "title": {
+      "en": "[Saintly Jade Cleric]",
+      "ja": "[セイントジェード・ヒーラー]",
+      "ko": "[세인트 제이드・힐러]",
+      "tw": "[神聖翡翠治癒師]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1011_101102.png"
+  },
+  "101103": {
+    "cardId": 101103,
+    "charId": 1011,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101103-grass-wonder",
+    "name": {
+      "en": "Grass Wonder",
+      "ja": "グラスワンダー",
+      "ko": "그래스 원더",
+      "tw": "草上飛"
+    },
+    "title": {
+      "en": "Honor of the Azure Flame",
+      "ja": "[蒼炎の誉]",
+      "ko": "[푸른 불꽃의 명예]",
+      "tw": "[蒼炎之譽]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1011_101103.png"
+  },
+  "101201": {
+    "cardId": 101201,
+    "charId": 1012,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101201-hishi-amazon",
+    "name": {
+      "en": "Hishi Amazon",
+      "ja": "ヒシアマゾン",
+      "ko": "히시 아마존",
+      "tw": "菱亞馬遜"
+    },
+    "title": {
+      "en": "[Azure Amazon]",
+      "ja": "[アマゾネス・ラピス]",
+      "ko": "[아마조네스・라피스]",
+      "tw": "[亞馬遜青金石]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1012_101201.png"
+  },
+  "101202": {
+    "cardId": 101202,
+    "charId": 1012,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101202-hishi-amazon",
+    "name": {
+      "en": "Hishi Amazon",
+      "ja": "ヒシアマゾン",
+      "ko": "히시 아마존",
+      "tw": "菱亞馬遜"
+    },
+    "title": {
+      "en": "[Hungry Veil]",
+      "ja": "[Hungry Veil]",
+      "ko": "[Hungry Veil]",
+      "tw": "[Hungry Veil]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1012_101202.png"
+  },
+  "101301": {
+    "cardId": 101301,
+    "charId": 1013,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101301-mejiro-mcqueen",
+    "name": {
+      "en": "Mejiro McQueen",
+      "ja": "メジロマックイーン",
+      "ko": "메지로 맥퀸",
+      "tw": "目白麥昆"
+    },
+    "title": {
+      "en": "[Frontline Elegance]",
+      "ja": "[エレガンス・ライン]",
+      "ko": "[엘레강스・라인]",
+      "tw": "[優雅線條]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1013_101301.png"
+  },
+  "101302": {
+    "cardId": 101302,
+    "charId": 1013,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101302-mejiro-mcqueen",
+    "name": {
+      "en": "Mejiro McQueen",
+      "ja": "メジロマックイーン",
+      "ko": "메지로 맥퀸",
+      "tw": "目白麥昆"
+    },
+    "title": {
+      "en": "[End of the Skies]",
+      "ja": "[エンド・オブ・スカイ]",
+      "ko": "[엔드・오브・스카이]",
+      "tw": "[空之盡頭]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1013_101302.png"
+  },
+  "101303": {
+    "cardId": 101303,
+    "charId": 1013,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101303-mejiro-mcqueen",
+    "name": {
+      "en": "Mejiro McQueen",
+      "ja": "メジロマックイーン",
+      "ko": "메지로 맥퀸",
+      "tw": "目白麥昆"
+    },
+    "title": {
+      "en": "[Fair Lady of the Waves]",
+      "ja": "[さざ波フェアレディ]",
+      "ko": "[잔물결 페어 레이디]",
+      "tw": "[漣漪窈窕淑女]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1013_101303.png"
+  },
+  "101401": {
+    "cardId": 101401,
+    "charId": 1014,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "101401-el-condor-pasa",
+    "name": {
+      "en": "El Condor Pasa",
+      "ja": "エルコンドルパサー",
+      "ko": "엘 콘도르 파사",
+      "tw": "神鷹"
+    },
+    "title": {
+      "en": "[El☆Número 1]",
+      "ja": "[エル☆Número 1]",
+      "ko": "[엘☆Número 1]",
+      "tw": "[神鷹☆Número 1]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1014_101401.png"
+  },
+  "101402": {
+    "cardId": 101402,
+    "charId": 1014,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101402-el-condor-pasa",
+    "name": {
+      "en": "El Condor Pasa",
+      "ja": "エルコンドルパサー",
+      "ko": "엘 콘도르 파사",
+      "tw": "神鷹"
+    },
+    "title": {
+      "en": "[Kukulkan Warrior]",
+      "ja": "[ククルカン・モンク]",
+      "ko": "[쿠쿨칸・몽크]",
+      "tw": "[羽蛇神武鬥家]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1014_101402.png"
+  },
+  "101501": {
+    "cardId": 101501,
+    "charId": 1015,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101501-tm-opera-o",
+    "name": {
+      "en": "TM Opera O",
+      "ja": "テイエムオペラオー",
+      "ko": "티엠 오페라 오",
+      "tw": "好歌劇"
+    },
+    "title": {
+      "en": "[O Sole Suo!]",
+      "ja": "[オー・ソレ・スーオ！]",
+      "ko": "[오・솔레・수오!]",
+      "tw": "[你的太陽！]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1015_101501.png"
+  },
+  "101502": {
+    "cardId": 101502,
+    "charId": 1015,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101502-tm-opera-o",
+    "name": {
+      "en": "TM Opera O",
+      "ja": "テイエムオペラオー",
+      "ko": "티엠 오페라 오",
+      "tw": "好歌劇"
+    },
+    "title": {
+      "en": "[New Year, Same Radiance!]",
+      "ja": "[初晴・青き絢爛]",
+      "ko": "[새해 창천・푸르른 현란]",
+      "tw": "[初晴．湛藍絢爛]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1015_101502.png"
+  },
+  "101601": {
+    "cardId": 101601,
+    "charId": 1016,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101601-narita-brian",
+    "name": {
+      "en": "Narita Brian",
+      "ja": "ナリタブライアン",
+      "ko": "나리타 브라이언",
+      "tw": "成田白仁"
+    },
+    "title": {
+      "en": "[Maverick]",
+      "ja": "[Maverick]",
+      "ko": "[Maverick]",
+      "tw": "[Maverick]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1016_101601.png"
+  },
+  "101602": {
+    "cardId": 101602,
+    "charId": 1016,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101602-narita-brian",
+    "name": {
+      "en": "Narita Brian",
+      "ja": "ナリタブライアン",
+      "ko": "나리타 브라이언",
+      "tw": "成田白仁"
+    },
+    "title": {
+      "en": "[Ravenous Wolf]",
+      "ja": "[餓狼]",
+      "ko": "[굶주린 늑대]",
+      "tw": "[餓狼]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1016_101602.png"
+  },
+  "101701": {
+    "cardId": 101701,
+    "charId": 1017,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101701-symboli-rudolf",
+    "name": {
+      "en": "Symboli Rudolf",
+      "ja": "シンボリルドルフ",
+      "ko": "심볼리 루돌프",
+      "tw": "魯道夫象徵"
+    },
+    "title": {
+      "en": "[Emperor's Path]",
+      "ja": "[ロード・オブ・エンペラー]",
+      "ko": "[로드・오브・엠퍼러]",
+      "tw": "[皇帝之路]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1017_101701.png"
+  },
+  "101702": {
+    "cardId": 101702,
+    "charId": 1017,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101702-symboli-rudolf",
+    "name": {
+      "en": "Symboli Rudolf",
+      "ja": "シンボリルドルフ",
+      "ko": "심볼리 루돌프",
+      "tw": "魯道夫象徵"
+    },
+    "title": {
+      "en": "[Archer by Moonlight]",
+      "ja": "[皓月の弓取り]",
+      "ko": "[밝은 달의 활잡이]",
+      "tw": "[皓月下的弓手]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1017_101702.png"
+  },
+  "101703": {
+    "cardId": 101703,
+    "charId": 1017,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101703-symboli-rudolf",
+    "name": {
+      "en": "Symboli Rudolf",
+      "ja": "シンボリルドルフ",
+      "ko": "심볼리 루돌프",
+      "tw": "魯道夫象徵"
+    },
+    "title": {
+      "en": "Adamant Sovereign",
+      "ja": "[Adamant Sovereign]",
+      "ko": "[Adamant Sovereign]",
+      "tw": "[Adamant Sovereign]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1017_101703.png"
+  },
+  "101801": {
+    "cardId": 101801,
+    "charId": 1018,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "101801-air-groove",
+    "name": {
+      "en": "Air Groove",
+      "ja": "エアグルーヴ",
+      "ko": "에어 그루브",
+      "tw": "氣槽"
+    },
+    "title": {
+      "en": "[Empress Road]",
+      "ja": "[エンプレスロード]",
+      "ko": "[엠프리스 로드]",
+      "tw": "[女帝之路]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1018_101801.png"
+  },
+  "101802": {
+    "cardId": 101802,
+    "charId": 1018,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101802-air-groove",
+    "name": {
+      "en": "Air Groove",
+      "ja": "エアグルーヴ",
+      "ko": "에어 그루브",
+      "tw": "氣槽"
+    },
+    "title": {
+      "en": "[Quercus Civilis]",
+      "ja": "[クエルクス・キウィーリス]",
+      "ko": "[퀘르쿠스・키윌리스]",
+      "tw": "[榮譽橡木冠]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1018_101802.png"
+  },
+  "101803": {
+    "cardId": 101803,
+    "charId": 1018,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101803-air-groove",
+    "name": {
+      "en": "Air Groove",
+      "ja": "エアグルーヴ",
+      "ko": "에어 그루브",
+      "tw": "氣槽"
+    },
+    "title": {
+      "en": "Eternal Hekateia",
+      "ja": "[悠久なるヘカテイア]",
+      "ko": "[悠久なるヘカテイア]",
+      "tw": "[悠久なるヘカテイア]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1018_101803.png"
+  },
+  "101901": {
+    "cardId": 101901,
+    "charId": 1019,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101901-agnes-digital",
+    "name": {
+      "en": "Agnes Digital",
+      "ja": "アグネスデジタル",
+      "ko": "아그네스 디지털",
+      "tw": "愛麗數碼"
+    },
+    "title": {
+      "en": "[Full-Color Fangirling]",
+      "ja": "[超特急！フルカラー特殊PP]",
+      "ko": "[초특급! 풀컬러 특수 PP]",
+      "tw": "[超特急！全彩特殊膜]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1019_101901.png"
+  },
+  "101902": {
+    "cardId": 101902,
+    "charId": 1019,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "101902-agnes-digital",
+    "name": {
+      "en": "Agnes Digital",
+      "ja": "アグネスデジタル",
+      "ko": "아그네스 디지털",
+      "tw": "愛麗數碼"
+    },
+    "title": {
+      "en": "[Fanatic♡Jiangshi]",
+      "ja": "[愛麗♡キョンシー]",
+      "ko": "[아이리♡강시]",
+      "tw": "[愛麗♡殭屍]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1019_101902.png"
+  },
+  "102001": {
+    "cardId": 102001,
+    "charId": 1020,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102001-seiun-sky",
+    "name": {
+      "en": "Seiun Sky",
+      "ja": "セイウンスカイ",
+      "ko": "세이운 스카이",
+      "tw": "青雲天空"
+    },
+    "title": {
+      "en": "[Reeling in the Big One]",
+      "ja": "[あおぐもサミング]",
+      "ko": "[푸른 구름 서밍]",
+      "tw": "[青雲釣術]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1020_102001.png"
+  },
+  "102002": {
+    "cardId": 102002,
+    "charId": 1020,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102002-seiun-sky",
+    "name": {
+      "en": "Seiun Sky",
+      "ja": "セイウンスカイ",
+      "ko": "세이운 스카이",
+      "tw": "青雲天空"
+    },
+    "title": {
+      "en": "[Soirée des Chatons]",
+      "ja": "[ソワレ・ド・シャトン]",
+      "ko": "[수아레・드・샤통]",
+      "tw": "[小貓咪的晚宴]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1020_102002.png"
+  },
+  "102003": {
+    "cardId": 102003,
+    "charId": 1020,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102003-seiun-sky",
+    "name": {
+      "en": "Seiun Sky",
+      "ja": "セイウンスカイ",
+      "ko": "세이운 스카이",
+      "tw": "青雲天空"
+    },
+    "title": {
+      "en": "Shoreline Whimsy in Orange",
+      "ja": "[渚のきまぐれオランジュ]",
+      "ko": "[渚のきまぐれオランジュ]",
+      "tw": "[渚のきまぐれオランジュ]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1020_102003.png"
+  },
+  "102101": {
+    "cardId": 102101,
+    "charId": 1021,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102101-tamamo-cross",
+    "name": {
+      "en": "Tamamo Cross",
+      "ja": "タマモクロス",
+      "ko": "타마모 크로스",
+      "tw": "玉藻十字"
+    },
+    "title": {
+      "en": "[Fast as Lightning]",
+      "ja": "[疾風迅雷]",
+      "ko": "[질풍신뢰]",
+      "tw": "[疾風迅雷]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1021_102101.png"
+  },
+  "102102": {
+    "cardId": 102102,
+    "charId": 1021,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102102-tamamo-cross",
+    "name": {
+      "en": "Tamamo Cross",
+      "ja": "タマモクロス",
+      "ko": "타마모 크로스",
+      "tw": "玉藻十字"
+    },
+    "title": {
+      "en": "[Raging Thunder]",
+      "ja": "[猛ル鳴神]",
+      "ko": "[날뛰는 나루카미]",
+      "tw": "[荒暴雷神]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1021_102102.png"
+  },
+  "102201": {
+    "cardId": 102201,
+    "charId": 1022,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102201-fine-motion",
+    "name": {
+      "en": "Fine Motion",
+      "ja": "ファインモーション",
+      "ko": "파인 모션",
+      "tw": "美妙姿勢"
+    },
+    "title": {
+      "en": "[Noble Seamair]",
+      "ja": "[Noble Seamair]",
+      "ko": "[Noble Seamair]",
+      "tw": "[Noble Seamair]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1022_102201.png"
+  },
+  "102202": {
+    "cardId": 102202,
+    "charId": 1022,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102202-fine-motion",
+    "name": {
+      "en": "Fine Motion",
+      "ja": "ファインモーション",
+      "ko": "파인 모션",
+      "tw": "美妙姿勢"
+    },
+    "title": {
+      "en": "[Titania]",
+      "ja": "[Titania]",
+      "ko": "[Titania]",
+      "tw": "[Titania]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1022_102202.png"
+  },
+  "102203": {
+    "cardId": 102203,
+    "charId": 1022,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102203-fine-motion",
+    "name": {
+      "en": "Fine Motion",
+      "ja": "ファインモーション",
+      "ko": "파인 모션",
+      "tw": "美妙姿勢"
+    },
+    "title": {
+      "en": "Radiant Noodle Splendor Saga",
+      "ja": "[麺華煌彩伝・極]",
+      "ko": "[麺華煌彩伝・極]",
+      "tw": "[麺華煌彩伝・極]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1022_102203.png"
+  },
+  "102301": {
+    "cardId": 102301,
+    "charId": 1023,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102301-biwa-hayahide",
+    "name": {
+      "en": "Biwa Hayahide",
+      "ja": "ビワハヤヒデ",
+      "ko": "비와 하야히데",
+      "tw": "琵琶晨光"
+    },
+    "title": {
+      "en": "[pf. Winning Equation...]",
+      "ja": "[pf.Victory formula...]",
+      "ko": "[pf.Victory formula...]",
+      "tw": "[pf.Victory formula...]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1023_102301.png"
+  },
+  "102302": {
+    "cardId": 102302,
+    "charId": 1023,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102302-biwa-hayahide",
+    "name": {
+      "en": "Biwa Hayahide",
+      "ja": "ビワハヤヒデ",
+      "ko": "비와 하야히데",
+      "tw": "琵琶晨光"
+    },
+    "title": {
+      "en": "[Rouge Caroler]",
+      "ja": "[ノエルージュ・キャロル]",
+      "ko": "[노엘 루주・캐럴]",
+      "tw": "[聖夜紅袍頌歌]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1023_102302.png"
+  },
+  "102303": {
+    "cardId": 102303,
+    "charId": 1023,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102303-biwa-hayahide",
+    "name": {
+      "en": "Biwa Hayahide",
+      "ja": "ビワハヤヒデ",
+      "ko": "비와 하야히데",
+      "tw": "琵琶晨光"
+    },
+    "title": {
+      "en": "Engineered Victory",
+      "ja": "[Engineered Victory]",
+      "ko": "[Engineered Victory]",
+      "tw": "[Engineered Victory]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1023_102303.png"
+  },
+  "102401": {
+    "cardId": 102401,
+    "charId": 1024,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "102401-mayano-top-gun",
+    "name": {
+      "en": "Mayano Top Gun",
+      "ja": "マヤノトップガン",
+      "ko": "마야노 탑건",
+      "tw": "重砲"
+    },
+    "title": {
+      "en": "[Scramble☆Zone]",
+      "ja": "[すくらんぶる☆ゾーン]",
+      "ko": "[스크램블☆존]",
+      "tw": "[急飛☆區域]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1024_102401.png"
+  },
+  "102402": {
+    "cardId": 102402,
+    "charId": 1024,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102402-mayano-top-gun",
+    "name": {
+      "en": "Mayano Top Gun",
+      "ja": "マヤノトップガン",
+      "ko": "마야노 탑건",
+      "tw": "重砲"
+    },
+    "title": {
+      "en": "[Sunlight Bouquet]",
+      "ja": "[サンライト・ブーケ]",
+      "ko": "[선라이트・부케]",
+      "tw": "[陽光捧花]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1024_102402.png"
+  },
+  "102403": {
+    "cardId": 102403,
+    "charId": 1024,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102403-mayano-top-gun",
+    "name": {
+      "en": "Mayano Top Gun",
+      "ja": "マヤノトップガン",
+      "ko": "마야노 탑건",
+      "tw": "重砲"
+    },
+    "title": {
+      "en": "Rocking☆MewMeow",
+      "ja": "[ろっきん☆MewMeow]",
+      "ko": "[록 인☆MewMeow]",
+      "tw": "[搖滾☆MewMeow]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1024_102403.png"
+  },
+  "102501": {
+    "cardId": 102501,
+    "charId": 1025,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102501-manhattan-cafe",
+    "name": {
+      "en": "Manhattan Cafe",
+      "ja": "マンハッタンカフェ",
+      "ko": "맨하탄 카페",
+      "tw": "曼哈頓咖啡"
+    },
+    "title": {
+      "en": "[Creeping Shadow]",
+      "ja": "[Creeping Black]",
+      "ko": "[Creeping Black]",
+      "tw": "[Creeping Black]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1025_102501.png"
+  },
+  "102502": {
+    "cardId": 102502,
+    "charId": 1025,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102502-manhattan-cafe",
+    "name": {
+      "en": "Manhattan Cafe",
+      "ja": "マンハッタンカフェ",
+      "ko": "맨하탄 카페",
+      "tw": "曼哈頓咖啡"
+    },
+    "title": {
+      "en": "Willow-Green Evening",
+      "ja": "[柳緑小夜]",
+      "ko": "[버들빛 밤]",
+      "tw": "[柳綠小夜]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1025_102502.png"
+  },
+  "102503": {
+    "cardId": 102503,
+    "charId": 1025,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102503-manhattan-cafe",
+    "name": {
+      "en": "Manhattan Cafe",
+      "ja": "マンハッタンカフェ",
+      "ko": "맨하탄 카페",
+      "tw": "曼哈頓咖啡"
+    },
+    "title": {
+      "en": "Ethereal Rose",
+      "ja": "[幽玄薔薇]",
+      "ko": "[幽玄薔薇]",
+      "tw": "[幽玄薔薇]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1025_102503.png"
+  },
+  "102601": {
+    "cardId": 102601,
+    "charId": 1026,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102601-mihono-bourbon",
+    "name": {
+      "en": "Mihono Bourbon",
+      "ja": "ミホノブルボン",
+      "ko": "미호노 부르봉",
+      "tw": "美浦波旁"
+    },
+    "title": {
+      "en": "[MB-19890425]",
+      "ja": "[MB-19890425]",
+      "ko": "[MB-19890425]",
+      "tw": "[MB-19890425]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1026_102601.png"
+  },
+  "102602": {
+    "cardId": 102602,
+    "charId": 1026,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102602-mihono-bourbon",
+    "name": {
+      "en": "Mihono Bourbon",
+      "ja": "ミホノブルボン",
+      "ko": "미호노 부르봉",
+      "tw": "美浦波旁"
+    },
+    "title": {
+      "en": "[CODE: ICING]",
+      "ja": "[CODE：グラサージュ]",
+      "ko": "[CODE: 글라사주]",
+      "tw": "[CODE：淋面裝飾]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1026_102602.png"
+  },
+  "102701": {
+    "cardId": 102701,
+    "charId": 1027,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "102701-mejiro-ryan",
+    "name": {
+      "en": "Mejiro Ryan",
+      "ja": "メジロライアン",
+      "ko": "메지로 라이언",
+      "tw": "目白雷恩"
+    },
+    "title": {
+      "en": "[Down the Line]",
+      "ja": "[ストレート・ライン]",
+      "ko": "[스트레이트・라인]",
+      "tw": "[勇往直前]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1027_102701.png"
+  },
+  "102702": {
+    "cardId": 102702,
+    "charId": 1027,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102702-mejiro-ryan",
+    "name": {
+      "en": "Mejiro Ryan",
+      "ja": "メジロライアン",
+      "ko": "메지로 라이언",
+      "tw": "目白雷恩"
+    },
+    "title": {
+      "en": "[Marguerite Latte]",
+      "ja": "[マーガレット・ラッテ]",
+      "ko": "[마가렛・라떼]",
+      "tw": "[雛菊．拿鐵]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1027_102702.png"
+  },
+  "102801": {
+    "cardId": 102801,
+    "charId": 1028,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102801-hishi-akebono",
+    "name": {
+      "en": "Hishi Akebono",
+      "ja": "ヒシアケボノ",
+      "ko": "히시 아케보노",
+      "tw": "菱曙"
+    },
+    "title": {
+      "en": "[Buono ☆ Alla Moda]",
+      "ja": "[ボーノ☆アラモーダ]",
+      "ko": "[보노☆알라모다]",
+      "tw": "[Buono☆時尚]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1028_102801.png"
+  },
+  "102802": {
+    "cardId": 102802,
+    "charId": 1028,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102802-hishi-akebono",
+    "name": {
+      "en": "Hishi Akebono",
+      "ja": "ヒシアケボノ",
+      "ko": "히시 아케보노",
+      "tw": "菱曙"
+    },
+    "title": {
+      "en": "Magic Night Garland",
+      "ja": "[マジックナイトガーランド]",
+      "ko": "[マジックナイトガーランド]",
+      "tw": "[マジックナイトガーランド]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1028_102802.png"
+  },
+  "102901": {
+    "cardId": 102901,
+    "charId": 1029,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102901-yukino-bijin",
+    "name": {
+      "en": "Yukino Bijin",
+      "ja": "ユキノビジン",
+      "ko": "유키노 비진",
+      "tw": "雪之美人"
+    },
+    "title": {
+      "en": "[Darl'n Snowflake]",
+      "ja": "[めんこいめんこいむつのはな]",
+      "ko": "[귀엽고 귀여운 눈꽃]",
+      "tw": "[好口愛好口愛的銀粟]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1029_102901.png"
+  },
+  "102902": {
+    "cardId": 102902,
+    "charId": 1029,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "102902-yukino-bijin",
+    "name": {
+      "en": "Yukino Bijin",
+      "ja": "ユキノビジン",
+      "ko": "유키노 비진",
+      "tw": "雪之美人"
+    },
+    "title": {
+      "en": "Snowy Girl of Tea and Cake",
+      "ja": "[茶の子雪ん子]",
+      "ko": "[차 과자와 눈의 요정]",
+      "tw": "[小茶點小雪精]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1029_102902.png"
+  },
+  "103001": {
+    "cardId": 103001,
+    "charId": 1030,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103001-rice-shower",
+    "name": {
+      "en": "Rice Shower",
+      "ja": "ライスシャワー",
+      "ko": "라이스 샤워",
+      "tw": "米浴"
+    },
+    "title": {
+      "en": "[Rosy Dreams]",
+      "ja": "[ローゼスドリーム]",
+      "ko": "[로제스 드림]",
+      "tw": "[薔薇之夢]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1030_103001.png"
+  },
+  "103002": {
+    "cardId": 103002,
+    "charId": 1030,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103002-rice-shower",
+    "name": {
+      "en": "Rice Shower",
+      "ja": "ライスシャワー",
+      "ko": "라이스 샤워",
+      "tw": "米浴"
+    },
+    "title": {
+      "en": "[Vampire Makeover!]",
+      "ja": "[Make up Vampire!]",
+      "ko": "[Make up Vampire!]",
+      "tw": "[Make up Vampire!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1030_103002.png"
+  },
+  "103003": {
+    "cardId": 103003,
+    "charId": 1030,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103003-rice-shower",
+    "name": {
+      "en": "Rice Shower",
+      "ja": "ライスシャワー",
+      "ko": "라이스 샤워",
+      "tw": "米浴"
+    },
+    "title": {
+      "en": "Yummy Dreamy Fairy",
+      "ja": "[Yummy Dreamy Fairy]",
+      "ko": "[Yummy Dreamy Fairy]",
+      "tw": "[Yummy Dreamy Fairy]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1030_103003.png"
+  },
+  "103101": {
+    "cardId": 103101,
+    "charId": 1031,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103101-ines-fujin",
+    "name": {
+      "en": "Ines Fujin",
+      "ja": "アイネスフウジン",
+      "ko": "아이네스 후진",
+      "tw": "艾尼風神"
+    },
+    "title": {
+      "en": "[Always Electrifying]",
+      "ja": "[オールタイム・フィーバー]",
+      "ko": "[올 타임・피버]",
+      "tw": "[全天候狂熱]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1031_103101.png"
+  },
+  "103102": {
+    "cardId": 103102,
+    "charId": 1031,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103102-ines-fujin",
+    "name": {
+      "en": "Ines Fujin",
+      "ja": "アイネスフウジン",
+      "ko": "아이네스 후진",
+      "tw": "艾尼風神"
+    },
+    "title": {
+      "en": "[Melt Your Heart]",
+      "ja": "[MELTY GIFT]",
+      "ko": "[MELTY GIFT]",
+      "tw": "[MELTY GIFT]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1031_103102.png"
+  },
+  "103103": {
+    "cardId": 103103,
+    "charId": 1031,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103103-ines-fujin",
+    "name": {
+      "en": "Ines Fujin",
+      "ja": "アイネスフウジン",
+      "ko": "아이네스 후진",
+      "tw": "艾尼風神"
+    },
+    "title": {
+      "en": "Hello Hello Island",
+      "ja": "[Hello Hello Island]",
+      "ko": "[Hello Hello Island]",
+      "tw": "[Hello Hello Island]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1031_103103.png"
+  },
+  "103201": {
+    "cardId": 103201,
+    "charId": 1032,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "103201-agnes-tachyon",
+    "name": {
+      "en": "Agnes Tachyon",
+      "ja": "アグネスタキオン",
+      "ko": "아그네스 타키온",
+      "tw": "愛麗速子"
+    },
+    "title": {
+      "en": "[tach-nology]",
+      "ja": "[tach-nology]",
+      "ko": "[tach-nology]",
+      "tw": "[tach-nology]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1032_103201.png"
+  },
+  "103202": {
+    "cardId": 103202,
+    "charId": 1032,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103202-agnes-tachyon",
+    "name": {
+      "en": "Agnes Tachyon",
+      "ja": "アグネスタキオン",
+      "ko": "아그네스 타키온",
+      "tw": "愛麗速子"
+    },
+    "title": {
+      "en": "[Lunatic Lab]",
+      "ja": "[Lunatic Lab]",
+      "ko": "[Lunatic Lab]",
+      "tw": "[Lunatic Lab]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1032_103202.png"
+  },
+  "103203": {
+    "cardId": 103203,
+    "charId": 1032,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103203-agnes-tachyon",
+    "name": {
+      "en": "Agnes Tachyon",
+      "ja": "アグネスタキオン",
+      "ko": "아그네스 타키온",
+      "tw": "愛麗速子"
+    },
+    "title": {
+      "en": "Σ Experiment",
+      "ja": "[Σ Experiment]",
+      "ko": "[Σ Experiment]",
+      "tw": "[Σ Experiment]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1032_103203.png"
+  },
+  "103301": {
+    "cardId": 103301,
+    "charId": 1033,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103301-admire-vega",
+    "name": {
+      "en": "Admire Vega",
+      "ja": "アドマイヤベガ",
+      "ko": "어드마이어 베가",
+      "tw": "愛慕織姬"
+    },
+    "title": {
+      "en": "[Starry Nocturne]",
+      "ja": "[Starry Nocturne]",
+      "ko": "[Starry Nocturne]",
+      "tw": "[Starry Nocturne]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1033_103301.png"
+  },
+  "103302": {
+    "cardId": 103302,
+    "charId": 1033,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103302-admire-vega",
+    "name": {
+      "en": "Admire Vega",
+      "ja": "アドマイヤベガ",
+      "ko": "어드마이어 베가",
+      "tw": "愛慕織姬"
+    },
+    "title": {
+      "en": "Glacialis Vega",
+      "ja": "[Glacialis Vega]",
+      "ko": "[Glacialis Vega]",
+      "tw": "[Glacialis Vega]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1033_103302.png"
+  },
+  "103401": {
+    "cardId": 103401,
+    "charId": 1034,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103401-inari-one",
+    "name": {
+      "en": "Inari One",
+      "ja": "イナリワン",
+      "ko": "이나리 원",
+      "tw": "稻荷一"
+    },
+    "title": {
+      "en": "[Edomurasaki]",
+      "ja": "[稲荷所縁江戸紫]",
+      "ko": "[여우와 연이 있는 보랏빛]",
+      "tw": "[稻荷因緣江戶紫]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1034_103401.png"
+  },
+  "103402": {
+    "cardId": 103402,
+    "charId": 1034,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103402-inari-one",
+    "name": {
+      "en": "Inari One",
+      "ja": "イナリワン",
+      "ko": "이나리 원",
+      "tw": "稻荷一"
+    },
+    "title": {
+      "en": "[Golden Dream]",
+      "ja": "[夢ノ金原]",
+      "ko": "[꿈의 카나하라]",
+      "tw": "[夢想的金原]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1034_103402.png"
+  },
+  "103501": {
+    "cardId": 103501,
+    "charId": 1035,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "103501-winning-ticket",
+    "name": {
+      "en": "Winning Ticket",
+      "ja": "ウイニングチケット",
+      "ko": "위닝 티켓",
+      "tw": "勝利獎券"
+    },
+    "title": {
+      "en": "[Get to Winning!]",
+      "ja": "[Go To Winning!]",
+      "ko": "[Go To Winning!]",
+      "tw": "[Go To Winning!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1035_103501.png"
+  },
+  "103502": {
+    "cardId": 103502,
+    "charId": 1035,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103502-winning-ticket",
+    "name": {
+      "en": "Winning Ticket",
+      "ja": "ウイニングチケット",
+      "ko": "위닝 티켓",
+      "tw": "勝利獎券"
+    },
+    "title": {
+      "en": "[Dream Deliverer]",
+      "ja": "[Dream Deliverer]",
+      "ko": "[Dream Deliverer]",
+      "tw": "[Dream Deliverer]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1035_103502.png"
+  },
+  "103503": {
+    "cardId": 103503,
+    "charId": 1035,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103503-winning-ticket",
+    "name": {
+      "en": "Winning Ticket",
+      "ja": "ウイニングチケット",
+      "ko": "위닝 티켓",
+      "tw": "勝利獎券"
+    },
+    "title": {
+      "en": "Glorious Coat",
+      "ja": "[Glorious Coat]",
+      "ko": "[Glorious Coat]",
+      "tw": "[Glorious Coat]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1035_103503.png"
+  },
+  "103601": {
+    "cardId": 103601,
+    "charId": 1036,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103601-air-shakur",
+    "name": {
+      "en": "Air Shakur",
+      "ja": "エアシャカール",
+      "ko": "에어 샤커",
+      "tw": "空中神宮"
+    },
+    "title": {
+      "en": "[unsigned]",
+      "ja": "[unsigned]",
+      "ko": "[unsigned]",
+      "tw": "[unsigned]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1036_103601.png"
+  },
+  "103602": {
+    "cardId": 103602,
+    "charId": 1036,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103602-air-shakur",
+    "name": {
+      "en": "Air Shakur",
+      "ja": "エアシャカール",
+      "ko": "에어 샤커",
+      "tw": "空中神宮"
+    },
+    "title": {
+      "en": "Belphegor's Prime",
+      "ja": "[Belphegor's Prime]",
+      "ko": "[Belphegor's Prime]",
+      "tw": "[Belphegor's Prime]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1036_103602.png"
+  },
+  "103701": {
+    "cardId": 103701,
+    "charId": 1037,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103701-eishin-flash",
+    "name": {
+      "en": "Eishin Flash",
+      "ja": "エイシンフラッシュ",
+      "ko": "에이신 플래시",
+      "tw": "榮進閃耀"
+    },
+    "title": {
+      "en": "[Meisterschaft]",
+      "ja": "[Meisterschaft]",
+      "ko": "[Meisterschaft]",
+      "tw": "[Meisterschaft]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1037_103701.png"
+  },
+  "103702": {
+    "cardId": 103702,
+    "charId": 1037,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103702-eishin-flash",
+    "name": {
+      "en": "Eishin Flash",
+      "ja": "エイシンフラッシュ",
+      "ko": "에이신 플래시",
+      "tw": "榮進閃耀"
+    },
+    "title": {
+      "en": "[Precise Chocolatier]",
+      "ja": "[コレクト・ショコラティエ]",
+      "ko": "[컬렉트・쇼콜라티에]",
+      "tw": "[精確無比巧克力師]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1037_103702.png"
+  },
+  "103703": {
+    "cardId": 103703,
+    "charId": 1037,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103703-eishin-flash",
+    "name": {
+      "en": "Eishin Flash",
+      "ja": "エイシンフラッシュ",
+      "ko": "에이신 플래시",
+      "tw": "榮進閃耀"
+    },
+    "title": {
+      "en": "Reines Plätschern",
+      "ja": "[Reines Plätschern]",
+      "ko": "[Reines Plätschern]",
+      "tw": "[Reines Plätschern]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1037_103703.png"
+  },
+  "103801": {
+    "cardId": 103801,
+    "charId": 1038,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103801-curren-chan",
+    "name": {
+      "en": "Curren Chan",
+      "ja": "カレンチャン",
+      "ko": "카렌짱",
+      "tw": "真機伶"
+    },
+    "title": {
+      "en": "[Fille Éclair]",
+      "ja": "[フィーユ・エクレール]",
+      "ko": "[피유・에클레르]",
+      "tw": "[閃光少女]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1038_103801.png"
+  },
+  "103802": {
+    "cardId": 103802,
+    "charId": 1038,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103802-curren-chan",
+    "name": {
+      "en": "Curren Chan",
+      "ja": "カレンチャン",
+      "ko": "카렌짱",
+      "tw": "真機伶"
+    },
+    "title": {
+      "en": "[Ma Chérie of the New Moon]",
+      "ja": "[朔月のマ・シェリ]",
+      "ko": "[삭월의 마・셰리]",
+      "tw": "[朔月甜心]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1038_103802.png"
+  },
+  "103901": {
+    "cardId": 103901,
+    "charId": 1039,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103901-kawakami-princess",
+    "name": {
+      "en": "Kawakami Princess",
+      "ja": "カワカミプリンセス",
+      "ko": "카와카미 프린세스",
+      "tw": "川上公主"
+    },
+    "title": {
+      "en": "[Princess of Pink]",
+      "ja": "[プリンセス・オブ・ピンク]",
+      "ko": "[프린세스・오브・핑크]",
+      "tw": "[Princess of pink]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1039_103901.png"
+  },
+  "103902": {
+    "cardId": 103902,
+    "charId": 1039,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "103902-kawakami-princess",
+    "name": {
+      "en": "Kawakami Princess",
+      "ja": "カワカミプリンセス",
+      "ko": "카와카미 프린세스",
+      "tw": "川上公主"
+    },
+    "title": {
+      "en": "Suikan Beauty",
+      "ja": "[水干撫子]",
+      "ko": "[무사 요조숙녀]",
+      "tw": "[水干撫子]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1039_103902.png"
+  },
+  "104001": {
+    "cardId": 104001,
+    "charId": 1040,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104001-gold-city",
+    "name": {
+      "en": "Gold City",
+      "ja": "ゴールドシチー",
+      "ko": "골드 시티",
+      "tw": "黃金城市"
+    },
+    "title": {
+      "en": "[Authentic / 1928]",
+      "ja": "[オーセンティック/1928]",
+      "ko": "[오센틱/1928]",
+      "tw": "[純正/1928]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1040_104001.png"
+  },
+  "104002": {
+    "cardId": 104002,
+    "charId": 1040,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104002-gold-city",
+    "name": {
+      "en": "Gold City",
+      "ja": "ゴールドシチー",
+      "ko": "골드 시티",
+      "tw": "黃金城市"
+    },
+    "title": {
+      "en": "[Autumn Cosmos]",
+      "ja": "[秋桜ダンツァトリーチェ]",
+      "ko": "[코스모스 단차트리체]",
+      "tw": "[秋櫻舞者]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1040_104002.png"
+  },
+  "104003": {
+    "cardId": 104003,
+    "charId": 1040,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104003-gold-city",
+    "name": {
+      "en": "Gold City",
+      "ja": "ゴールドシチー",
+      "ko": "골드 시티",
+      "tw": "黃金城市"
+    },
+    "title": {
+      "en": "Boho Flare",
+      "ja": "[Boho Flare]",
+      "ko": "[Boho Flare]",
+      "tw": "[Boho Flare]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1040_104003.png"
+  },
+  "104101": {
+    "cardId": 104101,
+    "charId": 1041,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "104101-sakura-bakushin-o",
+    "name": {
+      "en": "Sakura Bakushin O",
+      "ja": "サクラバクシンオー",
+      "ko": "사쿠라 바쿠신 오",
+      "tw": "櫻花驀進王"
+    },
+    "title": {
+      "en": "[Blossom in Learning]",
+      "ja": "[サクラ、すすめ！]",
+      "ko": "[사쿠라, 나아가라!]",
+      "tw": "[前進吧！櫻花]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1041_104101.png"
+  },
+  "104102": {
+    "cardId": 104102,
+    "charId": 1041,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104102-sakura-bakushin-o",
+    "name": {
+      "en": "Sakura Bakushin O",
+      "ja": "サクラバクシンオー",
+      "ko": "사쿠라 바쿠신 오",
+      "tw": "櫻花驀進王"
+    },
+    "title": {
+      "en": "[Red Hot☆Leader]",
+      "ja": "[レッドホット☆リーダー]",
+      "ko": "[레드 핫☆리더]",
+      "tw": "[赤熱☆隊長]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1041_104102.png"
+  },
+  "104103": {
+    "cardId": 104103,
+    "charId": 1041,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104103-sakura-bakushin-o",
+    "name": {
+      "en": "Sakura Bakushin O",
+      "ja": "サクラバクシンオー",
+      "ko": "사쿠라 바쿠신 오",
+      "tw": "櫻花驀進王"
+    },
+    "title": {
+      "en": "Spring-Thunder Speedster",
+      "ja": "[春雷の韋駄天]",
+      "ko": "[春雷の韋駄天]",
+      "tw": "[春雷の韋駄天]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1041_104103.png"
+  },
+  "104201": {
+    "cardId": 104201,
+    "charId": 1042,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104201-seeking-the-pearl",
+    "name": {
+      "en": "Seeking the Pearl",
+      "ja": "シーキングザパール",
+      "ko": "시킹 더 펄",
+      "tw": "採珠"
+    },
+    "title": {
+      "en": "[Rocket☆Star]",
+      "ja": "[Rocket☆Star]",
+      "ko": "[Rocket☆Star]",
+      "tw": "[Rocket☆Star]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1042_104201.png"
+  },
+  "104202": {
+    "cardId": 104202,
+    "charId": 1042,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104202-seeking-the-pearl",
+    "name": {
+      "en": "Seeking the Pearl",
+      "ja": "シーキングザパール",
+      "ko": "시킹 더 펄",
+      "tw": "採珠"
+    },
+    "title": {
+      "en": "Be♪Witched",
+      "ja": "[Be♪Witched]",
+      "ko": "[Be♪Witched]",
+      "tw": "[Be♪Witched]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1042_104202.png"
+  },
+  "104301": {
+    "cardId": 104301,
+    "charId": 1043,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104301-shinko-windy",
+    "name": {
+      "en": "Shinko Windy",
+      "ja": "シンコウウインディ",
+      "ko": "신코 윈디",
+      "tw": "新光風"
+    },
+    "title": {
+      "en": "[Wicked Punk]",
+      "ja": "[Wicked Punk]",
+      "ko": "[Wicked Punk]",
+      "tw": "[Wicked Punk]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1043_104301.png"
+  },
+  "104302": {
+    "cardId": 104302,
+    "charId": 1043,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104302-shinko-windy",
+    "name": {
+      "en": "Shinko Windy",
+      "ja": "シンコウウインディ",
+      "ko": "신코 윈디",
+      "tw": "新光風"
+    },
+    "title": {
+      "en": "Chomp-Chomp ☆ Scamp",
+      "ja": "[ガブガブ☆スキャンプ]",
+      "ko": "[ガブガブ☆スキャンプ]",
+      "tw": "[ガブガブ☆スキャンプ]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1043_104302.png"
+  },
+  "104401": {
+    "cardId": 104401,
+    "charId": 1044,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104401-sweep-tosho",
+    "name": {
+      "en": "Sweep Tosho",
+      "ja": "スイープトウショウ",
+      "ko": "스윕 토쇼",
+      "tw": "東商變革"
+    },
+    "title": {
+      "en": "[Platanus Witch]",
+      "ja": "[プラタナス・ウィッチ]",
+      "ko": "[플라타너스・위치]",
+      "tw": "[懸鈴木魔女]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1044_104401.png"
+  },
+  "104402": {
+    "cardId": 104402,
+    "charId": 1044,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104402-sweep-tosho",
+    "name": {
+      "en": "Sweep Tosho",
+      "ja": "スイープトウショウ",
+      "ko": "스윕 토쇼",
+      "tw": "東商變革"
+    },
+    "title": {
+      "en": "Realize・Rune",
+      "ja": "[リアライズ・ルーン]",
+      "ko": "[리얼라이즈・룬]",
+      "tw": "[實現憧憬的符文]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1044_104402.png"
+  },
+  "104501": {
+    "cardId": 104501,
+    "charId": 1045,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "104501-super-creek",
+    "name": {
+      "en": "Super Creek",
+      "ja": "スーパークリーク",
+      "ko": "슈퍼 크릭",
+      "tw": "超級小溪"
+    },
+    "title": {
+      "en": "[Murmuring Stream]",
+      "ja": "[マーマリングストリーム]",
+      "ko": "[머머링 스트림]",
+      "tw": "[低語溪流]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1045_104501.png"
+  },
+  "104502": {
+    "cardId": 104502,
+    "charId": 1045,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104502-super-creek",
+    "name": {
+      "en": "Super Creek",
+      "ja": "スーパークリーク",
+      "ko": "슈퍼 크릭",
+      "tw": "超級小溪"
+    },
+    "title": {
+      "en": "[Chiffon-Wrapped Mummy]",
+      "ja": "[シフォンリボンマミー]",
+      "ko": "[쉬폰 리본 머미]",
+      "tw": "[雪紡緞帶木乃伊]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1045_104502.png"
+  },
+  "104503": {
+    "cardId": 104503,
+    "charId": 1045,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104503-super-creek",
+    "name": {
+      "en": "Super Creek",
+      "ja": "スーパークリーク",
+      "ko": "슈퍼 크릭",
+      "tw": "超級小溪"
+    },
+    "title": {
+      "en": "Flowery Shadow Amongst the Gentle Rain",
+      "ja": "[慈雨華影]",
+      "ko": "[자우화영]",
+      "tw": "[慈雨華影]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1045_104503.png"
+  },
+  "104601": {
+    "cardId": 104601,
+    "charId": 1046,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104601-smart-falcon",
+    "name": {
+      "en": "Smart Falcon",
+      "ja": "スマートファルコン",
+      "ko": "스마트 팔콘",
+      "tw": "醒目飛鷹"
+    },
+    "title": {
+      "en": "[LOVE☆4EVER]",
+      "ja": "[あぶそりゅーと☆LOVE]",
+      "ko": "[앱설루트☆LOVE]",
+      "tw": "[絕對純粹☆LOVE]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1046_104601.png"
+  },
+  "104602": {
+    "cardId": 104602,
+    "charId": 1046,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104602-smart-falcon",
+    "name": {
+      "en": "Smart Falcon",
+      "ja": "スマートファルコン",
+      "ko": "스마트 팔콘",
+      "tw": "醒目飛鷹"
+    },
+    "title": {
+      "en": "[Twilight Triumph]",
+      "ja": "[黄昏トライアンフ]",
+      "ko": "[황혼 트라이엄프]",
+      "tw": "[黃昏凱旋]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1046_104602.png"
+  },
+  "104603": {
+    "cardId": 104603,
+    "charId": 1046,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104603-smart-falcon",
+    "name": {
+      "en": "Smart Falcon",
+      "ja": "スマートファルコン",
+      "ko": "스마트 팔콘",
+      "tw": "醒目飛鷹"
+    },
+    "title": {
+      "en": "Luminous ☆ Twirler",
+      "ja": "[ルミナス☆トワラー]",
+      "ko": "[루미너스☆트월러]",
+      "tw": "[光輝☆舞棒者]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1046_104603.png"
+  },
+  "104701": {
+    "cardId": 104701,
+    "charId": 1047,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104701-zenno-rob-roy",
+    "name": {
+      "en": "Zenno Rob Roy",
+      "ja": "ゼンノロブロイ",
+      "ko": "젠노 롭 로이",
+      "tw": "荒漠英雄"
+    },
+    "title": {
+      "en": "[Heroic Author]",
+      "ja": "[Heroic Author]",
+      "ko": "[Heroic Author]",
+      "tw": "[Heroic Author]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1047_104701.png"
+  },
+  "104702": {
+    "cardId": 104702,
+    "charId": 1047,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104702-zenno-rob-roy",
+    "name": {
+      "en": "Zenno Rob Roy",
+      "ja": "ゼンノロブロイ",
+      "ko": "젠노 롭 로이",
+      "tw": "荒漠英雄"
+    },
+    "title": {
+      "en": "Inlaid Stories",
+      "ja": "[Inlaid Stories]",
+      "ko": "[Inlaid Stories]",
+      "tw": "[Inlaid Stories]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1047_104702.png"
+  },
+  "104801": {
+    "cardId": 104801,
+    "charId": 1048,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104801-tosen-jordan",
+    "name": {
+      "en": "Tosen Jordan",
+      "ja": "トーセンジョーダン",
+      "ko": "토센 조던",
+      "tw": "島川喬登"
+    },
+    "title": {
+      "en": "[Jokester ☆ Vibes]",
+      "ja": "[ポップス☆ジョーカー]",
+      "ko": "[팝스☆조커]",
+      "tw": "[POPS☆JOKER]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1048_104801.png"
+  },
+  "104802": {
+    "cardId": 104802,
+    "charId": 1048,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104802-tosen-jordan",
+    "name": {
+      "en": "Tosen Jordan",
+      "ja": "トーセンジョーダン",
+      "ko": "토센 조던",
+      "tw": "島川喬登"
+    },
+    "title": {
+      "en": "[Aurore☆Vacances]",
+      "ja": "[Aurore☆Vacances]",
+      "ko": "[Aurore☆Vacances]",
+      "tw": "[Aurore☆Vacances]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1048_104802.png"
+  },
+  "104803": {
+    "cardId": 104803,
+    "charId": 1048,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104803-tosen-jordan",
+    "name": {
+      "en": "Tosen Jordan",
+      "ja": "トーセンジョーダン",
+      "ko": "토센 조던",
+      "tw": "島川喬登"
+    },
+    "title": {
+      "en": "Highkey ☆ Hallowed",
+      "ja": "[Highkey☆Hallowed]",
+      "ko": "[Highkey☆Hallowed]",
+      "tw": "[Highkey☆Hallowed]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1048_104803.png"
+  },
+  "104901": {
+    "cardId": 104901,
+    "charId": 1049,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104901-nakayama-festa",
+    "name": {
+      "en": "Nakayama Festa",
+      "ja": "ナカヤマフェスタ",
+      "ko": "나카야마 페스타",
+      "tw": "中山慶典"
+    },
+    "title": {
+      "en": "[Desperate Measures]",
+      "ja": "[死中求活]",
+      "ko": "[사중구활]",
+      "tw": "[死中求活]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1049_104901.png"
+  },
+  "104902": {
+    "cardId": 104902,
+    "charId": 1049,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "104902-nakayama-festa",
+    "name": {
+      "en": "Nakayama Festa",
+      "ja": "ナカヤマフェスタ",
+      "ko": "나카야마 페스타",
+      "tw": "中山慶典"
+    },
+    "title": {
+      "en": "Festive Play",
+      "ja": "[祝祭遊戯]",
+      "ko": "[祝祭遊戯]",
+      "tw": "[祝祭遊戯]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1049_104902.png"
+  },
+  "105001": {
+    "cardId": 105001,
+    "charId": 1050,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105001-narita-taishin",
+    "name": {
+      "en": "Narita Taishin",
+      "ja": "ナリタタイシン",
+      "ko": "나리타 타이신",
+      "tw": "成田大進"
+    },
+    "title": {
+      "en": "[Nevertheless]",
+      "ja": "[Nevertheless]",
+      "ko": "[Nevertheless]",
+      "tw": "[Nevertheless]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1050_105001.png"
+  },
+  "105002": {
+    "cardId": 105002,
+    "charId": 1050,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105002-narita-taishin",
+    "name": {
+      "en": "Narita Taishin",
+      "ja": "ナリタタイシン",
+      "ko": "나리타 타이신",
+      "tw": "成田大進"
+    },
+    "title": {
+      "en": "[Difference Engineer]",
+      "ja": "[ディファレンス・エンジニア]",
+      "ko": "[디퍼런스・엔지니어]",
+      "tw": "[與眾不同的技師]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1050_105002.png"
+  },
+  "105003": {
+    "cardId": 105003,
+    "charId": 1050,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105003-narita-taishin",
+    "name": {
+      "en": "Narita Taishin",
+      "ja": "ナリタタイシン",
+      "ko": "나리타 타이신",
+      "tw": "成田大進"
+    },
+    "title": {
+      "en": "Stray Light Override",
+      "ja": "[迷光オーヴァライド]",
+      "ko": "[미광 오버라이드]",
+      "tw": "[迷光追越]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1050_105003.png"
+  },
+  "105101": {
+    "cardId": 105101,
+    "charId": 1051,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105101-nishino-flower",
+    "name": {
+      "en": "Nishino Flower",
+      "ja": "ニシノフラワー",
+      "ko": "니시노 플라워",
+      "tw": "西野花"
+    },
+    "title": {
+      "en": "[Layered Petals]",
+      "ja": "[ティアード・ペタル]",
+      "ko": "[티어드・페탈]",
+      "tw": "[重瓣花朵]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1051_105101.png"
+  },
+  "105102": {
+    "cardId": 105102,
+    "charId": 1051,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105102-nishino-flower",
+    "name": {
+      "en": "Nishino Flower",
+      "ja": "ニシノフラワー",
+      "ko": "니시노 플라워",
+      "tw": "西野花"
+    },
+    "title": {
+      "en": "[Sweet Juneberry]",
+      "ja": "[Sweet Juneberry]",
+      "ko": "[Sweet Juneberry]",
+      "tw": "[Sweet Juneberry]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1051_105102.png"
+  },
+  "105201": {
+    "cardId": 105201,
+    "charId": 1052,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "105201-haru-urara",
+    "name": {
+      "en": "Haru Urara",
+      "ja": "ハルウララ",
+      "ko": "하루 우라라",
+      "tw": "春烏菈菈"
+    },
+    "title": {
+      "en": "[Bestest Prize ♪]",
+      "ja": "[うららん一等賞♪]",
+      "ko": "[화창한 1등상♪]",
+      "tw": "[烏菈菈得第一♪]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1052_105201.png"
+  },
+  "105202": {
+    "cardId": 105202,
+    "charId": 1052,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105202-haru-urara",
+    "name": {
+      "en": "Haru Urara",
+      "ja": "ハルウララ",
+      "ko": "하루 우라라",
+      "tw": "春烏菈菈"
+    },
+    "title": {
+      "en": "[New Year ♪ New Urara!]",
+      "ja": "[初うらら♪さくさくら]",
+      "ko": "[새해의 화창함♪ 활짝 핀 벚꽃]",
+      "tw": "[初烏菈菈♪櫻花綻放]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1052_105202.png"
+  },
+  "105301": {
+    "cardId": 105301,
+    "charId": 1053,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105301-bamboo-memory",
+    "name": {
+      "en": "Bamboo Memory",
+      "ja": "バンブーメモリー",
+      "ko": "뱀부 메모리",
+      "tw": "青竹回憶"
+    },
+    "title": {
+      "en": "[Iron Ambition]",
+      "ja": "[黒鉄の大志]",
+      "ko": "[흑철의 큰 뜻]",
+      "tw": "[黑鐵大志]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1053_105301.png"
+  },
+  "105302": {
+    "cardId": 105302,
+    "charId": 1053,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105302-bamboo-memory",
+    "name": {
+      "en": "Bamboo Memory",
+      "ja": "バンブーメモリー",
+      "ko": "뱀부 메모리",
+      "tw": "青竹回憶"
+    },
+    "title": {
+      "en": "[Ultra☆Marine]",
+      "ja": "[Ultra☆Marine]",
+      "ko": "[Ultra☆Marine]",
+      "tw": "[Ultra☆Marine]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1053_105302.png"
+  },
+  "105401": {
+    "cardId": 105401,
+    "charId": 1054,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "105401-biko-pegasus",
+    "name": {
+      "en": "Biko Pegasus",
+      "ja": "ビコーペガサス",
+      "ko": "비코 페가수스",
+      "tw": "微光飛駒"
+    },
+    "title": {
+      "en": "Gale Pegasus Type Zero",
+      "ja": "[疾風ペガサス・零式]",
+      "ko": "[질풍 페가수스・영식]",
+      "tw": "[疾風飛駒．零式]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1054_105401.png"
+  },
+  "105501": {
+    "cardId": 105501,
+    "charId": 1055,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105501-marvelous-sunday",
+    "name": {
+      "en": "Marvelous Sunday",
+      "ja": "マーベラスサンデー",
+      "ko": "마블러스 선데이",
+      "tw": "美麗週日"
+    },
+    "title": {
+      "en": "[★Super∞Marvel∞Tastic☆]",
+      "ja": "[☆キラ★ドキ☆ワク∞マベ∞]",
+      "ko": "[☆반짝★두근☆콩닥∞마블∞]",
+      "tw": "[☆閃耀★怦然☆雀躍∞美麗∞]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1055_105501.png"
+  },
+  "105502": {
+    "cardId": 105502,
+    "charId": 1055,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105502-marvelous-sunday",
+    "name": {
+      "en": "Marvelous Sunday",
+      "ja": "マーベラスサンデー",
+      "ko": "마블러스 선데이",
+      "tw": "美麗週日"
+    },
+    "title": {
+      "en": "Trick ☆ Ribonetta",
+      "ja": "[トリック☆リボネッタ]",
+      "ko": "[トリック☆リボネッタ]",
+      "tw": "[トリック☆リボネッタ]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1055_105502.png"
+  },
+  "105601": {
+    "cardId": 105601,
+    "charId": 1056,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "105601-matikanefukukitaru",
+    "name": {
+      "en": "Matikanefukukitaru",
+      "ja": "マチカネフクキタル",
+      "ko": "마치카네 후쿠키타루",
+      "tw": "待兼福來"
+    },
+    "title": {
+      "en": "[Rising☆Fortune]",
+      "ja": "[運気上昇☆幸福万来]",
+      "ko": "[운기상승☆행복만래]",
+      "tw": "[運勢上升☆好運臨門]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1056_105601.png"
+  },
+  "105602": {
+    "cardId": 105602,
+    "charId": 1056,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105602-matikanefukukitaru",
+    "name": {
+      "en": "Matikanefukukitaru",
+      "ja": "マチカネフクキタル",
+      "ko": "마치카네 후쿠키타루",
+      "tw": "待兼福來"
+    },
+    "title": {
+      "en": "[Lucky Tidings]",
+      "ja": "[吉兆・初あらし]",
+      "ko": "[길조・초가을 바람]",
+      "tw": "[吉兆初現]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1056_105602.png"
+  },
+  "105701": {
+    "cardId": 105701,
+    "charId": 1057,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105701-mr-cb",
+    "name": {
+      "en": "Mr. C.B.",
+      "ja": "ミスターシービー",
+      "ko": "미스터 시비",
+      "tw": "千明代表"
+    },
+    "title": {
+      "en": "[Clear Bliss]",
+      "ja": "[Clear Bliss]",
+      "ko": "[Clear Bliss]",
+      "tw": "[Clear Bliss]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1057_105701.png"
+  },
+  "105702": {
+    "cardId": 105702,
+    "charId": 1057,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105702-mr-cb",
+    "name": {
+      "en": "Mr. C.B.",
+      "ja": "ミスターシービー",
+      "ko": "미스터 시비",
+      "tw": "千明代表"
+    },
+    "title": {
+      "en": "Dazzling Kabuki Flower",
+      "ja": "[絢爛花道歌舞く君]",
+      "ko": "[현란한 꽃길, 가무하는 그대]",
+      "tw": "[絢爛花道歌舞之人]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1057_105702.png"
+  },
+  "105801": {
+    "cardId": 105801,
+    "charId": 1058,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105801-meisho-doto",
+    "name": {
+      "en": "Meisho Doto",
+      "ja": "メイショウドトウ",
+      "ko": "메이쇼 도토",
+      "tw": "名將怒濤"
+    },
+    "title": {
+      "en": "[Turbulent Blue]",
+      "ja": "[ブルー/レイジング]",
+      "ko": "[블루/레이징]",
+      "tw": "[湛藍/湧濤]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1058_105801.png"
+  },
+  "105802": {
+    "cardId": 105802,
+    "charId": 1058,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105802-meisho-doto",
+    "name": {
+      "en": "Meisho Doto",
+      "ja": "メイショウドトウ",
+      "ko": "메이쇼 도토",
+      "tw": "名將怒濤"
+    },
+    "title": {
+      "en": "[Dot-o'-Lantern]",
+      "ja": "[Dot-o'-Lantern]",
+      "ko": "[Dot-o'-Lantern]",
+      "tw": "[Dot-o'-Lantern]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1058_105802.png"
+  },
+  "105901": {
+    "cardId": 105901,
+    "charId": 1059,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105901-mejiro-dober",
+    "name": {
+      "en": "Mejiro Dober",
+      "ja": "メジロドーベル",
+      "ko": "메지로 도베르",
+      "tw": "目白多伯"
+    },
+    "title": {
+      "en": "[Off the Line]",
+      "ja": "[ツイステッド・ライン]",
+      "ko": "[트위스티드・라인]",
+      "tw": "[Twisted Line]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1059_105901.png"
+  },
+  "105902": {
+    "cardId": 105902,
+    "charId": 1059,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "105902-mejiro-dober",
+    "name": {
+      "en": "Mejiro Dober",
+      "ja": "メジロドーベル",
+      "ko": "메지로 도베르",
+      "tw": "目白多伯"
+    },
+    "title": {
+      "en": "[Sapphire Sojourn]",
+      "ja": "[バカンス・サフィール]",
+      "ko": "[바캉스・사피르]",
+      "tw": "[藍寶石假期]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1059_105902.png"
+  },
+  "106001": {
+    "cardId": 106001,
+    "charId": 1060,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "106001-nice-nature",
+    "name": {
+      "en": "Nice Nature",
+      "ja": "ナイスネイチャ",
+      "ko": "나이스 네이처",
+      "tw": "優秀素質"
+    },
+    "title": {
+      "en": "[Poinsettia Ribbon]",
+      "ja": "[ポインセチア・リボン]",
+      "ko": "[포인세티아・리본]",
+      "tw": "[聖誕紅緞帶]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1060_106001.png"
+  },
+  "106002": {
+    "cardId": 106002,
+    "charId": 1060,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106002-nice-nature",
+    "name": {
+      "en": "Nice Nature",
+      "ja": "ナイスネイチャ",
+      "ko": "나이스 네이처",
+      "tw": "優秀素質"
+    },
+    "title": {
+      "en": "[Run & Win]",
+      "ja": "[RUN＆WIN]",
+      "ko": "[RUN&WIN]",
+      "tw": "[RUN＆WIN]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1060_106002.png"
+  },
+  "106003": {
+    "cardId": 106003,
+    "charId": 1060,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106003-nice-nature",
+    "name": {
+      "en": "Nice Nature",
+      "ja": "ナイスネイチャ",
+      "ko": "나이스 네이처",
+      "tw": "優秀素質"
+    },
+    "title": {
+      "en": "Converging Wishes",
+      "ja": "[ネガイノカサネ]",
+      "ko": "[소원의 겹옷]",
+      "tw": "[萬千祈願]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1060_106003.png"
+  },
+  "106101": {
+    "cardId": 106101,
+    "charId": 1061,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "106101-king-halo",
+    "name": {
+      "en": "King Halo",
+      "ja": "キングヘイロー",
+      "ko": "킹 헤일로",
+      "tw": "帝王光輝"
+    },
+    "title": {
+      "en": "[King of Emeralds]",
+      "ja": "[キング・オブ・エメラルド]",
+      "ko": "[킹・오브・에메랄드]",
+      "tw": "[綠寶石之王]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1061_106101.png"
+  },
+  "106102": {
+    "cardId": 106102,
+    "charId": 1061,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106102-king-halo",
+    "name": {
+      "en": "King Halo",
+      "ja": "キングヘイロー",
+      "ko": "킹 헤일로",
+      "tw": "帝王光輝"
+    },
+    "title": {
+      "en": "[Cheerleader in Noble White]",
+      "ja": "[白く気高き激励の装]",
+      "ko": "[하얗고 고결한 격려의 복장]",
+      "tw": "[潔白高貴的激勵之服]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1061_106102.png"
+  },
+  "106103": {
+    "cardId": 106103,
+    "charId": 1061,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106103-king-halo",
+    "name": {
+      "en": "King Halo",
+      "ja": "キングヘイロー",
+      "ko": "킹 헤일로",
+      "tw": "帝王光輝"
+    },
+    "title": {
+      "en": "Evergreen Identity",
+      "ja": "[Evergreen Identity]",
+      "ko": "[Evergreen Identity]",
+      "tw": "[Evergreen Identity]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1061_106103.png"
+  },
+  "106201": {
+    "cardId": 106201,
+    "charId": 1062,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "106201-matikanetannhauser",
+    "name": {
+      "en": "Matikanetannhauser",
+      "ja": "マチカネタンホイザ",
+      "ko": "마치카네 탄호이저",
+      "tw": "待兼唐懷瑟"
+    },
+    "title": {
+      "en": "[Clippety-Tippety-Clop]",
+      "ja": "[ぱんぱかティルトット]",
+      "ko": "[팡파카 틸토트]",
+      "tw": "[鏘鏘～斜裝登場]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1062_106201.png"
+  },
+  "106202": {
+    "cardId": 106202,
+    "charId": 1062,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106202-matikanetannhauser",
+    "name": {
+      "en": "Matikanetannhauser",
+      "ja": "マチカネタンホイザ",
+      "ko": "마치카네 탄호이저",
+      "tw": "待兼唐懷瑟"
+    },
+    "title": {
+      "en": "[Blue Turbulence]",
+      "ja": "[ブルー・タービュランス]",
+      "ko": "[블루・터뷸런스]",
+      "tw": "[藍色‧亂流]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1062_106202.png"
+  },
+  "106301": {
+    "cardId": 106301,
+    "charId": 1063,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "106301-ikuno-dictus",
+    "name": {
+      "en": "Ikuno Dictus",
+      "ja": "イクノディクタス",
+      "ko": "이쿠노 딕터스",
+      "tw": "生野狄杜斯"
+    },
+    "title": {
+      "en": "Mantle of Steel",
+      "ja": "[Mantle of Steel]",
+      "ko": "[Mantle of Steel]",
+      "tw": "[Mantle of Steel]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1063_106301.png"
+  },
+  "106302": {
+    "cardId": 106302,
+    "charId": 1063,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106302-ikuno-dictus",
+    "name": {
+      "en": "Ikuno Dictus",
+      "ja": "イクノディクタス",
+      "ko": "이쿠노 딕터스",
+      "tw": "生野狄杜斯"
+    },
+    "title": {
+      "en": "Strolling an Orderly Path",
+      "ja": "[逍遥、整然たる路を]",
+      "ko": "[逍遥、整然たる路を]",
+      "tw": "[逍遥、整然たる路を]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1063_106302.png"
+  },
+  "106401": {
+    "cardId": 106401,
+    "charId": 1064,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106401-mejiro-palmer",
+    "name": {
+      "en": "Mejiro Palmer",
+      "ja": "メジロパーマー",
+      "ko": "메지로 파머",
+      "tw": "目白善信"
+    },
+    "title": {
+      "en": "[Line Breakthrough]",
+      "ja": "[Line Breakthrough]",
+      "ko": "[Line Breakthrough]",
+      "tw": "[Line Breakthrough]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1064_106401.png"
+  },
+  "106402": {
+    "cardId": 106402,
+    "charId": 1064,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106402-mejiro-palmer",
+    "name": {
+      "en": "Mejiro Palmer",
+      "ja": "メジロパーマー",
+      "ko": "메지로 파머",
+      "tw": "目白善信"
+    },
+    "title": {
+      "en": "Warm-Hearted Reindeer",
+      "ja": "[赤心のトナカイさん]",
+      "ko": "[진심인 순록 씨]",
+      "tw": "[飽含真心的馴鹿]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1064_106402.png"
+  },
+  "106501": {
+    "cardId": 106501,
+    "charId": 1065,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106501-daitaku-helios",
+    "name": {
+      "en": "Daitaku Helios",
+      "ja": "ダイタクヘリオス",
+      "ko": "다이타쿠 헬리오스",
+      "tw": "大德太陽"
+    },
+    "title": {
+      "en": "[Fun☆Fun☆Party Night]",
+      "ja": "[Fun☆Fun☆ぱりない]",
+      "ko": "[Fun☆Fun☆파뤼나잇]",
+      "tw": "[Fun☆Fun☆派對夜]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1065_106501.png"
+  },
+  "106502": {
+    "cardId": 106502,
+    "charId": 1065,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106502-daitaku-helios",
+    "name": {
+      "en": "Daitaku Helios",
+      "ja": "ダイタクヘリオス",
+      "ko": "다이타쿠 헬리오스",
+      "tw": "大德太陽"
+    },
+    "title": {
+      "en": "Joyful Jamboree!",
+      "ja": "[Joyful Jamboree!]",
+      "ko": "[Joyful Jamboree!]",
+      "tw": "[Joyful Jamboree!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1065_106502.png"
+  },
+  "106601": {
+    "cardId": 106601,
+    "charId": 1066,
+    "rarity": 1,
+    "obtained": "gacha",
+    "urlName": "106601-twin-turbo",
+    "name": {
+      "en": "Twin Turbo",
+      "ja": "ツインターボ",
+      "ko": "트윈 터보",
+      "tw": "雙渦輪"
+    },
+    "title": {
+      "en": "[Turbo Engine! Full Throttle!]",
+      "ja": "[爆走！ターボエンジン]",
+      "ko": "[폭주! 터보 엔진]",
+      "tw": "[暴衝！渦輪引擎]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1066_106601.png"
+  },
+  "106701": {
+    "cardId": 106701,
+    "charId": 1067,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106701-satono-diamond",
+    "name": {
+      "en": "Satono Diamond",
+      "ja": "サトノダイヤモンド",
+      "ko": "사토노 다이아몬드",
+      "tw": "里見光鑽"
+    },
+    "title": {
+      "en": "[Natural Brilliance]",
+      "ja": "[Natural Brilliance]",
+      "ko": "[Natural Brilliance]",
+      "tw": "[Natural Brilliance]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1067_106701.png"
+  },
+  "106702": {
+    "cardId": 106702,
+    "charId": 1067,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106702-satono-diamond",
+    "name": {
+      "en": "Satono Diamond",
+      "ja": "サトノダイヤモンド",
+      "ko": "사토노 다이아몬드",
+      "tw": "里見光鑽"
+    },
+    "title": {
+      "en": "[Jade's Prosperity]",
+      "ja": "[花形・弥栄之翠]",
+      "ko": "[각광・번영을 부르는 녹빛]",
+      "tw": "[當家花旦・彌榮之翠]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1067_106702.png"
+  },
+  "106703": {
+    "cardId": 106703,
+    "charId": 1067,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106703-satono-diamond",
+    "name": {
+      "en": "Satono Diamond",
+      "ja": "サトノダイヤモンド",
+      "ko": "사토노 다이아몬드",
+      "tw": "里見光鑽"
+    },
+    "title": {
+      "en": "Chevalier Bleu",
+      "ja": "[シュヴァリエ・ブル]",
+      "ko": "[슈발리에・블뢰]",
+      "tw": "[蒼藍騎士]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1067_106703.png"
+  },
+  "106801": {
+    "cardId": 106801,
+    "charId": 1068,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106801-kitasan-black",
+    "name": {
+      "en": "Kitasan Black",
+      "ja": "キタサンブラック",
+      "ko": "키타산 블랙",
+      "tw": "北部玄駒"
+    },
+    "title": {
+      "en": "[Gilded Shrine to Glory]",
+      "ja": "[錦上・大判御輿]",
+      "ko": "[금상・금화가마]",
+      "tw": "[錦上．大判御輿]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1068_106801.png"
+  },
+  "106802": {
+    "cardId": 106802,
+    "charId": 1068,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106802-kitasan-black",
+    "name": {
+      "en": "Kitasan Black",
+      "ja": "キタサンブラック",
+      "ko": "키타산 블랙",
+      "tw": "北部玄駒"
+    },
+    "title": {
+      "en": "[Crane's Ambition]",
+      "ja": "[真打・慶鶴之志]",
+      "ko": "[주역・경사스러운 학의 뜻]",
+      "tw": "[壓軸好戲・慶鶴之志]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1068_106802.png"
+  },
+  "106803": {
+    "cardId": 106803,
+    "charId": 1068,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106803-kitasan-black",
+    "name": {
+      "en": "Kitasan Black",
+      "ja": "キタサンブラック",
+      "ko": "키타산 블랙",
+      "tw": "北部玄駒"
+    },
+    "title": {
+      "en": "Final Bloom",
+      "ja": "[結願のしまい華]",
+      "ko": "[결원의 마지막 꽃]",
+      "tw": "[償願謝幕之花]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1068_106803.png"
+  },
+  "106901": {
+    "cardId": 106901,
+    "charId": 1069,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106901-sakura-chiyono-o",
+    "name": {
+      "en": "Sakura Chiyono O",
+      "ja": "サクラチヨノオー",
+      "ko": "사쿠라 치요노 오",
+      "tw": "櫻花千代王"
+    },
+    "title": {
+      "en": "[Strength in Full Bloom]",
+      "ja": "[日下開山・花あかり]",
+      "ko": "[천하무쌍・만개한 벚꽃의 빛]",
+      "tw": "[天下第一花滿天]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1069_106901.png"
+  },
+  "106902": {
+    "cardId": 106902,
+    "charId": 1069,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "106902-sakura-chiyono-o",
+    "name": {
+      "en": "Sakura Chiyono O",
+      "ja": "サクラチヨノオー",
+      "ko": "사쿠라 치요노 오",
+      "tw": "櫻花千代王"
+    },
+    "title": {
+      "en": "[Fleur Enneigée]",
+      "ja": "[Fleur Enneigée]",
+      "ko": "[Fleur Enneigée]",
+      "tw": "[Fleur Enneigée]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1069_106902.png"
+  },
+  "107001": {
+    "cardId": 107001,
+    "charId": 1070,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107001-sirius-symboli",
+    "name": {
+      "en": "Sirius Symboli",
+      "ja": "シリウスシンボリ",
+      "ko": "시리우스 심볼리",
+      "tw": "天狼星象徵"
+    },
+    "title": {
+      "en": "[Féroce]",
+      "ja": "[Féroce]",
+      "ko": "[Féroce]",
+      "tw": "[Féroce]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1070_107001.png"
+  },
+  "107002": {
+    "cardId": 107002,
+    "charId": 1070,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107002-sirius-symboli",
+    "name": {
+      "en": "Sirius Symboli",
+      "ja": "シリウスシンボリ",
+      "ko": "시리우스 심볼리",
+      "tw": "天狼星象徵"
+    },
+    "title": {
+      "en": "Louve Stellaire",
+      "ja": "[Louve stellaire]",
+      "ko": "[Louve stellaire]",
+      "tw": "[Louve stellaire]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1070_107002.png"
+  },
+  "107101": {
+    "cardId": 107101,
+    "charId": 1071,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107101-mejiro-ardan",
+    "name": {
+      "en": "Mejiro Ardan",
+      "ja": "メジロアルダン",
+      "ko": "메지로 아르당",
+      "tw": "目白阿爾丹"
+    },
+    "title": {
+      "en": "[Crystalline]",
+      "ja": "[クリノクロア・ライン]",
+      "ko": "[클리노클로어・라인]",
+      "tw": "[Clinochlore Line]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1071_107101.png"
+  },
+  "107102": {
+    "cardId": 107102,
+    "charId": 1071,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107102-mejiro-ardan",
+    "name": {
+      "en": "Mejiro Ardan",
+      "ja": "メジロアルダン",
+      "ko": "메지로 아르당",
+      "tw": "目白阿爾丹"
+    },
+    "title": {
+      "en": "[Neige Émeraude]",
+      "ja": "[Neige Émeraude]",
+      "ko": "[Neige Émeraude]",
+      "tw": "[Neige Émeraude]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1071_107102.png"
+  },
+  "107201": {
+    "cardId": 107201,
+    "charId": 1072,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107201-yaeno-muteki",
+    "name": {
+      "en": "Yaeno Muteki",
+      "ja": "ヤエノムテキ",
+      "ko": "야에노 무테키",
+      "tw": "八重無敵"
+    },
+    "title": {
+      "en": "[Blazed Head, Covered Fists]",
+      "ja": "[四白流星の襲]",
+      "ko": "[사백유성의 습격]",
+      "tw": "[四白流星襲擊]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1072_107201.png"
+  },
+  "107202": {
+    "cardId": 107202,
+    "charId": 1072,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107202-yaeno-muteki",
+    "name": {
+      "en": "Yaeno Muteki",
+      "ja": "ヤエノムテキ",
+      "ko": "야에노 무테키",
+      "tw": "八重無敵"
+    },
+    "title": {
+      "en": "Black General, Zen",
+      "ja": "[黒将Zen]",
+      "ko": "[흑장 Zen]",
+      "tw": "[黑將Zen]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1072_107202.png"
+  },
+  "107301": {
+    "cardId": 107301,
+    "charId": 1073,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "107301-tsurumaru-tsuyoshi",
+    "name": {
+      "en": "Tsurumaru Tsuyoshi",
+      "ja": "ツルマルツヨシ",
+      "ko": "츠루마루 츠요시",
+      "tw": "鶴丸強志"
+    },
+    "title": {
+      "en": "Dream Bold, Stand Tall, Tsuyoshi!",
+      "ja": "[志、高し、強し！]",
+      "ko": "[뜻, 높고, 강하게!]",
+      "tw": "[志向、遠大、堅強！]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1073_107301.png"
+  },
+  "107401": {
+    "cardId": 107401,
+    "charId": 1074,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107401-mejiro-bright",
+    "name": {
+      "en": "Mejiro Bright",
+      "ja": "メジロブライト",
+      "ko": "메지로 브라이트",
+      "tw": "目白光明"
+    },
+    "title": {
+      "en": "[Brunissage Line]",
+      "ja": "[ブリュニサージュ・ライン]",
+      "ko": "[브뤼니사주・라인]",
+      "tw": "[Vernissage Line]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1074_107401.png"
+  },
+  "107402": {
+    "cardId": 107402,
+    "charId": 1074,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107402-mejiro-bright",
+    "name": {
+      "en": "Mejiro Bright",
+      "ja": "メジロブライト",
+      "ko": "메지로 브라이트",
+      "tw": "目白光明"
+    },
+    "title": {
+      "en": "Starry Snow Lolita",
+      "ja": "[清らに星澄むスノーロリィタ]",
+      "ko": "[거룩한 밤 경사로운 스노우 롤리타]",
+      "tw": "[絢麗星夜的細雪蘿莉塔]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1074_107402.png"
+  },
+  "107403": {
+    "cardId": 107403,
+    "charId": 1074,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107403-mejiro-bright",
+    "name": {
+      "en": "Mejiro Bright",
+      "ja": "メジロブライト",
+      "ko": "메지로 브라이트",
+      "tw": "目白光明"
+    },
+    "title": {
+      "en": "Seaside Elegance in Chiffon",
+      "ja": "[海辺のエレガンスシフォン]",
+      "ko": "[海辺のエレガンスシフォン]",
+      "tw": "[海辺のエレガンスシフォン]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1074_107403.png"
+  },
+  "107601": {
+    "cardId": 107601,
+    "charId": 1076,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107601-sakura-laurel",
+    "name": {
+      "en": "Sakura Laurel",
+      "ja": "サクラローレル",
+      "ko": "사쿠라 로렐",
+      "tw": "櫻花桂冠"
+    },
+    "title": {
+      "en": "[Saisir le rêve]",
+      "ja": "[Saisir le rêve]",
+      "ko": "[Saisir le rêve]",
+      "tw": "[Saisir le rêve]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1076_107601.png"
+  },
+  "107602": {
+    "cardId": 107602,
+    "charId": 1076,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107602-sakura-laurel",
+    "name": {
+      "en": "Sakura Laurel",
+      "ja": "サクラローレル",
+      "ko": "사쿠라 로렐",
+      "tw": "櫻花桂冠"
+    },
+    "title": {
+      "en": "Nouvelle Pousse",
+      "ja": "[Nouvelle pousse]",
+      "ko": "[Nouvelle pousse]",
+      "tw": "[Nouvelle pousse]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1076_107602.png"
+  },
+  "107701": {
+    "cardId": 107701,
+    "charId": 1077,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107701-narita-top-road",
+    "name": {
+      "en": "Narita Top Road",
+      "ja": "ナリタトップロード",
+      "ko": "나리타 탑 로드",
+      "tw": "成田路"
+    },
+    "title": {
+      "en": "The Proud Road",
+      "ja": "[The Proud Road]",
+      "ko": "[The Proud Road]",
+      "tw": "[The Proud Road]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1077_107701.png"
+  },
+  "107702": {
+    "cardId": 107702,
+    "charId": 1077,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107702-narita-top-road",
+    "name": {
+      "en": "Narita Top Road",
+      "ja": "ナリタトップロード",
+      "ko": "나리타 탑 로드",
+      "tw": "成田路"
+    },
+    "title": {
+      "en": "Celestial Road",
+      "ja": "[Celestial Road]",
+      "ko": "[Celestial Road]",
+      "tw": "[Celestial Road]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1077_107702.png"
+  },
+  "107703": {
+    "cardId": 107703,
+    "charId": 1077,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107703-narita-top-road",
+    "name": {
+      "en": "Narita Top Road",
+      "ja": "ナリタトップロード",
+      "ko": "나리타 탑 로드",
+      "tw": "成田路"
+    },
+    "title": {
+      "en": "Bountiful Dragon Broth Saga",
+      "ja": "[万福龍湯伝・頂]",
+      "ko": "[万福龍湯伝・頂]",
+      "tw": "[万福龍湯伝・頂]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1077_107703.png"
+  },
+  "107801": {
+    "cardId": 107801,
+    "charId": 1078,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107801-yamanin-zephyr",
+    "name": {
+      "en": "Yamanin Zephyr",
+      "ja": "ヤマニンゼファー",
+      "ko": "야마닌 제퍼",
+      "tw": "山人西風"
+    },
+    "title": {
+      "en": "[Fluttertail Spirit]",
+      "ja": "[Fluttertail Spirit]",
+      "ko": "[Fluttertail Spirit]",
+      "tw": "[Fluttertail Spirit]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1078_107801.png"
+  },
+  "107802": {
+    "cardId": 107802,
+    "charId": 1078,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107802-yamanin-zephyr",
+    "name": {
+      "en": "Yamanin Zephyr",
+      "ja": "ヤマニンゼファー",
+      "ko": "야마닌 제퍼",
+      "tw": "山人西風"
+    },
+    "title": {
+      "en": "Sugary Wind",
+      "ja": "[Sugary Wind]",
+      "ko": "[Sugary Wind]",
+      "tw": "[Sugary Wind]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1078_107802.png"
+  },
+  "107901": {
+    "cardId": 107901,
+    "charId": 1079,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "107901-furioso",
+    "name": {
+      "en": "Furioso",
+      "ja": "フリオーソ",
+      "ko": "푸리오소",
+      "tw": "狂熱激昂"
+    },
+    "title": {
+      "en": "Triumphant Return of the Auspicious Star",
+      "ja": "[衣錦還郷の瑞星]",
+      "ko": "[금의환향의 상서로운 별]",
+      "tw": "[衣錦還鄉的瑞星]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1079_107901.png"
+  },
+  "108001": {
+    "cardId": 108001,
+    "charId": 1080,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108001-transcend",
+    "name": {
+      "en": "Transcend",
+      "ja": "トランセンド",
+      "ko": "트랜센드",
+      "tw": "創升"
+    },
+    "title": {
+      "en": "ZOKU-ZOKU GIZMO",
+      "ja": "[ZOKU-ZOKU GIZMO]",
+      "ko": "[JJARIT-JJARIT GIZMO]",
+      "tw": "[興奮不已GIZMO]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1080_108001.png"
+  },
+  "108002": {
+    "cardId": 108002,
+    "charId": 1080,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108002-transcend",
+    "name": {
+      "en": "Transcend",
+      "ja": "トランセンド",
+      "ko": "트랜센드",
+      "tw": "創升"
+    },
+    "title": {
+      "en": "Twilit Neo-Kagura",
+      "ja": "[宵闇ネオカグラ]",
+      "ko": "[宵闇ネオカグラ]",
+      "tw": "[宵闇ネオカグラ]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1080_108002.png"
+  },
+  "108101": {
+    "cardId": 108101,
+    "charId": 1081,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108101-espoir-city",
+    "name": {
+      "en": "Espoir City",
+      "ja": "エスポワールシチー",
+      "ko": "에스푸아르 시티",
+      "tw": "希望城市"
+    },
+    "title": {
+      "en": "Red Devil Gear",
+      "ja": "[Red Devil Gear]",
+      "ko": "[Red Devil Gear]",
+      "tw": "[Red Devil Gear]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1081_108101.png"
+  },
+  "108201": {
+    "cardId": 108201,
+    "charId": 1082,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108201-north-flight",
+    "name": {
+      "en": "North Flight",
+      "ja": "ノースフライト",
+      "ko": "노스 플라이트",
+      "tw": "北方飛翔"
+    },
+    "title": {
+      "en": "Looking Fly!",
+      "ja": "[Looking Fly!]",
+      "ko": "[Looking Fly!]",
+      "tw": "[Looking Fly!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1082_108201.png"
+  },
+  "108202": {
+    "cardId": 108202,
+    "charId": 1082,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108202-north-flight",
+    "name": {
+      "en": "North Flight",
+      "ja": "ノースフライト",
+      "ko": "노스 플라이트",
+      "tw": "北方飛翔"
+    },
+    "title": {
+      "en": "Pale-Blue Flash",
+      "ja": "[水縹の一閃]",
+      "ko": "[水縹の一閃]",
+      "tw": "[水縹の一閃]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1082_108202.png"
+  },
+  "108301": {
+    "cardId": 108301,
+    "charId": 1083,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108301-symboli-kris-s",
+    "name": {
+      "en": "Symboli Kris S",
+      "ja": "シンボリクリスエス",
+      "ko": "심볼리 크리스 에스",
+      "tw": "克莉斯耶絲象徵"
+    },
+    "title": {
+      "en": "[Onyx Soldier]",
+      "ja": "[Onyx Soldier]",
+      "ko": "[Onyx Soldier]",
+      "tw": "[Onyx Soldier]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1083_108301.png"
+  },
+  "108302": {
+    "cardId": 108302,
+    "charId": 1083,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108302-symboli-kris-s",
+    "name": {
+      "en": "Symboli Kris S",
+      "ja": "シンボリクリスエス",
+      "ko": "심볼리 크리스 에스",
+      "tw": "克莉斯耶絲象徵"
+    },
+    "title": {
+      "en": "Jetblack Automaton",
+      "ja": "[Jetblack Automaton]",
+      "ko": "[Jetblack Automaton]",
+      "tw": "[Jetblack Automaton]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1083_108302.png"
+  },
+  "108401": {
+    "cardId": 108401,
+    "charId": 1084,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108401-tanino-gimlet",
+    "name": {
+      "en": "Tanino Gimlet",
+      "ja": "タニノギムレット",
+      "ko": "타니노 김렛",
+      "tw": "谷水琴蕾"
+    },
+    "title": {
+      "en": "[Mantle of Keravnos]",
+      "ja": "[身に纏うケラヴノス]",
+      "ko": "[몸을 휘감는 케라브노스]",
+      "tw": "[雷光纏身]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1084_108401.png"
+  },
+  "108402": {
+    "cardId": 108402,
+    "charId": 1084,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108402-tanino-gimlet",
+    "name": {
+      "en": "Tanino Gimlet",
+      "ja": "タニノギムレット",
+      "ko": "타니노 김렛",
+      "tw": "谷水琴蕾"
+    },
+    "title": {
+      "en": "With a Twist",
+      "ja": "[With a Twist]",
+      "ko": "[With a Twist]",
+      "tw": "[With a Twist]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1084_108402.png"
+  },
+  "108501": {
+    "cardId": 108501,
+    "charId": 1085,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108501-daiichi-ruby",
+    "name": {
+      "en": "Daiichi Ruby",
+      "ja": "ダイイチルビー",
+      "ko": "다이이치 루비",
+      "tw": "第一紅寶"
+    },
+    "title": {
+      "en": "[Opulent Gem]",
+      "ja": "[華麗なる紅玉]",
+      "ko": "[화려한 홍옥]",
+      "tw": "[華麗紅玉]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1085_108501.png"
+  },
+  "108502": {
+    "cardId": 108502,
+    "charId": 1085,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108502-daiichi-ruby",
+    "name": {
+      "en": "Daiichi Ruby",
+      "ja": "ダイイチルビー",
+      "ko": "다이이치 루비",
+      "tw": "第一紅寶"
+    },
+    "title": {
+      "en": "Flowing Blue",
+      "ja": "[Flowing Blue]",
+      "ko": "[Flowing Blue]",
+      "tw": "[Flowing Blue]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1085_108502.png"
+  },
+  "108601": {
+    "cardId": 108601,
+    "charId": 1086,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108601-mejiro-ramonu",
+    "name": {
+      "en": "Mejiro Ramonu",
+      "ja": "メジロラモーヌ",
+      "ko": "메지로 라모누",
+      "tw": "目白拉茉奴"
+    },
+    "title": {
+      "en": "Onyx Line",
+      "ja": "[オニキス・ライン]",
+      "ko": "[오닉스・라인]",
+      "tw": "[Onyx Line]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1086_108601.png"
+  },
+  "108602": {
+    "cardId": 108602,
+    "charId": 1086,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108602-mejiro-ramonu",
+    "name": {
+      "en": "Mejiro Ramonu",
+      "ja": "メジロラモーヌ",
+      "ko": "메지로 라모누",
+      "tw": "目白拉茉奴"
+    },
+    "title": {
+      "en": "Untouchable Eden",
+      "ja": "[Untouchable Eden]",
+      "ko": "[Untouchable Eden]",
+      "tw": "[Untouchable Eden]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1086_108602.png"
+  },
+  "108701": {
+    "cardId": 108701,
+    "charId": 1087,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108701-aston-machan",
+    "name": {
+      "en": "Aston Machan",
+      "ja": "アストンマーチャン",
+      "ko": "애스턴 마짱",
+      "tw": "奧斯頓真弓"
+    },
+    "title": {
+      "en": "[Flare]",
+      "ja": "[Flare]",
+      "ko": "[Flare]",
+      "tw": "[Flare]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1087_108701.png"
+  },
+  "108702": {
+    "cardId": 108702,
+    "charId": 1087,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108702-aston-machan",
+    "name": {
+      "en": "Aston Machan",
+      "ja": "アストンマーチャン",
+      "ko": "애스턴 마짱",
+      "tw": "奧斯頓真弓"
+    },
+    "title": {
+      "en": "Everlasting Sweet Treat",
+      "ja": "[溶けない砂糖菓子]",
+      "ko": "[녹지 않는 설탕 과자]",
+      "tw": "[不融的砂糖點心]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1087_108702.png"
+  },
+  "108801": {
+    "cardId": 108801,
+    "charId": 1088,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108801-satono-crown",
+    "name": {
+      "en": "Satono Crown",
+      "ja": "サトノクラウン",
+      "ko": "사토노 크라운",
+      "tw": "里見皇冠"
+    },
+    "title": {
+      "en": "Emerald Journey",
+      "ja": "[黒翠千里行]",
+      "ko": "[검은 옥이 천 리를 간다]",
+      "tw": "[黑翠千里行]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1088_108801.png"
+  },
+  "108802": {
+    "cardId": 108802,
+    "charId": 1088,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108802-satono-crown",
+    "name": {
+      "en": "Satono Crown",
+      "ja": "サトノクラウン",
+      "ko": "사토노 크라운",
+      "tw": "里見皇冠"
+    },
+    "title": {
+      "en": "Sunny Island Floral Beauty",
+      "ja": "[晴島花麗]",
+      "ko": "[맑은 섬에 핀 아름다운 꽃]",
+      "tw": "[晴島花麗]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1088_108802.png"
+  },
+  "108901": {
+    "cardId": 108901,
+    "charId": 1089,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108901-cheval-grand",
+    "name": {
+      "en": "Cheval Grand",
+      "ja": "シュヴァルグラン",
+      "ko": "슈발 그랑",
+      "tw": "高尚駿逸"
+    },
+    "title": {
+      "en": "Grand Itinéraire",
+      "ja": "[Grand itinéraire]",
+      "ko": "[Grand itinéraire]",
+      "tw": "[Grand itinéraire]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1089_108901.png"
+  },
+  "108902": {
+    "cardId": 108902,
+    "charId": 1089,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "108902-cheval-grand",
+    "name": {
+      "en": "Cheval Grand",
+      "ja": "シュヴァルグラン",
+      "ko": "슈발 그랑",
+      "tw": "高尚駿逸"
+    },
+    "title": {
+      "en": "Summer Lull Navy Drop",
+      "ja": "[夏凪ネイビードロップ]",
+      "ko": "[잔잔한 여름의 네이비 드롭]",
+      "tw": "[夏日靜謐的深藍水滴]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1089_108902.png"
+  },
+  "109001": {
+    "cardId": 109001,
+    "charId": 1090,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109001-verxina",
+    "name": {
+      "en": "Verxina",
+      "ja": "ヴィルシーナ",
+      "ko": "베르시나",
+      "tw": "極峰"
+    },
+    "title": {
+      "en": "Le Beau Sommet",
+      "ja": "[Le beau sommet]",
+      "ko": "[Le beau sommet]",
+      "tw": "[Le beau sommet]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1090_109001.png"
+  },
+  "109101": {
+    "cardId": 109101,
+    "charId": 1091,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109101-vivlos",
+    "name": {
+      "en": "Vivlos",
+      "ja": "ヴィブロス",
+      "ko": "비블로스",
+      "tw": "比布魯斯"
+    },
+    "title": {
+      "en": "Voyage Étincelant",
+      "ja": "[Voyage étincelant]",
+      "ko": "[Voyage étincelant]",
+      "tw": "[Voyage étincelant]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1091_109101.png"
+  },
+  "109102": {
+    "cardId": 109102,
+    "charId": 1091,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109102-vivlos",
+    "name": {
+      "en": "Vivlos",
+      "ja": "ヴィブロス",
+      "ko": "비블로스",
+      "tw": "比布魯斯"
+    },
+    "title": {
+      "en": "Éclat d'été",
+      "ja": "[Éclat d'été]",
+      "ko": "[Éclat d'été]",
+      "tw": "[Éclat d'été]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1091_109102.png"
+  },
+  "109201": {
+    "cardId": 109201,
+    "charId": 1092,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109201-dantsu-flame",
+    "name": {
+      "en": "Dantsu Flame",
+      "ja": "ダンツフレーム",
+      "ko": "단츠 플레임",
+      "tw": "緞通烈焰"
+    },
+    "title": {
+      "en": "Center ◎ Spotlight",
+      "ja": "[まんなか◎スポットライト]",
+      "ko": "[まんなか◎スポットライト]",
+      "tw": "[まんなか◎スポットライト]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1092_109201.png"
+  },
+  "109301": {
+    "cardId": 109301,
+    "charId": 1093,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109301-ksmiracle",
+    "name": {
+      "en": "K.S.Miracle",
+      "ja": "ケイエスミラクル",
+      "ko": "케이에스 미라클",
+      "tw": "喜嘉奇蹟"
+    },
+    "title": {
+      "en": "Prism",
+      "ja": "[Prism]",
+      "ko": "[Prism]",
+      "tw": "[Prism]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1093_109301.png"
+  },
+  "109302": {
+    "cardId": 109302,
+    "charId": 1093,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109302-ksmiracle",
+    "name": {
+      "en": "K.S.Miracle",
+      "ja": "ケイエスミラクル",
+      "ko": "케이에스 미라클",
+      "tw": "喜嘉奇蹟"
+    },
+    "title": {
+      "en": "Andante in Autumn Hues",
+      "ja": "[秋日色アンダンテ]",
+      "ko": "[가을빛 안단테]",
+      "tw": "[秋日暖調行板節奏]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1093_109302.png"
+  },
+  "109401": {
+    "cardId": 109401,
+    "charId": 1094,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109401-jungle-pocket",
+    "name": {
+      "en": "Jungle Pocket",
+      "ja": "ジャングルポケット",
+      "ko": "정글 포켓",
+      "tw": "叢林口袋"
+    },
+    "title": {
+      "en": "Ruler's Battle Cry",
+      "ja": "[王者の喊声]",
+      "ko": "[왕의 함성]",
+      "tw": "[王者的吶喊]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1094_109401.png"
+  },
+  "109402": {
+    "cardId": 109402,
+    "charId": 1094,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109402-jungle-pocket",
+    "name": {
+      "en": "Jungle Pocket",
+      "ja": "ジャングルポケット",
+      "ko": "정글 포켓",
+      "tw": "叢林口袋"
+    },
+    "title": {
+      "en": "Vermilion Head",
+      "ja": "[ヴァーミリオン・ヘッド]",
+      "ko": "[ヴァーミリオン・ヘッド]",
+      "tw": "[ヴァーミリオン・ヘッド]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1094_109402.png"
+  },
+  "109501": {
+    "cardId": 109501,
+    "charId": 1095,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109501-believe",
+    "name": {
+      "en": "Believe",
+      "ja": "ビリーヴ",
+      "ko": "빌리브",
+      "tw": "信念"
+    },
+    "title": {
+      "en": "Purity",
+      "ja": "[精粋]",
+      "ko": "[精粋]",
+      "tw": "[精粋]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1095_109501.png"
+  },
+  "109601": {
+    "cardId": 109601,
+    "charId": 1096,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109601-no-reason",
+    "name": {
+      "en": "No Reason",
+      "ja": "ノーリーズン",
+      "ko": "노 리즌",
+      "tw": "無需理由"
+    },
+    "title": {
+      "en": "Swift Crimson Armor",
+      "ja": "[紅色塗早駆具足]",
+      "ko": "[질주하는 붉은 갑주]",
+      "tw": "[赤紅漆疾馳甲冑]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1096_109601.png"
+  },
+  "109701": {
+    "cardId": 109701,
+    "charId": 1097,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109701-still-in-love",
+    "name": {
+      "en": "Still in Love",
+      "ja": "スティルインラブ",
+      "ko": "스틸 인 러브",
+      "tw": "愛如往昔"
+    },
+    "title": {
+      "en": "Scarlet Vow Raiment",
+      "ja": "[緋想の誓衣]",
+      "ko": "[진홍빛 염원의 서의]",
+      "tw": "[緋念誓衣]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1097_109701.png"
+  },
+  "109801": {
+    "cardId": 109801,
+    "charId": 1098,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109801-copano-rickey",
+    "name": {
+      "en": "Copano Rickey",
+      "ja": "コパノリッキー",
+      "ko": "코파노 리키",
+      "tw": "小林歷奇"
+    },
+    "title": {
+      "en": "[Eightfold☆Fortune]",
+      "ja": "[陰陽八卦☆開運衣]",
+      "ko": "[음양팔괘☆운이 트이는 옷]",
+      "tw": "[陰陽八卦☆開運衣]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1098_109801.png"
+  },
+  "109802": {
+    "cardId": 109802,
+    "charId": 1098,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109802-copano-rickey",
+    "name": {
+      "en": "Copano Rickey",
+      "ja": "コパノリッキー",
+      "ko": "코파노 리키",
+      "tw": "小林歷奇"
+    },
+    "title": {
+      "en": "Dazzling ☆ Lucky Wear",
+      "ja": "[光彩陸離☆招福衣]",
+      "ko": "[광채육리☆복을 부르는 옷]",
+      "tw": "[光彩奪目☆招福衣]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1098_109802.png"
+  },
+  "109901": {
+    "cardId": 109901,
+    "charId": 1099,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109901-hokko-tarumae",
+    "name": {
+      "en": "Hokko Tarumae",
+      "ja": "ホッコータルマエ",
+      "ko": "홋코 타루마에",
+      "tw": "北幸樽前"
+    },
+    "title": {
+      "en": "[Starry Lightship]",
+      "ja": "[スター・ライト・シップ]",
+      "ko": "[스타・라이트・십]",
+      "tw": "[繁星．光華．船隻]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1099_109901.png"
+  },
+  "109902": {
+    "cardId": 109902,
+    "charId": 1099,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "109902-hokko-tarumae",
+    "name": {
+      "en": "Hokko Tarumae",
+      "ja": "ホッコータルマエ",
+      "ko": "홋코 타루마에",
+      "tw": "北幸樽前"
+    },
+    "title": {
+      "en": "Pastel Marine Locodol",
+      "ja": "[パステルマリン・ロコドル]",
+      "ko": "[파스텔 마린・지역 아이돌]",
+      "tw": "[粉藍海洋．地方偶像]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1099_109902.png"
+  },
+  "110001": {
+    "cardId": 110001,
+    "charId": 1100,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110001-wonder-acute",
+    "name": {
+      "en": "Wonder Acute",
+      "ja": "ワンダーアキュート",
+      "ko": "원더 어큐트",
+      "tw": "奇銳駿"
+    },
+    "title": {
+      "en": "[Butterfly Sting]",
+      "ja": "[Butterfly Sting]",
+      "ko": "[Butterfly Sting]",
+      "tw": "[Butterfly Sting]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1100_110001.png"
+  },
+  "110002": {
+    "cardId": 110002,
+    "charId": 1100,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110002-wonder-acute",
+    "name": {
+      "en": "Wonder Acute",
+      "ja": "ワンダーアキュート",
+      "ko": "원더 어큐트",
+      "tw": "奇銳駿"
+    },
+    "title": {
+      "en": "Soft Light・Hot Spring Scent",
+      "ja": "[柔灯・湯の香の装い]",
+      "ko": "[柔灯・湯の香の装い]",
+      "tw": "[柔灯・湯の香の装い]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1100_110002.png"
+  },
+  "110201": {
+    "cardId": 110201,
+    "charId": 1102,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110201-sounds-of-earth",
+    "name": {
+      "en": "Sounds of Earth",
+      "ja": "サウンズオブアース",
+      "ko": "사운즈 오브 어스",
+      "tw": "萬籟爭鳴"
+    },
+    "title": {
+      "en": "Ritmo Della Terra",
+      "ja": "[リトモ・デッラ・テッラ]",
+      "ko": "[Ritmo della Terra]",
+      "tw": "[地球的節奏]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1102_110201.png"
+  },
+  "110202": {
+    "cardId": 110202,
+    "charId": 1102,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110202-sounds-of-earth",
+    "name": {
+      "en": "Sounds of Earth",
+      "ja": "サウンズオブアース",
+      "ko": "사운즈 오브 어스",
+      "tw": "萬籟爭鳴"
+    },
+    "title": {
+      "en": "Sonata alla Menta",
+      "ja": "[ソナタ・アッラ・メンタ]",
+      "ko": "[ソナタ・アッラ・メンタ]",
+      "tw": "[ソナタ・アッラ・メンタ]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1102_110202.png"
+  },
+  "110301": {
+    "cardId": 110301,
+    "charId": 1103,
+    "rarity": 2,
+    "obtained": "gacha",
+    "urlName": "110301-royce-and-royce",
+    "name": {
+      "en": "Royce and Royce",
+      "ja": "ロイスアンドロイス",
+      "ko": "로이스 앤 로이스",
+      "tw": "萊斯萊斯"
+    },
+    "title": {
+      "en": "Inspiring Genius",
+      "ja": "[Inspiring Genius]",
+      "ko": "[Inspiring Genius]",
+      "tw": "[Inspiring Genius]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1103_110301.png"
+  },
+  "110401": {
+    "cardId": 110401,
+    "charId": 1104,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110401-katsuragi-ace",
+    "name": {
+      "en": "Katsuragi Ace",
+      "ja": "カツラギエース",
+      "ko": "카츠라기 에이스",
+      "tw": "葛城榮主"
+    },
+    "title": {
+      "en": "[Dragon Rising]",
+      "ja": "[登竜之頂]",
+      "ko": "[등용지정]",
+      "tw": "[登龍之頂]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1104_110401.png"
+  },
+  "110402": {
+    "cardId": 110402,
+    "charId": 1104,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110402-katsuragi-ace",
+    "name": {
+      "en": "Katsuragi Ace",
+      "ja": "カツラギエース",
+      "ko": "카츠라기 에이스",
+      "tw": "葛城榮主"
+    },
+    "title": {
+      "en": "Pen Name: Ink Dragon",
+      "ja": "[雅号・墨龍]",
+      "ko": "[아호・묵룡]",
+      "tw": "[雅號．墨龍]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1104_110402.png"
+  },
+  "110501": {
+    "cardId": 110501,
+    "charId": 1105,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110501-neo-universe",
+    "name": {
+      "en": "Neo Universe",
+      "ja": "ネオユニヴァース",
+      "ko": "네오 유니버스",
+      "tw": "新宇宙"
+    },
+    "title": {
+      "en": "[Universe-Naut]",
+      "ja": "[Universe-Naut]",
+      "ko": "[Universe-Naut]",
+      "tw": "[Universe-Naut]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1105_110501.png"
+  },
+  "110502": {
+    "cardId": 110502,
+    "charId": 1105,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110502-neo-universe",
+    "name": {
+      "en": "Neo Universe",
+      "ja": "ネオユニヴァース",
+      "ko": "네오 유니버스",
+      "tw": "新宇宙"
+    },
+    "title": {
+      "en": "Like “ZEER”",
+      "ja": "[Like “ZEER”]",
+      "ko": "[Like “ZEER”]",
+      "tw": "[Like “ZEER”]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1105_110502.png"
+  },
+  "110601": {
+    "cardId": 110601,
+    "charId": 1106,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110601-hishi-miracle",
+    "name": {
+      "en": "Hishi Miracle",
+      "ja": "ヒシミラクル",
+      "ko": "히시 미라클",
+      "tw": "菱奇蹟"
+    },
+    "title": {
+      "en": "[Miracle Maker]",
+      "ja": "[みらくるめーくあっぷ！]",
+      "ko": "[미라클 메이크업!]",
+      "tw": "[點綴奇蹟！]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1106_110601.png"
+  },
+  "110602": {
+    "cardId": 110602,
+    "charId": 1106,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110602-hishi-miracle",
+    "name": {
+      "en": "Hishi Miracle",
+      "ja": "ヒシミラクル",
+      "ko": "히시 미라클",
+      "tw": "菱奇蹟"
+    },
+    "title": {
+      "en": "Happy Little Notes",
+      "ja": "[ハッピー・リトル・ノーツ]",
+      "ko": "[해피・리틀・노츠]",
+      "tw": "[快樂小音符]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1106_110602.png"
+  },
+  "110701": {
+    "cardId": 110701,
+    "charId": 1107,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110701-tap-dance-city",
+    "name": {
+      "en": "Tap Dance City",
+      "ja": "タップダンスシチー",
+      "ko": "탭 댄스 시티",
+      "tw": "踢踏城市"
+    },
+    "title": {
+      "en": "GLITTER!",
+      "ja": "[GLITTER!]",
+      "ko": "[GLITTER!]",
+      "tw": "[GLITTER!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1107_110701.png"
+  },
+  "110702": {
+    "cardId": 110702,
+    "charId": 1107,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110702-tap-dance-city",
+    "name": {
+      "en": "Tap Dance City",
+      "ja": "タップダンスシチー",
+      "ko": "탭 댄스 시티",
+      "tw": "踢踏城市"
+    },
+    "title": {
+      "en": "Tap! Tap! Tap!",
+      "ja": "[Tap! Tap! Tap!]",
+      "ko": "[Tap! Tap! Tap!]",
+      "tw": "[Tap! Tap! Tap!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1107_110702.png"
+  },
+  "110801": {
+    "cardId": 110801,
+    "charId": 1108,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110801-duramente",
+    "name": {
+      "en": "Duramente",
+      "ja": "ドゥラメンテ",
+      "ko": "두라멘테",
+      "tw": "大鳴大放"
+    },
+    "title": {
+      "en": "Red in Black",
+      "ja": "[Red in Black]",
+      "ko": "[Red in Black]",
+      "tw": "[Red in Black]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1108_110801.png"
+  },
+  "110901": {
+    "cardId": 110901,
+    "charId": 1109,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "110901-rhein-kraft",
+    "name": {
+      "en": "Rhein Kraft",
+      "ja": "ラインクラフト",
+      "ko": "라인 크라프트",
+      "tw": "萊茵實力"
+    },
+    "title": {
+      "en": "Dream Successor",
+      "ja": "[Dream Successor]",
+      "ko": "[Dream Successor]",
+      "tw": "[Dream Successor]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1109_110901.png"
+  },
+  "110902": {
+    "cardId": 110902,
+    "charId": 1109,
+    "rarity": 3,
+    "obtained": "main_story",
+    "urlName": "110902-rhein-kraft",
+    "name": {
+      "en": "Rhein Kraft",
+      "ja": "ラインクラフト",
+      "ko": "라인 크라프트",
+      "tw": "萊茵實力"
+    },
+    "title": {
+      "en": "Eternal Fairytale",
+      "ja": "[Eternal Fairytale]",
+      "ko": "[Eternal Fairytale]",
+      "tw": "[Eternal Fairytale]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1109_110902.png"
+  },
+  "111001": {
+    "cardId": 111001,
+    "charId": 1110,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111001-cesario",
+    "name": {
+      "en": "Cesario",
+      "ja": "シーザリオ",
+      "ko": "세자리오",
+      "tw": "西薩里奧"
+    },
+    "title": {
+      "en": "Future Weaver",
+      "ja": "[Future Weaver]",
+      "ko": "[Future Weaver]",
+      "tw": "[Future Weaver]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1110_111001.png"
+  },
+  "111002": {
+    "cardId": 111002,
+    "charId": 1110,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111002-cesario",
+    "name": {
+      "en": "Cesario",
+      "ja": "シーザリオ",
+      "ko": "세자리오",
+      "tw": "西薩里奧"
+    },
+    "title": {
+      "en": "Twinbell Queen",
+      "ja": "[Twinbell Queen]",
+      "ko": "[Twinbell Queen]",
+      "tw": "[Twinbell Queen]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1110_111002.png"
+  },
+  "111101": {
+    "cardId": 111101,
+    "charId": 1111,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111101-air-messiah",
+    "name": {
+      "en": "Air Messiah",
+      "ja": "エアメサイア",
+      "ko": "에어 메사이어",
+      "tw": "空中彌賽亞"
+    },
+    "title": {
+      "en": "Inherited Hope",
+      "ja": "[Inherited Hope]",
+      "ko": "[Inherited Hope]",
+      "tw": "[Inherited Hope]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1111_111101.png"
+  },
+  "111201": {
+    "cardId": 111201,
+    "charId": 1112,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111201-daring-heart",
+    "name": {
+      "en": "Daring Heart",
+      "ja": "デアリングハート",
+      "ko": "데어링 하트",
+      "tw": "勇敢之心"
+    },
+    "title": {
+      "en": "Daring Darling!",
+      "ja": "[Daring Darling!]",
+      "ko": "[Daring Darling!]",
+      "tw": "[Daring Darling!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1112_111201.png"
+  },
+  "111301": {
+    "cardId": 111301,
+    "charId": 1113,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111301-fusaichi-pandora",
+    "name": {
+      "en": "Fusaichi Pandora",
+      "ja": "フサイチパンドラ",
+      "ko": "후사이치 판도라",
+      "tw": "房一潘朵拉"
+    },
+    "title": {
+      "en": "Assorted Cuteness♡",
+      "ja": "[Assorted Cuteness♡]",
+      "ko": "[Assorted Cuteness♡]",
+      "tw": "[Assorted Cuteness♡]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1113_111301.png"
+  },
+  "111302": {
+    "cardId": 111302,
+    "charId": 1113,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111302-fusaichi-pandora",
+    "name": {
+      "en": "Fusaichi Pandora",
+      "ja": "フサイチパンドラ",
+      "ko": "후사이치 판도라",
+      "tw": "房一潘朵拉"
+    },
+    "title": {
+      "en": "Snatchin' Hearts ♡",
+      "ja": "[Snatchin' Hearts ♡]",
+      "ko": "[Snatchin' Hearts ♡]",
+      "tw": "[Snatchin' Hearts ♡]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1113_111302.png"
+  },
+  "111401": {
+    "cardId": 111401,
+    "charId": 1114,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111401-buena-vista",
+    "name": {
+      "en": "Buena Vista",
+      "ja": "ブエナビスタ",
+      "ko": "부에나 비스타",
+      "tw": "迷人景致"
+    },
+    "title": {
+      "en": "Heroína Inocente",
+      "ja": "[Heroína Inocente]",
+      "ko": "[Heroína Inocente]",
+      "tw": "[Heroína Inocente]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1114_111401.png"
+  },
+  "111501": {
+    "cardId": 111501,
+    "charId": 1115,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111501-orfevre",
+    "name": {
+      "en": "Orfevre",
+      "ja": "オルフェーヴル",
+      "ko": "오르페브르",
+      "tw": "黃金巨匠"
+    },
+    "title": {
+      "en": "Total Dominion",
+      "ja": "[総攬]",
+      "ko": "[총람]",
+      "tw": "[總攬]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1115_111501.png"
+  },
+  "111601": {
+    "cardId": 111601,
+    "charId": 1116,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111601-gentildonna",
+    "name": {
+      "en": "Gentildonna",
+      "ja": "ジェンティルドンナ",
+      "ko": "젠틸돈나",
+      "tw": "貴婦人"
+    },
+    "title": {
+      "en": "Regina dei Fiori",
+      "ja": "[Regina dei fiori]",
+      "ko": "[Regina dei fiori]",
+      "tw": "[Regina dei fiori]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1116_111601.png"
+  },
+  "111602": {
+    "cardId": 111602,
+    "charId": 1116,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111602-gentildonna",
+    "name": {
+      "en": "Gentildonna",
+      "ja": "ジェンティルドンナ",
+      "ko": "젠틸돈나",
+      "tw": "貴婦人"
+    },
+    "title": {
+      "en": "La dama perfetta",
+      "ja": "[La dama perfetta]",
+      "ko": "[La dama perfetta]",
+      "tw": "[La dama perfetta]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1116_111602.png"
+  },
+  "111701": {
+    "cardId": 111701,
+    "charId": 1117,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111701-win-variation",
+    "name": {
+      "en": "Win Variation",
+      "ja": "ウインバリアシオン",
+      "ko": "윈 바리아시옹",
+      "tw": "凱旋芭蕾"
+    },
+    "title": {
+      "en": "Dramatic Tutu",
+      "ja": "[ドラマティック・チュチュ]",
+      "ko": "[드라마틱・튀튀]",
+      "tw": "[戲夢芭蕾裙]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1117_111701.png"
+  },
+  "111801": {
+    "cardId": 111801,
+    "charId": 1118,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111801-admire-groove",
+    "name": {
+      "en": "Admire Groove",
+      "ja": "アドマイヤグルーヴ",
+      "ko": "어드마이어 그루브",
+      "tw": "愛慕律動"
+    },
+    "title": {
+      "en": "Glacial Queen",
+      "ja": "[Glacial Queen]",
+      "ko": "[Glacial Queen]",
+      "tw": "[Glacial Queen]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1118_111801.png"
+  },
+  "111901": {
+    "cardId": 111901,
+    "charId": 1119,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111901-dream-journey",
+    "name": {
+      "en": "Dream Journey",
+      "ja": "ドリームジャーニー",
+      "ko": "드림 저니",
+      "tw": "夢之旅"
+    },
+    "title": {
+      "en": "Dreamland Memento",
+      "ja": "[夢路のよすが]",
+      "ko": "[꿈길의 인연]",
+      "tw": "[夢之所歸]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1119_111901.png"
+  },
+  "111902": {
+    "cardId": 111902,
+    "charId": 1119,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "111902-dream-journey",
+    "name": {
+      "en": "Dream Journey",
+      "ja": "ドリームジャーニー",
+      "ko": "드림 저니",
+      "tw": "夢之旅"
+    },
+    "title": {
+      "en": "Snow-White Dream Road",
+      "ja": "[雪白の夢路]",
+      "ko": "[雪白の夢路]",
+      "tw": "[雪白の夢路]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1119_111902.png"
+  },
+  "112001": {
+    "cardId": 112001,
+    "charId": 1120,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "112001-calstone-light-o",
+    "name": {
+      "en": "Calstone Light O",
+      "ja": "カルストンライトオ",
+      "ko": "칼스톤 라이트 오",
+      "tw": "浮岩光王"
+    },
+    "title": {
+      "en": "One True Path",
+      "ja": "[真実一路]",
+      "ko": "[진실일로]",
+      "tw": "[一心求真]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1120_112001.png"
+  },
+  "112101": {
+    "cardId": 112101,
+    "charId": 1121,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "112101-durandal",
+    "name": {
+      "en": "Durandal",
+      "ja": "デュランダル",
+      "ko": "뒤랑달",
+      "tw": "杜蘭達爾"
+    },
+    "title": {
+      "en": "Chevalier Fidèle",
+      "ja": "[Chevalier fidèle]",
+      "ko": "[Chevalier fidèle]",
+      "tw": "[Chevalier fidèle]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1121_112101.png"
+  },
+  "112401": {
+    "cardId": 112401,
+    "charId": 1124,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "112401-bubble-gum-fellow",
+    "name": {
+      "en": "Bubble Gum Fellow",
+      "ja": "バブルガムフェロー",
+      "ko": "버블검 펠로",
+      "tw": "泡泡糖小子"
+    },
+    "title": {
+      "en": "POPPING!",
+      "ja": "[POPPING!]",
+      "ko": "[POPPING!]",
+      "tw": "[POPPING!]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1124_112401.png"
+  },
+  "112402": {
+    "cardId": 112402,
+    "charId": 1124,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "112402-bubble-gum-fellow",
+    "name": {
+      "en": "Bubble Gum Fellow",
+      "ja": "バブルガムフェロー",
+      "ko": "버블검 펠로",
+      "tw": "泡泡糖小子"
+    },
+    "title": {
+      "en": "Dawn Light",
+      "ja": "[暁光]",
+      "ko": "[暁光]",
+      "tw": "[暁光]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1124_112402.png"
+  },
+  "112701": {
+    "cardId": 112701,
+    "charId": 1127,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "112701-fenomeno",
+    "name": {
+      "en": "Fenomeno",
+      "ja": "フェノーメノ",
+      "ko": "페노메노",
+      "tw": "超常駿驥"
+    },
+    "title": {
+      "en": "Black Flame of Righteousness",
+      "ja": "[義心の黒焔]",
+      "ko": "[정의심의 검은 불꽃]",
+      "tw": "[義心黑焰]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1127_112701.png"
+  },
+  "112702": {
+    "cardId": 112702,
+    "charId": 1127,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "112702-fenomeno",
+    "name": {
+      "en": "Fenomeno",
+      "ja": "フェノーメノ",
+      "ko": "페노메노",
+      "tw": "超常駿驥"
+    },
+    "title": {
+      "en": "Violet Flame of Fortitude",
+      "ja": "[剛毅なる紫焔]",
+      "ko": "[剛毅なる紫焔]",
+      "tw": "[剛毅なる紫焔]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1127_112702.png"
+  },
+  "112901": {
+    "cardId": 112901,
+    "charId": 1129,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "112901-almond-eye",
+    "name": {
+      "en": "Almond Eye",
+      "ja": "アーモンドアイ",
+      "ko": "아몬드 아이",
+      "tw": "杏目"
+    },
+    "title": {
+      "en": "The Changer",
+      "ja": "[The Changer]",
+      "ko": "[The Changer]",
+      "tw": "[The Changer]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1129_112901.png"
+  },
+  "113001": {
+    "cardId": 113001,
+    "charId": 1130,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113001-lucky-lilac",
+    "name": {
+      "en": "Lucky Lilac",
+      "ja": "ラッキーライラック",
+      "ko": "럭키 라일락",
+      "tw": "幸運歐丁香"
+    },
+    "title": {
+      "en": "Standard of Unyielding Resolve",
+      "ja": "[万折不撓の纏]",
+      "ko": "[万折不撓の纏]",
+      "tw": "[万折不撓の纏]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1130_113001.png"
+  },
+  "113101": {
+    "cardId": 113101,
+    "charId": 1131,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113101-gran-alegria",
+    "name": {
+      "en": "Gran Alegria",
+      "ja": "グランアレグリア",
+      "ko": "그란 알레그리아",
+      "tw": "放聲歡呼"
+    },
+    "title": {
+      "en": "sMile My Way!",
+      "ja": "[すまいる・まい・うぇい！]",
+      "ko": "[스마일・마이・웨이!]",
+      "tw": "[微笑哩有我的路！]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1131_113101.png"
+  },
+  "113201": {
+    "cardId": 113201,
+    "charId": 1132,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113201-loves-only-you",
+    "name": {
+      "en": "Loves Only You",
+      "ja": "ラヴズオンリーユー",
+      "ko": "러브즈 온리 유",
+      "tw": "唯獨愛你"
+    },
+    "title": {
+      "en": "9927 Wishes",
+      "ja": "[9927 Wishes]",
+      "ko": "[9927 Wishes]",
+      "tw": "[9927 Wishes]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1132_113201.png"
+  },
+  "113202": {
+    "cardId": 113202,
+    "charId": 1132,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113202-loves-only-you",
+    "name": {
+      "en": "Loves Only You",
+      "ja": "ラヴズオンリーユー",
+      "ko": "러브즈 온리 유",
+      "tw": "唯獨愛你"
+    },
+    "title": {
+      "en": "Love-Linked Aster",
+      "ja": "[Love-Linked Aster]",
+      "ko": "[Love-Linked Aster]",
+      "tw": "[Love-Linked Aster]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1132_113202.png"
+  },
+  "113301": {
+    "cardId": 113301,
+    "charId": 1133,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113301-chrono-genesis",
+    "name": {
+      "en": "Chrono Genesis",
+      "ja": "クロノジェネシス",
+      "ko": "크로노 제네시스",
+      "tw": "時代創世"
+    },
+    "title": {
+      "en": "Prismatic Curator",
+      "ja": "[陸離の編纂者]",
+      "ko": "[찬란한 편찬자]",
+      "tw": "[璀璨的編篡者]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1133_113301.png"
+  },
+  "113401": {
+    "cardId": 113401,
+    "charId": 1134,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113401-curren-bouquetdor",
+    "name": {
+      "en": "Curren Bouquetd'or",
+      "ja": "カレンブーケドール",
+      "ko": "카렌 부케도르",
+      "tw": "機伶金花"
+    },
+    "title": {
+      "en": "Couture in Bloom",
+      "ja": "[花宿しのクチュール]",
+      "ko": "[花宿しのクチュール]",
+      "tw": "[花宿しのクチュール]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1134_113401.png"
+  },
+  "113501": {
+    "cardId": 113501,
+    "charId": 1135,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113501-stay-gold",
+    "name": {
+      "en": "Stay Gold",
+      "ja": "ステイゴールド",
+      "ko": "스테이 골드",
+      "tw": "黃金旅程"
+    },
+    "title": {
+      "en": "Sunlit Outsider",
+      "ja": "[Sunlit Outsider]",
+      "ko": "[Sunlit Outsider]",
+      "tw": "[Sunlit Outsider]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1135_113501.png"
+  },
+  "113601": {
+    "cardId": 113601,
+    "charId": 1136,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113601-red-desire",
+    "name": {
+      "en": "Red Desire",
+      "ja": "レッドディザイア",
+      "ko": "레드 디자이어",
+      "tw": null
+    },
+    "title": {
+      "en": "Divine Raiment",
+      "ja": "[Divine Raiment]",
+      "ko": "[Divine Raiment]",
+      "tw": "[Divine Raiment]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1136_113601.png"
+  },
+  "113701": {
+    "cardId": 113701,
+    "charId": 1137,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "113701-kiseki",
+    "name": {
+      "en": "Kiseki",
+      "ja": "キセキ",
+      "ko": "키세키",
+      "tw": null
+    },
+    "title": {
+      "en": "Miracle Author",
+      "ja": "[Miracle Author]",
+      "ko": "[Miracle Author]",
+      "tw": "[Miracle Author]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1137_113701.png"
+  },
+  "114101": {
+    "cardId": 114101,
+    "charId": 1141,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "114101-epiphaneia",
+    "name": {
+      "en": "Epiphaneia",
+      "ja": "エピファネイア",
+      "ko": "에피파네이아",
+      "tw": null
+    },
+    "title": {
+      "en": "Fate's Chosen Star",
+      "ja": "[Fate's Chosen Star]",
+      "ko": "[Fate's Chosen Star]",
+      "tw": "[Fate's Chosen Star]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1141_114101.png"
+  },
+  "114301": {
+    "cardId": 114301,
+    "charId": 1143,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "114301-victoire-pisa",
+    "name": {
+      "en": "Victoire Pisa",
+      "ja": "ヴィクトワールピサ",
+      "ko": "빅투아르 피사",
+      "tw": null
+    },
+    "title": {
+      "en": "Lueur Angélique",
+      "ja": "[Lueur Angélique]",
+      "ko": "[Lueur Angélique]",
+      "tw": "[Lueur Angélique]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1143_114301.png"
+  },
+  "114401": {
+    "cardId": 114401,
+    "charId": 1144,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "114401-rose-kingdom",
+    "name": {
+      "en": "Rose Kingdom",
+      "ja": "ローズキングダム",
+      "ko": "로즈 킹덤",
+      "tw": null
+    },
+    "title": {
+      "en": "Éclat de Roseraie",
+      "ja": "[Éclat de Roseraie]",
+      "ko": "[Éclat de Roseraie]",
+      "tw": "[Éclat de Roseraie]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1144_114401.png"
+  },
+  "114501": {
+    "cardId": 114501,
+    "charId": 1145,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "114501-rulership",
+    "name": {
+      "en": "Rulership",
+      "ja": "ルーラーシップ",
+      "ko": "룰러쉽",
+      "tw": null
+    },
+    "title": {
+      "en": "Monochrome GM",
+      "ja": "[Monochrome GM]",
+      "ko": "[Monochrome GM]",
+      "tw": "[Monochrome GM]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1145_114501.png"
+  },
+  "114901": {
+    "cardId": 114901,
+    "charId": 1149,
+    "rarity": 3,
+    "obtained": "gacha",
+    "urlName": "114901-phalaenopsis",
+    "name": {
+      "en": "Phalaenopsis",
+      "ja": "ファレノプシス",
+      "ko": null,
+      "tw": null
+    },
+    "title": {
+      "en": "",
+      "ja": "[絶佳の暁闇]",
+      "ko": "[絶佳の暁闇]",
+      "tw": "[絶佳の暁闇]"
+    },
+    "image": "https://gametora.com/images/umamusume/characters/thumb/chara_stand_1149_114901.png"
+  }
+}
